@@ -10,20 +10,21 @@ public sealed class TestMaze : Component
 	[Button( "Run", "casino" )]
 	public void Generate()
 	{
-		var generator = new MazeGenerator();
-		View = generator.Generate( new MazeGeneratorParameters( Random.Shared.Next(), 16 ) );
-	}
+		using var _ = Scene.Push();
 
-	protected override void DrawGizmos()
-	{
-		base.DrawGizmos();
-
-		if ( View is null )
+		foreach ( var child in GameObject.Children )
 		{
-			return;
+			child.Destroy();
 		}
 
-		var offset = new Vector3( View.Height, View.Width ) * -32f;
+		var generator = new MazeGenerator();
+
+		generator.AddAllChunkResources();
+
+		View = generator.Generate( new MazeGeneratorParameters( Random.Shared.Next(), 16 ) );
+
+		var offset = new Vector3( View.Height, View.Width ) * -24f - Vector3.Up * 192f;
+		var wallModel = Model.Load( "models/wall.vmdl" );
 
 		for ( var j = 0; j <= View.Height; ++j )
 		{
@@ -31,7 +32,15 @@ public sealed class TestMaze : Component
 			{
 				if ( View[j, i, Direction.North] == WallState.Closed )
 				{
-					Gizmo.Draw.SolidBox( new BBox( offset + new Vector3( j * 64f, i * 64f ), offset + new Vector3( j * 64f, i * 64f + 64f, 128f ) ).Grow( 8f ) );
+					var wall = new GameObject
+					{
+						Parent = GameObject,
+						Transform = { Position = new Vector3( j * 48f, i * 48f ) + offset },
+						Flags = GameObjectFlags.NotNetworked | GameObjectFlags.NotSaved
+					};
+					var renderer = wall.Components.Create<ModelRenderer>();
+
+					renderer.Model = wallModel;
 				}
 			}
 		}
@@ -42,7 +51,15 @@ public sealed class TestMaze : Component
 			{
 				if ( View[j, i, Direction.West] == WallState.Closed )
 				{
-					Gizmo.Draw.SolidBox( new BBox( offset + new Vector3( j * 64f, i * 64f ), offset + new Vector3( j * 64f + 64f, i * 64f, 128f ) ).Grow( 8f ) );
+					var wall = new GameObject {
+						Parent = GameObject,
+						Transform = { Position = new Vector3( j * 48f, i * 48f - 48f ) + offset,
+						Rotation = Rotation.FromYaw( 90f ) },
+						Flags = GameObjectFlags.NotNetworked | GameObjectFlags.NotSaved
+					};
+					var renderer = wall.Components.Create<ModelRenderer>();
+
+					renderer.Model = wallModel;
 				}
 			}
 		}

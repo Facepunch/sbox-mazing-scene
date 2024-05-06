@@ -59,7 +59,7 @@
     {
       "__guid": "6ad70641-3c6c-4402-9c85-9a4969af4764",
       "Name": "Plane",
-      "Scale": "5,5,5",
+      "Scale": "20,20,5",
       "Enabled": true,
       "NetworkMode": 2,
       "NetworkInterpolation": true,
@@ -68,7 +68,7 @@
           "__type": "Sandbox.ModelRenderer",
           "__guid": "72b4d299-2ee3-4f11-a9e5-c0cf2ee18d89",
           "BodyGroups": 18446744073709551615,
-          "MaterialOverride": "materials/default.vmat",
+          "MaterialOverride": "materials/floor/mazing_floor.vmat",
           "Model": "models/dev/plane.vmdl",
           "RenderType": "On",
           "Tint": "0.39546,0.51163,0.27128,1"
@@ -80,129 +80,6 @@
           "IsTrigger": false,
           "Scale": "100,100,10",
           "Static": false
-        }
-      ]
-    },
-    {
-      "__guid": "3c2490ef-54a0-49bb-8f13-490e40aa51d1",
-      "Name": "Cube",
-      "Position": "21.41682,74.1244,14.40159",
-      "Rotation": "0.00000001819328,-0.00000000000000008235059,0.3052325,0.952278",
-      "Scale": "0.5632889,0.5632889,0.5632889",
-      "Enabled": true,
-      "NetworkMode": 2,
-      "NetworkInterpolation": true,
-      "Components": [
-        {
-          "__type": "Sandbox.ModelRenderer",
-          "__guid": "154e9384-5082-41ef-a0c4-8bf1b4f32d02",
-          "BodyGroups": 18446744073709551615,
-          "MaterialOverride": "materials/default.vmat",
-          "Model": "models/dev/box.vmdl",
-          "RenderType": "On",
-          "Tint": "1,0,0.93333,1"
-        },
-        {
-          "__type": "Sandbox.BoxCollider",
-          "__guid": "5dd8c64a-1430-42ca-8e47-16f338f8a50e",
-          "Center": "0,0,0",
-          "IsTrigger": false,
-          "Scale": "50,50,50",
-          "Static": false
-        },
-        {
-          "__type": "Sandbox.Rigidbody",
-          "__guid": "385c44be-a171-43af-bf46-a63662dd8f93",
-          "AngularDamping": 0,
-          "Gravity": true,
-          "LinearDamping": 0,
-          "Locking": {},
-          "MassOverride": 0,
-          "MotionEnabled": true,
-          "RigidbodyFlags": 0,
-          "StartAsleep": false
-        }
-      ]
-    },
-    {
-      "__guid": "523e3e8f-a4ec-4ec1-af9a-d86ffc9c17e1",
-      "Name": "Cube (1)",
-      "Position": "40.81348,46.97572,14.40159",
-      "Rotation": "0.00000001819328,-0.00000000000000008235059,0.3052325,0.952278",
-      "Scale": "0.5632889,0.5632889,0.5632889",
-      "Enabled": true,
-      "NetworkMode": 2,
-      "NetworkInterpolation": true,
-      "Components": [
-        {
-          "__type": "Sandbox.ModelRenderer",
-          "__guid": "791a8d89-7041-43a1-9d75-1e38eacdb9c2",
-          "BodyGroups": 18446744073709551615,
-          "MaterialOverride": "materials/default.vmat",
-          "Model": "models/dev/box.vmdl",
-          "RenderType": "On",
-          "Tint": "1,0,0.93333,1"
-        },
-        {
-          "__type": "Sandbox.BoxCollider",
-          "__guid": "023653a7-6d1c-4f9b-ab0b-390aa947c0be",
-          "Center": "0,0,0",
-          "IsTrigger": false,
-          "Scale": "50,50,50",
-          "Static": false
-        },
-        {
-          "__type": "Sandbox.Rigidbody",
-          "__guid": "67353aef-60f8-4054-afdd-803875eda23c",
-          "AngularDamping": 0,
-          "Gravity": true,
-          "LinearDamping": 0,
-          "Locking": {},
-          "MassOverride": 0,
-          "MotionEnabled": true,
-          "RigidbodyFlags": 0,
-          "StartAsleep": false
-        }
-      ]
-    },
-    {
-      "__guid": "5b483a09-bbf2-4949-98c7-a73b789d0ee7",
-      "Name": "Cube (2)",
-      "Position": "49.53707,34.08896,43.67614",
-      "Rotation": "0.00000001819328,-0.00000000000000008235059,0.3052325,0.952278",
-      "Scale": "0.5632889,0.5632889,0.5632889",
-      "Enabled": true,
-      "NetworkMode": 2,
-      "NetworkInterpolation": true,
-      "Components": [
-        {
-          "__type": "Sandbox.ModelRenderer",
-          "__guid": "f5083a47-a6ce-4b18-a2ea-cffa4bb42cc3",
-          "BodyGroups": 18446744073709551615,
-          "MaterialOverride": "materials/default.vmat",
-          "Model": "models/dev/box.vmdl",
-          "RenderType": "On",
-          "Tint": "1,0,0.93333,1"
-        },
-        {
-          "__type": "Sandbox.BoxCollider",
-          "__guid": "f9aabc07-7ede-4577-b703-6af2e292a0cb",
-          "Center": "0,0,0",
-          "IsTrigger": false,
-          "Scale": "50,50,50",
-          "Static": false
-        },
-        {
-          "__type": "Sandbox.Rigidbody",
-          "__guid": "27ac3538-694d-4487-b31a-f168a3dca0d2",
-          "AngularDamping": 0,
-          "Gravity": true,
-          "LinearDamping": 0,
-          "Locking": {},
-          "MassOverride": 0,
-          "MotionEnabled": true,
-          "RigidbodyFlags": 0,
-          "StartAsleep": false
         }
       ]
     },
@@ -287,6 +164,70 @@
           "__type": "Mazing.TestMaze",
           "__guid": "0886cc99-e2af-4965-9049-8fcf900f7e37"
         }
+      ],
+      "Children": []
+    },
+    {
+      "__guid": "d6a72d7c-6bbf-4427-aed4-a5c445e35a92",
+      "Name": "Point Light (2)",
+      "Position": "-222.353,186.4628,130.8718",
+      "Tags": "light_point,light",
+      "Enabled": true,
+      "NetworkMode": 2,
+      "NetworkInterpolation": true,
+      "Components": [
+        {
+          "__type": "Sandbox.PointLight",
+          "__guid": "9eb611dd-ce6e-412f-b463-fab6ef83a736",
+          "Attenuation": 1,
+          "FogMode": "Enabled",
+          "FogStrength": 1,
+          "LightColor": "0.77907,1,0.46977,1",
+          "Radius": 400,
+          "Shadows": true
+        }
+      ]
+    },
+    {
+      "__guid": "fcd82a26-8c69-4375-87e2-91b88f9f2b02",
+      "Name": "Point Light (1)",
+      "Position": "15.59996,-376.4331,130.872",
+      "Tags": "light_point,light",
+      "Enabled": true,
+      "NetworkMode": 2,
+      "NetworkInterpolation": true,
+      "Components": [
+        {
+          "__type": "Sandbox.PointLight",
+          "__guid": "98a999ac-29ce-49d3-b01c-981f6e5d6465",
+          "Attenuation": 1,
+          "FogMode": "Enabled",
+          "FogStrength": 1,
+          "LightColor": "0.56698,0.46977,1,1",
+          "Radius": 400,
+          "Shadows": true
+        }
+      ]
+    },
+    {
+      "__guid": "1f14413e-86f9-4ad4-a34c-d404a8458520",
+      "Name": "Point Light",
+      "Position": "219.5171,-69.89362,130.8724",
+      "Tags": "light_point,light",
+      "Enabled": true,
+      "NetworkMode": 2,
+      "NetworkInterpolation": true,
+      "Components": [
+        {
+          "__type": "Sandbox.PointLight",
+          "__guid": "eb86aed6-1dca-488a-a039-1cebeff5d8ac",
+          "Attenuation": 1,
+          "FogMode": "Enabled",
+          "FogStrength": 1,
+          "LightColor": "0.46977,0.87628,1,1",
+          "Radius": 400,
+          "Shadows": true
+        }
       ]
     }
   ],
@@ -313,7 +254,7 @@
   },
   "Title": "minimal",
   "Description": "",
-  "LastSaved": "2024-05-06T16:19:07.095504\u002B01:00",
+  "LastSaved": "2024-05-06T18:28:14.1155447\u002B01:00",
   "ResourceVersion": 1,
   "__version": 1,
   "__references": []
