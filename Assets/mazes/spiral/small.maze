@@ -3,8 +3,10 @@
     "Width": 4,
     "Height": 4,
     "VertWalls": "11001111111111110011",
-    "HorzWalls": "11110111000011101111"
+    "HorzWalls": "11110111000011101111",
+    "Cells": "0000000000000000"
   },
+  "IsSpecial": false,
   "ResourceVersion": 0,
   "__version": 0,
   "__references": []

@@ -2,12 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Editor;
-using Mazing.Resources;
 using Sandbox;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Mazing.Editor;
 
-[CustomEditor( typeof( MazeChunkData ) )]
+[CustomEditor( typeof( MazeData ) )]
 public class MazeChunkWidget : ControlWidget
 {
 	public override bool IsWideMode => true;
@@ -18,10 +18,14 @@ public class MazeChunkWidget : ControlWidget
 
 	private Layout Content { get; }
 
-	protected override int ValueHash => SerializedProperty.GetValue<MazeChunkData>().ValueHash;
+	protected override int ValueHash => SerializedProperty.GetValue<MazeData>().ValueHash;
 
 	private int _width;
 	private int _height;
+
+	private MazeChunkCellWidget[,]? _cells;
+
+	private WallState? _wallStateBrush;
 
 	public MazeChunkWidget( SerializedProperty property ) : base( property )
 	{
@@ -47,7 +51,7 @@ public class MazeChunkWidget : ControlWidget
 			obj.NoteChanged( SerializedProperty );
 		}
 
-		var data = SerializedProperty.GetValue<MazeChunkData>();
+		var data = SerializedProperty.GetValue<MazeData>();
 
 		if ( _width != data.Width || _height != data.Height )
 		{
@@ -60,7 +64,7 @@ public class MazeChunkWidget : ControlWidget
 	{
 		Content.Clear( true );
 
-		var data = SerializedProperty.GetValue<MazeChunkData>();
+		var data = SerializedProperty.GetValue<MazeData>();
 
 		_width = data.Width;
 		_height = data.Height;
@@ -71,8 +75,8 @@ public class MazeChunkWidget : ControlWidget
 
 		Content.Add( controlSheet );
 
-		controlSheet.AddRow( obj.GetProperty( nameof(MazeChunkData.Width) ) );
-		controlSheet.AddRow( obj.GetProperty( nameof(MazeChunkData.Height) ) );
+		controlSheet.AddRow( obj.GetProperty( nameof( MazeData.Width) ) );
+		controlSheet.AddRow( obj.GetProperty( nameof( MazeData.Height) ) );
 
 		var grid = Layout.Grid();
 		grid.HorizontalSpacing = 0;
@@ -80,17 +84,64 @@ public class MazeChunkWidget : ControlWidget
 		grid.Alignment = TextFlag.Left;
 		grid.Margin = 16f;
 
+		_cells = new MazeChunkCellWidget[data.Height, data.Width];
+
 		for ( var i = 0; i < data.Height; ++i )
 		{
 			for ( var j = 0; j < data.Width; ++j )
 			{
 				var cell = new MazeChunkCellWidget( this, data, i, j );
 
+				_cells[i, j] = cell;
+
 				grid.AddCell( j, i, cell );
 			}
 		}
 
 		Content.Add( grid );
+	}
+
+	protected override void OnMousePress( MouseEvent e )
+	{
+		base.OnMousePress( e );
+
+		_wallStateBrush = e.LeftMouseButton ? WallState.Closed : WallState.Open;
+	}
+
+	protected override void OnMouseReleased( MouseEvent e )
+	{
+		base.OnMouseReleased( e );
+
+		_wallStateBrush = null;
+	}
+
+	private bool TryGetCellPos( Vector2 localPos, out int row, out int col, out Vector2 cellLocalPos )
+	{
+		var offset = _cells![0, 0].Position;
+
+		localPos -= offset;
+
+		row = (int)MathF.Floor( localPos.y / 32f );
+		col = (int)MathF.Floor( localPos.x / 32f );
+
+		cellLocalPos = localPos - new Vector2( col, row ) * 32f;
+
+		return row >= 0 && row < _height && col >= 0 && col < _width;
+	}
+
+	protected override void OnMouseMove( MouseEvent e )
+	{
+		base.OnMouseMove( e );
+
+		if ( _wallStateBrush is null || _cells is null )
+		{
+			return;
+		}
+
+		if ( TryGetCellPos( e.LocalPosition, out var row, out var col, out var cellLocalPos ) )
+		{
+			_cells[row, col].PaintWall( cellLocalPos, _wallStateBrush.Value );
+		}
 	}
 
 	protected override void PaintUnder()
@@ -104,13 +155,16 @@ public class MazeChunkWidget : ControlWidget
 
 internal class MazeChunkCellWidget : Widget
 {
-	public MazeChunkData Data { get; }
+	public MazeChunkWidget MazeChunkWidget { get; }
+	public MazeData Data { get; }
 	public int Row { get; }
 	public int Col { get; }
 
-	public MazeChunkCellWidget( MazeChunkWidget parent, MazeChunkData data, int row, int col )
+	public MazeChunkCellWidget( MazeChunkWidget parent, MazeData data, int row, int col )
 		: base( parent )
 	{
+		MazeChunkWidget = parent;
+
 		Data = data;
 		Row = row;
 		Col = col;
@@ -124,7 +178,7 @@ internal class MazeChunkCellWidget : Widget
 	{
 		var pos = (localPos / Size - 0.5f) * 2f;
 
-		if ( MathF.Abs( pos.x ) < 0.5f && MathF.Abs( pos.y ) < 0.5f )
+		if ( MathF.Abs( pos.x ) < 0.5f == MathF.Abs( pos.y ) < 0.5f )
 		{
 			return null;
 		}
@@ -137,30 +191,60 @@ internal class MazeChunkCellWidget : Widget
 		return pos.y <= 0f ? Direction.North : Direction.South;
 	}
 
+	public void PaintWall( Vector2 localPos, WallState state )
+	{
+		if ( GetDirection( localPos ) is not { } dir )
+		{
+			return;
+		}
+
+		var prev = Data[Row, Col, dir];
+
+		if ( prev == state )
+		{
+			return;
+		}
+
+		Data[Row, Col, dir] = state;
+
+		Update();
+		SignalValuesChanged();
+	}
+
 	protected override void OnMouseClick( MouseEvent e )
 	{
 		base.OnMouseClick( e );
 
-		if ( GetDirection( e.LocalPosition ) is { } dir )
+		if ( GetDirection( e.LocalPosition ) is not null )
 		{
-			var prev = Data[Row, Col, dir];
-			var next = prev == WallState.Closed ? WallState.Open : WallState.Closed;
-
-			Data[Row, Col, dir] = next;
-
-			Update();
-			SignalValuesChanged();
+			return;
 		}
-		else
+
+		var prev = Data[Row, Col];
+		var next = (CellState)(((int)prev + 1) % (int)CellState.Count);
+
+		Data[Row, Col] = next;
+
+		Update();
+		SignalValuesChanged();
+	}
+
+	protected override void OnMouseRightClick( MouseEvent e )
+	{
+		base.OnMouseRightClick( e );
+
+		if ( GetDirection( e.LocalPosition ) is not null )
 		{
-			var prev = Data[Row, Col];
-			var next = (CellState)(((int)prev + 1) % (int)CellState.Count);
-
-			Data[Row, Col] = next;
-
-			Update();
-			SignalValuesChanged();
+			return;
 		}
+
+		var prev = Data[Row, Col];
+		var next = (CellState)(((int)prev + (int)CellState.Count - 1) % (int)CellState.Count);
+
+		Data[Row, Col] = next;
+
+		Update();
+		SignalValuesChanged();
 	}
 
 	private static Dictionary<CellState, string>? CellStateIcons { get; set; }
@@ -181,7 +265,10 @@ internal class MazeChunkCellWidget : Widget
 		Paint.ClearPen();
 		Paint.SetBrush( Theme.ControlText.Darken( 0.8f ) );
 
-		Paint.DrawRect( ContentRect.Shrink( 1f ) );
+		if ( Data[Row, Col] != CellState.Empty )
+		{
+			Paint.DrawRect( ContentRect.Shrink( 1f ) );
+		}
 
 		Paint.SetBrush( Theme.ControlText.Darken( 0.2f ) );
 
