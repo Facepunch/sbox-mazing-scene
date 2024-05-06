@@ -1,0 +1,11 @@
+{
+  "Data": {
+    "Width": 4,
+    "Height": 8,
+    "VertWalls": "1000110001100011000110001100011000110001",
+    "HorzWalls": "111111111111111111111111111111111111"
+  },
+  "ResourceVersion": 0,
+  "__version": 0,
+  "__references": []
+}

@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Editor;
 using Mazing.Resources;
 using Sandbox;
@@ -18,13 +20,16 @@ public class MazeChunkWidget : ControlWidget
 
 	protected override int ValueHash => SerializedProperty.GetValue<MazeChunkData>().ValueHash;
 
+	private int _width;
+	private int _height;
+
 	public MazeChunkWidget( SerializedProperty property ) : base( property )
 	{
 		Layout = Layout.Column();
-		Layout.Spacing = 2;
 		Layout.Margin = 16f;
 
 		Content = Layout.Column();
+		Content.Margin = 4f;
 
 		Layout.Add( Content );
 
@@ -41,20 +46,39 @@ public class MazeChunkWidget : ControlWidget
 		{
 			obj.NoteChanged( SerializedProperty );
 		}
+
+		var data = SerializedProperty.GetValue<MazeChunkData>();
+
+		if ( _width != data.Width || _height != data.Height )
+		{
+			Rebuild();
+		}
 	}
 
 	[EditorEvent.Hotload]
 	private void Rebuild()
 	{
 		Content.Clear( true );
-		Content.Margin = 4f;
+
+		var data = SerializedProperty.GetValue<MazeChunkData>();
+
+		_width = data.Width;
+		_height = data.Height;
+
+		SerializedProperty.TryGetAsObject( out var obj );
+
+		var controlSheet = new ControlSheet();
+
+		Content.Add( controlSheet );
+
+		controlSheet.AddRow( obj.GetProperty( nameof(MazeChunkData.Width) ) );
+		controlSheet.AddRow( obj.GetProperty( nameof(MazeChunkData.Height) ) );
 
 		var grid = Layout.Grid();
 		grid.HorizontalSpacing = 0;
 		grid.VerticalSpacing = 0;
 		grid.Alignment = TextFlag.Left;
-
-		var data = SerializedProperty.GetValue<MazeChunkData>();
+		grid.Margin = 16f;
 
 		for ( var i = 0; i < data.Height; ++i )
 		{
@@ -71,7 +95,10 @@ public class MazeChunkWidget : ControlWidget
 
 	protected override void PaintUnder()
 	{
+		Paint.ClearPen();
+		Paint.SetBrush( Theme.WidgetBackground.Darken( 0.1f ) );
 
+		Paint.DrawRect( ContentRect.Shrink( 8f ) );
 	}
 }
 
@@ -120,10 +147,31 @@ internal class MazeChunkCellWidget : Widget
 			var next = prev == WallState.Closed ? WallState.Open : WallState.Closed;
 
 			Data[Row, Col, dir] = next;
-			Update();
 
+			Update();
 			SignalValuesChanged();
 		}
+		else
+		{
+			var prev = Data[Row, Col];
+			var next = (CellState)(((int)prev + 1) % (int)CellState.Count);
+
+			Data[Row, Col] = next;
+
+			Update();
+			SignalValuesChanged();
+		}
+	}
+
+	private static Dictionary<CellState, string>? CellStateIcons { get; set; }
+
+	private static string? GetIcon( CellState state )
+	{
+		CellStateIcons ??= TypeLibrary.GetEnumDescription( typeof( CellState ) )
+			.Where( x => x.Icon != null )
+			.ToDictionary( x => (CellState)x.ObjectValue, x => x.Icon );
+
+		return CollectionExtensions.GetValueOrDefault( CellStateIcons, state );
 	}
 
 	protected override void OnPaint()
@@ -155,6 +203,12 @@ internal class MazeChunkCellWidget : Widget
 		if ( Data[Row, Col, Direction.South] == WallState.Closed )
 		{
 			Paint.DrawRect( new Rect( ContentRect.Left, ContentRect.Bottom - 2f, ContentRect.Width, 2f ) );
+		}
+
+		if ( GetIcon( Data[Row, Col] ) is {} icon )
+		{
+			Paint.SetPen( Theme.ControlText );
+			Paint.DrawIcon( ContentRect.Shrink( 4f ), icon, 20f );
 		}
 	}
 }

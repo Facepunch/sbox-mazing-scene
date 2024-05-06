@@ -10,6 +10,28 @@ public enum WallState
 	Closed
 }
 
+public enum CellState
+{
+	None,
+
+	[Icon( "key" )]
+	Key,
+
+	[Icon( "logout" )]
+	Exit,
+
+	[Icon( "accessibility_new" )]
+	Player,
+
+	[Icon( "diamond" )]
+	Treasure,
+
+	[Icon( "sentiment_dissatisfied" )]
+	Enemy,
+
+	Count
+}
+
 public enum Direction
 {
 	West,
@@ -23,9 +45,36 @@ public class MazeChunkData
 {
 	private WallState[] _vertWalls = null!;
 	private WallState[] _horzWalls = null!;
+	private CellState[] _cells = null!;
 
-	public int Width { get; private set; } = 8;
-	public int Height { get; private set; } = 8;
+	private int _width = 8;
+	private int _height = 8;
+
+	public int Width
+	{
+		get => _width;
+		set
+		{
+			_width = value;
+
+			Validate();
+			Clear();
+			AddOuterWalls();
+		}
+	}
+
+	public int Height
+	{
+		get => _height;
+		set
+		{
+			_height = value;
+
+			Validate();
+			Clear();
+			AddOuterWalls();
+		}
+	}
 
 	public int ValueHash
 	{
@@ -46,12 +95,18 @@ public class MazeChunkData
 				hash.Add( wallState );
 			}
 
+			foreach ( var cellState in _cells )
+			{
+				hash.Add( cellState );
+			}
+
 			return hash.ToHashCode();
 		}
 	}
 
 	public IReadOnlyList<WallState> VertWalls => _vertWalls;
 	public IReadOnlyList<WallState> HorzWalls => _horzWalls;
+	public IReadOnlyList<CellState> Cells => _cells;
 
 	public MazeChunkData()
 	{
@@ -59,13 +114,14 @@ public class MazeChunkData
 		AddOuterWalls();
 	}
 
-	internal MazeChunkData( int width, int height, WallState[] vertWalls, WallState[] horzWalls )
+	internal MazeChunkData( int width, int height, WallState[]? vertWalls, WallState[]? horzWalls, CellState[]? cells )
 	{
-		Width = width;
-		Height = height;
+		_width = width;
+		_height = height;
 
 		_vertWalls = vertWalls;
 		_horzWalls = horzWalls;
+		_cells = cells;
 
 		Validate();
 	}
@@ -74,6 +130,14 @@ public class MazeChunkData
 	{
 		Array.Resize( ref _vertWalls, (Width + 1) * Height );
 		Array.Resize( ref _horzWalls, (Height + 1) * Width );
+		Array.Resize( ref _cells, Width * Height );
+	}
+
+	private void Clear()
+	{
+		Array.Clear( _vertWalls );
+		Array.Clear( _horzWalls );
+		Array.Clear( _cells );
 	}
 
 	private void AddOuterWalls()
@@ -130,11 +194,21 @@ public class MazeChunkData
 			}
 		}
 	}
+
+	public CellState this[ int row, int col ]
+	{
+		get => row < 0 || row >= Height || col < 0 || col >= Width ? CellState.None : _cells[col + row * Width];
+		set
+		{
+			if ( row < 0 || row >= Height || col < 0 || col >= Width ) return;
+			_cells[col + row * Width] = value;
+		}
+	}
 }
 
 internal class MazeChunkDataConverter : JsonConverter<MazeChunkData>
 {
-	internal record Model( int Width, int Height, string VertWalls, string HorzWalls );
+	internal record Model( int Width, int Height, string VertWalls, string HorzWalls, string Cells );
 
 	public override MazeChunkData? Read( ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options )
 	{
@@ -146,21 +220,26 @@ internal class MazeChunkDataConverter : JsonConverter<MazeChunkData>
 		}
 
 		return new MazeChunkData( model.Width, model.Height,
-			model.VertWalls.Deserialize<WallState>().ToArray(),
-			model.HorzWalls.Deserialize<WallState>().ToArray() );
+			model.VertWalls.Deserialize<WallState>()?.ToArray(),
+			model.HorzWalls.Deserialize<WallState>()?.ToArray(),
+			model.Cells.Deserialize<CellState>()?.ToArray() );
 	}
 
 	public override void Write( Utf8JsonWriter writer, MazeChunkData value, JsonSerializerOptions options )
 	{
-		JsonSerializer.Serialize( writer, new Model( value.Width, value.Height, value.VertWalls.Serialize(), value.HorzWalls.Serialize() ), options );
+		JsonSerializer.Serialize( writer, new Model( value.Width, value.Height, value.VertWalls.Serialize(), value.HorzWalls.Serialize(), value.Cells.Serialize() ), options );
 	}
 }
 
 [GameResource( "Maze Chunk", "maze", "A hand-crafted segment of a maze.", Icon = "route" )]
 public class MazeChunkResource : GameResource
 {
-	[Property]
-	public MazeChunkData Data { get; set; } = new();
+	[Property] public MazeChunkData Data { get; set; } = new();
+
+	/// <summary>
+	/// If true, this maze chunk won't be used for normal maze generation.
+	/// </summary>
+	[Property] public bool IsSpecial { get; set; }
 }
 
 internal static class SerializationExtensions
@@ -174,10 +253,11 @@ internal static class SerializationExtensions
 			.ToArray() );
 	}
 
-	public static IEnumerable<T> Deserialize<T>( this string value )
+	public static IEnumerable<T>? Deserialize<T>( this string? value )
 	{
-		return value
+		return value?
 			.Select( x => x - '0' )
-			.Select( x => (T)Convert.ChangeType( x, typeof(T) ) );
+			.Select( x => Enum.ToObject( typeof(T), x ) )
+			.OfType<T>();
 	}
 }
