@@ -30,7 +30,11 @@ public static class MazeDataViewExtensions
 
 		public int Height => Inner.Height;
 
-		public WallState this[int row, int col, Direction dir] => Inner[row, Width - col - 1, dir.Opposite()];
+		public WallState this[ int row, int col, Direction dir ] => Inner[row, Width - col - 1, dir switch
+		{
+			Direction.East or Direction.West => dir.Opposite(),
+			_ => dir
+		}];
 
 		public CellState this[int row, int col] => Inner[row, Width - col - 1];
 	}
@@ -41,7 +45,11 @@ public static class MazeDataViewExtensions
 
 		public int Height => Inner.Height;
 
-		public WallState this[ int row, int col, Direction dir ] => Inner[Height - row - 1, col, dir.Opposite()];
+		public WallState this[ int row, int col, Direction dir ] => Inner[Height - row - 1, col, dir switch
+		{
+			Direction.North or Direction.South => dir.Opposite(),
+			_ => dir
+		}];
 
 		public CellState this[int row, int col] => Inner[Height - row - 1, col];
 	}

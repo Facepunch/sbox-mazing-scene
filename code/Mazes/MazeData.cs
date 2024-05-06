@@ -22,7 +22,7 @@ public class MazeData : IMazeDataView
 			_width = value;
 
 			Validate();
-			Clear();
+			Clear( CellState.Default );
 			AddOuterWalls();
 		}
 	}
@@ -35,7 +35,7 @@ public class MazeData : IMazeDataView
 			_height = value;
 
 			Validate();
-			Clear();
+			Clear( CellState.Default );
 			AddOuterWalls();
 		}
 	}
@@ -97,11 +97,11 @@ public class MazeData : IMazeDataView
 		Array.Resize( ref _cells, Width * Height );
 	}
 
-	public void Clear()
+	public void Clear( CellState state )
 	{
 		Array.Clear( _vertWalls );
 		Array.Clear( _horzWalls );
-		Array.Clear( _cells );
+		Array.Fill( _cells, state );
 	}
 
 	public void AddOuterWalls()
@@ -128,7 +128,7 @@ public class MazeData : IMazeDataView
 		{
 			for ( var i = 0; i < width; ++i )
 			{
-				this[i + dstRowOffset, j + dstColOffset] = view[i, j];
+				this[j + dstRowOffset, i + dstColOffset] = view[j, i];
 			}
 		}
 
@@ -136,7 +136,7 @@ public class MazeData : IMazeDataView
 		{
 			for ( var i = 0; i < width; ++i )
 			{
-				this[i + dstRowOffset, j + dstColOffset, Direction.North] = view[i, j, Direction.North];
+				this[j + dstRowOffset, i + dstColOffset, Direction.North] = view[j, i, Direction.North];
 			}
 		}
 
@@ -144,7 +144,7 @@ public class MazeData : IMazeDataView
 		{
 			for ( var i = 0; i <= width; ++i )
 			{
-				this[i + dstRowOffset, j + dstColOffset, Direction.West] = view[i, j, Direction.West];
+				this[j + dstRowOffset, i + dstColOffset, Direction.West] = view[j, i, Direction.West];
 			}
 		}
 	}
