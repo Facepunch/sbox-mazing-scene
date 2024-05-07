@@ -164,8 +164,7 @@
           "__type": "Mazing.TestMaze",
           "__guid": "0886cc99-e2af-4965-9049-8fcf900f7e37"
         }
-      ],
-      "Children": []
+      ]
     },
     {
       "__guid": "d6a72d7c-6bbf-4427-aed4-a5c445e35a92",
@@ -254,7 +253,7 @@
   },
   "Title": "minimal",
   "Description": "",
-  "LastSaved": "2024-05-06T18:28:14.1155447\u002B01:00",
+  "LastSaved": "2024-05-07T08:30:01.8759041\u002B01:00",
   "ResourceVersion": 1,
   "__version": 1,
   "__references": []
