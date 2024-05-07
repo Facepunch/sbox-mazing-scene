@@ -52,6 +52,7 @@ public sealed class TestMaze : Component
 		var vOffset = -Vector3.Up * 192f;
 
 		var flags = GameObjectFlags.NotNetworked | GameObjectFlags.NotSaved | GameObjectFlags.Hidden;
+		var outerOffset = Vector3.Up * 64f;
 
 		for ( var j = 0; j <= View.Height; ++j )
 		{
@@ -59,11 +60,13 @@ public sealed class TestMaze : Component
 			{
 				if ( View[j, i, Direction.North] == WallState.Closed )
 				{
+					var outer = View[j - 1, i] == CellState.Empty || View[j, i] == CellState.Empty;
+
 					var wall = new GameObject
 					{
 						Name = "Wall",
 						Parent = GameObject,
-						Transform = { Position = new Vector3( j * 48f, i * 48f + 48f ) + offset + vOffset },
+						Transform = { Position = new Vector3( j * 48f, i * 48f + 48f ) + offset + vOffset + (outer ? outerOffset : 0f) },
 						Flags = flags
 					};
 
@@ -85,13 +88,15 @@ public sealed class TestMaze : Component
 			{
 				if ( View[j, i, Direction.West] == WallState.Closed )
 				{
+					var outer = View[j, i - 1] == CellState.Empty || View[j, i] == CellState.Empty;
+
 					var wall = new GameObject
 					{
 						Name = "Wall",
 						Parent = GameObject,
 						Transform =
 						{
-							Position = new Vector3( j * 48f, i * 48f ) + offset + vOffset,
+							Position = new Vector3( j * 48f, i * 48f ) + offset + vOffset + (outer ? outerOffset : 0f) ,
 							Rotation = Rotation.FromYaw( 90f )
 						},
 						Flags = flags
@@ -123,11 +128,16 @@ public sealed class TestMaze : Component
 					continue;
 				}
 
+				var outer = View[j - 1, i - 1] == CellState.Empty
+					|| View[j - 1, i] == CellState.Empty
+					|| View[j, i - 1] == CellState.Empty
+					|| View[j, i] == CellState.Empty;
+
 				var post = new GameObject
 				{
 					Name = "Post",
 					Parent = GameObject,
-					Transform = { Position = new Vector3( j * 48f, i * 48f ) + offset + vOffset },
+					Transform = { Position = new Vector3( j * 48f, i * 48f ) + offset + vOffset + (outer ? outerOffset : 0f) },
 					Flags = flags
 				};
 
@@ -168,8 +178,8 @@ public sealed class TestMaze : Component
 						Name = "Block",
 						Parent = GameObject,
 						Transform = {
-							Position = new Vector3( (j + 2) * 48f, (i + 2) * 48f ) + offset + new Vector3( 0f, 0f, 30f ),
-							LocalScale = new Vector3( 0.96f * 4f, 0.96f * 4f, 1.2f )
+							Position = new Vector3( (j + 2) * 48f, (i + 2) * 48f ) + offset + new Vector3( 0f, 0f, -68f ) + outerOffset,
+							LocalScale = new Vector3( 0.96f * 4f, 0.96f * 4f, 5.12f )
 						},
 						Flags = flags
 					};
@@ -211,8 +221,8 @@ public sealed class TestMaze : Component
 						Name = "Block",
 						Parent = GameObject,
 						Transform = {
-							Position = new Vector3( (j + l) * 48f, (i + k) * 48f ) + offset + new Vector3( 24f, 24f, 30f ),
-							LocalScale = new Vector3( 0.96f, 0.96f, 1.2f )
+							Position = new Vector3( (j + l) * 48f, (i + k) * 48f ) + offset + new Vector3( 24f, 24f, 30f - 256f ) + outerOffset,
+							LocalScale = new Vector3( 0.96f, 0.96f, 5.12f )
 						},
 						Flags = flags
 					};

@@ -37,6 +37,233 @@
           "ClearFlags": "All",
           "FieldOfView": 20,
           "IsMainCamera": true,
+          "OnComponentUpdate": {
+            "__version": 7,
+            "__guid": "9db040ce-6e7d-4919-881a-6dbef597b56a",
+            "UserData": {
+              "Title": "Follow Player",
+              "ReferencedComponentTypes": []
+            },
+            "Variables": [],
+            "Nodes": [
+              {
+                "Id": 0,
+                "Type": "input",
+                "UserData": {
+                  "Position": "480,192"
+                }
+              },
+              {
+                "Id": 2,
+                "Type": "scene.ref",
+                "Properties": {
+                  "gameobject": {
+                    "_type": "gameobject",
+                    "go": "8f297380-db7e-4a46-a345-1866bc6cf9d1"
+                  }
+                },
+                "UserData": {
+                  "Position": "176,16"
+                }
+              },
+              {
+                "Id": 3,
+                "Type": "property",
+                "ParentId": 2,
+                "Properties": {
+                  "_name": "Transform",
+                  "_type": "Sandbox.Game/Sandbox.GameObject"
+                },
+                "UserData": {
+                  "Visible": false
+                }
+              },
+              {
+                "Id": 4,
+                "Type": "property",
+                "ParentId": 3,
+                "Properties": {
+                  "_name": "Position",
+                  "_type": "Sandbox.Game/Sandbox.GameTransform"
+                },
+                "UserData": {
+                  "Labels": {
+                    "_result": "player pos"
+                  }
+                }
+              },
+              {
+                "Id": 9,
+                "Type": "property",
+                "Properties": {
+                  "_name": "Transform",
+                  "_type": "Sandbox.Game/Sandbox.GameObject"
+                },
+                "UserData": {
+                  "Position": "480,16",
+                  "Labels": {
+                    "_result": "camera transform"
+                  }
+                }
+              },
+              {
+                "Id": 10,
+                "Type": "property",
+                "ParentId": 9,
+                "Properties": {
+                  "_name": "Rotation",
+                  "_type": "Sandbox.Game/Sandbox.GameTransform"
+                },
+                "UserData": {
+                  "Visible": false
+                }
+              },
+              {
+                "Id": 11,
+                "Type": "property",
+                "ParentId": 10,
+                "Properties": {
+                  "_name": "Forward",
+                  "_type": "Sandbox.System/Rotation"
+                },
+                "UserData": {
+                  "Labels": {
+                    "_result": "camera forward"
+                  }
+                }
+              },
+              {
+                "Id": 12,
+                "Type": "op.subtract",
+                "UserData": {
+                  "Position": "480,272"
+                }
+              },
+              {
+                "Id": 13,
+                "Type": "op.multiply",
+                "UserData": {
+                  "Position": "272,320"
+                }
+              },
+              {
+                "Id": 19,
+                "Type": "property",
+                "Properties": {
+                  "_name": "z",
+                  "_type": "Sandbox.System/Vector3"
+                },
+                "UserData": {
+                  "Position": "256,224"
+                }
+              },
+              {
+                "Id": 25,
+                "Type": "property",
+                "Properties": {
+                  "_name": "Position",
+                  "_type": "Sandbox.Game/Sandbox.GameTransform"
+                },
+                "UserData": {
+                  "Position": "720,256"
+                }
+              }
+            ],
+            "Links": [
+              {
+                "SrcId": 2,
+                "SrcName": "_result",
+                "DstId": 3,
+                "DstName": "_target"
+              },
+              {
+                "SrcId": 3,
+                "SrcName": "_result",
+                "DstId": 4,
+                "DstName": "_target"
+              },
+              {
+                "SrcId": 0,
+                "SrcName": "_target",
+                "DstId": 9,
+                "DstName": "_target"
+              },
+              {
+                "SrcId": 9,
+                "SrcName": "_result",
+                "DstId": 10,
+                "DstName": "_target"
+              },
+              {
+                "SrcId": 10,
+                "SrcName": "_result",
+                "DstId": 11,
+                "DstName": "_target"
+              },
+              {
+                "SrcId": 19,
+                "SrcName": "_target",
+                "DstId": 12,
+                "DstName": "a"
+              },
+              {
+                "SrcId": 13,
+                "SrcName": "_result",
+                "DstId": 12,
+                "DstName": "b"
+              },
+              {
+                "SrcId": 11,
+                "SrcName": "_result",
+                "DstId": 13,
+                "DstName": "a"
+              },
+              {
+                "Value": {
+                  "$type": "Simple",
+                  "Type": "System.Private.CoreLib/System.Single",
+                  "Value": 1500
+                },
+                "DstId": 13,
+                "DstName": "b"
+              },
+              {
+                "SrcId": 4,
+                "SrcName": "_result",
+                "DstId": 19,
+                "DstName": "_target"
+              },
+              {
+                "Value": 64,
+                "DstId": 19,
+                "DstName": "_value"
+              },
+              {
+                "SrcId": 0,
+                "SrcName": "_signal",
+                "DstId": 25,
+                "DstName": "_signal"
+              },
+              {
+                "SrcId": 9,
+                "SrcName": "_result",
+                "DstId": 25,
+                "DstName": "_target"
+              },
+              {
+                "SrcId": 12,
+                "SrcName": "_result",
+                "DstId": 25,
+                "DstName": "_value"
+              }
+            ],
+            "Defaults": {
+              "$2.gameobject": {
+                "_type": "gameobject",
+                "go": "8f297380-db7e-4a46-a345-1866bc6cf9d1"
+              }
+            }
+          },
           "Orthographic": false,
           "OrthographicHeight": 1204,
           "Priority": 1,
@@ -104,7 +331,7 @@
           "CubeModel": "models/dev/box.vmdl",
           "FloorMaterial": "materials/floor/mazing_floor.vmat",
           "PostModel": "models/post.vmdl",
-          "Seed": 1877208395,
+          "Seed": 902385717,
           "Size": 4,
           "WallModel": "models/wall.vmdl"
         }
@@ -162,11 +389,81 @@
           "__guid": "6b9976b8-cce9-4c01-99b5-448401ddd3c7",
           "MoveInput": "0,0",
           "MoveSpeed": 120,
+          "OnComponentUpdate": {
+            "__version": 7,
+            "__guid": "01185c65-229d-4441-b78f-d082dba13c45",
+            "UserData": {
+              "Title": "Movement Test",
+              "ReferencedComponentTypes": []
+            },
+            "Variables": [],
+            "Nodes": [
+              {
+                "Id": 0,
+                "Type": "input"
+              },
+              {
+                "Id": 3,
+                "Type": "property",
+                "Properties": {
+                  "_name": "MoveInput",
+                  "_type": "package.local.mazing/Mazer"
+                },
+                "UserData": {
+                  "Position": "256,48"
+                }
+              },
+              {
+                "Id": 4,
+                "Type": "scene.ref",
+                "ParentId": 3,
+                "Properties": {
+                  "component": {
+                    "_type": "component",
+                    "component_id": "6b9976b8-cce9-4c01-99b5-448401ddd3c7",
+                    "go": "8f297380-db7e-4a46-a345-1866bc6cf9d1",
+                    "component_type": "Mazer"
+                  }
+                }
+              },
+              {
+                "Id": 5,
+                "Type": "input.analog.move",
+                "UserData": {
+                  "Position": "16,96"
+                }
+              }
+            ],
+            "Links": [
+              {
+                "SrcId": 0,
+                "SrcName": "_signal",
+                "DstId": 3,
+                "DstName": "_signal"
+              },
+              {
+                "SrcId": 4,
+                "SrcName": "_result",
+                "DstId": 3,
+                "DstName": "_target"
+              },
+              {
+                "SrcId": 5,
+                "SrcName": "_result",
+                "DstId": 3,
+                "DstName": "_value"
+              }
+            ],
+            "Defaults": {
+              "$4.component": {
+                "_type": "component",
+                "component_id": "6b9976b8-cce9-4c01-99b5-448401ddd3c7",
+                "go": "8f297380-db7e-4a46-a345-1866bc6cf9d1",
+                "component_type": "Mazer"
+              }
+            }
+          },
           "State": "Falling"
-        },
-        {
-          "__type": "Mazing.LocalMazerTest",
-          "__guid": "e200b7e0-3d4a-4361-a61f-8ad0977e4f29"
         }
       ],
       "Children": [
@@ -204,7 +501,7 @@
   },
   "Title": "minimal",
   "Description": "",
-  "LastSaved": "2024-05-07T12:46:16.3211575\u002B01:00",
+  "LastSaved": "2024-05-07T14:14:20.5367257\u002B01:00",
   "ResourceVersion": 1,
   "__version": 1,
   "__references": []
