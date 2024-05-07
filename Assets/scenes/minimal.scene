@@ -104,7 +104,7 @@
           "CubeModel": "models/dev/box.vmdl",
           "FloorMaterial": "materials/floor/mazing_floor.vmat",
           "PostModel": "models/post.vmdl",
-          "Seed": 2127054860,
+          "Seed": 1877208395,
           "Size": 4,
           "WallModel": "models/wall.vmdl"
         }
@@ -204,7 +204,7 @@
   },
   "Title": "minimal",
   "Description": "",
-  "LastSaved": "2024-05-07T12:35:50.181828\u002B01:00",
+  "LastSaved": "2024-05-07T12:46:16.3211575\u002B01:00",
   "ResourceVersion": 1,
   "__version": 1,
   "__references": []

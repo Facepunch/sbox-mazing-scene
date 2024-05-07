@@ -51,6 +51,8 @@ public sealed class TestMaze : Component
 		var offset = new Vector3( View.Height, View.Width ) * -24f;
 		var vOffset = -Vector3.Up * 192f;
 
+		var flags = GameObjectFlags.NotNetworked | GameObjectFlags.NotSaved | GameObjectFlags.Hidden;
+
 		for ( var j = 0; j <= View.Height; ++j )
 		{
 			for ( var i = 0; i < View.Width; ++i )
@@ -62,11 +64,17 @@ public sealed class TestMaze : Component
 						Name = "Wall",
 						Parent = GameObject,
 						Transform = { Position = new Vector3( j * 48f, i * 48f + 48f ) + offset + vOffset },
-						Flags = GameObjectFlags.NotNetworked | GameObjectFlags.NotSaved | GameObjectFlags.Hidden
+						Flags = flags
 					};
+
 					var renderer = wall.Components.Create<ModelRenderer>();
 
 					renderer.Model = WallModel;
+
+					var collider = wall.Components.Create<BoxCollider>();
+
+					collider.Scale = new Vector3( 8f, 56f, 256f );
+					collider.Center = new Vector3( 0f, -24f, 128f );
 				}
 			}
 		}
@@ -86,11 +94,17 @@ public sealed class TestMaze : Component
 							Position = new Vector3( j * 48f, i * 48f ) + offset + vOffset,
 							Rotation = Rotation.FromYaw( 90f )
 						},
-						Flags = GameObjectFlags.NotNetworked | GameObjectFlags.NotSaved | GameObjectFlags.Hidden
+						Flags = flags
 					};
+
 					var renderer = wall.Components.Create<ModelRenderer>();
 
 					renderer.Model = WallModel;
+
+					var collider = wall.Components.Create<BoxCollider>();
+
+					collider.Scale = new Vector3( 8f, 56f, 256f );
+					collider.Center = new Vector3( 0f, -24f, 128f );
 				}
 			}
 		}
@@ -114,7 +128,7 @@ public sealed class TestMaze : Component
 					Name = "Post",
 					Parent = GameObject,
 					Transform = { Position = new Vector3( j * 48f, i * 48f ) + offset + vOffset },
-					Flags = GameObjectFlags.NotNetworked | GameObjectFlags.NotSaved | GameObjectFlags.Hidden
+					Flags = flags
 				};
 
 				var renderer = post.Components.Create<ModelRenderer>();
@@ -157,13 +171,15 @@ public sealed class TestMaze : Component
 							Position = new Vector3( (j + 2) * 48f, (i + 2) * 48f ) + offset + new Vector3( 0f, 0f, 30f ),
 							LocalScale = new Vector3( 0.96f * 4f, 0.96f * 4f, 1.2f )
 						},
-						Flags = GameObjectFlags.NotNetworked | GameObjectFlags.NotSaved | GameObjectFlags.Hidden
+						Flags = flags
 					};
 
 					var renderer = block.Components.Create<ModelRenderer>();
 
 					renderer.Model = CubeModel;
 					renderer.Tint = Color.Black;
+
+					var collider = block.Components.Create<BoxCollider>();
 
 					continue;
 				}
@@ -177,7 +193,7 @@ public sealed class TestMaze : Component
 							Position = new Vector3( (j + 2) * 48f, (i + 2) * 48f ) + offset - Vector3.Up * 25f,
 							LocalScale = new Vector3( 0.96f * 4f, 0.96f * 4f, 1f )
 						},
-						Flags = GameObjectFlags.NotNetworked | GameObjectFlags.NotSaved | GameObjectFlags.Hidden
+						Flags = flags
 					};
 
 					var renderer = floor.Components.Create<ModelRenderer>();
@@ -198,13 +214,15 @@ public sealed class TestMaze : Component
 							Position = new Vector3( (j + l) * 48f, (i + k) * 48f ) + offset + new Vector3( 24f, 24f, 30f ),
 							LocalScale = new Vector3( 0.96f, 0.96f, 1.2f )
 						},
-						Flags = GameObjectFlags.NotNetworked | GameObjectFlags.NotSaved | GameObjectFlags.Hidden
+						Flags = flags
 					};
 
 					var renderer = block.Components.Create<ModelRenderer>();
 
 					renderer.Model = CubeModel;
 					renderer.Tint = Color.Black;
+
+					var collider = block.Components.Create<BoxCollider>();
 				}
 			}
 		}
@@ -216,7 +234,7 @@ public sealed class TestMaze : Component
 				Name = "Light",
 				Parent = GameObject,
 				Transform = { Position = pos * 48f + offset },
-				Flags = GameObjectFlags.NotNetworked | GameObjectFlags.NotSaved | GameObjectFlags.Hidden
+				Flags = flags
 			};
 
 			var l = light.Components.Create<PointLight>();
