@@ -57,18 +57,19 @@ partial class MazeGenerator
 				}
 			}
 
-			var score = row * row + col * col;
+			var dist2 = row * row + col * col;
+			var neighbors = 0;
 
 			for ( var i = 0; i < width; ++i )
 			{
 				if ( blocks.ContainsKey( (row - 1, col + i) ) )
 				{
-					score -= 1;
+					neighbors += 1;
 				}
 
 				if ( blocks.ContainsKey( (row + height, col + i) ) )
 				{
-					score -= 1;
+					neighbors += 1;
 				}
 			}
 
@@ -76,16 +77,16 @@ partial class MazeGenerator
 			{
 				if ( blocks.ContainsKey( (row + j, col - 1) ) )
 				{
-					score -= 1;
+					neighbors += 1;
 				}
 
 				if ( blocks.ContainsKey( (row + j, col + width) ) )
 				{
-					score -= 1;
+					neighbors += 1;
 				}
 			}
 
-			return score;
+			return dist2 - neighbors * neighbors;
 		}
 
 		void TryAddOpen( int row, int col )

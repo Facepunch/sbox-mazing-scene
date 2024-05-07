@@ -4,20 +4,32 @@ namespace Mazing;
 
 public sealed class TestMaze : Component
 {
-	[Property]
+	[Property, Group("Parameters")]
 	public int Seed { get; set; } = 0x12345678;
 
-	[Property]
+	[Property, Group( "Parameters" )]
 	public int Size { get; set; } = 4;
 
-	public IMazeDataView? View { get; private set; }
-
-	[Button( "Run", "casino" )]
+	[Button( "Run", "casino" ), Group( "Parameters" )]
 	public void Randomize()
 	{
 		Seed = Random.Shared.Next();
 		Generate();
 	}
+
+	[Property, Group( "Assets" )]
+	public Model WallModel { get; set; }
+
+	[Property, Group( "Assets" )]
+	public Model PostModel { get; set; }
+
+	[Property, Group( "Assets" )]
+	public Model CubeModel { get; set; }
+
+	[Property, Group( "Assets" )]
+	public Material FloorMaterial { get; set; }
+
+	public IMazeDataView? View { get; private set; }
 
 	public void Generate()
 	{
@@ -32,15 +44,12 @@ public sealed class TestMaze : Component
 
 		generator.AddAllChunkResources();
 
-		var result = generator.Generate( new MazeGeneratorParameters( Random.Shared.Next(), Size ) );
+		var result = generator.Generate( new MazeGeneratorParameters( Seed, Size ) );
 
 		View = result.View;
 
 		var offset = new Vector3( View.Height, View.Width ) * -24f;
 		var vOffset = -Vector3.Up * 192f;
-		var wallModel = Model.Load( "models/wall.vmdl" );
-		var postModel = Model.Load( "models/post.vmdl" );
-		var blockModel = Model.Load( "models/dev/box.vmdl" );
 
 		for ( var j = 0; j <= View.Height; ++j )
 		{
@@ -53,11 +62,11 @@ public sealed class TestMaze : Component
 						Name = "Wall",
 						Parent = GameObject,
 						Transform = { Position = new Vector3( j * 48f, i * 48f + 48f ) + offset + vOffset },
-						Flags = GameObjectFlags.NotNetworked | GameObjectFlags.NotSaved
+						Flags = GameObjectFlags.NotNetworked | GameObjectFlags.NotSaved | GameObjectFlags.Hidden
 					};
 					var renderer = wall.Components.Create<ModelRenderer>();
 
-					renderer.Model = wallModel;
+					renderer.Model = WallModel;
 				}
 			}
 		}
@@ -77,11 +86,11 @@ public sealed class TestMaze : Component
 							Position = new Vector3( j * 48f, i * 48f ) + offset + vOffset,
 							Rotation = Rotation.FromYaw( 90f )
 						},
-						Flags = GameObjectFlags.NotNetworked | GameObjectFlags.NotSaved
+						Flags = GameObjectFlags.NotNetworked | GameObjectFlags.NotSaved | GameObjectFlags.Hidden
 					};
 					var renderer = wall.Components.Create<ModelRenderer>();
 
-					renderer.Model = wallModel;
+					renderer.Model = WallModel;
 				}
 			}
 		}
@@ -105,21 +114,21 @@ public sealed class TestMaze : Component
 					Name = "Post",
 					Parent = GameObject,
 					Transform = { Position = new Vector3( j * 48f, i * 48f ) + offset + vOffset },
-					Flags = GameObjectFlags.NotNetworked | GameObjectFlags.NotSaved
+					Flags = GameObjectFlags.NotNetworked | GameObjectFlags.NotSaved | GameObjectFlags.Hidden
 				};
 
 				var renderer = post.Components.Create<ModelRenderer>();
 
-				renderer.Model = postModel;
+				renderer.Model = PostModel;
 			}
 		}
 
 		var empty = new List<(int Row, int Col)>();
 		var populated = new HashSet<(int Row, int Col)>();
 
-		for ( var j = -8; j <= View.Height + 4; j += 4 )
+		for ( var j = -4; j <= View.Height; j += 4 )
 		{
-			for ( var i = -8; i <= View.Width + 4; i += 4 )
+			for ( var i = -4; i <= View.Width; i += 4 )
 			{
 				var outOfBounds = i < 0 || j < 0 || i >= View.Width || j >= View.Height;
 
@@ -149,18 +158,36 @@ public sealed class TestMaze : Component
 							Position = new Vector3( (j + 2) * 48f, (i + 2) * 48f ) + offset + new Vector3( 0f, 0f, 30f ),
 							LocalScale = new Vector3( 0.96f * 4f, 0.96f * 4f, 1.2f )
 						},
-						Flags = GameObjectFlags.NotNetworked | GameObjectFlags.NotSaved
+						Flags = GameObjectFlags.NotNetworked | GameObjectFlags.NotSaved | GameObjectFlags.Hidden
 					};
 
 					var renderer = block.Components.Create<ModelRenderer>();
 
-					renderer.Model = blockModel;
+					renderer.Model = CubeModel;
 					renderer.Tint = Color.Black;
 
 					continue;
 				}
 
 				populated.Add( (j, i) );
+
+				{
+					var floor = new GameObject
+					{
+						Name = "Floor",
+						Parent = GameObject,
+						Transform = {
+							Position = new Vector3( (j + 2) * 48f, (i + 2) * 48f ) + offset - Vector3.Up * 25f,
+							LocalScale = new Vector3( 0.96f * 4f, 0.96f * 4f, 1f )
+						},
+						Flags = GameObjectFlags.NotNetworked | GameObjectFlags.NotSaved | GameObjectFlags.Hidden
+					};
+
+					var renderer = floor.Components.Create<ModelRenderer>();
+
+					renderer.Model = CubeModel;
+					renderer.MaterialOverride = FloorMaterial;
+				}
 
 				foreach ( var (l, k) in empty )
 				{
@@ -172,12 +199,12 @@ public sealed class TestMaze : Component
 							Position = new Vector3( (j + l) * 48f, (i + k) * 48f ) + offset + new Vector3( 24f, 24f, 30f ),
 							LocalScale = new Vector3( 0.96f, 0.96f, 1.2f )
 						},
-						Flags = GameObjectFlags.NotNetworked | GameObjectFlags.NotSaved
+						Flags = GameObjectFlags.NotNetworked | GameObjectFlags.NotSaved | GameObjectFlags.Hidden
 					};
 
 					var renderer = block.Components.Create<ModelRenderer>();
 
-					renderer.Model = blockModel;
+					renderer.Model = CubeModel;
 					renderer.Tint = Color.Black;
 				}
 			}
@@ -190,7 +217,7 @@ public sealed class TestMaze : Component
 				Name = "Light",
 				Parent = GameObject,
 				Transform = { Position = pos * 48f + offset },
-				Flags = GameObjectFlags.NotNetworked | GameObjectFlags.NotSaved
+				Flags = GameObjectFlags.NotNetworked | GameObjectFlags.NotSaved | GameObjectFlags.Hidden
 			};
 
 			var l = light.Components.Create<PointLight>();
