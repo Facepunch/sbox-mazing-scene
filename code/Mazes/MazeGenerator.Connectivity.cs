@@ -25,18 +25,6 @@ partial class MazeGenerator
 			return;
 		}
 
-		static (int Row, int Col) Neighbor( int row, int col, Direction dir )
-		{
-			return dir switch
-			{
-				Direction.North => (row - 1, col),
-				Direction.South => (row + 1, col),
-				Direction.West => (row, col - 1),
-				Direction.East => (row, col + 1),
-				_ => throw new ArgumentException()
-			};
-		}
-
 		var queue = new Queue<(int Row, int Col)>();
 		var walls = new List<(int Row, int Col, Direction Dir)>();
 
@@ -55,7 +43,7 @@ partial class MazeGenerator
 				{
 					var index = random.Next( walls.Count );
 					var wall = walls[index];
-					var neighbor = Neighbor( wall.Row, wall.Col, wall.Dir );
+					var neighbor = wall.Dir.GetNeighbor( wall.Row, wall.Col );
 
 					walls.RemoveAt( index );
 
@@ -76,7 +64,7 @@ partial class MazeGenerator
 
 			foreach ( var direction in directions )
 			{
-				var neighbor = Neighbor( next.Row, next.Col, direction );
+				var neighbor = direction.GetNeighbor( next.Row, next.Col );
 
 				if ( data[next.Row, next.Col, direction] == WallState.Open )
 				{

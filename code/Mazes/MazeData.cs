@@ -78,14 +78,14 @@ public class MazeData : IMazeDataView
 		AddOuterWalls();
 	}
 
-	internal MazeData( int width, int height, WallState[]? vertWalls, WallState[]? horzWalls, CellState[]? cells )
+	internal MazeData( int width, int height, WallState[]? vertWalls = null, WallState[]? horzWalls = null, CellState[]? cells = null )
 	{
 		_width = width;
 		_height = height;
 
-		_vertWalls = vertWalls;
-		_horzWalls = horzWalls;
-		_cells = cells;
+		_vertWalls = vertWalls!;
+		_horzWalls = horzWalls!;
+		_cells = cells!;
 
 		Validate();
 	}

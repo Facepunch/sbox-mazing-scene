@@ -7,6 +7,9 @@ public class LocalMazerTest : Component
 
 	protected override void OnUpdate()
 	{
-		Mazer.MoveInput = Input.AnalogMove;
+		if ( Network.IsOwner )
+		{
+			Mazer.MoveInput = Input.AnalogMove;
+		}
 	}
 }

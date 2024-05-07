@@ -1,0 +1,76 @@
+{
+  "RootObject": {
+    "__guid": "28d5cf41-7408-4697-9f85-55d95f768455",
+    "Name": "player",
+    "Enabled": true,
+    "NetworkMode": 1,
+    "NetworkInterpolation": true,
+    "Components": [
+      {
+        "__type": "Sandbox.SkinnedModelRenderer",
+        "__guid": "97126fae-b7ed-4248-85bd-20d69da05d52",
+        "BodyGroups": 341,
+        "CreateBoneObjects": false,
+        "Model": "models/citizen/citizen.vmdl",
+        "RenderType": "On",
+        "Tint": "1,1,1,1"
+      },
+      {
+        "__type": "Sandbox.Citizen.CitizenAnimationHelper",
+        "__guid": "8b322b0c-87a9-4e88-a073-12a034cb3ad9",
+        "BodyWeight": 1,
+        "EyeSource": {
+          "_type": "gameobject",
+          "go": "24dee3fc-536c-4765-bb8a-2381cb779cc8"
+        },
+        "EyesWeight": 1,
+        "HeadWeight": 1,
+        "LookAtEnabled": false,
+        "Target": {
+          "_type": "component",
+          "component_id": "97126fae-b7ed-4248-85bd-20d69da05d52",
+          "go": "28d5cf41-7408-4697-9f85-55d95f768455",
+          "component_type": "SkinnedModelRenderer"
+        }
+      },
+      {
+        "__type": "Sandbox.CharacterController",
+        "__guid": "222aaeb8-9bfc-44bd-b7cd-c1d09f06d095",
+        "Acceleration": 10,
+        "Bounciness": 0.3,
+        "GroundAngle": 45,
+        "Height": 64,
+        "IgnoreLayers": "",
+        "Radius": 12,
+        "StepHeight": 18
+      },
+      {
+        "__type": "Mazing.Mazer",
+        "__guid": "d5db0869-5d32-4fa4-83d2-a5b3b9bde139",
+        "MoveInput": "0,0",
+        "MoveSpeed": 120,
+        "State": "Falling"
+      },
+      {
+        "__type": "Mazing.LocalMazerTest",
+        "__guid": "c3cda89f-160f-4a71-a24c-d312dad07994"
+      }
+    ],
+    "Children": [
+      {
+        "__guid": "24dee3fc-536c-4765-bb8a-2381cb779cc8",
+        "Name": "Eyes",
+        "Position": "0,0,64",
+        "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkInterpolation": true
+      }
+    ]
+  },
+  "ShowInMenu": false,
+  "MenuPath": null,
+  "MenuIcon": null,
+  "ResourceVersion": 1,
+  "__version": 1,
+  "__references": []
+}

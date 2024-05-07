@@ -27,9 +27,9 @@ partial class MazeGenerator
 		foreach ( var (j, i) in lightCoords )
 		{
 			lights.Add( new MazeLight(
-				new Vector3( j * 4 + 2, i * 4 + 2, 4 ) + random.VectorInSphere(),
+				new Vector3( j * 4 + 2, i * 4 + 2, 3 ) + random.VectorInSphere(),
 				lightColors[random.Next( lightColors.Length )].WithValue( 1f + random.NextSingle() * 3f ),
-				8f )  );
+				5f )  );
 		}
 
 		return lights;
