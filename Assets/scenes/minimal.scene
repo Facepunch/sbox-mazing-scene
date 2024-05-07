@@ -45,7 +45,7 @@
           "TargetEye": "None",
           "Viewport": "0,0,1,1",
           "ZFar": 4096,
-          "ZNear": 1024
+          "ZNear": 16
         },
         {
           "__type": "Sandbox.Bloom",
@@ -104,8 +104,8 @@
           "CubeModel": "models/dev/box.vmdl",
           "FloorMaterial": "materials/floor/mazing_floor.vmat",
           "PostModel": "models/post.vmdl",
-          "Seed": 2094454958,
-          "Size": 16,
+          "Seed": 2127054860,
+          "Size": 4,
           "WallModel": "models/wall.vmdl"
         }
       ],
@@ -114,7 +114,7 @@
     {
       "__guid": "8f297380-db7e-4a46-a345-1866bc6cf9d1",
       "Name": "Player",
-      "Position": "-24,24,-0.000001302584",
+      "Position": "-24,24,512",
       "Enabled": true,
       "NetworkMode": 2,
       "NetworkInterpolation": true,
@@ -156,6 +156,17 @@
           "IgnoreLayers": "",
           "Radius": 16,
           "StepHeight": 18
+        },
+        {
+          "__type": "Mazer",
+          "__guid": "6b9976b8-cce9-4c01-99b5-448401ddd3c7",
+          "MoveInput": "0,0",
+          "MoveSpeed": 120,
+          "State": "Falling"
+        },
+        {
+          "__type": "Mazing.LocalMazerTest",
+          "__guid": "e200b7e0-3d4a-4361-a61f-8ad0977e4f29"
         }
       ],
       "Children": [
@@ -193,7 +204,7 @@
   },
   "Title": "minimal",
   "Description": "",
-  "LastSaved": "2024-05-07T12:02:12.7672309\u002B01:00",
+  "LastSaved": "2024-05-07T12:35:50.181828\u002B01:00",
   "ResourceVersion": 1,
   "__version": 1,
   "__references": []

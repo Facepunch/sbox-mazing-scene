@@ -124,7 +124,6 @@ public sealed class TestMaze : Component
 		}
 
 		var empty = new List<(int Row, int Col)>();
-		var populated = new HashSet<(int Row, int Col)>();
 
 		for ( var j = -4; j <= View.Height; j += 4 )
 		{
@@ -169,8 +168,6 @@ public sealed class TestMaze : Component
 					continue;
 				}
 
-				populated.Add( (j, i) );
-
 				{
 					var floor = new GameObject
 					{
@@ -187,6 +184,8 @@ public sealed class TestMaze : Component
 
 					renderer.Model = CubeModel;
 					renderer.MaterialOverride = FloorMaterial;
+
+					var collider = floor.Components.Create<BoxCollider>();
 				}
 
 				foreach ( var (l, k) in empty )
