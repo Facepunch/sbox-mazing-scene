@@ -162,72 +162,12 @@
       "Components": [
         {
           "__type": "Mazing.TestMaze",
-          "__guid": "0886cc99-e2af-4965-9049-8fcf900f7e37"
+          "__guid": "0886cc99-e2af-4965-9049-8fcf900f7e37",
+          "Seed": 1519672990,
+          "Size": 16
         }
-      ]
-    },
-    {
-      "__guid": "d6a72d7c-6bbf-4427-aed4-a5c445e35a92",
-      "Name": "Point Light (2)",
-      "Position": "-222.353,186.4628,130.8718",
-      "Tags": "light_point,light",
-      "Enabled": true,
-      "NetworkMode": 2,
-      "NetworkInterpolation": true,
-      "Components": [
-        {
-          "__type": "Sandbox.PointLight",
-          "__guid": "9eb611dd-ce6e-412f-b463-fab6ef83a736",
-          "Attenuation": 1,
-          "FogMode": "Enabled",
-          "FogStrength": 1,
-          "LightColor": "0.77907,1,0.46977,1",
-          "Radius": 400,
-          "Shadows": true
-        }
-      ]
-    },
-    {
-      "__guid": "fcd82a26-8c69-4375-87e2-91b88f9f2b02",
-      "Name": "Point Light (1)",
-      "Position": "15.59996,-376.4331,130.872",
-      "Tags": "light_point,light",
-      "Enabled": true,
-      "NetworkMode": 2,
-      "NetworkInterpolation": true,
-      "Components": [
-        {
-          "__type": "Sandbox.PointLight",
-          "__guid": "98a999ac-29ce-49d3-b01c-981f6e5d6465",
-          "Attenuation": 1,
-          "FogMode": "Enabled",
-          "FogStrength": 1,
-          "LightColor": "0.56698,0.46977,1,1",
-          "Radius": 400,
-          "Shadows": true
-        }
-      ]
-    },
-    {
-      "__guid": "1f14413e-86f9-4ad4-a34c-d404a8458520",
-      "Name": "Point Light",
-      "Position": "219.5171,-69.89362,130.8724",
-      "Tags": "light_point,light",
-      "Enabled": true,
-      "NetworkMode": 2,
-      "NetworkInterpolation": true,
-      "Components": [
-        {
-          "__type": "Sandbox.PointLight",
-          "__guid": "eb86aed6-1dca-488a-a039-1cebeff5d8ac",
-          "Attenuation": 1,
-          "FogMode": "Enabled",
-          "FogStrength": 1,
-          "LightColor": "0.46977,0.87628,1,1",
-          "Radius": 400,
-          "Shadows": true
-        }
-      ]
+      ],
+      "Children": []
     }
   ],
   "SceneProperties": {
@@ -253,7 +193,7 @@
   },
   "Title": "minimal",
   "Description": "",
-  "LastSaved": "2024-05-07T08:30:01.8759041\u002B01:00",
+  "LastSaved": "2024-05-07T11:17:02.7290308\u002B01:00",
   "ResourceVersion": 1,
   "__version": 1,
   "__references": []

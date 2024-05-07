@@ -20,7 +20,7 @@ partial class MazeGenerator
 		_resources.Sort( ( a, b ) => a.ResourceId - b.ResourceId );
 	}
 
-	private MazeData GenerateLayout( int size, Random random )
+	private (MazeData Data, IReadOnlyList<(int Row, int Col)> Blocks) GenerateLayout( int size, Random random )
 	{
 		var resources = _resources
 			.Select( x => (Size: (x.Data.Width / 4) * (x.Data.Height / 4), x.Data) )
@@ -57,7 +57,7 @@ partial class MazeGenerator
 				}
 			}
 
-			var score = Math.Abs( row ) + Math.Abs( col );
+			var score = row * row + col * col;
 
 			for ( var i = 0; i < width; ++i )
 			{
@@ -149,7 +149,7 @@ partial class MazeGenerator
 
 			possible.Sort( ( a, b ) => a.Score.CompareTo( b.Score ) );
 
-			var placement = possible[BiasedRandom( possible.Count, 2 )];
+			var placement = possible[BiasedRandom( possible.Count, 16 )];
 			var view = (IMazeDataView)next.Data;
 
 			if ( placement.Transpose )
@@ -215,6 +215,6 @@ partial class MazeGenerator
 			finalData.CopyFrom( view, (row - minRow) * 4, (col - minCol) * 4 );
 		}
 
-		return finalData;
+		return (finalData, blocks.Keys.Select( x => (x.Row - minRow, x.Col - minCol) ).ToArray());
 	}
 }

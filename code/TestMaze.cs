@@ -1,13 +1,24 @@
 using System;
-using Sandbox;
 
 namespace Mazing;
 
 public sealed class TestMaze : Component
 {
+	[Property]
+	public int Seed { get; set; } = 0x12345678;
+
+	[Property]
+	public int Size { get; set; } = 4;
+
 	public IMazeDataView? View { get; private set; }
 
 	[Button( "Run", "casino" )]
+	public void Randomize()
+	{
+		Seed = Random.Shared.Next();
+		Generate();
+	}
+
 	public void Generate()
 	{
 		using var _ = Scene.Push();
@@ -21,7 +32,9 @@ public sealed class TestMaze : Component
 
 		generator.AddAllChunkResources();
 
-		View = generator.Generate( new MazeGeneratorParameters( Random.Shared.Next(), 16 ) );
+		var result = generator.Generate( new MazeGeneratorParameters( Random.Shared.Next(), Size ) );
+
+		View = result.View;
 
 		var offset = new Vector3( View.Height, View.Width ) * -24f;
 		var vOffset = -Vector3.Up * 192f;
@@ -135,7 +148,8 @@ public sealed class TestMaze : Component
 						Transform = {
 							Position = new Vector3( (j + 2) * 48f, (i + 2) * 48f ) + offset + new Vector3( 0f, 0f, 30f ),
 							LocalScale = new Vector3( 0.96f * 4f, 0.96f * 4f, 1.2f )
-						}
+						},
+						Flags = GameObjectFlags.NotNetworked | GameObjectFlags.NotSaved
 					};
 
 					var renderer = block.Components.Create<ModelRenderer>();
@@ -157,7 +171,8 @@ public sealed class TestMaze : Component
 						Transform = {
 							Position = new Vector3( (j + l) * 48f, (i + k) * 48f ) + offset + new Vector3( 24f, 24f, 30f ),
 							LocalScale = new Vector3( 0.96f, 0.96f, 1.2f )
-						}
+						},
+						Flags = GameObjectFlags.NotNetworked | GameObjectFlags.NotSaved
 					};
 
 					var renderer = block.Components.Create<ModelRenderer>();
@@ -168,36 +183,28 @@ public sealed class TestMaze : Component
 			}
 		}
 
-		var mainHue = Random.Shared.NextSingle() * 360f;
-
-		var lightColors = new[]
-		{
-			new ColorHsv( mainHue, 0.5f, 4f ),
-			new ColorHsv( mainHue - 30f, 0.5f, 4f ),
-			new ColorHsv( mainHue + 30f, 0.5f, 4f )
-		};
-
-		var lightCoords = populated
-			.SelectMany( x => new[]
-			{
-				(x.Row, x.Col), (x.Row - 4, x.Col), (x.Row + 4, x.Col), (x.Row, x.Col - 4), (x.Row, x.Col + 4)
-			} )
-			.Distinct();
-
-		foreach ( var (j, i) in lightCoords )
+		foreach ( var (pos, color, radius) in result.Lights )
 		{
 			var light = new GameObject
 			{
 				Name = "Light",
 				Parent = GameObject,
-				Transform = { Position = new Vector3( (j + 2) * 48f, (i + 2) * 48f, 192f ) + offset + Vector3.Random * 48f }
+				Transform = { Position = pos * 48f + offset },
+				Flags = GameObjectFlags.NotNetworked | GameObjectFlags.NotSaved
 			};
 
 			var l = light.Components.Create<PointLight>();
 
-			l.LightColor = lightColors[Random.Shared.Next( lightColors.Length )];
-			l.Radius = 48f * 8;
+			l.LightColor = color;
+			l.Radius = radius * 48f;
 			l.Shadows = false;
 		}
+	}
+
+	protected override void OnStart()
+	{
+		base.OnStart();
+
+		Generate();
 	}
 }
