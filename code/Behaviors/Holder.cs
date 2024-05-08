@@ -25,7 +25,7 @@ public sealed class Holder : Component
 		{
 			throwable.Thrown += ( dir, range, thrower ) =>
 			{
-				Throw( dir, range + 1 );
+				Throw( dir, range == 0 ? 0 : range + 1 );
 				Enabled = false;
 			};
 
@@ -76,6 +76,11 @@ public sealed class Holder : Component
 
 	public void Throw( Direction dir, int range )
 	{
+		if ( IsProxy )
+		{
+			return;
+		}
+
 		if ( HeldItem is null )
 		{
 			return;
@@ -103,6 +108,11 @@ public sealed class Holder : Component
 
 	public bool TryPickUp( Holdable item )
 	{
+		if ( IsProxy )
+		{
+			return false;
+		}
+
 		if ( !Enabled || HeldItem == item || item.Holder is not null )
 		{
 			return false;

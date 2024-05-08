@@ -8,13 +8,15 @@ public enum MazerState
 {
 	Falling,
 	Walking,
-	Vaulting
+	Vaulting,
+	Exited
 }
 
 public sealed class Mazer : Component
 {
 	[RequireComponent] public Throwable Throwable { get; set; } = null!;
 	[RequireComponent] public MazeObject MazeObject { get; set; } = null!;
+	[RequireComponent] public Collider Trigger { get; set; } = null!;
 
 	[Property]
 	public Vector2 MoveInput { get; set; }
@@ -31,6 +33,8 @@ public sealed class Mazer : Component
 	public TimeUntil NextVault { get; set; }
 
 	public bool CanVault => NextVault > 0f;
+
+	public bool IsExiting { get; private set; }
 
 	[Property] public event Action? Vaulted;
 	[Property] public event Action<int>? VaultCooldownTick;
@@ -148,6 +152,19 @@ public sealed class Mazer : Component
 		Transform.Rotation = Rotation.Slerp( curRot, targetRot, Helpers.Ease( 0.125f ) );
 
 		CharacterController.Move();
+
+		var exit = Trigger.Touching
+			.Select( x => x.Components.Get<Exit>( FindMode.Enabled | FindMode.InParent ) )
+			.FirstOrDefault( x => x is { IsOpen: true } );
+
+		if ( exit is not null )
+		{
+			var (row, col) = exit.MazeObject.CellIndex;
+
+			Throwable.Throw( row, col, GameObject );
+
+			IsExiting = true;
+		}
 	}
 
 	private static Direction[] Directions { get; } = new[]
@@ -223,7 +240,14 @@ public sealed class Mazer : Component
 		CharacterController.Accelerate( Vector3.Up * -600f );
 		CharacterController.Move();
 
-		if ( CharacterController.IsOnGround )
+		if ( IsExiting )
+		{
+			if ( Transform.Position.z < -512f )
+			{
+				State = MazerState.Exited;
+			}
+		}
+		else if ( CharacterController.IsOnGround )
 		{
 			State = MazerState.Walking;
 		}
@@ -244,5 +268,11 @@ public sealed class Mazer : Component
 
 			State = MazerState.Falling;
 		}
+	}
+
+	public void Respawn()
+	{
+		State = MazerState.Falling;
+		IsExiting = false;
 	}
 }

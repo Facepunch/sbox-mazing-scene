@@ -1,14 +1,14 @@
 {
   "RootObject": {
-    "__guid": "3807f8d4-f958-479e-9dbd-17edd2833482",
+    "__guid": "7a88b5a2-a1f4-43f2-b244-851945a50e3a",
     "Name": "exit",
     "Enabled": true,
-    "NetworkMode": 2,
+    "NetworkMode": 1,
     "NetworkInterpolation": true,
     "Components": [
       {
         "__type": "Sandbox.SkinnedModelRenderer",
-        "__guid": "0a0e1193-8c49-43e6-a0b0-ab4c2ada366f",
+        "__guid": "8a409726-27b9-451f-ac85-0d065446e9e4",
         "AnimationGraph": "animgraphs/hatch.vanmgrph",
         "BodyGroups": 18446744073709551615,
         "CreateBoneObjects": false,
@@ -18,18 +18,47 @@
       },
       {
         "__type": "Mazing.MazeObject",
-        "__guid": "85c534d8-b4f5-42de-bfed-001262643994"
+        "__guid": "0fac7e9a-9070-4bf8-a767-154487940cd4"
       },
       {
         "__type": "Sandbox.BoxCollider",
-        "__guid": "9cc2e5f2-b7b8-4534-a464-70411bccd00f",
+        "__guid": "8663bc8a-3c97-4056-b0c2-9b45f8decff4",
         "Center": "0,0,-16",
         "IsTrigger": false,
         "Scale": "48,48,32",
         "Static": false
+      },
+      {
+        "__type": "Mazing.Exit",
+        "__guid": "96c6a3a1-e9f2-4ab4-a41f-c9d99a77f11a",
+        "IsOpen": false,
+        "Trigger": {
+          "_type": "component",
+          "component_id": "9d7909dc-4407-4e37-92d3-8bc0641f9369",
+          "go": "5e43056b-7b6f-469e-a995-c37fd6c08778",
+          "component_type": "BoxCollider"
+        }
       }
     ],
-    "Children": []
+    "Children": [
+      {
+        "__guid": "5e43056b-7b6f-469e-a995-c37fd6c08778",
+        "Name": "Trigger",
+        "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkInterpolation": true,
+        "Components": [
+          {
+            "__type": "Sandbox.BoxCollider",
+            "__guid": "9d7909dc-4407-4e37-92d3-8bc0641f9369",
+            "Center": "0,0,32",
+            "IsTrigger": true,
+            "Scale": "24,24,64",
+            "Static": false
+          }
+        ]
+      }
+    ]
   },
   "ShowInMenu": false,
   "MenuPath": null,

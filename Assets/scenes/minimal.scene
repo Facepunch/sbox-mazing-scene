@@ -66,8 +66,8 @@
                 "Type": "property",
                 "ParentId": 44,
                 "Properties": {
-                  "_name": "GameObject",
-                  "_type": "Sandbox.Game/Sandbox.Component"
+                  "_type": "Sandbox.Game/Sandbox.Component",
+                  "_name": "GameObject"
                 }
               },
               {
@@ -91,8 +91,8 @@
                 "Id": 49,
                 "Type": "var",
                 "Properties": {
-                  "_var": "target",
-                  "_kind": "Set"
+                  "_kind": "Set",
+                  "_var": "target"
                 },
                 "UserData": {
                   "Position": "-432,256"
@@ -133,8 +133,8 @@
                 "Type": "property",
                 "ParentId": 52,
                 "Properties": {
-                  "_name": "Transform",
-                  "_type": "Sandbox.Game/Sandbox.Component"
+                  "_type": "Sandbox.Game/Sandbox.Component",
+                  "_name": "Transform"
                 },
                 "UserData": {
                   "Visible": false
@@ -145,16 +145,16 @@
                 "Type": "property",
                 "ParentId": 53,
                 "Properties": {
-                  "_name": "Position",
-                  "_type": "Sandbox.Game/Sandbox.GameTransform"
+                  "_type": "Sandbox.Game/Sandbox.GameTransform",
+                  "_name": "Position"
                 }
               },
               {
                 "Id": 55,
                 "Type": "property",
                 "Properties": {
-                  "_name": "Transform",
-                  "_type": "Sandbox.Game/Sandbox.GameObject"
+                  "_type": "Sandbox.Game/Sandbox.GameObject",
+                  "_name": "Transform"
                 },
                 "UserData": {
                   "Position": "-32,-32",
@@ -168,8 +168,8 @@
                 "Type": "property",
                 "ParentId": 55,
                 "Properties": {
-                  "_name": "Rotation",
-                  "_type": "Sandbox.Game/Sandbox.GameTransform"
+                  "_type": "Sandbox.Game/Sandbox.GameTransform",
+                  "_name": "Rotation"
                 },
                 "UserData": {
                   "Visible": false
@@ -180,8 +180,8 @@
                 "Type": "property",
                 "ParentId": 56,
                 "Properties": {
-                  "_name": "Forward",
-                  "_type": "Sandbox.System/Rotation"
+                  "_type": "Sandbox.System/Rotation",
+                  "_name": "Forward"
                 },
                 "UserData": {
                   "Labels": {
@@ -207,8 +207,8 @@
                 "Id": 61,
                 "Type": "property",
                 "Properties": {
-                  "_name": "Position",
-                  "_type": "Sandbox.Game/Sandbox.GameTransform"
+                  "_type": "Sandbox.Game/Sandbox.GameTransform",
+                  "_name": "Position"
                 },
                 "UserData": {
                   "Position": "352,720"
@@ -218,8 +218,8 @@
                 "Id": 62,
                 "Type": "property",
                 "Properties": {
-                  "_name": "Scene",
-                  "_type": "Sandbox.Game/Sandbox.GameObject"
+                  "_type": "Sandbox.Game/Sandbox.GameObject",
+                  "_name": "Scene"
                 },
                 "UserData": {
                   "Position": "-672,352"
@@ -231,8 +231,8 @@
                 "Properties": {
                   "T": "package.ziks.mazing/Mazing.Mazer",
                   "_isStatic": false,
-                  "_name": "GetAll",
-                  "_type": "Sandbox.Game/Sandbox.IComponentLister"
+                  "_type": "Sandbox.Game/Sandbox.IComponentLister",
+                  "_name": "GetAll"
                 },
                 "UserData": {
                   "Position": "-464,384"
@@ -242,8 +242,8 @@
                 "Id": 68,
                 "Type": "property",
                 "Properties": {
-                  "_name": "z",
-                  "_type": "Sandbox.System/Vector3"
+                  "_type": "Sandbox.System/Vector3",
+                  "_name": "z"
                 },
                 "UserData": {
                   "Position": "-96,656"
@@ -526,8 +526,8 @@
             "prefab": "prefabs/player.prefab"
           },
           "PostModel": "models/post.vmdl",
-          "Seed": 902077580,
-          "Size": 32,
+          "Seed": 1162293918,
+          "Size": 5,
           "TileModel": "models/tile.vmdl",
           "TreasureCount": 8,
           "WallModel": "models/wall.vmdl"
@@ -572,7 +572,7 @@
   },
   "Title": "minimal",
   "Description": "",
-  "LastSaved": "2024-05-08T20:10:44.0186378\u002B01:00",
+  "LastSaved": "2024-05-08T22:44:30.0990098\u002B01:00",
   "ResourceVersion": 1,
   "__version": 1,
   "__references": []

@@ -49,6 +49,20 @@ public sealed class Throwable : Component
 			++actualRange;
 		}
 
+		ThrowInternal( row, col );
+
+		Thrown?.Invoke( dir, actualRange, thrower );
+	}
+
+	public void Throw( int row, int col, GameObject? thrower )
+	{
+		ThrowInternal( row, col );
+
+		Thrown?.Invoke( Direction.North, 0, thrower );
+	}
+
+	private void ThrowInternal( int row, int col )
+	{
 		Enabled = true;
 
 		_throwStart = Transform.Position;
@@ -62,8 +76,6 @@ public sealed class Throwable : Component
 		_throwHeight = sqrtDist * 64f;
 
 		Velocity = default;
-
-		Thrown?.Invoke( dir, actualRange, thrower );
 	}
 
 	protected override void OnUpdate()

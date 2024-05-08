@@ -54,6 +54,11 @@ partial class Maze
 			go.Flags |= GameObjectFlags.NotSaved;
 		}
 
+		if ( !Game.IsPlaying )
+		{
+			return;
+		}
+
 		var pawns = Scene.Components
 			.GetAll<Mazer>( FindMode.InChildren | FindMode.Enabled )
 			.ToArray();
@@ -63,12 +68,12 @@ partial class Maze
 		foreach ( var connection in Connection.All )
 		{
 			var spawn = PlayerSpawns[index++ % PlayerSpawns.Count];
-			var spawnPos = MazeToWorldPos( spawn.Row, spawn.Col ) + Vector3.Up * (512f + index * 64f);
+			var spawnPos = MazeToWorldPos( spawn.Row, spawn.Col ) + Vector3.Up * (1024f + index * 128f);
 
 			if ( pawns.FirstOrDefault( x => x.Network.OwnerConnection == connection ) is { } pawn )
 			{
 				pawn.Transform.Position = spawnPos;
-				pawn.State = MazerState.Falling;
+				pawn.Respawn();
 			}
 			else
 			{
