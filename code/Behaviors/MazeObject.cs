@@ -4,10 +4,10 @@ namespace Mazing;
 
 public sealed class MazeObject : Component
 {
-	private TestMaze? _maze;
+	private Maze? _maze;
 
-	public TestMaze Maze => _maze is null or { IsValid: false }
-		? _maze = Scene.Components.Get<TestMaze>( FindMode.Enabled | FindMode.InChildren )
+	public Maze Maze => _maze is null or { IsValid: false }
+		? _maze = Scene.Components.Get<Maze>( FindMode.Enabled | FindMode.InChildren )
 			?? throw new Exception( "Not in a maze!" )
 		: _maze;
 

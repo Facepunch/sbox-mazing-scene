@@ -9,6 +9,25 @@ public interface IMazeDataView
 
 	WallState this[int row, int col, Direction dir] { get; }
 	CellState this[int row, int col] { get; }
+
+	public IEnumerable<(int Row, int Col, CellState State)> Cells => Enumerable.Range( 0, Height )
+		.SelectMany( j => Enumerable.Range( 0, Width )
+			.Select( i => (Row: j, Col: i, State: this[j, i]) ) )
+		.Where( x => x.State != CellState.Empty );
+
+	public IEnumerable<(int Row, int Col)> GetCells( CellState state )
+	{
+		for ( var j = 0; j < Height; ++j )
+		{
+			for ( var i = 0; i < Width; ++i )
+			{
+				if ( this[j, i] == state )
+				{
+					yield return (j, i);
+				}
+			}
+		}
+	}
 }
 
 public static class MazeDataViewExtensions

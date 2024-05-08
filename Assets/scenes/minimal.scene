@@ -502,19 +502,25 @@
     },
     {
       "__guid": "69bed0b6-cf8c-4f54-abbe-37d38cc2c1f7",
-      "Name": "Test Maze",
+      "Name": "Maze",
       "Enabled": true,
       "NetworkMode": 2,
       "NetworkInterpolation": true,
       "Components": [
         {
-          "__type": "Mazing.TestMaze",
-          "__guid": "0886cc99-e2af-4965-9049-8fcf900f7e37",
+          "__type": "Mazing.Maze",
+          "__guid": "49dbbb1b-dc76-4f49-8dfc-a85bfda2cb01",
           "CubeModel": "models/dev/box.vmdl",
+          "EnemyCount": 4,
           "FloorMaterial": "materials/floor/mazing_floor.vmat",
+          "KeyPrefab": {
+            "_type": "gameobject",
+            "prefab": "prefabs/key.prefab"
+          },
           "PostModel": "models/post.vmdl",
-          "Seed": 2136989235,
-          "Size": 16,
+          "Seed": 1802031125,
+          "Size": 4,
+          "TreasureCount": 8,
           "WallModel": "models/wall.vmdl"
         }
       ],
@@ -536,15 +542,6 @@
           }
         }
       ]
-    },
-    {
-      "__guid": "4c884953-9592-41f8-9d7e-18f8b55126ee",
-      "Name": "key",
-      "Position": "263.1275,214.5107,-0.00007593189",
-      "Enabled": true,
-      "NetworkMode": 2,
-      "NetworkInterpolation": true,
-      "__Prefab": "prefabs/key.prefab"
     }
   ],
   "SceneProperties": {
@@ -570,7 +567,7 @@
   },
   "Title": "minimal",
   "Description": "",
-  "LastSaved": "2024-05-08T16:09:46.5032107\u002B01:00",
+  "LastSaved": "2024-05-08T17:28:57.2232544\u002B01:00",
   "ResourceVersion": 1,
   "__version": 1,
   "__references": []

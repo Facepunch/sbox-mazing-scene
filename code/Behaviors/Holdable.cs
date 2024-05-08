@@ -28,4 +28,3 @@ public sealed class Holdable : Component, Component.ITriggerListener
 		holder.TryPickUp( this );
 	}
 }
-

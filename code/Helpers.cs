@@ -21,5 +21,14 @@ public static class Helpers
 	{
 		return go.Network.IsOwner;
 	}
+
+	public static void Shuffle<T>( this IList<T> list, Random random )
+	{
+		for ( var i = 0; i < list.Count - 1; ++i )
+		{
+			var j = random.Next( i, list.Count );
+			(list[i], list[j]) = (list[j], list[i]);
+		}
+	}
 }
 
