@@ -13,6 +13,9 @@ public enum MazerState
 
 public sealed class Mazer : Component
 {
+	[RequireComponent] public Throwable Throwable { get; set; } = null!;
+	[RequireComponent] public MazeObject MazeObject { get; set; } = null!;
+
 	[Property]
 	public Vector2 MoveInput { get; set; }
 
@@ -23,129 +26,62 @@ public sealed class Mazer : Component
 	public float MoveSpeed { get; set; } = 120f;
 
 	[Property]
-	public float VaultDuration { get; set; } = 0.5f;
-
-	[Property]
 	public float VaultCooldown { get; set; } = 3f;
-
-	[Property]
-	public float VaultHeight { get; set; } = 64f;
 
 	public TimeUntil NextVault { get; set; }
 
 	public bool CanVault => NextVault > 0f;
 
-	[Property]
-	public TestMaze? Maze { get; set; }
-
 	[Property] public event Action? Vaulted;
 	[Property] public event Action<int>? VaultCooldownTick;
 	[Property] public event Action? VaultReady;
-
-	public Vector2 MazeLocalPos => Maze?.WorldToMazePos( Transform.Position ) ?? default;
-
-	public Vector2 CellLocalPos
-	{
-		get
-		{
-			var mazeLocalPos = MazeLocalPos;
-			return mazeLocalPos - new Vector2( MathF.Floor( mazeLocalPos.x ), MathF.Floor( mazeLocalPos.y ) );
-		}
-	}
-
-	public (int Row, int Col) CellIndex
-	{
-		get
-		{
-			if ( Maze is null )
-			{
-				return (0, 0);
-			}
-
-			var mazePos = Maze.WorldToMazePos( Transform.Position );
-			return ((int)MathF.Floor( mazePos.x ), (int)MathF.Floor( mazePos.y ));
-		}
-	}
+	[Property] public event Action<SceneModel.FootstepEvent> Footstep;
 
 	private Vector2 _targetLook = Direction.West.GetNormal();
 
-	private Vector3 _vaultStart;
-	private Vector3 _vaultEnd;
-	private TimeUntil _vaultEndTime;
-	private float _vaultHeight;
 	private int _lastCooldownTick;
 
 	[RequireComponent] public CharacterController CharacterController { get; set; } = null!;
 	[RequireComponent] public CitizenAnimationHelper AnimationHelper { get; set; } = null!;
 
+	protected override void OnStart()
+	{
+		AnimationHelper.Target.OnFootstepEvent += Footstep;
+	}
+
 	public bool TryVault()
 	{
-		if ( Maze is null )
-		{
-			return false;
-		}
-
 		if ( State != MazerState.Walking || NextVault > 0f )
 		{
 			return false;
 		}
 
 		var dir = _targetLook.GetDirection();
-		var (row, col) = CellIndex;
+		var (row, col) = MazeObject.CellIndex;
 
-		if ( Maze.View![row, col, dir] == WallState.Open )
+		if ( MazeObject.View[row, col, dir] == WallState.Open )
 		{
 			return false;
 		}
 
 		var target = dir.GetNeighbor( row, col );
 
-		if ( Maze.View[target.Row, target.Col] == CellState.Empty )
+		if ( MazeObject.View[target.Row, target.Col] == CellState.Empty )
 		{
 			return false;
 		}
 
 		NextVault = VaultCooldown;
 
-		VaultTo( target.Row, target.Col );
+		Throwable.Throw( dir, 1, GameObject );
 
 		Vaulted?.Invoke();
 
 		return true;
 	}
 
-	public void VaultTo( int row, int col )
-	{
-		if ( Maze is null )
-		{
-			return;
-		}
-
-		_vaultStart = Transform.Position;
-
-		_vaultEnd = Maze.MazeToWorldPos( row, col );
-
-		var dist = (_vaultEnd - _vaultStart).WithZ( 0f ).Length / 48f;
-		var sqrtDist = MathF.Sqrt( dist );
-
-		_vaultEndTime = sqrtDist * VaultDuration;
-		_vaultHeight = sqrtDist * VaultHeight;
-
-		State = MazerState.Vaulting;
-
-		CharacterController.Enabled = false;
-
-		AnimationHelper.IsGrounded = false;
-		AnimationHelper.TriggerJump();
-	}
-
 	protected override void OnUpdate()
 	{
-		if ( Maze is null or { IsValid: false } )
-		{
-			Maze = Scene.Components.Get<TestMaze>( FindMode.Enabled | FindMode.InChildren );
-		}
-
 		var cooldownTick = Math.Max( 0, (int)MathF.Ceiling( NextVault ) );
 
 		if ( _lastCooldownTick != cooldownTick )
@@ -158,6 +94,13 @@ public sealed class Mazer : Component
 			{
 				VaultReady?.Invoke();
 			}
+		}
+
+		if ( State != MazerState.Vaulting && Throwable.Enabled )
+		{
+			State = MazerState.Vaulting;
+
+			AnimationHelper.TriggerJump();
 		}
 
 		switch ( State )
@@ -214,13 +157,8 @@ public sealed class Mazer : Component
 
 	private void AlignMovementToGrid( ref Vector2 input )
 	{
-		if ( Maze?.View is not {} view )
-		{
-			return;
-		}
-
-		var (row, col) = CellIndex;
-		var cellPos = CellLocalPos;
+		var (row, col) = MazeObject.CellIndex;
+		var cellPos = MazeObject.CellLocalPos;
 		var dir = input.Normal;
 
 		Direction? bestDir = null;
@@ -231,7 +169,7 @@ public sealed class Mazer : Component
 			var norm = direction.GetNormal();
 			var dist = GetDist( cellPos, dir, new Vector2( 0.5f, 0.5f ) - norm * 0.5f, -norm );
 
-			if ( view[row, col, direction] != WallState.Open )
+			if ( MazeObject.View[row, col, direction] != WallState.Open )
 			{
 				dist += 2f;
 			}
@@ -250,7 +188,7 @@ public sealed class Mazer : Component
 
 		var right = forward.Clockwise();
 
-		var forwardTarget = view[row, col, forward] == WallState.Open ? 1f : Vector2.Dot( cellPos - 0.5f, forward.GetNormal() ) * -2f;
+		var forwardTarget = MazeObject.View[row, col, forward] == WallState.Open ? 1f : Vector2.Dot( cellPos - 0.5f, forward.GetNormal() ) * -2f;
 		var rightTargetVel = Vector2.Dot( cellPos - 0.5f, right.GetNormal() ) * -2f;
 		var rightVel = CharacterController.Velocity.Dot( right.GetNormal() ) / MoveSpeed;
 
@@ -276,27 +214,6 @@ public sealed class Mazer : Component
 		return Vector2.Dot( origin - pos, normal ) / denom;
 	}
 
-	protected override void DrawGizmos()
-	{
-		base.DrawGizmos();
-
-		if ( Maze is null )
-		{
-			return;
-		}
-
-		using var scope = Gizmo.Scope();
-
-		Gizmo.Transform = global::Transform.Zero;
-
-		var mazePos = Maze.WorldToMazePos( Transform.Position );
-		var cellPos = (Row: (int) MathF.Floor( mazePos.x ), Col: (int) MathF.Floor( mazePos.y ));
-
-		var cellRect = Maze.GetCellWorldRect( cellPos.Row, cellPos.Col );
-
-		Gizmo.Draw.LineBBox( new BBox( cellRect.Position, cellRect.Position + cellRect.Size ) );
-	}
-
 	private void OnFalling()
 	{
 		AnimationHelper.IsGrounded = false;
@@ -314,25 +231,13 @@ public sealed class Mazer : Component
 
 	private void OnVaulting()
 	{
-		var duration = _vaultEndTime.Passed + _vaultEndTime;
-
-		var x = Math.Clamp( _vaultEndTime.Fraction, 0f, 1f );
-		var y = -4f * x * x + 4f * x;
-
-		var up = Vector3.Up * _vaultHeight;
-		var along = _vaultEnd - _vaultStart;
-
-		Transform.Position = _vaultStart + along * x + up * y;
-
+		CharacterController.Enabled = false;
 		CharacterController.Velocity = Vector3.Zero;
 
-		var dt = 1f / duration;
-		var dydx = -8f * x + 4f;
-
 		AnimationHelper.IsGrounded = false;
-		AnimationHelper.WithVelocity( along * dt + up * dydx * dt );
+		AnimationHelper.WithVelocity( Throwable.Velocity );
 
-		if ( x >= 1f )
+		if ( Throwable.Active )
 		{
 			CharacterController.Enabled = true;
 			CharacterController.IsOnGround = false;

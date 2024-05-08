@@ -18,15 +18,36 @@
         "Tint": "1,1,1,1"
       },
       {
-        "__type": "Mazing.Item",
-        "__guid": "49c28d33-ab3c-4d09-8df9-044e19d5f00f"
+        "__type": "Mazing.Throwable",
+        "__guid": "9718d4f6-b85e-44f3-bf37-8e64fc45db48",
+        "ThrowDuration": 0.5,
+        "ThrowHeight": 64
+      },
+      {
+        "__type": "Mazing.MazeObject",
+        "__guid": "0368be96-3e9a-4248-bd92-a91cffc41e52"
+      },
+      {
+        "__type": "Mazing.Holdable",
+        "__guid": "79f13159-6b9a-4e5b-9229-df1d5a347dac",
+        "IsHeavy": false,
+        "PickupOnLand": true,
+        "PickupOnTouch": true
+      },
+      {
+        "__type": "Sandbox.SphereCollider",
+        "__guid": "0f8756ed-7d9c-4007-9320-3b73b056e706",
+        "Center": "0,0,32",
+        "IsTrigger": true,
+        "Radius": 16,
+        "Static": false
       }
     ],
     "Children": [
       {
         "__guid": "2daf4e7a-297e-4cfe-9cff-81e5ecdd819e",
         "Name": "Light",
-        "Position": "0,0,16",
+        "Position": "0,0,24",
         "Tags": "light_point,light",
         "Enabled": true,
         "NetworkMode": 2,
