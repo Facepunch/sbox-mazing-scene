@@ -1,0 +1,15 @@
+{
+	"UI": true,
+	"Volume": 0.200000,
+	"VolumeRandom": 0,
+	"Pitch": 1.060000,
+	"PitchRandom": 0,
+	"Decibels": 50,
+	"Sounds":
+	[
+		"sounds/player/player.recharge2.vsnd"
+	],
+	"SelectionMode": "Random",
+	"MaximumDistance": 599.313050,
+	"MinimumDistance": 29.965652
+}

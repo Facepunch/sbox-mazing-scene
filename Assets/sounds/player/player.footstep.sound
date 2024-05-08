@@ -1,0 +1,15 @@
+{
+	"UI": false,
+	"Volume": 0.500000,
+	"VolumeRandom": 0,
+	"Pitch": 1,
+	"PitchRandom": 0.100000,
+	"Decibels": 70,
+	"Sounds":
+	[
+		"sounds/player/footstep.vsnd"
+	],
+	"SelectionMode": "Random",
+	"MaximumDistance": 1143.933500,
+	"MinimumDistance": 57.196674
+}

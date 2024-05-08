@@ -1,0 +1,15 @@
+{
+	"UI": false,
+	"Volume": 1,
+	"VolumeRandom": 0,
+	"Pitch": 1,
+	"PitchRandom": 0.050000,
+	"Decibels": 40,
+	"Sounds":
+	[
+		"sounds/enemy/spike_trap_trigger.vsnd"
+	],
+	"SelectionMode": "Random",
+	"MaximumDistance": 395.080350,
+	"MinimumDistance": 19.754019
+}

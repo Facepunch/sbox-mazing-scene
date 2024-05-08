@@ -1,0 +1,55 @@
+{
+  "RootObject": {
+    "__guid": "4c884953-9592-41f8-9d7e-18f8b55126ee",
+    "Name": "key",
+    "Tags": "item,key",
+    "Enabled": true,
+    "NetworkMode": 2,
+    "NetworkInterpolation": true,
+    "Components": [
+      {
+        "__type": "Sandbox.SkinnedModelRenderer",
+        "__guid": "cb55d542-1f2c-4e5c-8e57-ba3488d79bab",
+        "AnimationGraph": "animgraphs/item.vanmgrph",
+        "BodyGroups": 1,
+        "CreateBoneObjects": false,
+        "Model": "models/item.vmdl",
+        "RenderType": "On",
+        "Tint": "1,1,1,1"
+      },
+      {
+        "__type": "Mazing.Item",
+        "__guid": "49c28d33-ab3c-4d09-8df9-044e19d5f00f"
+      }
+    ],
+    "Children": [
+      {
+        "__guid": "2daf4e7a-297e-4cfe-9cff-81e5ecdd819e",
+        "Name": "Light",
+        "Position": "0,0,16",
+        "Tags": "light_point,light",
+        "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkInterpolation": true,
+        "Components": [
+          {
+            "__type": "Sandbox.PointLight",
+            "__guid": "8453c9ba-eea0-4fe2-b2a8-202f591d892f",
+            "Attenuation": 1,
+            "FogMode": "Enabled",
+            "FogStrength": 1,
+            "LightColor": "1,0.83395,0.41395,1",
+            "Radius": 96,
+            "Shadows": true
+          }
+        ]
+      }
+    ]
+  },
+  "ShowInMenu": false,
+  "MenuPath": null,
+  "MenuIcon": null,
+  "ResourceVersion": 1,
+  "__version": 1,
+  "__references": []
+}

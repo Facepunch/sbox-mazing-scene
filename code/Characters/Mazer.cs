@@ -38,6 +38,10 @@ public sealed class Mazer : Component
 	[Property]
 	public TestMaze? Maze { get; set; }
 
+	[Property] public event Action? Vaulted;
+	[Property] public event Action<int>? VaultCooldownTick;
+	[Property] public event Action? VaultReady;
+
 	public Vector2 MazeLocalPos => Maze?.WorldToMazePos( Transform.Position ) ?? default;
 
 	public Vector2 CellLocalPos
@@ -69,6 +73,7 @@ public sealed class Mazer : Component
 	private Vector3 _vaultEnd;
 	private TimeUntil _vaultEndTime;
 	private float _vaultHeight;
+	private int _lastCooldownTick;
 
 	[RequireComponent] public CharacterController CharacterController { get; set; } = null!;
 	[RequireComponent] public CitizenAnimationHelper AnimationHelper { get; set; } = null!;
@@ -80,7 +85,7 @@ public sealed class Mazer : Component
 			return false;
 		}
 
-		if ( NextVault > 0f )
+		if ( State != MazerState.Walking || NextVault > 0f )
 		{
 			return false;
 		}
@@ -102,26 +107,29 @@ public sealed class Mazer : Component
 
 		NextVault = VaultCooldown;
 
-		Vault( dir, 1 );
+		VaultTo( target.Row, target.Col );
+
+		Vaulted?.Invoke();
+
 		return true;
 	}
 
-	public void Vault( Direction dir, int range )
+	public void VaultTo( int row, int col )
 	{
 		if ( Maze is null )
 		{
 			return;
 		}
 
-		var cellIndex = CellIndex;
-
 		_vaultStart = Transform.Position;
 
-		var endIndex = dir.GetNeighbor( cellIndex.Row, cellIndex.Col, range );
+		_vaultEnd = Maze.MazeToWorldPos( row, col );
 
-		_vaultEnd = Maze.MazeToWorldPos( endIndex.Row, endIndex.Col );
-		_vaultEndTime = MathF.Sqrt( range ) * VaultDuration;
-		_vaultHeight = MathF.Sqrt( range ) * VaultHeight;
+		var dist = (_vaultEnd - _vaultStart).WithZ( 0f ).Length / 48f;
+		var sqrtDist = MathF.Sqrt( dist );
+
+		_vaultEndTime = sqrtDist * VaultDuration;
+		_vaultHeight = sqrtDist * VaultHeight;
 
 		State = MazerState.Vaulting;
 
@@ -136,6 +144,20 @@ public sealed class Mazer : Component
 		if ( Maze is null or { IsValid: false } )
 		{
 			Maze = Scene.Components.Get<TestMaze>( FindMode.Enabled | FindMode.InChildren );
+		}
+
+		var cooldownTick = Math.Max( 0, (int)MathF.Ceiling( NextVault ) );
+
+		if ( _lastCooldownTick != cooldownTick )
+		{
+			_lastCooldownTick = cooldownTick;
+
+			VaultCooldownTick?.Invoke( cooldownTick );
+
+			if ( cooldownTick == 0 )
+			{
+				VaultReady?.Invoke();
+			}
 		}
 
 		switch ( State )

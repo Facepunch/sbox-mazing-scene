@@ -513,7 +513,7 @@
           "CubeModel": "models/dev/box.vmdl",
           "FloorMaterial": "materials/floor/mazing_floor.vmat",
           "PostModel": "models/post.vmdl",
-          "Seed": 147709984,
+          "Seed": 2136989235,
           "Size": 16,
           "WallModel": "models/wall.vmdl"
         }
@@ -536,6 +536,15 @@
           }
         }
       ]
+    },
+    {
+      "__guid": "4c884953-9592-41f8-9d7e-18f8b55126ee",
+      "Name": "key",
+      "Position": "263.1275,214.5107,-0.00007593189",
+      "Enabled": true,
+      "NetworkMode": 2,
+      "NetworkInterpolation": true,
+      "__Prefab": "prefabs/key.prefab"
     }
   ],
   "SceneProperties": {
@@ -561,7 +570,7 @@
   },
   "Title": "minimal",
   "Description": "",
-  "LastSaved": "2024-05-08T11:35:29.6742313\u002B01:00",
+  "LastSaved": "2024-05-08T14:06:30.7703406\u002B01:00",
   "ResourceVersion": 1,
   "__version": 1,
   "__references": []
