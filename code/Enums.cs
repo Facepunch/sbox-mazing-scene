@@ -42,14 +42,14 @@ public enum Direction
 
 public static class DirectionExtensions
 {
-	public static (int Row, int Col) GetNeighbor( this Direction dir, int row, int col )
+	public static (int Row, int Col) GetNeighbor( this Direction dir, int row, int col, int range = 1 )
 	{
 		return dir switch
 		{
-			Direction.North => (row - 1, col),
-			Direction.South => (row + 1, col),
-			Direction.West => (row, col - 1),
-			Direction.East => (row, col + 1),
+			Direction.North => (row - range, col),
+			Direction.South => (row + range, col),
+			Direction.West => (row, col - range),
+			Direction.East => (row, col + range),
 			_ => throw new ArgumentException()
 		};
 	}
@@ -76,6 +76,16 @@ public static class DirectionExtensions
 			Direction.West => Direction.South,
 			_ => throw new ArgumentException()
 		};
+	}
+
+	public static Direction GetDirection( this Vector2 vec )
+	{
+		if ( MathF.Abs( vec.x ) > MathF.Abs( vec.y ) )
+		{
+			return vec.x < 0f ? Direction.North : Direction.South;
+		}
+
+		return vec.y < 0f ? Direction.West : Direction.East;
 	}
 
 	public static Vector2 GetNormal( this Direction dir )

@@ -34,6 +34,11 @@ public sealed class TestMaze : Component
 		return Transform.World.PointToWorld( pos * 48f );
 	}
 
+	public Vector3 MazeToWorldPos( int row, int col )
+	{
+		return Transform.World.PointToWorld( new Vector2( row + 0.5f, col + 0.5f ) * 48f );
+	}
+
 	public Rect GetCellWorldRect( int row, int col )
 	{
 		var min = Transform.World.PointToWorld( new Vector3( row, col ) * 48f );

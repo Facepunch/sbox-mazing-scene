@@ -23,12 +23,113 @@ public sealed class Mazer : Component
 	public float MoveSpeed { get; set; } = 120f;
 
 	[Property]
+	public float VaultDuration { get; set; } = 0.5f;
+
+	[Property]
+	public float VaultCooldown { get; set; } = 3f;
+
+	[Property]
+	public float VaultHeight { get; set; } = 64f;
+
+	public TimeUntil NextVault { get; set; }
+
+	public bool CanVault => NextVault > 0f;
+
+	[Property]
 	public TestMaze? Maze { get; set; }
 
-	private Vector3 _targetDirection = new ( 1f, 0f, 0f );
+	public Vector2 MazeLocalPos => Maze?.WorldToMazePos( Transform.Position ) ?? default;
+
+	public Vector2 CellLocalPos
+	{
+		get
+		{
+			var mazeLocalPos = MazeLocalPos;
+			return mazeLocalPos - new Vector2( MathF.Floor( mazeLocalPos.x ), MathF.Floor( mazeLocalPos.y ) );
+		}
+	}
+
+	public (int Row, int Col) CellIndex
+	{
+		get
+		{
+			if ( Maze is null )
+			{
+				return (0, 0);
+			}
+
+			var mazePos = Maze.WorldToMazePos( Transform.Position );
+			return ((int)MathF.Floor( mazePos.x ), (int)MathF.Floor( mazePos.y ));
+		}
+	}
+
+	private Vector2 _targetLook = Direction.West.GetNormal();
+
+	private Vector3 _vaultStart;
+	private Vector3 _vaultEnd;
+	private TimeUntil _vaultEndTime;
+	private float _vaultHeight;
 
 	[RequireComponent] public CharacterController CharacterController { get; set; } = null!;
 	[RequireComponent] public CitizenAnimationHelper AnimationHelper { get; set; } = null!;
+
+	public bool TryVault()
+	{
+		if ( Maze is null )
+		{
+			return false;
+		}
+
+		if ( NextVault > 0f )
+		{
+			return false;
+		}
+
+		var dir = _targetLook.GetDirection();
+		var (row, col) = CellIndex;
+
+		if ( Maze.View![row, col, dir] == WallState.Open )
+		{
+			return false;
+		}
+
+		var target = dir.GetNeighbor( row, col );
+
+		if ( Maze.View[target.Row, target.Col] == CellState.Empty )
+		{
+			return false;
+		}
+
+		NextVault = VaultCooldown;
+
+		Vault( dir, 1 );
+		return true;
+	}
+
+	public void Vault( Direction dir, int range )
+	{
+		if ( Maze is null )
+		{
+			return;
+		}
+
+		var cellIndex = CellIndex;
+
+		_vaultStart = Transform.Position;
+
+		var endIndex = dir.GetNeighbor( cellIndex.Row, cellIndex.Col, range );
+
+		_vaultEnd = Maze.MazeToWorldPos( endIndex.Row, endIndex.Col );
+		_vaultEndTime = MathF.Sqrt( range ) * VaultDuration;
+		_vaultHeight = MathF.Sqrt( range ) * VaultHeight;
+
+		State = MazerState.Vaulting;
+
+		CharacterController.Enabled = false;
+
+		AnimationHelper.IsGrounded = false;
+		AnimationHelper.TriggerJump();
+	}
 
 	protected override void OnUpdate()
 	{
@@ -65,7 +166,7 @@ public sealed class Mazer : Component
 		}
 		else
 		{
-			_targetDirection = new Vector3( input.Normal, 0f );
+			_targetLook = input.Normal;
 
 			AlignMovementToGrid( ref input );
 		}
@@ -77,7 +178,7 @@ public sealed class Mazer : Component
 		AnimationHelper.WithVelocity( CharacterController.Velocity );
 
 		var curRot = Transform.Rotation;
-		var targetRot = Rotation.LookAt( _targetDirection, Vector3.Up );
+		var targetRot = Rotation.LookAt( _targetLook, Vector3.Up );
 
 		Transform.Rotation = Rotation.Slerp( curRot, targetRot, Helpers.Ease( 0.125f ) );
 
@@ -96,10 +197,8 @@ public sealed class Mazer : Component
 			return;
 		}
 
-		var mazePos = Maze.WorldToMazePos( Transform.Position );
-		var (row, col) = ((int) MathF.Floor( mazePos.x ), (int) MathF.Floor( mazePos.y ));
-
-		var cellPos = mazePos - new Vector2( row, col );
+		var (row, col) = CellIndex;
+		var cellPos = CellLocalPos;
 		var dir = input.Normal;
 
 		Direction? bestDir = null;
@@ -193,6 +292,30 @@ public sealed class Mazer : Component
 
 	private void OnVaulting()
 	{
+		var duration = _vaultEndTime.Passed + _vaultEndTime;
 
+		var x = Math.Clamp( _vaultEndTime.Fraction, 0f, 1f );
+		var y = -4f * x * x + 4f * x;
+
+		var up = Vector3.Up * _vaultHeight;
+		var along = _vaultEnd - _vaultStart;
+
+		Transform.Position = _vaultStart + along * x + up * y;
+
+		CharacterController.Velocity = Vector3.Zero;
+
+		var dt = 1f / duration;
+		var dydx = -8f * x + 4f;
+
+		AnimationHelper.IsGrounded = false;
+		AnimationHelper.WithVelocity( along * dt + up * dydx * dt );
+
+		if ( x >= 1f )
+		{
+			CharacterController.Enabled = true;
+			CharacterController.IsOnGround = false;
+
+			State = MazerState.Falling;
+		}
 	}
 }
