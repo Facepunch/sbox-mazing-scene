@@ -32,6 +32,11 @@ public sealed class Mazer : Component
 
 	protected override void OnUpdate()
 	{
+		if ( Maze is null or { IsValid: false } )
+		{
+			Maze = Scene.Components.Get<TestMaze>( FindMode.Enabled | FindMode.InChildren );
+		}
+
 		switch ( State )
 		{
 			case MazerState.Walking:
@@ -54,7 +59,16 @@ public sealed class Mazer : Component
 
 		var input = MoveInput.LengthSquared > 1f ? MoveInput.Normal : MoveInput;
 
-		UpdateTargetDirection( ref input );
+		if ( input.LengthSquared <= 0.01f )
+		{
+			input = Vector2.Zero;
+		}
+		else
+		{
+			_targetDirection = new Vector3( input.Normal, 0f );
+
+			AlignMovementToGrid( ref input );
+		}
 
 		CharacterController.Accelerate( input * MoveSpeed );
 
@@ -70,16 +84,13 @@ public sealed class Mazer : Component
 		CharacterController.Move();
 	}
 
-	private void UpdateTargetDirection( ref Vector2 input )
+	private static Direction[] Directions { get; } = new[]
 	{
-		if ( input.LengthSquared < 0.01f )
-		{
-			input = Vector2.Zero;
-			return;
-		}
+		Direction.West, Direction.North, Direction.East, Direction.South
+	};
 
-		_targetDirection = new Vector3( input.Normal, 0f );
-
+	private void AlignMovementToGrid( ref Vector2 input )
+	{
 		if ( Maze?.View is not {} view )
 		{
 			return;
@@ -91,30 +102,27 @@ public sealed class Mazer : Component
 		var cellPos = mazePos - new Vector2( row, col );
 		var dir = input.Normal;
 
-		var north = view[row, col, Direction.North] == WallState.Open ? GetDist( cellPos, dir, new Vector2( 0f, 0f ), new Vector2( 1f, 0f ) ) : float.PositiveInfinity;
-		var south = view[row, col, Direction.South] == WallState.Open ? GetDist( cellPos, dir, new Vector2( 1f, 0f ), new Vector2( -1f, 0f ) ) : float.PositiveInfinity;
-		var west = view[row, col, Direction.West] == WallState.Open ? GetDist( cellPos, dir, new Vector2( 0f, 0f ), new Vector2( 0f, 1f ) ) : float.PositiveInfinity;
-		var east = view[row, col, Direction.East] == WallState.Open ? GetDist( cellPos, dir, new Vector2( 0f, 1f ), new Vector2( 0f, -1f ) ) : float.PositiveInfinity;
+		Direction? bestDir = null;
+		var minDist = float.PositiveInfinity;
 
-		Direction forward;
+		foreach ( var direction in Directions )
+		{
+			var norm = direction.GetNormal();
+			var dist = GetDist( cellPos, dir, new Vector2( 0.5f, 0.5f ) - norm * 0.5f, -norm );
 
-		if ( north < east && north < west )
-		{
-			forward = Direction.North;
+			if ( view[row, col, direction] != WallState.Open )
+			{
+				dist += 2f;
+			}
+
+			if ( dist < minDist )
+			{
+				bestDir = direction;
+				minDist = dist;
+			}
 		}
-		else if ( south < east && south < west )
-		{
-			forward = Direction.South;
-		}
-		else if ( west < east )
-		{
-			forward = Direction.West;
-		}
-		else if ( east > west )
-		{
-			forward = Direction.East;
-		}
-		else
+
+		if ( bestDir is not { } forward )
 		{
 			return;
 		}
@@ -122,9 +130,10 @@ public sealed class Mazer : Component
 		var right = forward.Clockwise();
 
 		var forwardTarget = view[row, col, forward] == WallState.Open ? 1f : Vector2.Dot( cellPos - 0.5f, forward.GetNormal() ) * -2f;
-		var rightTarget = Vector2.Dot( cellPos - 0.5f, right.GetNormal() ) * -2f;
+		var rightTargetVel = Vector2.Dot( cellPos - 0.5f, right.GetNormal() ) * -2f;
+		var rightVel = CharacterController.Velocity.Dot( right.GetNormal() ) / MoveSpeed;
 
-		var targetInput = forward.GetNormal() * forwardTarget + right.GetNormal() * rightTarget;
+		var targetInput = forward.GetNormal() * forwardTarget + right.GetNormal() * (rightTargetVel - rightVel);
 
 		if ( targetInput.LengthSquared > 1f )
 		{

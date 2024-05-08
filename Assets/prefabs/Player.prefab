@@ -1,6 +1,6 @@
 {
   "RootObject": {
-    "__guid": "28d5cf41-7408-4697-9f85-55d95f768455",
+    "__guid": "8d58044e-2622-43f8-943b-9fefd9046345",
     "Name": "player",
     "Enabled": true,
     "NetworkMode": 1,
@@ -8,7 +8,7 @@
     "Components": [
       {
         "__type": "Sandbox.SkinnedModelRenderer",
-        "__guid": "97126fae-b7ed-4248-85bd-20d69da05d52",
+        "__guid": "3ea570ea-86c7-4687-aa1e-421d1dae7e39",
         "BodyGroups": 341,
         "CreateBoneObjects": false,
         "Model": "models/citizen/citizen.vmdl",
@@ -17,48 +17,150 @@
       },
       {
         "__type": "Sandbox.Citizen.CitizenAnimationHelper",
-        "__guid": "8b322b0c-87a9-4e88-a073-12a034cb3ad9",
+        "__guid": "5436ca3e-7497-48fa-a304-ebacacb8521f",
         "BodyWeight": 1,
         "EyeSource": {
           "_type": "gameobject",
-          "go": "24dee3fc-536c-4765-bb8a-2381cb779cc8"
+          "go": "fee66e06-6e57-4bc5-a31d-1ecf95cfc45b"
         },
         "EyesWeight": 1,
         "HeadWeight": 1,
         "LookAtEnabled": false,
         "Target": {
           "_type": "component",
-          "component_id": "97126fae-b7ed-4248-85bd-20d69da05d52",
-          "go": "28d5cf41-7408-4697-9f85-55d95f768455",
+          "component_id": "3ea570ea-86c7-4687-aa1e-421d1dae7e39",
+          "go": "8d58044e-2622-43f8-943b-9fefd9046345",
           "component_type": "SkinnedModelRenderer"
         }
       },
       {
         "__type": "Sandbox.CharacterController",
-        "__guid": "222aaeb8-9bfc-44bd-b7cd-c1d09f06d095",
+        "__guid": "e7d20206-2f6f-4be2-aa68-ab136f044205",
         "Acceleration": 10,
         "Bounciness": 0.3,
         "GroundAngle": 45,
         "Height": 64,
         "IgnoreLayers": "",
-        "Radius": 12,
+        "Radius": 6,
         "StepHeight": 18
       },
       {
         "__type": "Mazing.Mazer",
-        "__guid": "d5db0869-5d32-4fa4-83d2-a5b3b9bde139",
+        "__guid": "b2575624-b82b-4503-a10a-7520025da037",
         "MoveInput": "0,0",
         "MoveSpeed": 120,
+        "OnComponentUpdate": {
+          "__version": 7,
+          "__guid": "2edf1110-dab3-4451-8741-2fa7338f1013",
+          "UserData": {
+            "Title": "Move if owner",
+            "ReferencedComponentTypes": []
+          },
+          "Variables": [],
+          "Nodes": [
+            {
+              "Id": 0,
+              "Type": "input"
+            },
+            {
+              "Id": 1,
+              "Type": "mazing.isowner",
+              "UserData": {
+                "Position": "16,48"
+              }
+            },
+            {
+              "Id": 2,
+              "Type": "if",
+              "UserData": {
+                "Position": "256,0"
+              }
+            },
+            {
+              "Id": 7,
+              "Type": "property",
+              "Properties": {
+                "_type": "package.ziks.mazing/Mazing.Mazer",
+                "_name": "MoveInput"
+              },
+              "UserData": {
+                "Position": "528,48"
+              }
+            },
+            {
+              "Id": 8,
+              "Type": "scene.ref",
+              "ParentId": 7,
+              "Properties": {
+                "component": {
+                  "_type": "component",
+                  "component_id": "b2575624-b82b-4503-a10a-7520025da037",
+                  "go": "8d58044e-2622-43f8-943b-9fefd9046345",
+                  "component_type": "Mazer"
+                }
+              }
+            },
+            {
+              "Id": 9,
+              "Type": "input.analog.move",
+              "UserData": {
+                "Position": "272,96"
+              }
+            }
+          ],
+          "Links": [
+            {
+              "SrcId": 0,
+              "SrcName": "_target",
+              "DstId": 1,
+              "DstName": "go"
+            },
+            {
+              "SrcId": 0,
+              "SrcName": "_signal",
+              "DstId": 2,
+              "DstName": "_signal"
+            },
+            {
+              "SrcId": 1,
+              "SrcName": "_result",
+              "DstId": 2,
+              "DstName": "condition"
+            },
+            {
+              "SrcId": 2,
+              "SrcName": "true",
+              "DstId": 7,
+              "DstName": "_signal"
+            },
+            {
+              "SrcId": 8,
+              "SrcName": "_result",
+              "DstId": 7,
+              "DstName": "_target"
+            },
+            {
+              "SrcId": 9,
+              "SrcName": "_result",
+              "DstId": 7,
+              "DstName": "_value"
+            }
+          ],
+          "Defaults": {
+            "$8.component": {
+              "_type": "component",
+              "component_id": "b2575624-b82b-4503-a10a-7520025da037",
+              "go": "8d58044e-2622-43f8-943b-9fefd9046345",
+              "component_type": "Mazer"
+            }
+          }
+        },
         "State": "Falling"
-      },
-      {
-        "__type": "Mazing.LocalMazerTest",
-        "__guid": "c3cda89f-160f-4a71-a24c-d312dad07994"
       }
     ],
     "Children": [
       {
-        "__guid": "24dee3fc-536c-4765-bb8a-2381cb779cc8",
+        "__guid": "fee66e06-6e57-4bc5-a31d-1ecf95cfc45b",
         "Name": "Eyes",
         "Position": "0,0,64",
         "Enabled": true,
