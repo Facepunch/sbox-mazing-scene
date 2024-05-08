@@ -1,6 +1,6 @@
 {
   "RootObject": {
-    "__guid": "4c884953-9592-41f8-9d7e-18f8b55126ee",
+    "__guid": "b66e0e3c-61e0-455a-83da-16312a26b29b",
     "Name": "key",
     "Tags": "item,key",
     "Enabled": true,
@@ -9,34 +9,34 @@
     "Components": [
       {
         "__type": "Sandbox.SkinnedModelRenderer",
-        "__guid": "cb55d542-1f2c-4e5c-8e57-ba3488d79bab",
+        "__guid": "16f3e843-a408-4304-92e5-98d59d2a2c6b",
         "AnimationGraph": "animgraphs/item.vanmgrph",
         "BodyGroups": 1,
-        "CreateBoneObjects": false,
+        "CreateBoneObjects": true,
         "Model": "models/item.vmdl",
-        "RenderType": "On",
+        "RenderType": "Off",
         "Tint": "1,1,1,1"
       },
       {
         "__type": "Mazing.Throwable",
-        "__guid": "9718d4f6-b85e-44f3-bf37-8e64fc45db48",
+        "__guid": "0c951d0d-fbfb-4029-a525-0b0c64d322ff",
         "ThrowDuration": 0.5,
         "ThrowHeight": 64
       },
       {
         "__type": "Mazing.MazeObject",
-        "__guid": "0368be96-3e9a-4248-bd92-a91cffc41e52"
+        "__guid": "3d70bb14-dcab-4b01-bcb6-8c32279b6045"
       },
       {
         "__type": "Mazing.Holdable",
-        "__guid": "79f13159-6b9a-4e5b-9229-df1d5a347dac",
+        "__guid": "b9e80638-125b-4388-a8cf-ebb6fc6bf52c",
         "IsHeavy": false,
         "PickupOnLand": true,
         "PickupOnTouch": true
       },
       {
         "__type": "Sandbox.SphereCollider",
-        "__guid": "0f8756ed-7d9c-4007-9320-3b73b056e706",
+        "__guid": "de8e33da-c969-438f-9a69-5b0c95f8aa6a",
         "Center": "0,0,32",
         "IsTrigger": true,
         "Radius": 16,
@@ -45,25 +45,54 @@
     ],
     "Children": [
       {
-        "__guid": "2daf4e7a-297e-4cfe-9cff-81e5ecdd819e",
-        "Name": "Light",
-        "Position": "0,0,24",
-        "Tags": "light_point,light",
+        "__guid": "0da5430c-6353-4def-8797-c28f2c8d0704",
+        "Name": "Item",
+        "Position": "0.0000180792,0.00002670288,119.9999",
+        "Rotation": "0.6830127,0.1830129,0.6830126,0.1830128",
         "Enabled": true,
         "NetworkMode": 2,
         "NetworkInterpolation": true,
-        "Components": [
+        "Children": [
           {
-            "__type": "Sandbox.PointLight",
-            "__guid": "8453c9ba-eea0-4fe2-b2a8-202f591d892f",
-            "Attenuation": 1,
-            "FogMode": "Enabled",
-            "FogStrength": 1,
-            "LightColor": "1,0.83395,0.41395,1",
-            "Radius": 96,
-            "Shadows": true
+            "__guid": "282aadf4-f54c-4a09-ad16-c9f3c571d377",
+            "Name": "Item_end",
+            "Position": "-0.00002527237,5.999949,0.00002031935",
+            "Enabled": true,
+            "NetworkMode": 2,
+            "NetworkInterpolation": true
+          },
+          {
+            "__guid": "aa1940bc-5e15-47fa-b10a-b43ea9e4ce87",
+            "Name": "Light",
+            "Position": "0,0,0.000001947943",
+            "Rotation": "-0.6830127,-0.1830129,-0.6830126,0.1830128",
+            "Tags": "light_point,light",
+            "Enabled": true,
+            "NetworkMode": 2,
+            "NetworkInterpolation": true,
+            "Components": [
+              {
+                "__type": "Sandbox.PointLight",
+                "__guid": "0de4801a-92db-4b85-85ae-df73d10e5357",
+                "Attenuation": 1,
+                "FogMode": "Enabled",
+                "FogStrength": 1,
+                "LightColor": "2,1.66791,0.8279,1",
+                "Radius": 96,
+                "Shadows": true
+              }
+            ]
           }
         ]
+      },
+      {
+        "__guid": "d2d74f48-bab4-4ca3-941b-1914a81b228d",
+        "Name": "Root",
+        "Position": "0.00001130809,0.00001703013,95.99996",
+        "Rotation": "0.4999999,0.4999999,0.4999999,0.5000003",
+        "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkInterpolation": true
       }
     ]
   },

@@ -52,6 +52,8 @@ public sealed partial class Maze : Component
 	{
 		using var _ = Scene.Push();
 
+		DestroySpawnedObjects();
+
 		foreach ( var child in GameObject.Children )
 		{
 			child.Destroy();
@@ -66,6 +68,7 @@ public sealed partial class Maze : Component
 		View = result.View;
 
 		UpdateGeometry( result );
+
 		SpawnObjects();
 	}
 

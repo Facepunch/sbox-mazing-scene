@@ -1,0 +1,40 @@
+{
+  "RootObject": {
+    "__guid": "3807f8d4-f958-479e-9dbd-17edd2833482",
+    "Name": "exit",
+    "Enabled": true,
+    "NetworkMode": 2,
+    "NetworkInterpolation": true,
+    "Components": [
+      {
+        "__type": "Sandbox.SkinnedModelRenderer",
+        "__guid": "0a0e1193-8c49-43e6-a0b0-ab4c2ada366f",
+        "AnimationGraph": "animgraphs/hatch.vanmgrph",
+        "BodyGroups": 18446744073709551615,
+        "CreateBoneObjects": false,
+        "Model": "models/hatch.vmdl",
+        "RenderType": "On",
+        "Tint": "1,1,1,1"
+      },
+      {
+        "__type": "Mazing.MazeObject",
+        "__guid": "85c534d8-b4f5-42de-bfed-001262643994"
+      },
+      {
+        "__type": "Sandbox.BoxCollider",
+        "__guid": "9cc2e5f2-b7b8-4534-a464-70411bccd00f",
+        "Center": "0,0,-16",
+        "IsTrigger": false,
+        "Scale": "48,48,32",
+        "Static": false
+      }
+    ],
+    "Children": []
+  },
+  "ShowInMenu": false,
+  "MenuPath": null,
+  "MenuIcon": null,
+  "ResourceVersion": 1,
+  "__version": 1,
+  "__references": []
+}

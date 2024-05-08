@@ -5,6 +5,7 @@ partial class Maze
 	[Property, Group( "Assets" )] public Model WallModel { get; set; } = null!;
 	[Property, Group( "Assets" )] public Model PostModel { get; set; } = null!;
 	[Property, Group( "Assets" )] public Model CubeModel { get; set; } = null!;
+	[Property, Group( "Assets" )] public Model TileModel { get; set; } = null!;
 	[Property, Group( "Assets" )] public Material FloorMaterial { get; set; } = null!;
 
 	private void UpdateGeometry( GeneratedMaze result )
@@ -39,6 +40,7 @@ partial class Maze
 
 					collider.Scale = new Vector3( 8f, 56f, 256f );
 					collider.Center = new Vector3( 0f, -24f, 128f );
+					collider.Static = true;
 				}
 			}
 		}
@@ -71,6 +73,7 @@ partial class Maze
 
 					collider.Scale = new Vector3( 8f, 56f, 256f );
 					collider.Center = new Vector3( 0f, -24f, 128f );
+					collider.Static = true;
 				}
 			}
 		}
@@ -109,6 +112,7 @@ partial class Maze
 		}
 
 		var empty = new List<(int Row, int Col)>();
+		var tiles = new List<(int Row, int Col)>();
 
 		for ( var j = -4; j <= View.Height; j += 4 )
 		{
@@ -116,19 +120,77 @@ partial class Maze
 			{
 				var outOfBounds = i < 0 || j < 0 || i >= View.Width || j >= View.Height;
 
+				tiles.Clear();
+				empty.Clear();
+
 				if ( !outOfBounds )
 				{
-					empty.Clear();
-
 					for ( var l = 0; l < 4; ++l )
 					{
 						for ( var k = 0; k < 4; ++k )
 						{
-							if ( View[j + l, i + k] == CellState.Empty )
+							switch (View[j + l, i + k] )
 							{
-								empty.Add( (l, k) );
+								case CellState.Empty:
+									empty.Add( (l, k) );
+									break;
+
+								case CellState.Exit:
+									break;
+
+								default:
+									tiles.Add( (l, k) );
+									break;
 							}
 						}
+					}
+				}
+
+				if ( tiles.Count == 16 )
+				{
+					var floor = new GameObject
+					{
+						Name = "Floor",
+						Parent = GameObject,
+						Transform = {
+							LocalPosition = new Vector3( (j + 2) * 48f, (i + 2) * 48f ) - Vector3.Up * 25f,
+							LocalScale = new Vector3( 0.96f * 4f, 0.96f * 4f, 1f )
+						},
+						Flags = flags
+					};
+
+					var renderer = floor.Components.Create<ModelRenderer>();
+
+					renderer.Model = CubeModel;
+					renderer.MaterialOverride = FloorMaterial;
+
+					var collider = floor.Components.Create<BoxCollider>();
+
+					collider.Static = true;
+				}
+				else
+				{
+					foreach ( var (l, k) in tiles )
+					{
+						var floor = new GameObject
+						{
+							Name = "Floor",
+							Parent = GameObject,
+							Transform = {
+								LocalPosition = new Vector3( (j + l + 0.5f) * 48f, (i + k + 0.5f) * 48f )
+							},
+							Flags = flags
+						};
+
+						var renderer = floor.Components.Create<ModelRenderer>();
+
+						renderer.Model = TileModel;
+
+						var collider = floor.Components.Create<BoxCollider>();
+
+						collider.Scale = new Vector3( 48f, 48f, 32f );
+						collider.Center = new Vector3( 0f, 0f, -16f );
+						collider.Static = true;
 					}
 				}
 
@@ -152,48 +214,32 @@ partial class Maze
 
 					var collider = block.Components.Create<BoxCollider>();
 
-					continue;
+					collider.Static = true;
 				}
-
+				else
 				{
-					var floor = new GameObject
+					foreach ( var (l, k) in empty )
 					{
-						Name = "Floor",
-						Parent = GameObject,
-						Transform = {
-							LocalPosition = new Vector3( (j + 2) * 48f, (i + 2) * 48f ) - Vector3.Up * 25f,
-							LocalScale = new Vector3( 0.96f * 4f, 0.96f * 4f, 1f )
-						},
-						Flags = flags
-					};
+						var block = new GameObject
+						{
+							Name = "Block",
+							Parent = GameObject,
+							Transform = {
+								LocalPosition = new Vector3( (j + l) * 48f, (i + k) * 48f ) + vOffset + new Vector3( 24f, 24f, 124f ) + outerOffset,
+								LocalScale = new Vector3( 0.96f, 0.96f, 5.12f )
+							},
+							Flags = flags
+						};
 
-					var renderer = floor.Components.Create<ModelRenderer>();
+						var renderer = block.Components.Create<ModelRenderer>();
 
-					renderer.Model = CubeModel;
-					renderer.MaterialOverride = FloorMaterial;
+						renderer.Model = CubeModel;
+						renderer.Tint = Color.Black;
 
-					var collider = floor.Components.Create<BoxCollider>();
-				}
+						var collider = block.Components.Create<BoxCollider>();
 
-				foreach ( var (l, k) in empty )
-				{
-					var block = new GameObject
-					{
-						Name = "Block",
-						Parent = GameObject,
-						Transform = {
-							LocalPosition = new Vector3( (j + l) * 48f, (i + k) * 48f ) + vOffset + new Vector3( 24f, 24f, 124f ) + outerOffset,
-							LocalScale = new Vector3( 0.96f, 0.96f, 5.12f )
-						},
-						Flags = flags
-					};
-
-					var renderer = block.Components.Create<ModelRenderer>();
-
-					renderer.Model = CubeModel;
-					renderer.Tint = Color.Black;
-
-					var collider = block.Components.Create<BoxCollider>();
+						collider.Static = true;
+					}
 				}
 			}
 		}

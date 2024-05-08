@@ -28,11 +28,6 @@ public sealed class MazeObject : Component
 	{
 		get
 		{
-			if ( Maze is null )
-			{
-				return (0, 0);
-			}
-
 			var mazePos = Maze.WorldToMazePos( Transform.Position );
 			return ((int)MathF.Floor( mazePos.x ), (int)MathF.Floor( mazePos.y ));
 		}
