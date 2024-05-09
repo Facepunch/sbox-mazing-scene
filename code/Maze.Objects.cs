@@ -80,23 +80,19 @@ partial class Maze
 			var spawn = PlayerSpawns[index++ % PlayerSpawns.Count];
 			var spawnPos = MazeToWorldPos( spawn.Row, spawn.Col ) + Vector3.Up * (1024f + index * 128f);
 
-			if ( pawns.FirstOrDefault( x => x.Network.OwnerConnection == connection ) is { } pawn )
-			{
-				pawn.Respawn( spawnPos );
-			}
-			else
-			{
-				SpawnPlayer( connection, spawnPos );
-			}
+			var pawn = pawns.FirstOrDefault( x => x.Network.OwnerConnection == connection )
+				?? SpawnPlayer( connection, spawnPos );
+
+			pawn?.Respawn( spawnPos );
 		}
 	}
 
-	public void SpawnPlayer( Connection connection, Vector3? pos = null )
+	public Player? SpawnPlayer( Connection connection, Vector3? pos = null )
 	{
 		if ( PlayerSpawns.Count == 0 )
 		{
 			// No maze yet!
-			return;
+			return null;
 		}
 
 		pos ??= MazeToWorldPos( PlayerSpawns[0].Row, PlayerSpawns[0].Col ) + Vector3.Up * 512f;
@@ -106,6 +102,8 @@ partial class Maze
 
 		// Spawn it on the network, assign connection as the owner
 		player.NetworkSpawn( connection );
+
+		return player.Components.Get<Player>();
 	}
 }
 

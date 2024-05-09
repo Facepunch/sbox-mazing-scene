@@ -5,6 +5,7 @@ namespace Mazing;
 public sealed class Player : Component
 {
 	[RequireComponent] public Mazer Mazer { get; set; } = null!;
+	[RequireComponent] public SkinnedModelRenderer ModelRenderer { get; set; } = null!;
 
 	[Property, Sync]
 	public bool IsExiting { get; set; }
@@ -15,6 +16,14 @@ public sealed class Player : Component
 	[Property] public event Action? Exiting;
 
 	private bool _wasExiting;
+
+	[Authority]
+	public void UpdateClothing()
+	{
+		var clothing = ClothingContainer.CreateFromLocalUser();
+
+		clothing.Apply( ModelRenderer );
+	}
 
 	protected override void OnUpdate()
 	{
@@ -59,5 +68,7 @@ public sealed class Player : Component
 
 		IsExiting = false;
 		HasExited = false;
+
+		UpdateClothing();
 	}
 }
