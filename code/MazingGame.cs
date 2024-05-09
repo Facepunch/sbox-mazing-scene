@@ -20,7 +20,19 @@ public class MazingGame : Component, Component.INetworkListener
 	public TimeSince StateStart { get; set; }
 
 	[Property]
-	public int FirstMazeSize { get; set; } = 4;
+	public int InitialMazeSize { get; set; } = 4;
+
+	[Property]
+	public int InitialEnemyCount { get; set; } = 2;
+
+	[Property]
+	public int MazeSizeIncrement { get; set; } = 1;
+
+	[Property]
+	public int EnemyCountIncrement { get; set; } = 1;
+
+	[Property, Sync]
+	public int Level { get; set; } = 0;
 
 	[Property]
 	public event Action? LevelCompleted;
@@ -108,14 +120,12 @@ public class MazingGame : Component, Component.INetworkListener
 	{
 		if ( StateStart > 1f )
 		{
-			if ( Maze.IsLobby )
-			{
-				Maze.NextLevel( FirstMazeSize, Random.Shared.Next() );
-			}
-			else
-			{
-				Maze.NextLevel( Maze.Size + 1, Random.Shared.Next() );
-			}
+			Level += 1;
+
+			Maze.NextLevel( Level,
+				InitialMazeSize + (Level - 1) * MazeSizeIncrement,
+				InitialEnemyCount + (Level - 1) * EnemyCountIncrement,
+				Random.Shared.Next() );
 
 			State = GameState.StartingLevel;
 			StateStart = 0f;

@@ -1,0 +1,291 @@
+{
+  "RootObject": {
+    "__guid": "8109af8a-5706-46bf-948c-9fdc7fb4a562",
+    "Flags": 0,
+    "Name": "wanderer",
+    "Enabled": true,
+    "NetworkMode": 1,
+    "NetworkInterpolation": true,
+    "Components": [
+      {
+        "__type": "Sandbox.SkinnedModelRenderer",
+        "__guid": "06b5c16d-2b82-41fd-a703-1e7ffcc16f91",
+        "BodyGroups": 341,
+        "CreateBoneObjects": false,
+        "MaterialGroup": "default",
+        "Model": "models/citizen/citizen.vmdl",
+        "RenderType": "On",
+        "Tint": "1,1,1,1"
+      },
+      {
+        "__type": "Sandbox.Citizen.CitizenAnimationHelper",
+        "__guid": "9fbcfedb-55d3-447a-ac2f-d89964ed93cc",
+        "BodyWeight": 1,
+        "EyeSource": {
+          "_type": "gameobject",
+          "go": "7f73865f-a365-4556-8fc6-dda28592f597"
+        },
+        "EyesWeight": 1,
+        "HeadWeight": 1,
+        "LookAtEnabled": false,
+        "Target": {
+          "_type": "component",
+          "component_id": "06b5c16d-2b82-41fd-a703-1e7ffcc16f91",
+          "go": "8109af8a-5706-46bf-948c-9fdc7fb4a562",
+          "component_type": "SkinnedModelRenderer"
+        }
+      },
+      {
+        "__type": "Mazing.Mazer",
+        "__guid": "33540942-684f-40a4-8103-220a88a47b08",
+        "Footstep": {
+          "__version": 7,
+          "__guid": "cdae7337-975c-43a4-bc4e-0c7304ea56e8",
+          "UserData": {
+            "Title": "Footstep",
+            "ReferencedComponentTypes": []
+          },
+          "Variables": [],
+          "Nodes": [
+            {
+              "Id": 1,
+              "Type": "input",
+              "UserData": {
+                "Position": "96,192"
+              }
+            },
+            {
+              "Id": 2,
+              "Type": "resource.ref",
+              "Properties": {
+                "T": "Sandbox.Engine/Sandbox.SoundEvent",
+                "value": "sounds/player/player.footstep.sound"
+              },
+              "UserData": {
+                "Position": "64,368"
+              }
+            },
+            {
+              "Id": 3,
+              "Type": "sound.playat",
+              "UserData": {
+                "Position": "432,192"
+              }
+            },
+            {
+              "Id": 4,
+              "Type": "property",
+              "ParentId": 1,
+              "Properties": {
+                "_name": "Transform",
+                "_type": {
+                  "$type": "Nested",
+                  "DeclaringType": "Sandbox.Engine/Sandbox.SceneModel",
+                  "Name": "FootstepEvent"
+                }
+              },
+              "UserData": {
+                "Visible": false
+              }
+            },
+            {
+              "Id": 5,
+              "Type": "property",
+              "ParentId": 4,
+              "Properties": {
+                "_name": "Position",
+                "_type": "Sandbox.System/Transform"
+              },
+              "UserData": {
+                "Labels": {
+                  "_result": "pos"
+                }
+              }
+            },
+            {
+              "Id": 6,
+              "Type": "property",
+              "ParentId": 1,
+              "Properties": {
+                "_name": "Volume",
+                "_type": {
+                  "$type": "Nested",
+                  "DeclaringType": "Sandbox.Engine/Sandbox.SceneModel",
+                  "Name": "FootstepEvent"
+                }
+              },
+              "UserData": {
+                "Labels": {
+                  "_result": "volume"
+                }
+              }
+            },
+            {
+              "Id": 7,
+              "Type": "property",
+              "Properties": {
+                "_name": "Volume",
+                "_type": "Sandbox.Engine/Sandbox.SoundHandle"
+              },
+              "UserData": {
+                "Position": "720,192"
+              }
+            },
+            {
+              "Id": 8,
+              "Type": "op.multiply",
+              "UserData": {
+                "Position": "496,304"
+              }
+            }
+          ],
+          "Links": [
+            {
+              "SrcId": 1,
+              "SrcName": "_signal",
+              "DstId": 3,
+              "DstName": "_signal"
+            },
+            {
+              "SrcId": 5,
+              "SrcName": "_result",
+              "DstId": 3,
+              "DstName": "position"
+            },
+            {
+              "SrcId": 2,
+              "SrcName": "_result",
+              "DstId": 3,
+              "DstName": "soundEvent"
+            },
+            {
+              "SrcId": 1,
+              "SrcName": "obj",
+              "DstId": 4,
+              "DstName": "_target"
+            },
+            {
+              "SrcId": 4,
+              "SrcName": "_result",
+              "DstId": 5,
+              "DstName": "_target"
+            },
+            {
+              "SrcId": 1,
+              "SrcName": "obj",
+              "DstId": 6,
+              "DstName": "_target"
+            },
+            {
+              "SrcId": 3,
+              "SrcName": "_signal",
+              "DstId": 7,
+              "DstName": "_signal"
+            },
+            {
+              "SrcId": 3,
+              "SrcName": "_result",
+              "DstId": 7,
+              "DstName": "_target"
+            },
+            {
+              "SrcId": 8,
+              "SrcName": "_result",
+              "DstId": 7,
+              "DstName": "_value"
+            },
+            {
+              "SrcId": 6,
+              "SrcName": "_result",
+              "DstId": 8,
+              "DstName": "a"
+            },
+            {
+              "Value": {
+                "$type": "Simple",
+                "Type": "System.Private.CoreLib/System.Single",
+                "Value": 0.125
+              },
+              "DstId": 8,
+              "DstName": "b"
+            }
+          ]
+        },
+        "MoveInput": "0,0",
+        "MoveSpeed": 60,
+        "NextVault": {
+          "Relative": -3889.965,
+          "Passed": 3889.965,
+          "Fraction": 1
+        },
+        "State": "Walking",
+        "VaultCooldown": 3
+      },
+      {
+        "__type": "Mazing.MazeObject",
+        "__guid": "1fd37e57-89bf-48a5-addd-97f644cd06ba"
+      },
+      {
+        "__type": "Mazing.Throwable",
+        "__guid": "4baa4ffe-2479-4b5f-9610-4d88f34071ab",
+        "ThrowDuration": 0.5,
+        "ThrowHeight": 64
+      },
+      {
+        "__type": "Mazing.Wander",
+        "__guid": "1275d393-afed-41f3-aafb-e5c9c93f4593"
+      },
+      {
+        "__type": "Sandbox.CapsuleCollider",
+        "__guid": "a39cfd21-1411-4b86-9533-83242f7fae3f",
+        "End": "0,0,64",
+        "IsTrigger": true,
+        "Radius": 8,
+        "Start": "0,0,8",
+        "Static": false
+      },
+      {
+        "__type": "Sandbox.CharacterController",
+        "__guid": "4dd53904-7e78-4669-b69a-f7edd2cd9c1c",
+        "Acceleration": 10,
+        "Bounciness": 0.3,
+        "GroundAngle": 45,
+        "Height": 64,
+        "IgnoreLayers": "",
+        "Radius": 16,
+        "StepHeight": 18
+      },
+      {
+        "__type": "Mazing.ClothingSpawner",
+        "__guid": "9d381d67-6945-4309-ad55-92545a8133e8",
+        "Clothing": [
+          "models/citizen_clothes/full_outfit/medieval_armour/medieval_armour.clothing",
+          "models/citizen_clothes/hat/bucket_helmet/models/bucket_helmet.clothing"
+        ]
+      },
+      {
+        "__type": "Mazing.Enemy",
+        "__guid": "80d0e755-ef3e-443f-85c2-cfa093fe1ec4",
+        "Difficulty": 1,
+        "MinLevel": 0
+      }
+    ],
+    "Children": [
+      {
+        "__guid": "7f73865f-a365-4556-8fc6-dda28592f597",
+        "Flags": 0,
+        "Name": "Eyes",
+        "Position": "0,0,64",
+        "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkInterpolation": true
+      }
+    ]
+  },
+  "ShowInMenu": false,
+  "MenuPath": null,
+  "MenuIcon": null,
+  "ResourceVersion": 1,
+  "__version": 1,
+  "__references": []
+}

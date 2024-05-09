@@ -4,6 +4,11 @@ namespace Mazing;
 
 public static class Helpers
 {
+	public static IReadOnlyList<Direction> Directions { get; } = new[]
+	{
+		Direction.West, Direction.North, Direction.East, Direction.South
+	};
+
 	public static float Ease( float frac )
 	{
 		return Ease( frac, Time.Delta );

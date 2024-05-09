@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections;
+using System.Text.Json;
+using static Sandbox.PhysicsGroupDescription.BodyPart;
 
 namespace Mazing;
 
@@ -6,7 +9,7 @@ partial class Maze
 {
 	[Property, Group( "Prefabs" )] public GameObject KeyPrefab { get; set; } = null!;
 	[Property, Group( "Prefabs" )] public GameObject ExitPrefab { get; set; } = null!;
-	[Property, Group( "Prefabs" )] public GameObject PlayerPrefab { get; set; }
+	[Property, Group( "Prefabs" )] public GameObject PlayerPrefab { get; set; } = null!;
 
 
 	private readonly List<(int Row, int Col)> _playerSpawns = new ();
@@ -24,6 +27,17 @@ partial class Maze
 		_spawnedObjects.Clear();
 	}
 
+	private record EnemyInfo( int Difficulty, int MinLevel )
+	{
+		public static EnemyInfo? FromPrefab( PrefabFile prefab )
+		{
+			var component = prefab.RootObject?["Components"]?.AsArray()
+				.FirstOrDefault(x => x?["__type"]?.GetValue<string>() == "Mazing.Enemy" );
+
+			return component?.Deserialize<EnemyInfo>();
+		}
+	}
+
 	private void SpawnObjects()
 	{
 		if ( Network.IsProxy )
@@ -33,6 +47,61 @@ partial class Maze
 
 		_playerSpawns.Clear();
 		_spawnedObjects.Clear();
+
+		var random = new Random( Seed );
+
+		var enemyTypes = ResourceLibrary.GetAll<PrefabFile>()
+			.Select( x => (Info: EnemyInfo.FromPrefab( x )!, Prefab: x) )
+			.Where( x => x.Info != null! )
+			.ToArray();
+
+		var requiredEnemyTypes = enemyTypes
+			.Where( x => x.Info.MinLevel == Level )
+			.ToArray();
+
+		requiredEnemyTypes.Shuffle( random );
+
+		var spareEnemyTypes = enemyTypes
+			.Where( x => x.Info.MinLevel < Level )
+			.ToArray();
+
+		spareEnemyTypes.Shuffle( random );
+
+		var minEnemyTypeCount = Math.Max( requiredEnemyTypes.Length, random.NextSingle() < 0.25f ? 1 : 2 );
+		var enemyTypeCount = Math.Min( random.Next( minEnemyTypeCount, 4 ),
+			requiredEnemyTypes.Length + spareEnemyTypes.Length );
+
+		var enemyTypeQueue = new Queue<(EnemyInfo Info, PrefabFile Prefab)>(
+			requiredEnemyTypes
+			.Concat( spareEnemyTypes )
+			.Take( enemyTypeCount ) );
+
+		var enemyPoints = EnemyCount;
+
+		PrefabFile? GetEnemyPrefab()
+		{
+			if ( enemyPoints <= 0 )
+			{
+				return null;
+			}
+
+			while ( enemyTypeQueue.Count > 0 )
+			{
+				var next = enemyTypeQueue.Dequeue();
+
+				if ( next.Info.Difficulty > enemyPoints )
+				{
+					continue;
+				}
+
+				enemyPoints -= next.Info.Difficulty;
+
+				enemyTypeQueue.Enqueue( next );
+				return next.Prefab;
+			}
+
+			return null;
+		}
 
 		foreach ( var (row, col, state) in View!.Cells )
 		{
@@ -44,6 +113,14 @@ partial class Maze
 
 				case CellState.Exit:
 					_spawnedObjects.Add( ExitPrefab.Clone( MazeToWorldPos( row, col ) ) );
+					break;
+
+				case CellState.Enemy:
+					if ( GetEnemyPrefab() is { } prefab )
+					{
+						var scene = SceneUtility.GetPrefabScene( prefab );
+						_spawnedObjects.Add( scene.Clone( MazeToWorldPos( row, col ) ) );
+					}
 					break;
 
 				case CellState.Player:

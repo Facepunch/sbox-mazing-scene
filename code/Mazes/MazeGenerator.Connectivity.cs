@@ -28,8 +28,6 @@ partial class BaseMazeGenerator
 		var queue = new Queue<(int Row, int Col)>();
 		var walls = new List<(int Row, int Col, Direction Dir)>();
 
-		var directions = new[] { Direction.West, Direction.North, Direction.East, Direction.South };
-
 		var first = unvisited.First();
 
 		unvisited.Remove( first );
@@ -62,7 +60,7 @@ partial class BaseMazeGenerator
 
 			var next = queue.Dequeue();
 
-			foreach ( var direction in directions )
+			foreach ( var direction in Helpers.Directions )
 			{
 				var neighbor = direction.GetNeighbor( next.Row, next.Col );
 

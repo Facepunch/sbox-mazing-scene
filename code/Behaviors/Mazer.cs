@@ -13,7 +13,6 @@ public enum MazerState
 
 public sealed class Mazer : Component
 {
-	[RequireComponent] public Holdable Holdable { get; set; } = null!;
 	[RequireComponent] public Throwable Throwable { get; set; } = null!;
 	[RequireComponent] public MazeObject MazeObject { get; set; } = null!;
 	[RequireComponent] public Collider Trigger { get; set; } = null!;
@@ -36,6 +35,8 @@ public sealed class Mazer : Component
 	public TimeUntil NextVault { get; set; }
 
 	public bool CanVault => NextVault > 0f;
+
+	public Direction Direction => _targetLook.GetDirection();
 
 	[Property] public event Action? Vaulted;
 	[Property] public event Action<int>? VaultCooldownTick;
@@ -156,19 +157,12 @@ public sealed class Mazer : Component
 			return;
 		}
 
-		Holdable.Enabled = true;
-
 		if ( !CharacterController.IsOnGround )
 		{
 			var (row, col) = MazeObject.CellIndex;
 			Throwable.Throw( row, col );
 		}
 	}
-
-	private static Direction[] Directions { get; } = new[]
-	{
-		Direction.West, Direction.North, Direction.East, Direction.South
-	};
 
 	private void AlignMovementToGrid( ref Vector2 input )
 	{
@@ -179,10 +173,15 @@ public sealed class Mazer : Component
 		Direction? bestDir = null;
 		var minDist = float.PositiveInfinity;
 
-		foreach ( var direction in Directions )
+		foreach ( var direction in Helpers.Directions )
 		{
 			var norm = direction.GetNormal();
-			var dist = GetDist( cellPos, dir, new Vector2( 0.5f, 0.5f ) - norm * 0.5f, -norm );
+			var dist = GetDist( cellPos, dir, new Vector2( 0.5f, 0.5f ) + norm * 0.5f, -norm );
+
+			if ( dist < 0f )
+			{
+				continue;
+			}
 
 			if ( MazeObject.View[row, col, direction] != WallState.Open )
 			{
@@ -203,11 +202,15 @@ public sealed class Mazer : Component
 
 		var right = forward.Clockwise();
 
-		var forwardTarget = MazeObject.View[row, col, forward] == WallState.Open ? 1f : Vector2.Dot( cellPos - 0.5f, forward.GetNormal() ) * -2f;
-		var rightTargetVel = Vector2.Dot( cellPos - 0.5f, right.GetNormal() ) * -2f;
+		var forwardTarget = MazeObject.View[row, col, forward] == WallState.Open ? 1f : Vector2.Dot( cellPos - 0.5f, forward.GetNormal() ) * -8f;
+		var rightTargetVel = Vector2.Dot( cellPos - 0.5f, right.GetNormal() ) * -8f;
 		var rightVel = CharacterController.Velocity.Dot( right.GetNormal() ) / MoveSpeed;
+		var rightTarget = rightTargetVel - rightVel;
 
-		var targetInput = forward.GetNormal() * forwardTarget + right.GetNormal() * (rightTargetVel - rightVel);
+		forwardTarget = Math.Clamp( forwardTarget, -1f, 1f );
+		rightTarget = Math.Clamp( rightTarget, -1f, 1f );
+
+		var targetInput = forward.GetNormal() * forwardTarget + right.GetNormal() * rightTarget;
 
 		if ( targetInput.LengthSquared > 1f )
 		{
@@ -247,8 +250,6 @@ public sealed class Mazer : Component
 		{
 			return;
 		}
-
-		Holdable.Enabled = false;
 
 		if ( CharacterController.IsOnGround )
 		{

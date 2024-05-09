@@ -1,6 +1,6 @@
 {
   "RootObject": {
-    "__guid": "ea33b8a5-3677-4b20-8b89-ef803fb51a05",
+    "__guid": "1297c193-ff11-41a8-a75f-4c27e57ba8e7",
     "Flags": 0,
     "Name": "key",
     "Tags": "item,key",
@@ -10,7 +10,7 @@
     "Components": [
       {
         "__type": "Sandbox.SkinnedModelRenderer",
-        "__guid": "84661910-494b-4417-811d-f3a3b04d4a4f",
+        "__guid": "ba970c9a-a691-4b09-98bd-8696529b31b2",
         "AnimationGraph": "animgraphs/item.vanmgrph",
         "BodyGroups": 1,
         "CreateBoneObjects": true,
@@ -20,20 +20,20 @@
       },
       {
         "__type": "Mazing.Throwable",
-        "__guid": "49844eb6-69db-40e0-82b9-1449ad605012",
+        "__guid": "d0e759a1-42e4-4cb1-973b-41f8b889a986",
         "ThrowDuration": 0.5,
         "ThrowHeight": 64
       },
       {
         "__type": "Mazing.MazeObject",
-        "__guid": "9ce89156-5193-41b4-93e2-11238a0155d2"
+        "__guid": "db312307-d12d-48cc-96b5-a07ba48b1654"
       },
       {
         "__type": "Mazing.Holdable",
-        "__guid": "6d82b423-f989-4b2b-ab82-734433562039",
+        "__guid": "29757e91-43b2-4736-a0ff-7c6cdcdd446f",
         "Dropped": {
           "__version": 7,
-          "__guid": "316965be-0a1e-455e-add3-498360476bf3",
+          "__guid": "0dc4b0a3-53b7-4a4e-ac42-bae6d4302988",
           "UserData": {
             "Title": "Dropped",
             "ReferencedComponentTypes": []
@@ -86,7 +86,7 @@
         },
         "PickedUp": {
           "__version": 7,
-          "__guid": "18bd780e-be5c-4cff-8310-484c1885b76d",
+          "__guid": "09574bf5-7ccd-4f8d-b824-31321e1ac52e",
           "UserData": {
             "Title": "Picked Up",
             "ReferencedComponentTypes": []
@@ -143,7 +143,7 @@
       },
       {
         "__type": "Sandbox.SphereCollider",
-        "__guid": "dd824886-19ef-458d-9a60-d8f234108bd4",
+        "__guid": "489a4ddc-b4df-4ce4-9904-20feab9e0257",
         "Center": "0,0,32",
         "IsTrigger": true,
         "Radius": 16,
@@ -151,12 +151,12 @@
       },
       {
         "__type": "Mazing.Key",
-        "__guid": "d5f30e4a-bcf9-4d38-a380-a3d27e1fc8a6"
+        "__guid": "8d5609d4-faa0-4ad2-8abf-c2c614759105"
       }
     ],
     "Children": [
       {
-        "__guid": "6a136686-36ed-47e0-8c58-4962b30b043e",
+        "__guid": "02947de2-390e-436c-8ca4-bd996afbb30e",
         "Flags": 4,
         "Name": "Item",
         "Position": "0.0000180792,0.00002670288,119.9999",
@@ -166,7 +166,7 @@
         "NetworkInterpolation": true,
         "Children": [
           {
-            "__guid": "18b59dbc-81f8-4905-a191-86f1751b8a35",
+            "__guid": "68fcf521-22b7-4fec-afa8-ee45661acdbb",
             "Flags": 4,
             "Name": "Item_end",
             "Position": "-0.00002527237,5.999949,0.00002031935",
@@ -175,7 +175,7 @@
             "NetworkInterpolation": true
           },
           {
-            "__guid": "04b971f3-21f4-489f-be2e-f0f48e7e29f8",
+            "__guid": "9c459837-b2c2-42c7-b697-98046bee83ff",
             "Flags": 0,
             "Name": "Light",
             "Position": "0,0,0",
@@ -187,7 +187,7 @@
             "Components": [
               {
                 "__type": "Sandbox.PointLight",
-                "__guid": "2cffa286-f1e7-4d32-b272-c826dc7b01b7",
+                "__guid": "424e1310-5193-4bbc-a2a8-a3910a764e00",
                 "Attenuation": 1,
                 "FogMode": "Enabled",
                 "FogStrength": 1,
@@ -200,7 +200,7 @@
         ]
       },
       {
-        "__guid": "80efe9ca-d11c-49e7-8395-07b24118ca43",
+        "__guid": "58a99d56-f649-453e-a005-2ee3ec34fbc2",
         "Flags": 4,
         "Name": "Root",
         "Position": "0.00001130809,0.00001703013,95.99996",
