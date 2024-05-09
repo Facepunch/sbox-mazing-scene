@@ -2,6 +2,12 @@
 
 namespace Mazing;
 
+public interface IThrowableListener
+{
+	public void Thrown( Direction dir, int range ) { }
+	public void Landed() { }
+}
+
 public sealed class Throwable : Component
 {
 	[RequireComponent] public MazeObject MazeObject { get; set; } = null!;
@@ -14,7 +20,7 @@ public sealed class Throwable : Component
 
 	public Vector3 Velocity { get; private set; }
 
-	public delegate void ThrownAction( Direction direction, int range, GameObject? thrower );
+	public delegate void ThrownAction( Direction direction, int range );
 
 	[Property] public event ThrownAction? Thrown;
 	[Property] public event Action? Landed;
@@ -29,7 +35,8 @@ public sealed class Throwable : Component
 		Enabled = false;
 	}
 
-	public void Throw( Direction dir, int range, GameObject? thrower )
+	[Broadcast]
+	public void Throw( Direction dir, int range )
 	{
 		var (row, col) = MazeObject.CellIndex;
 
@@ -51,14 +58,22 @@ public sealed class Throwable : Component
 
 		ThrowInternal( row, col );
 
-		Thrown?.Invoke( dir, actualRange, thrower );
+		if ( IsProxy ) return;
+
+		Thrown?.Invoke( dir, actualRange );
+
+		foreach ( var listener in Components.GetAll<IThrowableListener>( FindMode.Enabled | FindMode.Disabled | FindMode.InSelf ) )
+		{
+			listener.Thrown( dir, actualRange );
+		}
 	}
 
-	public void Throw( int row, int col, GameObject? thrower )
+	[Broadcast]
+	public void Throw( int row, int col )
 	{
 		ThrowInternal( row, col );
 
-		Thrown?.Invoke( Direction.North, 0, thrower );
+		Thrown?.Invoke( Direction.North, 0 );
 	}
 
 	private void ThrowInternal( int row, int col )
@@ -95,11 +110,17 @@ public sealed class Throwable : Component
 
 		Velocity = along * dt + up * dydx * dt;
 
-		if ( x >= 1f )
-		{
-			Enabled = false;
+		if ( x < 1f ) return;
 
-			Landed?.Invoke();
+		Enabled = false;
+
+		if ( IsProxy ) return;
+
+		Landed?.Invoke();
+
+		foreach ( var listener in Components.GetAll<IThrowableListener>( FindMode.Enabled | FindMode.Disabled | FindMode.InSelf ) )
+		{
+			listener.Landed();
 		}
 	}
 }

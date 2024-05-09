@@ -4,8 +4,21 @@ using System.Threading.Tasks;
 
 namespace Mazing;
 
+public enum GameState
+{
+	StartingLevel,
+	Playing,
+	EndingLevel
+}
+
 public class MazingGame : Component, Component.INetworkListener
 {
+	[Property]
+	public GameState State { get; set; }
+
+	[Property]
+	public TimeSince StateStart { get; set; }
+
 	public Maze Maze => Scene.Components.Get<Maze>( FindMode.Enabled | FindMode.InChildren )
 		?? throw new Exception( "No maze!" );
 
@@ -31,15 +44,38 @@ public class MazingGame : Component, Component.INetworkListener
 
 	protected override void OnUpdate()
 	{
+		if ( IsProxy )
+		{
+			return;
+		}
+
+		switch ( State )
+		{
+			case GameState.StartingLevel:
+				OnStartingLevel();
+				break;
+
+			case GameState.Playing:
+				OnPlaying();
+				break;
+
+			case GameState.EndingLevel:
+				OnEndingLevel();
+				break;
+		}
+	}
+
+	private void OnPlaying()
+	{
 		var anyPlayers = false;
 		var anyInMaze = false;
-		var anyExited = false;
+		var anyExiting = false;
 
 		foreach ( var mazer in Scene.Components.GetAll<Mazer>( FindMode.Enabled | FindMode.InChildren ) )
 		{
 			anyPlayers = true;
 			anyInMaze |= !mazer.IsExiting;
-			anyExited |= mazer.State == MazerState.Exited;
+			anyExiting |= mazer.IsExiting && mazer.State != MazerState.Exited;
 		}
 
 		if ( !anyPlayers )
@@ -47,11 +83,30 @@ public class MazingGame : Component, Component.INetworkListener
 			return;
 		}
 
-		if ( !anyInMaze && anyExited )
+		if ( !anyInMaze && !anyExiting )
 		{
-			Maze.Size += 1;
-			Maze.Seed = Random.Shared.Next();
-			Maze.Generate();
+			State = GameState.EndingLevel;
+			StateStart = 0f;
+		}
+	}
+
+	private void OnEndingLevel()
+	{
+		if ( StateStart > 2f )
+		{
+			Maze.NextLevel( Maze.Size + 1, Random.Shared.Next() );
+
+			State = GameState.StartingLevel;
+			StateStart = 0f;
+		}
+	}
+
+	private void OnStartingLevel()
+	{
+		if ( StateStart > 2f )
+		{
+			State = GameState.Playing;
+			StateStart = 0f;
 		}
 	}
 }

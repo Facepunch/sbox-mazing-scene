@@ -1,6 +1,7 @@
 {
   "RootObject": {
-    "__guid": "c019a7af-b785-4bea-8428-0ecef91c3557",
+    "__guid": "ea33b8a5-3677-4b20-8b89-ef803fb51a05",
+    "Flags": 0,
     "Name": "key",
     "Tags": "item,key",
     "Enabled": true,
@@ -9,7 +10,7 @@
     "Components": [
       {
         "__type": "Sandbox.SkinnedModelRenderer",
-        "__guid": "34b008fd-a11e-45f6-befb-5d2762c6c89c",
+        "__guid": "84661910-494b-4417-811d-f3a3b04d4a4f",
         "AnimationGraph": "animgraphs/item.vanmgrph",
         "BodyGroups": 1,
         "CreateBoneObjects": true,
@@ -19,24 +20,130 @@
       },
       {
         "__type": "Mazing.Throwable",
-        "__guid": "580a135b-9b73-4a4f-8050-880129debe3e",
+        "__guid": "49844eb6-69db-40e0-82b9-1449ad605012",
         "ThrowDuration": 0.5,
         "ThrowHeight": 64
       },
       {
         "__type": "Mazing.MazeObject",
-        "__guid": "d61b538a-b7cc-487d-b717-b1b80dd61eaf"
+        "__guid": "9ce89156-5193-41b4-93e2-11238a0155d2"
       },
       {
         "__type": "Mazing.Holdable",
-        "__guid": "b5c712bb-581a-4d29-b991-692ace94cf15",
+        "__guid": "6d82b423-f989-4b2b-ab82-734433562039",
+        "Dropped": {
+          "__version": 7,
+          "__guid": "316965be-0a1e-455e-add3-498360476bf3",
+          "UserData": {
+            "Title": "Dropped",
+            "ReferencedComponentTypes": []
+          },
+          "Variables": [],
+          "Nodes": [
+            {
+              "Id": 0,
+              "Type": "input"
+            },
+            {
+              "Id": 2,
+              "Type": "resource.ref",
+              "Properties": {
+                "T": "Sandbox.Engine/Sandbox.SoundEvent",
+                "value": "sounds/treasure/key.drop.sound"
+              },
+              "UserData": {
+                "Position": "-0,112"
+              }
+            },
+            {
+              "Id": 3,
+              "Type": "sound.play",
+              "UserData": {
+                "Position": "304,64"
+              }
+            }
+          ],
+          "Links": [
+            {
+              "SrcId": 0,
+              "SrcName": "_signal",
+              "DstId": 3,
+              "DstName": "_signal"
+            },
+            {
+              "SrcId": 0,
+              "SrcName": "_target",
+              "DstId": 3,
+              "DstName": "_this"
+            },
+            {
+              "SrcId": 2,
+              "SrcName": "_result",
+              "DstId": 3,
+              "DstName": "soundEvent"
+            }
+          ]
+        },
+        "PickedUp": {
+          "__version": 7,
+          "__guid": "18bd780e-be5c-4cff-8310-484c1885b76d",
+          "UserData": {
+            "Title": "Picked Up",
+            "ReferencedComponentTypes": []
+          },
+          "Variables": [],
+          "Nodes": [
+            {
+              "Id": 0,
+              "Type": "input"
+            },
+            {
+              "Id": 2,
+              "Type": "resource.ref",
+              "Properties": {
+                "T": "Sandbox.Engine/Sandbox.SoundEvent",
+                "value": "sounds/treasure/key.collect.sound"
+              },
+              "UserData": {
+                "Position": "-16,64"
+              }
+            },
+            {
+              "Id": 3,
+              "Type": "sound.play",
+              "UserData": {
+                "Position": "288,32"
+              }
+            }
+          ],
+          "Links": [
+            {
+              "SrcId": 0,
+              "SrcName": "_signal",
+              "DstId": 3,
+              "DstName": "_signal"
+            },
+            {
+              "SrcId": 0,
+              "SrcName": "_target",
+              "DstId": 3,
+              "DstName": "_this"
+            },
+            {
+              "SrcId": 2,
+              "SrcName": "_result",
+              "DstId": 3,
+              "DstName": "soundEvent"
+            }
+          ]
+        },
         "IsHeavy": false,
         "PickupOnLand": true,
         "PickupOnTouch": true
       },
       {
         "__type": "Sandbox.SphereCollider",
-        "__guid": "fed39636-c0a9-4076-9a8a-e93c42dc6d6c",
+        "__guid": "dd824886-19ef-458d-9a60-d8f234108bd4",
         "Center": "0,0,32",
         "IsTrigger": true,
         "Radius": 16,
@@ -44,12 +151,13 @@
       },
       {
         "__type": "Mazing.Key",
-        "__guid": "b2d11534-c0b1-416c-93b1-da5efe051dc0"
+        "__guid": "d5f30e4a-bcf9-4d38-a380-a3d27e1fc8a6"
       }
     ],
     "Children": [
       {
-        "__guid": "94b6f693-5878-47aa-a065-3535194ab042",
+        "__guid": "6a136686-36ed-47e0-8c58-4962b30b043e",
+        "Flags": 4,
         "Name": "Item",
         "Position": "0.0000180792,0.00002670288,119.9999",
         "Rotation": "0.6830127,0.1830129,0.6830126,0.1830128",
@@ -58,7 +166,8 @@
         "NetworkInterpolation": true,
         "Children": [
           {
-            "__guid": "23053046-98b4-40de-a570-2c1d50d46baa",
+            "__guid": "18b59dbc-81f8-4905-a191-86f1751b8a35",
+            "Flags": 4,
             "Name": "Item_end",
             "Position": "-0.00002527237,5.999949,0.00002031935",
             "Enabled": true,
@@ -66,7 +175,8 @@
             "NetworkInterpolation": true
           },
           {
-            "__guid": "e1ade40b-a2b8-43b8-a4fb-64436c2aff19",
+            "__guid": "04b971f3-21f4-489f-be2e-f0f48e7e29f8",
+            "Flags": 0,
             "Name": "Light",
             "Position": "0,0,0",
             "Rotation": "-0.6830127,-0.1830129,-0.6830126,0.1830128",
@@ -77,7 +187,7 @@
             "Components": [
               {
                 "__type": "Sandbox.PointLight",
-                "__guid": "7e444ece-d5c0-4454-ae88-1377616587b5",
+                "__guid": "2cffa286-f1e7-4d32-b272-c826dc7b01b7",
                 "Attenuation": 1,
                 "FogMode": "Enabled",
                 "FogStrength": 1,
@@ -90,7 +200,8 @@
         ]
       },
       {
-        "__guid": "40c7d27a-d57f-45e7-88c8-f9e8b26347bd",
+        "__guid": "80efe9ca-d11c-49e7-8395-07b24118ca43",
+        "Flags": 4,
         "Name": "Root",
         "Position": "0.00001130809,0.00001703013,95.99996",
         "Rotation": "0.4999999,0.4999999,0.4999999,0.5000003",

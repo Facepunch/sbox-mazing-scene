@@ -1,35 +1,43 @@
 ﻿
+using System;
+
 namespace Mazing;
 
-public sealed class Holdable : Component, Component.ITriggerListener
+public sealed class Holdable : Component
 {
 	[RequireComponent] public MazeObject MazeObject { get; set; } = null!;
 	[RequireComponent] public Throwable Throwable { get; set; } = null!;
 
-	[Property] public bool IsHeavy { get; set; }
+	[Property, Sync] public bool IsHeavy { get; set; }
 
-	[Property] public bool PickupOnTouch { get; set; } = true;
-	[Property] public bool PickupOnLand { get; set; } = true;
+	[Property, Sync] public bool PickupOnTouch { get; set; } = true;
+	[Property, Sync] public bool PickupOnLand { get; set; } = true;
 
 	[Property] public Holder? Holder { get; set; }
 
-	void ITriggerListener.OnTriggerEnter( Collider other )
-	{
-		if ( !PickupOnTouch || Throwable.Enabled || Holder is not null )
-		{
-			return;
-		}
+	[Property]
+	public event Action? PickedUp;
 
-		if ( other.Components.Get<Holder>() is not {} holder )
-		{
-			return;
-		}
+	[Property]
+	public event Action? Dropped;
 
-		holder.TryPickUp( this );
-	}
-
-	public void Drop()
+	protected override void OnDisabled()
 	{
 		Holder?.Drop();
+	}
+
+	protected override void OnDestroy()
+	{
+		Holder?.Drop();
+	}
+
+	public void DispatchPickedUp()
+	{
+		PickedUp?.Invoke();
+	}
+
+	public void DispatchDropped()
+	{
+		Dropped?.Invoke();
 	}
 }

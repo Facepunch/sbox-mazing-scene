@@ -1,6 +1,7 @@
 {
   "RootObject": {
-    "__guid": "7a88b5a2-a1f4-43f2-b244-851945a50e3a",
+    "__guid": "6ab45c10-d549-4678-9272-13f687bc8965",
+    "Flags": 0,
     "Name": "exit",
     "Enabled": true,
     "NetworkMode": 1,
@@ -8,7 +9,7 @@
     "Components": [
       {
         "__type": "Sandbox.SkinnedModelRenderer",
-        "__guid": "8a409726-27b9-451f-ac85-0d065446e9e4",
+        "__guid": "1f8e918c-63e1-4509-85e5-85c58ae5b4f8",
         "AnimationGraph": "animgraphs/hatch.vanmgrph",
         "BodyGroups": 18446744073709551615,
         "CreateBoneObjects": false,
@@ -18,11 +19,11 @@
       },
       {
         "__type": "Mazing.MazeObject",
-        "__guid": "0fac7e9a-9070-4bf8-a767-154487940cd4"
+        "__guid": "6342e3d3-e642-4df5-991f-3bc6137e235d"
       },
       {
         "__type": "Sandbox.BoxCollider",
-        "__guid": "8663bc8a-3c97-4056-b0c2-9b45f8decff4",
+        "__guid": "d7031e7b-fc27-4b19-a3a6-267fb41dc9ab",
         "Center": "0,0,-16",
         "IsTrigger": false,
         "Scale": "48,48,32",
@@ -30,19 +31,179 @@
       },
       {
         "__type": "Mazing.Exit",
-        "__guid": "96c6a3a1-e9f2-4ab4-a41f-c9d99a77f11a",
+        "__guid": "58792293-f14e-496b-8141-afad826bdfbc",
+        "Opened": {
+          "__version": 7,
+          "__guid": "f27eb228-a8a4-4672-9fd4-226a1747e112",
+          "UserData": {
+            "Title": "Opened",
+            "ReferencedComponentTypes": []
+          },
+          "Variables": [],
+          "Nodes": [
+            {
+              "Id": 0,
+              "Type": "input"
+            },
+            {
+              "Id": 2,
+              "Type": "scene.ref",
+              "Properties": {
+                "component": {
+                  "_type": "component",
+                  "component_id": "d7031e7b-fc27-4b19-a3a6-267fb41dc9ab",
+                  "go": "6ab45c10-d549-4678-9272-13f687bc8965",
+                  "component_type": "BoxCollider"
+                }
+              },
+              "UserData": {
+                "Position": "-16,64"
+              }
+            },
+            {
+              "Id": 3,
+              "Type": "property",
+              "Properties": {
+                "_name": "Enabled",
+                "_type": "Sandbox.Game/Sandbox.Component"
+              },
+              "UserData": {
+                "Position": "240,0"
+              }
+            },
+            {
+              "Id": 7,
+              "Type": "scene.ref",
+              "Properties": {
+                "component": {
+                  "_type": "component",
+                  "component_id": "1f8e918c-63e1-4509-85e5-85c58ae5b4f8",
+                  "go": "6ab45c10-d549-4678-9272-13f687bc8965",
+                  "component_type": "SkinnedModelRenderer"
+                }
+              },
+              "UserData": {
+                "Position": "208,112"
+              }
+            },
+            {
+              "Id": 9,
+              "Type": "call",
+              "Properties": {
+                "_name": "Set",
+                "_isStatic": false,
+                "_type": "Sandbox.Game/Sandbox.SkinnedModelRenderer"
+              },
+              "UserData": {
+                "Position": "560,0"
+              }
+            },
+            {
+              "Id": 18,
+              "Type": "resource.ref",
+              "Properties": {
+                "T": "Sandbox.Engine/Sandbox.SoundEvent",
+                "value": "sounds/world/hatch.open.sound"
+              },
+              "UserData": {
+                "Position": "576,144"
+              }
+            },
+            {
+              "Id": 19,
+              "Type": "sound.play",
+              "UserData": {
+                "Position": "944,0"
+              }
+            }
+          ],
+          "Links": [
+            {
+              "SrcId": 0,
+              "SrcName": "_signal",
+              "DstId": 3,
+              "DstName": "_signal"
+            },
+            {
+              "SrcId": 2,
+              "SrcName": "_result",
+              "DstId": 3,
+              "DstName": "_target"
+            },
+            {
+              "Value": false,
+              "DstId": 3,
+              "DstName": "_value"
+            },
+            {
+              "SrcId": 3,
+              "SrcName": "_signal",
+              "DstId": 9,
+              "DstName": "_signal"
+            },
+            {
+              "SrcId": 7,
+              "SrcName": "_result",
+              "DstId": 9,
+              "DstName": "_target"
+            },
+            {
+              "Value": "open",
+              "DstId": 9,
+              "DstName": "v"
+            },
+            {
+              "Value": true,
+              "DstId": 9,
+              "DstName": "value"
+            },
+            {
+              "SrcId": 9,
+              "SrcName": "_signal",
+              "DstId": 19,
+              "DstName": "_signal"
+            },
+            {
+              "SrcId": 0,
+              "SrcName": "_target",
+              "DstId": 19,
+              "DstName": "_this"
+            },
+            {
+              "SrcId": 18,
+              "SrcName": "_result",
+              "DstId": 19,
+              "DstName": "soundEvent"
+            }
+          ],
+          "Defaults": {
+            "$2.component": {
+              "_type": "component",
+              "component_id": "d7031e7b-fc27-4b19-a3a6-267fb41dc9ab",
+              "go": "6ab45c10-d549-4678-9272-13f687bc8965",
+              "component_type": "BoxCollider"
+            },
+            "$7.component": {
+              "_type": "component",
+              "component_id": "1f8e918c-63e1-4509-85e5-85c58ae5b4f8",
+              "go": "6ab45c10-d549-4678-9272-13f687bc8965",
+              "component_type": "SkinnedModelRenderer"
+            }
+          }
+        },
         "IsOpen": false,
         "Trigger": {
           "_type": "component",
-          "component_id": "9d7909dc-4407-4e37-92d3-8bc0641f9369",
-          "go": "5e43056b-7b6f-469e-a995-c37fd6c08778",
+          "component_id": "fc1ecec3-8e71-41b7-bf1e-1f14f8abfd63",
+          "go": "120be263-0ddf-4e4d-9c44-c8a70985da9b",
           "component_type": "BoxCollider"
         }
       }
     ],
     "Children": [
       {
-        "__guid": "5e43056b-7b6f-469e-a995-c37fd6c08778",
+        "__guid": "120be263-0ddf-4e4d-9c44-c8a70985da9b",
+        "Flags": 0,
         "Name": "Trigger",
         "Enabled": true,
         "NetworkMode": 2,
@@ -50,7 +211,7 @@
         "Components": [
           {
             "__type": "Sandbox.BoxCollider",
-            "__guid": "9d7909dc-4407-4e37-92d3-8bc0641f9369",
+            "__guid": "fc1ecec3-8e71-41b7-bf1e-1f14f8abfd63",
             "Center": "0,0,32",
             "IsTrigger": true,
             "Scale": "24,24,64",

@@ -3,9 +3,10 @@
   "GameObjects": [
     {
       "__guid": "3ee1c9f4-07be-4e0b-8b23-67bee2d8ec8a",
+      "Flags": 0,
       "Name": "Camera",
       "Position": "187.101,591.1297,1499.999",
-      "Rotation": "0.00000003073043,0.5735766,-0.00000002151769,0.8191519",
+      "Rotation": "-0.5735766,0.000000005658613,0.8191519,-0.00000001428858",
       "Enabled": true,
       "NetworkMode": 2,
       "NetworkInterpolation": true,
@@ -66,8 +67,8 @@
                 "Type": "property",
                 "ParentId": 44,
                 "Properties": {
-                  "_type": "Sandbox.Game/Sandbox.Component",
-                  "_name": "GameObject"
+                  "_name": "GameObject",
+                  "_type": "Sandbox.Game/Sandbox.Component"
                 }
               },
               {
@@ -133,8 +134,8 @@
                 "Type": "property",
                 "ParentId": 52,
                 "Properties": {
-                  "_type": "Sandbox.Game/Sandbox.Component",
-                  "_name": "Transform"
+                  "_name": "Transform",
+                  "_type": "Sandbox.Game/Sandbox.Component"
                 },
                 "UserData": {
                   "Visible": false
@@ -145,16 +146,16 @@
                 "Type": "property",
                 "ParentId": 53,
                 "Properties": {
-                  "_type": "Sandbox.Game/Sandbox.GameTransform",
-                  "_name": "Position"
+                  "_name": "Position",
+                  "_type": "Sandbox.Game/Sandbox.GameTransform"
                 }
               },
               {
                 "Id": 55,
                 "Type": "property",
                 "Properties": {
-                  "_type": "Sandbox.Game/Sandbox.GameObject",
-                  "_name": "Transform"
+                  "_name": "Transform",
+                  "_type": "Sandbox.Game/Sandbox.GameObject"
                 },
                 "UserData": {
                   "Position": "-32,-32",
@@ -168,8 +169,8 @@
                 "Type": "property",
                 "ParentId": 55,
                 "Properties": {
-                  "_type": "Sandbox.Game/Sandbox.GameTransform",
-                  "_name": "Rotation"
+                  "_name": "Rotation",
+                  "_type": "Sandbox.Game/Sandbox.GameTransform"
                 },
                 "UserData": {
                   "Visible": false
@@ -180,8 +181,8 @@
                 "Type": "property",
                 "ParentId": 56,
                 "Properties": {
-                  "_type": "Sandbox.System/Rotation",
-                  "_name": "Forward"
+                  "_name": "Forward",
+                  "_type": "Sandbox.System/Rotation"
                 },
                 "UserData": {
                   "Labels": {
@@ -207,8 +208,8 @@
                 "Id": 61,
                 "Type": "property",
                 "Properties": {
-                  "_type": "Sandbox.Game/Sandbox.GameTransform",
-                  "_name": "Position"
+                  "_name": "Position",
+                  "_type": "Sandbox.Game/Sandbox.GameTransform"
                 },
                 "UserData": {
                   "Position": "352,720"
@@ -218,8 +219,8 @@
                 "Id": 62,
                 "Type": "property",
                 "Properties": {
-                  "_type": "Sandbox.Game/Sandbox.GameObject",
-                  "_name": "Scene"
+                  "_name": "Scene",
+                  "_type": "Sandbox.Game/Sandbox.GameObject"
                 },
                 "UserData": {
                   "Position": "-672,352"
@@ -230,9 +231,9 @@
                 "Type": "call",
                 "Properties": {
                   "T": "package.ziks.mazing/Mazing.Mazer",
+                  "_name": "GetAll",
                   "_isStatic": false,
-                  "_type": "Sandbox.Game/Sandbox.IComponentLister",
-                  "_name": "GetAll"
+                  "_type": "Sandbox.Game/Sandbox.IComponentLister"
                 },
                 "UserData": {
                   "Position": "-464,384"
@@ -242,8 +243,8 @@
                 "Id": 68,
                 "Type": "property",
                 "Properties": {
-                  "_type": "Sandbox.System/Vector3",
-                  "_name": "z"
+                  "_name": "z",
+                  "_type": "Sandbox.System/Vector3"
                 },
                 "UserData": {
                   "Position": "-96,656"
@@ -502,9 +503,10 @@
     },
     {
       "__guid": "69bed0b6-cf8c-4f54-abbe-37d38cc2c1f7",
+      "Flags": 0,
       "Name": "Maze",
       "Enabled": true,
-      "NetworkMode": 2,
+      "NetworkMode": 1,
       "NetworkInterpolation": true,
       "Components": [
         {
@@ -526,8 +528,8 @@
             "prefab": "prefabs/player.prefab"
           },
           "PostModel": "models/post.vmdl",
-          "Seed": 1162293918,
-          "Size": 5,
+          "Seed": 1977519300,
+          "Size": 4,
           "TileModel": "models/tile.vmdl",
           "TreasureCount": 8,
           "WallModel": "models/wall.vmdl"
@@ -537,14 +539,19 @@
     },
     {
       "__guid": "64e3759a-f77b-42ce-bca5-622faf25cefd",
+      "Flags": 0,
       "Name": "Game",
       "Enabled": true,
-      "NetworkMode": 2,
+      "NetworkMode": 1,
       "NetworkInterpolation": true,
       "Components": [
         {
           "__type": "Mazing.MazingGame",
-          "__guid": "048f1e63-b48c-41cd-9239-c7a18cf312bc"
+          "__guid": "048f1e63-b48c-41cd-9239-c7a18cf312bc",
+          "State": "StartingLevel",
+          "StateStart": {
+            "Relative": 3544.8435
+          }
         }
       ]
     }
@@ -572,7 +579,7 @@
   },
   "Title": "minimal",
   "Description": "",
-  "LastSaved": "2024-05-08T22:44:30.0990098\u002B01:00",
+  "LastSaved": "2024-05-09T12:16:06.4776951\u002B01:00",
   "ResourceVersion": 1,
   "__version": 1,
   "__references": []

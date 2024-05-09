@@ -4,7 +4,7 @@ using System;
 
 namespace Mazing;
 
-public sealed class Holder : Component
+public sealed class Holder : Component, Component.ITriggerListener, IThrowableListener
 {
 	[RequireComponent] public MazeObject MazeObject { get; set; } = null!;
 
@@ -19,25 +19,21 @@ public sealed class Holder : Component
 	private GameObject? _leftHandIk;
 	private GameObject? _rightHandIk;
 
-	protected override void OnStart()
+	void IThrowableListener.Thrown( Direction dir, int range )
 	{
-		if ( Components.Get<Throwable>() is { } throwable )
-		{
-			throwable.Thrown += ( dir, range, thrower ) =>
-			{
-				Throw( dir, range == 0 ? 0 : range + 1 );
-				Enabled = false;
-			};
+		Throw( dir, range == 0 ? 0 : range + 1 );
+		Enabled = false;
+	}
 
-			throwable.Landed += () =>
-			{
-				Enabled = true;
-			};
-		}
+	void IThrowableListener.Landed()
+	{
+		Enabled = true;
 	}
 
 	protected override void OnDestroy()
 	{
+		Drop();
+
 		_rightHandIk?.Destroy();
 		_rightHandIk = null;
 
@@ -74,13 +70,9 @@ public sealed class Holder : Component
 		Throw( Direction.North, 0 );
 	}
 
+	[Broadcast( NetPermission.OwnerOnly )]
 	public void Throw( Direction dir, int range )
 	{
-		if ( IsProxy )
-		{
-			return;
-		}
-
 		if ( HeldItem is null )
 		{
 			return;
@@ -103,7 +95,9 @@ public sealed class Holder : Component
 		HeldItem.Holder = null;
 		HeldItem = null;
 
-		item.Throwable.Throw( dir, range, GameObject );
+		item.DispatchDropped();
+
+		item.Throwable.Throw( dir, range );
 	}
 
 	public bool TryPickUp( Holdable item )
@@ -120,20 +114,7 @@ public sealed class Holder : Component
 
 		if ( HeldItem is null )
 		{
-			HeldItem = item;
-			HeldItem.Holder = this;
-
-			_heldVelocity = 0f;
-
-			if ( Components.Get<CitizenAnimationHelper>() is { } animHelper )
-			{
-				_leftHandIk = new GameObject { Name = "Left Hand Target", Parent = GameObject };
-				_rightHandIk = new GameObject { Name = "Right Hand Target", Parent = GameObject };
-
-				animHelper.IkLeftHand = _leftHandIk;
-				animHelper.IkRightHand = _rightHandIk;
-			}
-
+			PickUp( item.GameObject.Id );
 			return true;
 		}
 
@@ -143,6 +124,29 @@ public sealed class Holder : Component
 		}
 
 		return false;
+	}
+
+	[Broadcast( NetPermission.OwnerOnly )]
+	public void PickUp( Guid itemId )
+	{
+		var item = Scene.Directory.FindByGuid( itemId )
+			?.Components.Get<Holdable>();
+
+		HeldItem = item ?? throw new Exception( "Can't find item" );
+		HeldItem.Holder = this;
+
+		_heldVelocity = 0f;
+
+		item.DispatchPickedUp();
+
+		if ( Components.Get<CitizenAnimationHelper>() is { } animHelper )
+		{
+			_leftHandIk = new GameObject { Name = "Left Hand Target", Parent = GameObject };
+			_rightHandIk = new GameObject { Name = "Right Hand Target", Parent = GameObject };
+
+			animHelper.IkLeftHand = _leftHandIk;
+			animHelper.IkRightHand = _rightHandIk;
+		}
 	}
 
 	protected override void OnFixedUpdate()
@@ -181,5 +185,20 @@ public sealed class Holder : Component
 			_leftHandIk.Transform.LocalRotation = Rotation.From( -45f, 90f, 0f + MathF.Asin( forwardAmount ).RadianToDegree() );
 			_rightHandIk.Transform.LocalRotation = Rotation.From( -45f, -90f, 180f - MathF.Asin( forwardAmount ).RadianToDegree() );
 		}
+	}
+
+	void ITriggerListener.OnTriggerEnter( Collider other )
+	{
+		if ( other.Components.Get<Holdable>() is not { } holdable )
+		{
+			return;
+		}
+
+		if ( !holdable.PickupOnTouch || holdable.Throwable.Enabled || holdable.Holder is not null )
+		{
+			return;
+		}
+
+		TryPickUp( holdable );
 	}
 }

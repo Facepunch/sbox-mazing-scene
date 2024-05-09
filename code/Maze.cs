@@ -48,7 +48,16 @@ public sealed partial class Maze : Component
 		return new Rect( min, max - min );
 	}
 
-	public void Generate()
+	[Broadcast( NetPermission.HostOnly )]
+	public void NextLevel( int size, int seed )
+	{
+		Size = size;
+		Seed = seed;
+
+		Generate();
+	}
+
+	private void Generate()
 	{
 		using var _ = Scene.Push();
 

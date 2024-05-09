@@ -26,6 +26,11 @@ partial class Maze
 
 	private void SpawnObjects()
 	{
+		if ( Network.IsProxy )
+		{
+			return;
+		}
+
 		_playerSpawns.Clear();
 		_spawnedObjects.Clear();
 
@@ -38,7 +43,7 @@ partial class Maze
 					break;
 
 				case CellState.Exit:
-					_spawnedObjects.Add( ExitPrefab.Clone( MazeToWorldPos( row, col ), Rotation.FromYaw( 180f ) ) );
+					_spawnedObjects.Add( ExitPrefab.Clone( MazeToWorldPos( row, col ) ) );
 					break;
 
 				case CellState.Player:
@@ -49,14 +54,19 @@ partial class Maze
 
 		_playerSpawns.Shuffle( Random.Shared );
 
-		foreach ( var go in _spawnedObjects )
-		{
-			go.Flags |= GameObjectFlags.NotSaved;
-		}
-
 		if ( !Game.IsPlaying )
 		{
+			foreach ( var go in _spawnedObjects )
+			{
+				go.Flags |= GameObjectFlags.NotSaved;
+			}
+
 			return;
+		}
+
+		foreach ( var go in _spawnedObjects )
+		{
+			go.NetworkSpawn( Connection.Host );
 		}
 
 		var pawns = Scene.Components
@@ -72,8 +82,7 @@ partial class Maze
 
 			if ( pawns.FirstOrDefault( x => x.Network.OwnerConnection == connection ) is { } pawn )
 			{
-				pawn.Transform.Position = spawnPos;
-				pawn.Respawn();
+				pawn.Respawn( spawnPos );
 			}
 			else
 			{

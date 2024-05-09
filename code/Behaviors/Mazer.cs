@@ -14,27 +14,29 @@ public enum MazerState
 
 public sealed class Mazer : Component
 {
+	[RequireComponent] public Holdable Holdable { get; set; } = null!;
 	[RequireComponent] public Throwable Throwable { get; set; } = null!;
 	[RequireComponent] public MazeObject MazeObject { get; set; } = null!;
 	[RequireComponent] public Collider Trigger { get; set; } = null!;
 
-	[Property]
+	[Property, Sync]
 	public Vector2 MoveInput { get; set; }
 
-	[Property]
+	[Property, Sync]
 	public MazerState State { get; set; }
 
-	[Property]
+	[Property, Sync]
 	public float MoveSpeed { get; set; } = 120f;
 
-	[Property]
+	[Property, Sync]
 	public float VaultCooldown { get; set; } = 3f;
 
+	[Property, Sync]
 	public TimeUntil NextVault { get; set; }
 
 	public bool CanVault => NextVault > 0f;
 
-	public bool IsExiting { get; private set; }
+	public bool IsExiting => Transform.Position.z < -64f;
 
 	[Property] public event Action? Vaulted;
 	[Property] public event Action<int>? VaultCooldownTick;
@@ -77,7 +79,7 @@ public sealed class Mazer : Component
 
 		NextVault = VaultCooldown;
 
-		Throwable.Throw( dir, 1, GameObject );
+		Throwable.Throw( dir, 1 );
 
 		Vaulted?.Invoke();
 
@@ -153,17 +155,17 @@ public sealed class Mazer : Component
 
 		CharacterController.Move();
 
-		var exit = Trigger.Touching
-			.Select( x => x.Components.Get<Exit>( FindMode.Enabled | FindMode.InParent ) )
-			.FirstOrDefault( x => x is { IsOpen: true } );
-
-		if ( exit is not null )
+		if ( IsProxy )
 		{
-			var (row, col) = exit.MazeObject.CellIndex;
+			return;
+		}
 
-			Throwable.Throw( row, col, GameObject );
+		Holdable.Enabled = true;
 
-			IsExiting = true;
+		if ( !CharacterController.IsOnGround )
+		{
+			var (row, col) = MazeObject.CellIndex;
+			Throwable.Throw( row, col );
 		}
 	}
 
@@ -240,6 +242,13 @@ public sealed class Mazer : Component
 		CharacterController.Accelerate( Vector3.Up * -600f );
 		CharacterController.Move();
 
+		if ( IsProxy )
+		{
+			return;
+		}
+
+		Holdable.Enabled = false;
+
 		if ( IsExiting )
 		{
 			if ( Transform.Position.z < -512f )
@@ -261,6 +270,11 @@ public sealed class Mazer : Component
 		AnimationHelper.IsGrounded = false;
 		AnimationHelper.WithVelocity( Throwable.Velocity );
 
+		if ( IsProxy )
+		{
+			return;
+		}
+
 		if ( Throwable.Active )
 		{
 			CharacterController.Enabled = true;
@@ -270,9 +284,11 @@ public sealed class Mazer : Component
 		}
 	}
 
-	public void Respawn()
+	[Authority( NetPermission.HostOnly )]
+	public void Respawn( Vector3 pos )
 	{
+		Transform.Position = pos;
+
 		State = MazerState.Falling;
-		IsExiting = false;
 	}
 }

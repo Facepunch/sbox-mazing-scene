@@ -1,3 +1,4 @@
+using System;
 using Sandbox;
 
 namespace Mazing;
@@ -16,26 +17,36 @@ public sealed class Exit : Component
 	[Property]
 	public Collider Trigger { get; set; } = null!;
 
-	[Property]
+	[Property, Sync]
 	public bool IsOpen { get; set; }
+
+	private bool _wasOpen;
+
+	[Property]
+	public event Action? Opened;
 
 	public void Open( Key key )
 	{
 		IsOpen = true;
-
-		ModelRenderer.SceneModel.SetAnimParameter( "open", true );
-		Collider.Enabled = false;
-
-		if ( key.Components.Get<Holdable>() is {} holdable )
-		{
-			holdable.Drop();
-		}
 
 		key.GameObject.Destroy();
 	}
 
 	protected override void OnUpdate()
 	{
+		if ( IsOpen && !_wasOpen )
+		{
+			_wasOpen = IsOpen;
+
+			Opened?.Invoke();
+			return;
+		}
+
+		if ( IsOpen )
+		{
+			return;
+		}
+
 		if ( IsProxy ) return;
 
 		foreach ( var collider in Trigger.Touching )
