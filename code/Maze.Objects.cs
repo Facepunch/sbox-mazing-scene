@@ -70,7 +70,7 @@ partial class Maze
 		}
 
 		var pawns = Scene.Components
-			.GetAll<Mazer>( FindMode.InChildren | FindMode.Enabled )
+			.GetAll<Player>( FindMode.InChildren | FindMode.Enabled )
 			.ToArray();
 
 		var index = 0;

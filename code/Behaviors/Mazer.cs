@@ -8,8 +8,7 @@ public enum MazerState
 {
 	Falling,
 	Walking,
-	Vaulting,
-	Exited
+	Vaulting
 }
 
 public sealed class Mazer : Component
@@ -18,6 +17,8 @@ public sealed class Mazer : Component
 	[RequireComponent] public Throwable Throwable { get; set; } = null!;
 	[RequireComponent] public MazeObject MazeObject { get; set; } = null!;
 	[RequireComponent] public Collider Trigger { get; set; } = null!;
+	[RequireComponent] public CharacterController CharacterController { get; set; } = null!;
+	[RequireComponent] public CitizenAnimationHelper AnimationHelper { get; set; } = null!;
 
 	[Property, Sync]
 	public Vector2 MoveInput { get; set; }
@@ -36,22 +37,14 @@ public sealed class Mazer : Component
 
 	public bool CanVault => NextVault > 0f;
 
-	[Property, Sync]
-	public bool IsExiting { get; set; }
-
 	[Property] public event Action? Vaulted;
 	[Property] public event Action<int>? VaultCooldownTick;
 	[Property] public event Action? VaultReady;
 	[Property] public event Action<SceneModel.FootstepEvent> Footstep;
-	[Property] public event Action? Exiting;
 
 	private Vector2 _targetLook = Direction.West.GetNormal();
 
 	private int _lastCooldownTick;
-	private bool _wasExiting;
-
-	[RequireComponent] public CharacterController CharacterController { get; set; } = null!;
-	[RequireComponent] public CitizenAnimationHelper AnimationHelper { get; set; } = null!;
 
 	protected override void OnStart()
 	{
@@ -103,13 +96,6 @@ public sealed class Mazer : Component
 			{
 				VaultReady?.Invoke();
 			}
-		}
-
-		if ( !_wasExiting && IsExiting )
-		{
-			_wasExiting = IsExiting;
-
-			Exiting?.Invoke();
 		}
 
 		if ( State != MazerState.Vaulting && Throwable.Enabled )
@@ -245,6 +231,11 @@ public sealed class Mazer : Component
 
 	private void OnFalling()
 	{
+		if ( Transform.Position.z < -1024f )
+		{
+			return;
+		}
+
 		AnimationHelper.IsGrounded = false;
 		AnimationHelper.WithVelocity( CharacterController.Velocity );
 
@@ -259,19 +250,7 @@ public sealed class Mazer : Component
 
 		Holdable.Enabled = false;
 
-		if ( Transform.Position.z < -64f )
-		{
-			IsExiting = true;
-		}
-
-		if ( IsExiting )
-		{
-			if ( Transform.Position.z < -512f )
-			{
-				State = MazerState.Exited;
-			}
-		}
-		else if ( CharacterController.IsOnGround )
+		if ( CharacterController.IsOnGround )
 		{
 			State = MazerState.Walking;
 		}
@@ -297,16 +276,5 @@ public sealed class Mazer : Component
 
 			State = MazerState.Falling;
 		}
-	}
-
-	[Authority( NetPermission.HostOnly )]
-	public void Respawn( Vector3 pos )
-	{
-		Transform.Position = pos;
-
-		State = MazerState.Falling;
-
-		_wasExiting = false;
-		IsExiting = false;
 	}
 }

@@ -77,11 +77,11 @@ public class MazingGame : Component, Component.INetworkListener
 		var anyInMaze = false;
 		var anyExiting = false;
 
-		foreach ( var mazer in Scene.Components.GetAll<Mazer>( FindMode.Enabled | FindMode.InChildren ) )
+		foreach ( var player in Scene.Components.GetAll<Player>( FindMode.Enabled | FindMode.InChildren ) )
 		{
 			anyPlayers = true;
-			anyInMaze |= !mazer.IsExiting;
-			anyExiting |= mazer.IsExiting && mazer.State != MazerState.Exited;
+			anyInMaze |= !player.IsExiting;
+			anyExiting |= player is { IsExiting: true, HasExited: false };
 		}
 
 		if ( !anyPlayers )

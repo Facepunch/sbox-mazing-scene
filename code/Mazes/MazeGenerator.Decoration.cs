@@ -15,8 +15,10 @@ partial class BaseMazeGenerator
 			new ColorHsv( mainHue + 30f, 0.5f, 4f )
 		};
 
+		const int blockSize = 6;
+
 		var blocks = data.Cells
-			.Select( x => (Row: x.Row / 4, Col: x.Col / 4) )
+			.Select( x => (Row: x.Row / blockSize, Col: x.Col / blockSize) )
 			.Distinct()
 			.ToArray();
 
@@ -32,9 +34,9 @@ partial class BaseMazeGenerator
 		foreach ( var (j, i) in lightCoords )
 		{
 			lights.Add( new MazeLight(
-				new Vector3( j * 4 + 2, i * 4 + 2, 3 ) + random.VectorInSphere(),
-				lightColors[random.Next( lightColors.Length )].WithValue( 1f + random.NextSingle() * 1f ),
-				5f )  );
+				new Vector3( (j + 0.5f) * blockSize, (i + 0.5f) * blockSize, 3f ) + random.VectorInSphere() * blockSize * 0.25f,
+				lightColors[random.Next( lightColors.Length )].WithValue( 1f + random.NextSingle() * 2f ),
+				blockSize * 1.5f )  );
 		}
 
 		return lights;
