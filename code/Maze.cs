@@ -16,6 +16,8 @@ public sealed partial class Maze : Component
 	[Property, Group( "Parameters" )]
 	public int EnemyCount { get; set; } = 4;
 
+	public bool IsLobby => Size <= 0;
+
 	[Button( "Run", "casino" ), Group( "Parameters" )]
 	public void Randomize()
 	{
@@ -70,7 +72,7 @@ public sealed partial class Maze : Component
 			child.Destroy();
 		}
 
-		IMazeGenerator generator = Size <= 0 ? new LobbyMazeGenerator() : new MazeGenerator();
+		IMazeGenerator generator = IsLobby ? new LobbyMazeGenerator() : new MazeGenerator();
 
 		var result = generator.Generate( new MazeGeneratorParameters( Seed, Size, TreasureCount, EnemyCount ) );
 

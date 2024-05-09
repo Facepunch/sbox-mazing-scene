@@ -19,6 +19,9 @@ public class MazingGame : Component, Component.INetworkListener
 	[Property]
 	public TimeSince StateStart { get; set; }
 
+	[Property]
+	public int FirstMazeSize { get; set; } = 4;
+
 	public Maze Maze => Scene.Components.Get<Maze>( FindMode.Enabled | FindMode.InChildren )
 		?? throw new Exception( "No maze!" );
 
@@ -94,7 +97,14 @@ public class MazingGame : Component, Component.INetworkListener
 	{
 		if ( StateStart > 2f )
 		{
-			Maze.NextLevel( Maze.Size + 1, Random.Shared.Next() );
+			if ( Maze.IsLobby )
+			{
+				Maze.NextLevel( FirstMazeSize, Random.Shared.Next() );
+			}
+			else
+			{
+				Maze.NextLevel( Maze.Size + 1, Random.Shared.Next() );
+			}
 
 			State = GameState.StartingLevel;
 			StateStart = 0f;
