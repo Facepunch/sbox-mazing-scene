@@ -1,0 +1,33 @@
+@using System;
+@using Sandbox;
+@using Mazing;
+@using Sandbox.UI;
+
+@namespace Mazing;
+
+@inherits PanelComponent
+
+<root style="opacity: @Opacity;">
+</root>
+
+@code
+{
+    [Property, Range( 0f, 1f )] public float Opacity { get; set; } = 0.5f;
+
+    /// <summary>
+    /// the hash determines if the system should be rebuilt. If it changes, it will be rebuilt
+    /// </summary>
+    protected override int BuildHash() => System.HashCode.Combine( Opacity );
+
+    protected override void OnUpdate()
+    {
+	    var game = Scene.Components.Get<MazingGame>( FindMode.Enabled | FindMode.InChildren );
+
+	    Opacity = game.State switch
+	    {
+		    GameState.EndingLevel => Math.Clamp( game.StateStart * 2f, 0f, 1f ),
+		    GameState.StartingLevel => Math.Clamp( 1.5f - game.StateStart * 2f, 0f, 1f ),
+		    _ => 0f
+	    };
+    }
+}

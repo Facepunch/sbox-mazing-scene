@@ -2,6 +2,43 @@
   "__guid": "9f832399-4887-46b0-8f21-2ee284f538e2",
   "GameObjects": [
     {
+      "__guid": "73ab3cfa-8b0d-4fa6-b13b-a70414419728",
+      "Flags": 0,
+      "Name": "HUD",
+      "Position": "-0.0001983643,-0.0002441406,-0.0002441406",
+      "Enabled": true,
+      "NetworkMode": 2,
+      "NetworkInterpolation": true,
+      "Components": [
+        {
+          "__type": "Sandbox.ScreenPanel",
+          "__guid": "c8f4f794-9bb5-49ee-add9-b1cdd240e87e",
+          "AutoScreenScale": true,
+          "Opacity": 1,
+          "Scale": 1,
+          "ZIndex": 100
+        }
+      ],
+      "Children": [
+        {
+          "__guid": "51688159-e74a-4d10-95b1-70422b5e39ab",
+          "Flags": 0,
+          "Name": "Fade",
+          "Position": "0,0,0",
+          "Enabled": true,
+          "NetworkMode": 2,
+          "NetworkInterpolation": true,
+          "Components": [
+            {
+              "__type": "ScreenFade",
+              "__guid": "3b7bf239-50ec-459f-871f-a119bd9568e6",
+              "Opacity": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
       "__guid": "3ee1c9f4-07be-4e0b-8b23-67bee2d8ec8a",
       "Flags": 0,
       "Name": "Camera",
@@ -232,8 +269,8 @@
                 "Properties": {
                   "T": "package.ziks.mazing/Mazing.Mazer",
                   "_name": "GetAll",
-                  "_isStatic": false,
-                  "_type": "Sandbox.Game/Sandbox.IComponentLister"
+                  "_type": "Sandbox.Game/Sandbox.IComponentLister",
+                  "_isStatic": false
                 },
                 "UserData": {
                   "Position": "-464,384"
@@ -528,8 +565,8 @@
             "prefab": "prefabs/player.prefab"
           },
           "PostModel": "models/post.vmdl",
-          "Seed": 1977519300,
-          "Size": 4,
+          "Seed": 52226782,
+          "Size": 0,
           "TileModel": "models/tile.vmdl",
           "TreasureCount": 8,
           "WallModel": "models/wall.vmdl"
@@ -548,9 +585,10 @@
         {
           "__type": "Mazing.MazingGame",
           "__guid": "048f1e63-b48c-41cd-9239-c7a18cf312bc",
+          "FirstMazeSize": 4,
           "State": "StartingLevel",
           "StateStart": {
-            "Relative": 3544.8435
+            "Relative": 2616.4727
           }
         }
       ]
@@ -579,7 +617,7 @@
   },
   "Title": "minimal",
   "Description": "",
-  "LastSaved": "2024-05-09T12:16:06.4776951\u002B01:00",
+  "LastSaved": "2024-05-09T13:43:31.3873315\u002B01:00",
   "ResourceVersion": 1,
   "__version": 1,
   "__references": []

@@ -13,10 +13,10 @@ public enum GameState
 
 public class MazingGame : Component, Component.INetworkListener
 {
-	[Property]
+	[Property, Sync]
 	public GameState State { get; set; }
 
-	[Property]
+	[Property, Sync]
 	public TimeSince StateStart { get; set; }
 
 	[Property]
@@ -95,7 +95,7 @@ public class MazingGame : Component, Component.INetworkListener
 
 	private void OnEndingLevel()
 	{
-		if ( StateStart > 2f )
+		if ( StateStart > 1f )
 		{
 			if ( Maze.IsLobby )
 			{
@@ -113,7 +113,7 @@ public class MazingGame : Component, Component.INetworkListener
 
 	private void OnStartingLevel()
 	{
-		if ( StateStart > 2f )
+		if ( StateStart > 1f )
 		{
 			State = GameState.Playing;
 			StateStart = 0f;
