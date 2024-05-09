@@ -2,6 +2,13 @@
 
 namespace Mazing;
 
+[Flags]
+public enum MazeChunkFlags
+{
+	None = 0,
+	IsLobby = 1
+}
+
 [GameResource( "Maze Chunk", "maze", "A hand-crafted segment of a maze.", Icon = "route" )]
 public class MazeChunkResource : GameResource
 {
@@ -10,7 +17,7 @@ public class MazeChunkResource : GameResource
 	/// <summary>
 	/// If true, this maze chunk won't be used for normal maze generation.
 	/// </summary>
-	[Property] public bool IsSpecial { get; set; }
+	[Property] public MazeChunkFlags Flags { get; set; }
 }
 
 internal static class SerializationExtensions

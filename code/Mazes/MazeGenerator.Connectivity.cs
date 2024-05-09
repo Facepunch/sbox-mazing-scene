@@ -3,9 +3,9 @@ using Sandbox.Diagnostics;
 
 namespace Mazing;
 
-partial class MazeGenerator
+partial class BaseMazeGenerator
 {
-	private void FixConnectivity( MazeData data, Random random )
+	protected void FixConnectivity( MazeData data, Random random )
 	{
 		var unvisited = new HashSet<(int Row, int Col)>();
 

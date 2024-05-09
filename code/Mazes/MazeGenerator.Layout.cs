@@ -15,12 +15,12 @@ partial class MazeGenerator
 	public void AddChunkResources( IEnumerable<MazeChunkResource> resources )
 	{
 		_resources.AddRange( resources
-			.Where( x => !x.IsSpecial )
+			.Where( x => (x.Flags & MazeChunkFlags.IsLobby) == 0 )
 			.Where( x => (x.Data.Width & 3) == 0 && (x.Data.Height & 3) == 0 ) );
 		_resources.Sort( ( a, b ) => a.ResourceId - b.ResourceId );
 	}
 
-	private (MazeData Data, IReadOnlyList<(int Row, int Col)> Blocks) GenerateLayout( int size, Random random )
+	private MazeData GenerateLayout( int size, Random random )
 	{
 		var resources = _resources
 			.Select( x => (Size: (x.Data.Width / 4) * (x.Data.Height / 4), x.Data) )
@@ -216,6 +216,6 @@ partial class MazeGenerator
 			finalData.CopyFrom( view, (row - minRow) * 4, (col - minCol) * 4 );
 		}
 
-		return (finalData, blocks.Keys.Select( x => (x.Row - minRow, x.Col - minCol) ).ToArray());
+		return finalData;
 	}
 }

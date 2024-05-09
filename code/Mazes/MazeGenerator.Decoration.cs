@@ -2,9 +2,9 @@
 
 namespace Mazing;
 
-partial class MazeGenerator
+partial class BaseMazeGenerator
 {
-	private IReadOnlyList<MazeLight> GenerateLights( IReadOnlyList<(int Row, int Col)> blocks, Random random )
+	protected IReadOnlyList<MazeLight> GenerateLights( IMazeDataView data, Random random )
 	{
 		var mainHue = random.NextSingle() * 360f;
 
@@ -14,6 +14,11 @@ partial class MazeGenerator
 			new ColorHsv( mainHue - 30f, 0.5f, 4f ),
 			new ColorHsv( mainHue + 30f, 0.5f, 4f )
 		};
+
+		var blocks = data.Cells
+			.Select( x => (Row: x.Row / 4, Col: x.Col / 4) )
+			.Distinct()
+			.ToArray();
 
 		var lightCoords = blocks
 			.SelectMany( x => new[]

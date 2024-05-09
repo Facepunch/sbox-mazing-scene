@@ -20,6 +20,7 @@ public sealed partial class Maze : Component
 	public void Randomize()
 	{
 		Seed = Random.Shared.Next();
+
 		Generate();
 	}
 
@@ -57,6 +58,7 @@ public sealed partial class Maze : Component
 		Generate();
 	}
 
+	[Button( "Run", "casino" ), Group( "Parameters" )]
 	private void Generate()
 	{
 		using var _ = Scene.Push();
@@ -68,9 +70,7 @@ public sealed partial class Maze : Component
 			child.Destroy();
 		}
 
-		var generator = new MazeGenerator();
-
-		generator.AddAllChunkResources();
+		IMazeGenerator generator = Size <= 0 ? new LobbyMazeGenerator() : new MazeGenerator();
 
 		var result = generator.Generate( new MazeGeneratorParameters( Seed, Size, TreasureCount, EnemyCount ) );
 

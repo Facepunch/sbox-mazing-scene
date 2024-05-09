@@ -3,9 +3,9 @@ using System;
 
 namespace Mazing;
 
-partial class MazeGenerator
+partial class BaseMazeGenerator
 {
-	private void PlaceSpawns( MazeData data, int treasureCount, int enemyCount, Random random )
+	protected void PlaceSpawns( MazeData data, int treasureCount, int enemyCount, Random random )
 	{
 		var validCells = new Queue<(int Row, int Col)>();
 		var remainingCounts = new Dictionary<CellState, int>
