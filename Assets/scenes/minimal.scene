@@ -585,10 +585,63 @@
         {
           "__type": "Mazing.MazingGame",
           "__guid": "048f1e63-b48c-41cd-9239-c7a18cf312bc",
+          "LevelCompleted": {
+            "__version": 7,
+            "__guid": "6a9abcc4-e8ad-4889-bbdc-fc435f77bcaa",
+            "UserData": {
+              "Title": "Level Completed",
+              "ReferencedComponentTypes": []
+            },
+            "Variables": [],
+            "Nodes": [
+              {
+                "Id": 0,
+                "Type": "input"
+              },
+              {
+                "Id": 2,
+                "Type": "resource.ref",
+                "Properties": {
+                  "T": "Sandbox.Engine/Sandbox.SoundEvent",
+                  "value": "sounds/player/player.victory.sound"
+                },
+                "UserData": {
+                  "Position": "0,96"
+                }
+              },
+              {
+                "Id": 3,
+                "Type": "sound.play",
+                "UserData": {
+                  "Position": "304,32"
+                }
+              }
+            ],
+            "Links": [
+              {
+                "SrcId": 0,
+                "SrcName": "_signal",
+                "DstId": 3,
+                "DstName": "_signal"
+              },
+              {
+                "SrcId": 0,
+                "SrcName": "_target",
+                "DstId": 3,
+                "DstName": "_this"
+              },
+              {
+                "SrcId": 2,
+                "SrcName": "_result",
+                "DstId": 3,
+                "DstName": "soundEvent"
+              }
+            ]
+          },
           "FirstMazeSize": 4,
           "State": "StartingLevel",
           "StateStart": {
-            "Relative": 2616.4727
+            "Relative": 5339.197
           }
         }
       ]
@@ -617,7 +670,7 @@
   },
   "Title": "minimal",
   "Description": "",
-  "LastSaved": "2024-05-09T13:43:31.3873315\u002B01:00",
+  "LastSaved": "2024-05-09T14:28:54.1191599\u002B01:00",
   "ResourceVersion": 1,
   "__version": 1,
   "__references": []

@@ -36,16 +36,19 @@ public sealed class Mazer : Component
 
 	public bool CanVault => NextVault > 0f;
 
-	public bool IsExiting => Transform.Position.z < -64f;
+	[Property, Sync]
+	public bool IsExiting { get; set; }
 
 	[Property] public event Action? Vaulted;
 	[Property] public event Action<int>? VaultCooldownTick;
 	[Property] public event Action? VaultReady;
 	[Property] public event Action<SceneModel.FootstepEvent> Footstep;
+	[Property] public event Action? Exiting;
 
 	private Vector2 _targetLook = Direction.West.GetNormal();
 
 	private int _lastCooldownTick;
+	private bool _wasExiting;
 
 	[RequireComponent] public CharacterController CharacterController { get; set; } = null!;
 	[RequireComponent] public CitizenAnimationHelper AnimationHelper { get; set; } = null!;
@@ -100,6 +103,13 @@ public sealed class Mazer : Component
 			{
 				VaultReady?.Invoke();
 			}
+		}
+
+		if ( !_wasExiting && IsExiting )
+		{
+			_wasExiting = IsExiting;
+
+			Exiting?.Invoke();
 		}
 
 		if ( State != MazerState.Vaulting && Throwable.Enabled )
@@ -249,6 +259,11 @@ public sealed class Mazer : Component
 
 		Holdable.Enabled = false;
 
+		if ( Transform.Position.z < -64f )
+		{
+			IsExiting = true;
+		}
+
 		if ( IsExiting )
 		{
 			if ( Transform.Position.z < -512f )
@@ -290,5 +305,8 @@ public sealed class Mazer : Component
 		Transform.Position = pos;
 
 		State = MazerState.Falling;
+
+		_wasExiting = false;
+		IsExiting = false;
 	}
 }

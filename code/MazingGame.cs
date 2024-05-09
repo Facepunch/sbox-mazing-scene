@@ -22,6 +22,9 @@ public class MazingGame : Component, Component.INetworkListener
 	[Property]
 	public int FirstMazeSize { get; set; } = 4;
 
+	[Property]
+	public event Action? LevelCompleted;
+
 	public Maze Maze => Scene.Components.Get<Maze>( FindMode.Enabled | FindMode.InChildren )
 		?? throw new Exception( "No maze!" );
 
@@ -90,7 +93,15 @@ public class MazingGame : Component, Component.INetworkListener
 		{
 			State = GameState.EndingLevel;
 			StateStart = 0f;
+
+			DispatchLevelCompleted();
 		}
+	}
+
+	[Broadcast( NetPermission.HostOnly )]
+	public void DispatchLevelCompleted()
+	{
+		LevelCompleted?.Invoke();
 	}
 
 	private void OnEndingLevel()
