@@ -12,7 +12,7 @@ public sealed class Seeker : Wanderer
 
 		var path = MazeObject.View.FindPathToAny( MazeObject.CellIndex, ends, 256, MazeObject.Maze.GetPathCost );
 
-		return path?[1].GetDirection() ?? base.GetNewTarget();
+		return path?[0].GetDirectionTo( path[1] ) ?? base.GetNewTarget();
 	}
 }
 

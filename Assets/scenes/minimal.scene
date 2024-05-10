@@ -574,7 +574,7 @@
           "__type": "Mazing.Maze",
           "__guid": "49dbbb1b-dc76-4f49-8dfc-a85bfda2cb01",
           "CubeModel": "models/dev/box.vmdl",
-          "EnemyCount": 10,
+          "EnemyCount": 1,
           "ExitPrefab": {
             "_type": "gameobject",
             "prefab": "prefabs/exit.prefab"
@@ -584,16 +584,16 @@
             "_type": "gameobject",
             "prefab": "prefabs/key.prefab"
           },
-          "Level": 4,
+          "Level": 0,
           "PlayerPrefab": {
             "_type": "gameobject",
             "prefab": "prefabs/player.prefab"
           },
           "PostModel": "models/post.vmdl",
-          "Seed": 401468995,
-          "Size": 16,
+          "Seed": 1027835419,
+          "Size": 4,
           "TileModel": "models/tile.vmdl",
-          "TreasureCount": 16,
+          "TreasureCount": 2,
           "WallModel": "models/wall.vmdl"
         }
       ],
@@ -671,7 +671,7 @@
           "MazeSizeIncrement": 1,
           "State": "StartingLevel",
           "StateStart": {
-            "Relative": 16415.723
+            "Relative": 16572.023
           },
           "TreasureCountIncrement": 1
         }
@@ -701,7 +701,7 @@
   },
   "Title": "minimal",
   "Description": "",
-  "LastSaved": "2024-05-10T23:59:31.8280001\u002B01:00",
+  "LastSaved": "2024-05-11T00:02:08.128943\u002B01:00",
   "ResourceVersion": 1,
   "__version": 1,
   "__references": []
