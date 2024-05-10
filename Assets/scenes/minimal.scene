@@ -27,7 +27,14 @@
           "Position": "0,0,0",
           "Enabled": true,
           "NetworkMode": 2,
-          "NetworkInterpolation": true
+          "NetworkInterpolation": true,
+          "Components": [
+            {
+              "__type": "ScreenFade",
+              "__guid": "c598c54a-c83a-4b01-9565-a5195567b03c",
+              "Opacity": 0
+            }
+          ]
         }
       ]
     },
@@ -97,8 +104,8 @@
                 "Type": "property",
                 "ParentId": 44,
                 "Properties": {
-                  "_name": "GameObject",
-                  "_type": "Sandbox.Game/Sandbox.Component"
+                  "_type": "Sandbox.Game/Sandbox.Component",
+                  "_name": "GameObject"
                 }
               },
               {
@@ -122,8 +129,8 @@
                 "Id": 49,
                 "Type": "var",
                 "Properties": {
-                  "_var": "target",
-                  "_kind": "Set"
+                  "_kind": "Set",
+                  "_var": "target"
                 },
                 "UserData": {
                   "Position": "-432,256"
@@ -164,8 +171,8 @@
                 "Type": "property",
                 "ParentId": 52,
                 "Properties": {
-                  "_name": "Transform",
-                  "_type": "Sandbox.Game/Sandbox.Component"
+                  "_type": "Sandbox.Game/Sandbox.Component",
+                  "_name": "Transform"
                 },
                 "UserData": {
                   "Visible": false
@@ -176,16 +183,16 @@
                 "Type": "property",
                 "ParentId": 53,
                 "Properties": {
-                  "_name": "Position",
-                  "_type": "Sandbox.Game/Sandbox.GameTransform"
+                  "_type": "Sandbox.Game/Sandbox.GameTransform",
+                  "_name": "Position"
                 }
               },
               {
                 "Id": 55,
                 "Type": "property",
                 "Properties": {
-                  "_name": "Transform",
-                  "_type": "Sandbox.Game/Sandbox.GameObject"
+                  "_type": "Sandbox.Game/Sandbox.GameObject",
+                  "_name": "Transform"
                 },
                 "UserData": {
                   "Position": "-32,-32",
@@ -199,8 +206,8 @@
                 "Type": "property",
                 "ParentId": 55,
                 "Properties": {
-                  "_name": "Rotation",
-                  "_type": "Sandbox.Game/Sandbox.GameTransform"
+                  "_type": "Sandbox.Game/Sandbox.GameTransform",
+                  "_name": "Rotation"
                 },
                 "UserData": {
                   "Visible": false
@@ -211,8 +218,8 @@
                 "Type": "property",
                 "ParentId": 56,
                 "Properties": {
-                  "_name": "Forward",
-                  "_type": "Sandbox.System/Rotation"
+                  "_type": "Sandbox.System/Rotation",
+                  "_name": "Forward"
                 },
                 "UserData": {
                   "Labels": {
@@ -238,8 +245,8 @@
                 "Id": 61,
                 "Type": "property",
                 "Properties": {
-                  "_name": "Position",
-                  "_type": "Sandbox.Game/Sandbox.GameTransform"
+                  "_type": "Sandbox.Game/Sandbox.GameTransform",
+                  "_name": "Position"
                 },
                 "UserData": {
                   "Position": "352,720"
@@ -249,8 +256,8 @@
                 "Id": 62,
                 "Type": "property",
                 "Properties": {
-                  "_name": "Scene",
-                  "_type": "Sandbox.Game/Sandbox.GameObject"
+                  "_type": "Sandbox.Game/Sandbox.GameObject",
+                  "_name": "Scene"
                 },
                 "UserData": {
                   "Position": "-672,352"
@@ -261,9 +268,9 @@
                 "Type": "call",
                 "Properties": {
                   "T": "package.ziks.mazing/Mazing.Player",
+                  "_type": "Sandbox.Game/Sandbox.IComponentLister",
                   "_name": "GetAll",
-                  "_isStatic": false,
-                  "_type": "Sandbox.Game/Sandbox.IComponentLister"
+                  "_isStatic": false
                 },
                 "UserData": {
                   "Position": "-464,384"
@@ -273,8 +280,8 @@
                 "Id": 68,
                 "Type": "property",
                 "Properties": {
-                  "_name": "z",
-                  "_type": "Sandbox.System/Vector3"
+                  "_type": "Sandbox.System/Vector3",
+                  "_name": "z"
                 },
                 "UserData": {
                   "Position": "-96,656"
@@ -639,18 +646,10 @@
           "MazeSizeIncrement": 1,
           "State": "StartingLevel",
           "StateStart": {
-            "Relative": 3221.6565
+            "Relative": 1165.6359
           }
         }
       ]
-    },
-    {
-      "__guid": "1a448c74-794f-4f92-a9c9-348cbf0af311",
-      "Flags": 0,
-      "Name": "GameObject",
-      "Enabled": true,
-      "NetworkMode": 2,
-      "NetworkInterpolation": true
     }
   ],
   "SceneProperties": {
@@ -676,7 +675,7 @@
   },
   "Title": "minimal",
   "Description": "",
-  "LastSaved": "2024-05-10T10:17:46.3291759\u002B01:00",
+  "LastSaved": "2024-05-10T14:52:41.6560916\u002B01:00",
   "ResourceVersion": 1,
   "__version": 1,
   "__references": []

@@ -32,6 +32,8 @@ partial class Maze
 						Flags = flags
 					};
 
+					wall.Tags.Add( "wall" );
+
 					var renderer = wall.Components.Create<ModelRenderer>();
 
 					renderer.Model = WallModel;
@@ -64,6 +66,8 @@ partial class Maze
 						},
 						Flags = flags
 					};
+
+					wall.Tags.Add( "wall" );
 
 					var renderer = wall.Components.Create<ModelRenderer>();
 
@@ -159,6 +163,8 @@ partial class Maze
 						Flags = flags
 					};
 
+					floor.Tags.Add( "solid" );
+
 					var renderer = floor.Components.Create<ModelRenderer>();
 
 					renderer.Model = CubeModel;
@@ -181,6 +187,8 @@ partial class Maze
 							},
 							Flags = flags
 						};
+
+						floor.Tags.Add( "solid" );
 
 						var renderer = floor.Components.Create<ModelRenderer>();
 
@@ -207,6 +215,8 @@ partial class Maze
 						Flags = flags
 					};
 
+					block.Tags.Add( "solid" );
+
 					var renderer = block.Components.Create<ModelRenderer>();
 
 					renderer.Model = CubeModel;
@@ -230,6 +240,8 @@ partial class Maze
 							},
 							Flags = flags
 						};
+
+						block.Tags.Add( "solid" );
 
 						var renderer = block.Components.Create<ModelRenderer>();
 

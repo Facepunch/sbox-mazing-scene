@@ -19,6 +19,10 @@ public sealed class Mazer : Component
 	[RequireComponent] public Collider Trigger { get; set; } = null!;
 	[RequireComponent] public CharacterController CharacterController { get; set; } = null!;
 	[RequireComponent] public CitizenAnimationHelper AnimationHelper { get; set; } = null!;
+	[RequireComponent] public SkinnedModelRenderer ModelRenderer { get; set; } = null!;
+
+	[Property]
+	public Material GhostMaterial { get; set; }
 
 	[Property, Sync]
 	public Vector2 MoveInput { get; set; }
@@ -35,6 +39,9 @@ public sealed class Mazer : Component
 	[Property, Sync]
 	public TimeUntil NextVault { get; set; }
 
+	[Property, Sync]
+	public string? ClothingJson { get; set; }
+
 	public bool CanVault => NextVault > 0f;
 
 	public Direction Direction => _targetLook.GetDirection();
@@ -47,16 +54,18 @@ public sealed class Mazer : Component
 	private Vector2 _targetLook = Direction.West.GetNormal();
 
 	private int _lastCooldownTick;
+	private MazerState _lastState;
 
 	protected override void OnStart()
 	{
 		AnimationHelper.Target.OnFootstepEvent += Footstep;
 	}
 
-	[Broadcast( NetPermission.HostOnly )]
-	public void Kill()
+	public void SetClothing( ClothingContainer clothing )
 	{
-		State = MazerState.Dead;
+		ClothingJson = clothing.Serialize();
+
+		clothing.Apply( ModelRenderer );
 	}
 
 	public bool TryVault()
@@ -92,6 +101,65 @@ public sealed class Mazer : Component
 
 	protected override void OnUpdate()
 	{
+		if ( _lastState != State )
+		{
+			_lastState = State;
+
+			if ( State == MazerState.Dead )
+			{
+				OnBecomeGhost();
+			}
+			else if ( _lastState == MazerState.Dead )
+			{
+				OnBecomeAlive();
+			}
+		}
+
+		if ( State != MazerState.Dead )
+		{
+			OnAlive();
+		}
+
+		switch ( State )
+		{
+			case MazerState.Walking:
+				OnWalking();
+				return;
+
+			case MazerState.Falling:
+				OnFalling();
+				return;
+
+			case MazerState.Vaulting:
+				OnVaulting();
+				return;
+
+			case MazerState.Dead:
+				OnDead();
+				return;
+		}
+	}
+
+	private void OnBecomeGhost()
+	{
+		foreach ( var modelRenderer in Components.GetAll<ModelRenderer>() )
+		{
+			modelRenderer.MaterialOverride = GhostMaterial;
+			modelRenderer.Tint = new Color( 1f, 1f, 1f, 0.125f );
+		}
+	}
+
+	private void OnBecomeAlive()
+	{
+		foreach ( var modelRenderer in Components.GetAll<ModelRenderer>() )
+		{
+			modelRenderer.MaterialOverride = null;
+			modelRenderer.Tint = Color.White;
+		}
+	}
+
+	private void OnAlive()
+	{
 		var cooldownTick = Math.Max( 0, (int)MathF.Ceiling( NextVault ) );
 
 		if ( _lastCooldownTick != cooldownTick )
@@ -112,52 +180,11 @@ public sealed class Mazer : Component
 
 			AnimationHelper.TriggerJump();
 		}
-
-		switch ( State )
-		{
-			case MazerState.Walking:
-				OnWalking();
-				return;
-
-			case MazerState.Falling:
-				OnFalling();
-				return;
-
-			case MazerState.Vaulting:
-				OnVaulting();
-				return;
-		}
 	}
 
 	private void OnWalking()
 	{
-		CharacterController.ApplyFriction( 4f );
-
-		var input = MoveInput.LengthSquared > 1f ? MoveInput.Normal : MoveInput;
-
-		if ( input.LengthSquared <= 0.01f )
-		{
-			input = Vector2.Zero;
-		}
-		else
-		{
-			_targetLook = input.Normal;
-
-			AlignMovementToGrid( ref input );
-		}
-
-		CharacterController.Accelerate( input * MoveSpeed );
-
-		AnimationHelper.IsGrounded = true;
-		AnimationHelper.WithWishVelocity( input * MoveSpeed );
-		AnimationHelper.WithVelocity( CharacterController.Velocity );
-
-		var curRot = Transform.Rotation;
-		var targetRot = Rotation.LookAt( _targetLook, Vector3.Up );
-
-		Transform.Rotation = Rotation.Slerp( curRot, targetRot, Helpers.Ease( 0.125f ) );
-
-		CharacterController.Move();
+		Move( false );
 
 		if ( IsProxy )
 		{
@@ -171,7 +198,7 @@ public sealed class Mazer : Component
 		}
 	}
 
-	private void AlignMovementToGrid( ref Vector2 input )
+	private void AlignMovementToGrid( ref Vector2 input, bool noclip )
 	{
 		var (row, col) = MazeObject.CellIndex;
 		var cellPos = MazeObject.CellLocalPos;
@@ -190,7 +217,9 @@ public sealed class Mazer : Component
 				continue;
 			}
 
-			if ( MazeObject.View[row, col, direction] != WallState.Open )
+			var neighbor = direction.GetNeighbor( row, col );
+
+			if ( !noclip && MazeObject.View[row, col, direction] != WallState.Open || MazeObject.View[neighbor.Row, neighbor.Col] == CellState.Empty )
 			{
 				dist += 2f;
 			}
@@ -209,7 +238,10 @@ public sealed class Mazer : Component
 
 		var right = forward.Clockwise();
 
-		var forwardTarget = MazeObject.View[row, col, forward] == WallState.Open ? 1f : Vector2.Dot( cellPos - 0.5f, forward.GetNormal() ) * -8f;
+		var next = forward.GetNeighbor( row, col );
+
+		var forwardTarget = noclip && MazeObject.View[next.Row, next.Col] != CellState.Empty || MazeObject.View[row, col, forward] == WallState.Open
+			? 1f : Vector2.Dot( cellPos - 0.5f, forward.GetNormal() ) * -8f;
 		var rightTargetVel = Vector2.Dot( cellPos - 0.5f, right.GetNormal() ) * -8f;
 		var rightVel = CharacterController.Velocity.Dot( right.GetNormal() ) / MoveSpeed;
 		var rightTarget = rightTargetVel - rightVel;
@@ -284,5 +316,43 @@ public sealed class Mazer : Component
 
 			State = MazerState.Falling;
 		}
+	}
+
+	private void OnDead()
+	{
+		CharacterController.Accelerate( Vector3.Up * -100f );
+
+		Move( true );
+	}
+
+	private void Move( bool noclip )
+	{
+		CharacterController.ApplyFriction( 4f );
+
+		var input = MoveInput.LengthSquared > 1f ? MoveInput.Normal : MoveInput;
+
+		if ( input.LengthSquared <= 0.01f )
+		{
+			input = Vector2.Zero;
+		}
+		else
+		{
+			_targetLook = input.Normal;
+
+			AlignMovementToGrid( ref input, noclip );
+		}
+
+		CharacterController.Accelerate( input * MoveSpeed );
+
+		AnimationHelper.IsGrounded = !noclip;
+		AnimationHelper.WithWishVelocity( input * MoveSpeed );
+		AnimationHelper.WithVelocity( CharacterController.Velocity * (noclip ? 4f : 1f) );
+
+		var curRot = Transform.Rotation;
+		var targetRot = Rotation.LookAt( _targetLook, Vector3.Up );
+
+		Transform.Rotation = Rotation.Slerp( curRot, targetRot, Helpers.Ease( 0.125f ) );
+
+		CharacterController.Move();
 	}
 }

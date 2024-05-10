@@ -46,7 +46,9 @@ public sealed class MeleeAttacker : Component
 
 		NextAttack = 0f;
 
-		target.Mazer.Kill();
+		var force = ((target.Transform.Position - Transform.Position).WithZ( 0f ).Normal + Vector3.Up * 0.75f) * 5000f;
+
+		target.Kill( force );
 
 		DispatchAttacked( target.Id );
 	}

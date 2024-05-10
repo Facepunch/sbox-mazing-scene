@@ -183,4 +183,3 @@ partial class Maze
 		return player.Components.Get<Player>();
 	}
 }
-

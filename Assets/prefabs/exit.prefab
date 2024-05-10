@@ -1,15 +1,16 @@
 {
   "RootObject": {
-    "__guid": "6ab45c10-d549-4678-9272-13f687bc8965",
+    "__guid": "ec42d50f-da41-446d-82aa-cb969da8d58d",
     "Flags": 0,
     "Name": "exit",
+    "Tags": "solid",
     "Enabled": true,
     "NetworkMode": 1,
     "NetworkInterpolation": true,
     "Components": [
       {
         "__type": "Sandbox.SkinnedModelRenderer",
-        "__guid": "1f8e918c-63e1-4509-85e5-85c58ae5b4f8",
+        "__guid": "3ec557f1-adcb-47ed-9a96-1c568c41151c",
         "AnimationGraph": "animgraphs/hatch.vanmgrph",
         "BodyGroups": 18446744073709551615,
         "CreateBoneObjects": false,
@@ -19,11 +20,11 @@
       },
       {
         "__type": "Mazing.MazeObject",
-        "__guid": "6342e3d3-e642-4df5-991f-3bc6137e235d"
+        "__guid": "8a9627fb-49c6-4057-be7c-ec3304dde2e6"
       },
       {
         "__type": "Sandbox.BoxCollider",
-        "__guid": "d7031e7b-fc27-4b19-a3a6-267fb41dc9ab",
+        "__guid": "d27b0ec7-9544-4e93-a431-34b5e339ae68",
         "Center": "0,0,-16",
         "IsTrigger": false,
         "Scale": "48,48,32",
@@ -31,10 +32,10 @@
       },
       {
         "__type": "Mazing.Exit",
-        "__guid": "58792293-f14e-496b-8141-afad826bdfbc",
+        "__guid": "8d6d05d1-ea31-4c3f-b80c-ea4410af81ad",
         "Opened": {
           "__version": 7,
-          "__guid": "f27eb228-a8a4-4672-9fd4-226a1747e112",
+          "__guid": "5a8ad5a9-3584-4350-93e0-409c310b9b60",
           "UserData": {
             "Title": "Opened",
             "ReferencedComponentTypes": []
@@ -43,32 +44,9 @@
           "Nodes": [
             {
               "Id": 0,
-              "Type": "input"
-            },
-            {
-              "Id": 2,
-              "Type": "scene.ref",
-              "Properties": {
-                "component": {
-                  "_type": "component",
-                  "component_id": "d7031e7b-fc27-4b19-a3a6-267fb41dc9ab",
-                  "go": "6ab45c10-d549-4678-9272-13f687bc8965",
-                  "component_type": "BoxCollider"
-                }
-              },
+              "Type": "input",
               "UserData": {
-                "Position": "-16,64"
-              }
-            },
-            {
-              "Id": 3,
-              "Type": "property",
-              "Properties": {
-                "_name": "Enabled",
-                "_type": "Sandbox.Game/Sandbox.Component"
-              },
-              "UserData": {
-                "Position": "240,0"
+                "Position": "-224,0"
               }
             },
             {
@@ -77,8 +55,8 @@
               "Properties": {
                 "component": {
                   "_type": "component",
-                  "component_id": "1f8e918c-63e1-4509-85e5-85c58ae5b4f8",
-                  "go": "6ab45c10-d549-4678-9272-13f687bc8965",
+                  "component_id": "3ec557f1-adcb-47ed-9a96-1c568c41151c",
+                  "go": "ec42d50f-da41-446d-82aa-cb969da8d58d",
                   "component_type": "SkinnedModelRenderer"
                 }
               },
@@ -90,9 +68,9 @@
               "Id": 9,
               "Type": "call",
               "Properties": {
+                "_type": "Sandbox.Game/Sandbox.SkinnedModelRenderer",
                 "_name": "Set",
-                "_isStatic": false,
-                "_type": "Sandbox.Game/Sandbox.SkinnedModelRenderer"
+                "_isStatic": false
               },
               "UserData": {
                 "Position": "560,0"
@@ -115,28 +93,49 @@
               "UserData": {
                 "Position": "944,0"
               }
+            },
+            {
+              "Id": 25,
+              "Type": "property",
+              "Properties": {
+                "_type": "Sandbox.Game/Sandbox.GameObject",
+                "_name": "Tags"
+              },
+              "UserData": {
+                "Position": "0,-80",
+                "Labels": {
+                  "_result": "tags"
+                }
+              }
+            },
+            {
+              "Id": 26,
+              "Type": "call",
+              "Properties": {
+                "_type": "Sandbox.Game/Sandbox.GameTags",
+                "_name": "Remove",
+                "_isStatic": false
+              },
+              "UserData": {
+                "Position": "-0,-0"
+              }
+            },
+            {
+              "Id": 32,
+              "Type": "call",
+              "Properties": {
+                "_type": "Sandbox.Game/Sandbox.GameTags",
+                "_name": "Add",
+                "_isStatic": false
+              },
+              "UserData": {
+                "Position": "240,0"
+              }
             }
           ],
           "Links": [
             {
-              "SrcId": 0,
-              "SrcName": "_signal",
-              "DstId": 3,
-              "DstName": "_signal"
-            },
-            {
-              "SrcId": 2,
-              "SrcName": "_result",
-              "DstId": 3,
-              "DstName": "_target"
-            },
-            {
-              "Value": false,
-              "DstId": 3,
-              "DstName": "_value"
-            },
-            {
-              "SrcId": 3,
+              "SrcId": 32,
               "SrcName": "_signal",
               "DstId": 9,
               "DstName": "_signal"
@@ -174,19 +173,54 @@
               "SrcName": "_result",
               "DstId": 19,
               "DstName": "soundEvent"
+            },
+            {
+              "SrcId": 0,
+              "SrcName": "_target",
+              "DstId": 25,
+              "DstName": "_target"
+            },
+            {
+              "SrcId": 0,
+              "SrcName": "_signal",
+              "DstId": 26,
+              "DstName": "_signal"
+            },
+            {
+              "SrcId": 25,
+              "SrcName": "_result",
+              "DstId": 26,
+              "DstName": "_target"
+            },
+            {
+              "Value": "solid",
+              "DstId": 26,
+              "DstName": "tag"
+            },
+            {
+              "SrcId": 26,
+              "SrcName": "_signal",
+              "DstId": 32,
+              "DstName": "_signal"
+            },
+            {
+              "SrcId": 25,
+              "SrcName": "_result",
+              "DstId": 32,
+              "DstName": "_target"
+            },
+            {
+              "Value": "exit",
+              "DstId": 32,
+              "DstName": "tags",
+              "DstIndex": 0
             }
           ],
           "Defaults": {
-            "$2.component": {
-              "_type": "component",
-              "component_id": "d7031e7b-fc27-4b19-a3a6-267fb41dc9ab",
-              "go": "6ab45c10-d549-4678-9272-13f687bc8965",
-              "component_type": "BoxCollider"
-            },
             "$7.component": {
               "_type": "component",
-              "component_id": "1f8e918c-63e1-4509-85e5-85c58ae5b4f8",
-              "go": "6ab45c10-d549-4678-9272-13f687bc8965",
+              "component_id": "3ec557f1-adcb-47ed-9a96-1c568c41151c",
+              "go": "ec42d50f-da41-446d-82aa-cb969da8d58d",
               "component_type": "SkinnedModelRenderer"
             }
           }
@@ -194,15 +228,15 @@
         "IsOpen": false,
         "Trigger": {
           "_type": "component",
-          "component_id": "fc1ecec3-8e71-41b7-bf1e-1f14f8abfd63",
-          "go": "120be263-0ddf-4e4d-9c44-c8a70985da9b",
+          "component_id": "8e5d5194-0892-4c69-b7ac-b8be3fea3a83",
+          "go": "ac5a8945-9fa5-4288-9f07-1606ab5075a8",
           "component_type": "BoxCollider"
         }
       }
     ],
     "Children": [
       {
-        "__guid": "120be263-0ddf-4e4d-9c44-c8a70985da9b",
+        "__guid": "ac5a8945-9fa5-4288-9f07-1606ab5075a8",
         "Flags": 0,
         "Name": "Trigger",
         "Enabled": true,
@@ -211,7 +245,7 @@
         "Components": [
           {
             "__type": "Sandbox.BoxCollider",
-            "__guid": "fc1ecec3-8e71-41b7-bf1e-1f14f8abfd63",
+            "__guid": "8e5d5194-0892-4c69-b7ac-b8be3fea3a83",
             "Center": "0,0,32",
             "IsTrigger": true,
             "Scale": "24,24,64",
