@@ -104,8 +104,8 @@
                 "Type": "property",
                 "ParentId": 44,
                 "Properties": {
-                  "_type": "Sandbox.Game/Sandbox.Component",
-                  "_name": "GameObject"
+                  "_name": "GameObject",
+                  "_type": "Sandbox.Game/Sandbox.Component"
                 }
               },
               {
@@ -245,8 +245,8 @@
                 "Id": 61,
                 "Type": "property",
                 "Properties": {
-                  "_type": "Sandbox.Game/Sandbox.GameTransform",
-                  "_name": "Position"
+                  "_name": "Position",
+                  "_type": "Sandbox.Game/Sandbox.GameTransform"
                 },
                 "UserData": {
                   "Position": "352,720"
@@ -646,7 +646,7 @@
           "MazeSizeIncrement": 1,
           "State": "StartingLevel",
           "StateStart": {
-            "Relative": 1165.6359
+            "Relative": 79.915825
           }
         }
       ]
@@ -675,7 +675,7 @@
   },
   "Title": "minimal",
   "Description": "",
-  "LastSaved": "2024-05-10T14:52:41.6560916\u002B01:00",
+  "LastSaved": "2024-05-10T15:26:07.4033192\u002B01:00",
   "ResourceVersion": 1,
   "__version": 1,
   "__references": []

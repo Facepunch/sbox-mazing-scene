@@ -344,6 +344,7 @@ public sealed class Mazer : Component
 
 		CharacterController.Accelerate( input * MoveSpeed );
 
+		AnimationHelper.IsNoclipping = noclip;
 		AnimationHelper.IsGrounded = !noclip;
 		AnimationHelper.WithWishVelocity( input * MoveSpeed );
 		AnimationHelper.WithVelocity( CharacterController.Velocity * (noclip ? 4f : 1f) );
