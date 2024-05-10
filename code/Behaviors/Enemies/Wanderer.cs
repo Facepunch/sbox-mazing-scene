@@ -12,7 +12,7 @@ public class Wanderer : Navigator
 			? since : 60f;
 	}
 
-	protected override (int Row, int Col)? GetNewTarget()
+	protected override Direction? GetNewTarget()
 	{
 		var (row, col) = MazeObject.CellIndex;
 
@@ -22,6 +22,6 @@ public class Wanderer : Navigator
 			.Where( x => MazeObject.View[row, col, x] == WallState.Open )
 			.MaxBy( x => LastVisited( x.GetNeighbor( row, col ) ) + Random.Shared.NextSingle() );
 
-		return dir.GetNeighbor( row, col );
+		return dir;
 	}
 }

@@ -671,7 +671,7 @@
           "MazeSizeIncrement": 1,
           "State": "StartingLevel",
           "StateStart": {
-            "Relative": 14135.937
+            "Relative": 16415.723
           },
           "TreasureCountIncrement": 1
         }
@@ -701,7 +701,7 @@
   },
   "Title": "minimal",
   "Description": "",
-  "LastSaved": "2024-05-10T23:21:32.047989\u002B01:00",
+  "LastSaved": "2024-05-10T23:59:31.8280001\u002B01:00",
   "ResourceVersion": 1,
   "__version": 1,
   "__references": []

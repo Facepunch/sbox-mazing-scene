@@ -88,6 +88,16 @@ public static class DirectionExtensions
 		return vec.y < 0f ? Direction.West : Direction.East;
 	}
 
+	public static Direction GetDirection( this (int Row, int Col) tuple )
+	{
+		if ( MathF.Abs( tuple.Row ) > MathF.Abs( tuple.Col ) )
+		{
+			return tuple.Row < 0f ? Direction.North : Direction.South;
+		}
+
+		return tuple.Col < 0f ? Direction.West : Direction.East;
+	}
+
 	public static Vector2 GetNormal( this Direction dir )
 	{
 		return dir switch

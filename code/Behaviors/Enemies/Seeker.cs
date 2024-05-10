@@ -3,7 +3,7 @@ namespace Mazing;
 
 public sealed class Seeker : Wanderer
 {
-	protected override (int Row, int Col)? GetNewTarget()
+	protected override Direction? GetNewTarget()
 	{
 		var ends = Scene.Components.GetAll<Player>( FindMode.Enabled | FindMode.InChildren )
 			.Where( x => x.Mazer.State is MazerState.Walking or MazerState.Vaulting )
@@ -12,7 +12,7 @@ public sealed class Seeker : Wanderer
 
 		var path = MazeObject.View.FindPathToAny( MazeObject.CellIndex, ends, 256, MazeObject.Maze.GetPathCost );
 
-		return path?[1] ?? base.GetNewTarget();
+		return path?[1].GetDirection() ?? base.GetNewTarget();
 	}
 }
 

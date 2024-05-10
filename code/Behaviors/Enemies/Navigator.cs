@@ -14,9 +14,13 @@ public abstract class Navigator : Component
 
 	private TimeUntil _nextTargetUpdate;
 
+	protected Direction Direction { get; private set; }
+
 	protected override void OnStart()
 	{
 		_nextTargetUpdate = 3f + Random.Shared.NextSingle();
+
+		Direction = ((Vector2)Transform.Rotation.Forward).GetDirection();
 	}
 
 	protected override void OnUpdate()
@@ -26,9 +30,16 @@ public abstract class Navigator : Component
 			return;
 		}
 
+		var (row, col) = MazeObject.CellIndex;
+
 		if ( _target is null && _nextTargetUpdate <= 0f )
 		{
-			_target = GetNewTarget();
+			if ( GetNewTarget() is { } targetDir )
+			{
+				_target = targetDir.GetNeighbor( row, col );
+				Direction = targetDir;
+			}
+
 			_nextTargetUpdate = MinTargetUpdatePeriod;
 		}
 
@@ -37,18 +48,17 @@ public abstract class Navigator : Component
 			return;
 		}
 
-		var (row, col) = MazeObject.CellIndex;
 		var dist = Math.Abs( target.Row - row ) + Math.Abs( target.Col - col );
 		var targetPos = MazeObject.Maze.MazeToWorldPos( target.Row, target.Col );
 		var diff = (Vector2)(targetPos - Transform.Position);
 
-		Mazer.MoveInput = diff.IsNearZeroLength ? 0f : diff.Normal;
+		Mazer.MoveInput = Direction.GetNormal();
 
-		if ( diff.LengthSquared < 4f )
+		if ( Vector2.Dot( Direction.GetNormal(), diff ) <= 4f || dist > 1 )
 		{
 			_target = null;
 		}
 	}
 
-	protected abstract (int Row, int Col)? GetNewTarget();
+	protected abstract Direction? GetNewTarget();
 }
