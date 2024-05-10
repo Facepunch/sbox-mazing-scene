@@ -83,25 +83,60 @@ partial class BaseMazeGenerator
 
 		// Knock through a few more walls
 
-		var extraWallCount = Math.Max( 2, walls.Count / 16 );
+		walls.Clear();
 
-		while ( walls.Count > 0 && extraWallCount > 0 )
+		for ( var j = 0; j < data.Height; ++j )
 		{
-			var index = random.Next( walls.Count );
-			var wall = walls[index];
+			for ( var i = 1; i < data.Width; ++i )
+			{
+				if ( data[j, i - 1] == CellState.Empty || data[j, i] == CellState.Empty )
+				{
+					continue;
+				}
 
-			walls.RemoveAt( index );
+				if ( data[j, i, Direction.West] == WallState.Open )
+				{
+					continue;
+				}
 
-			if ( data[wall.Row, wall.Col, wall.Dir] == WallState.Open )
+				walls.Add( (j, i, Direction.West) );
+			}
+		}
+
+		for ( var j = 1; j < data.Height; ++j )
+		{
+			for ( var i = 0; i < data.Width; ++i )
+			{
+				if ( data[j - 1, i] == CellState.Empty || data[j, i] == CellState.Empty )
+				{
+					continue;
+				}
+
+				if ( data[j, i, Direction.North] == WallState.Open )
+				{
+					continue;
+				}
+
+				walls.Add( (j, i, Direction.North) );
+			}
+		}
+
+		walls.Shuffle( random );
+
+		var toRemove = Math.Max( 2, walls.Count / 16 );
+
+		while ( walls.Count > 0 && toRemove > 0 )
+		{
+			var wall = walls[^1];
+			walls.RemoveAt( walls.Count - 1 );
+
+			if ( data.FindPath( (wall.Row, wall.Col), wall.Dir.GetNeighbor( wall.Row, wall.Col ), 8 ) is {} path )
 			{
 				continue;
 			}
 
-			if ( random.NextSingle() < 0.125f ) //  !data.TryFindPath( (wall.Row, wall.Col), Neighbor( wall.Row, wall.Col, wall.Dir ), 8, out _ ) )
-			{
-				--extraWallCount;
-				data[wall.Row, wall.Col, wall.Dir] = WallState.Open;
-			}
+			data[wall.Row, wall.Col, wall.Dir] = WallState.Open;
+			--toRemove;
 		}
 	}
 }
