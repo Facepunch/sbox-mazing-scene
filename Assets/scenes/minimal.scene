@@ -95,8 +95,8 @@
                 "Id": 55,
                 "Type": "property",
                 "Properties": {
-                  "_name": "Transform",
-                  "_type": "Sandbox.Game/Sandbox.GameObject"
+                  "_type": "Sandbox.Game/Sandbox.GameObject",
+                  "_name": "Transform"
                 },
                 "UserData": {
                   "Position": "-32,-32",
@@ -110,8 +110,8 @@
                 "Type": "property",
                 "ParentId": 55,
                 "Properties": {
-                  "_name": "Rotation",
-                  "_type": "Sandbox.Game/Sandbox.GameTransform"
+                  "_type": "Sandbox.Game/Sandbox.GameTransform",
+                  "_name": "Rotation"
                 },
                 "UserData": {
                   "Visible": false
@@ -122,8 +122,8 @@
                 "Type": "property",
                 "ParentId": 56,
                 "Properties": {
-                  "_name": "Forward",
-                  "_type": "Sandbox.System/Rotation"
+                  "_type": "Sandbox.System/Rotation",
+                  "_name": "Forward"
                 },
                 "UserData": {
                   "Labels": {
@@ -149,8 +149,8 @@
                 "Id": 61,
                 "Type": "property",
                 "Properties": {
-                  "_name": "Position",
-                  "_type": "Sandbox.Game/Sandbox.GameTransform"
+                  "_type": "Sandbox.Game/Sandbox.GameTransform",
+                  "_name": "Position"
                 },
                 "UserData": {
                   "Position": "352,720"
@@ -160,8 +160,8 @@
                 "Id": 68,
                 "Type": "property",
                 "Properties": {
-                  "_name": "z",
-                  "_type": "Sandbox.System/Vector3"
+                  "_type": "Sandbox.System/Vector3",
+                  "_name": "z"
                 },
                 "UserData": {
                   "Position": "-96,656"
@@ -189,8 +189,8 @@
                 "Type": "property",
                 "ParentId": 77,
                 "Properties": {
-                  "_name": "Transform",
-                  "_type": "Sandbox.Game/Sandbox.Component"
+                  "_type": "Sandbox.Game/Sandbox.Component",
+                  "_name": "Transform"
                 },
                 "UserData": {
                   "Visible": false
@@ -201,8 +201,8 @@
                 "Type": "property",
                 "ParentId": 78,
                 "Properties": {
-                  "_name": "Position",
-                  "_type": "Sandbox.Game/Sandbox.GameTransform"
+                  "_type": "Sandbox.Game/Sandbox.GameTransform",
+                  "_name": "Position"
                 },
                 "UserData": {
                   "Labels": {
@@ -215,8 +215,8 @@
                 "Type": "property",
                 "ParentId": 77,
                 "Properties": {
-                  "_name": "IsDead",
-                  "_type": "package.ziks.mazing/Mazing.Player"
+                  "_type": "package.ziks.mazing/Mazing.Player",
+                  "_name": "IsDead"
                 },
                 "UserData": {
                   "Labels": {
@@ -228,8 +228,8 @@
                 "Id": 94,
                 "Type": "property",
                 "Properties": {
-                  "_name": "Saturation",
-                  "_type": "Sandbox.Game/Sandbox.ColorAdjustments"
+                  "_type": "Sandbox.Game/Sandbox.ColorAdjustments",
+                  "_name": "Saturation"
                 },
                 "UserData": {
                   "Position": "-400,288"
@@ -259,8 +259,8 @@
                 "Id": 109,
                 "Type": "property",
                 "Properties": {
-                  "_name": "Saturation",
-                  "_type": "Sandbox.Game/Sandbox.ColorAdjustments"
+                  "_type": "Sandbox.Game/Sandbox.ColorAdjustments",
+                  "_name": "Saturation"
                 },
                 "UserData": {
                   "Position": "336,320"
@@ -283,9 +283,9 @@
                 "Id": 116,
                 "Type": "call",
                 "Properties": {
+                  "_type": "package.ziks.mazing/Mazing.Helpers",
                   "_name": "LerpTo",
-                  "_isStatic": true,
-                  "_type": "package.ziks.mazing/Mazing.Helpers"
+                  "_isStatic": true
                 },
                 "UserData": {
                   "Position": "16,320"
@@ -486,13 +486,13 @@
               }
             ],
             "Defaults": {
-              "$110.component": {
+              "$95.component": {
                 "_type": "component",
                 "component_id": "0dc86950-f66e-4ecf-a39c-4add7b3e26f2",
                 "go": "3ee1c9f4-07be-4e0b-8b23-67bee2d8ec8a",
                 "component_type": "ColorAdjustments"
               },
-              "$95.component": {
+              "$110.component": {
                 "_type": "component",
                 "component_id": "0dc86950-f66e-4ecf-a39c-4add7b3e26f2",
                 "go": "3ee1c9f4-07be-4e0b-8b23-67bee2d8ec8a",
@@ -596,8 +596,7 @@
           "TreasureCount": 2,
           "WallModel": "models/wall.vmdl"
         }
-      ],
-      "Children": []
+      ]
     },
     {
       "__guid": "64e3759a-f77b-42ce-bca5-622faf25cefd",
@@ -666,12 +665,12 @@
           "EnemyCountIncrement": 1,
           "InitialEnemyCount": 2,
           "InitialMazeSize": 4,
-          "InitialTreasureCount": 2,
+          "InitialTreasureCount": 3,
           "Level": 0,
           "MazeSizeIncrement": 1,
           "State": "StartingLevel",
           "StateStart": {
-            "Relative": 13379.721
+            "Relative": 816.39465
           },
           "TreasureCountIncrement": 1
         }
@@ -701,7 +700,7 @@
   },
   "Title": "minimal",
   "Description": "",
-  "LastSaved": "2024-05-10T19:07:47.4710028\u002B01:00",
+  "LastSaved": "2024-05-10T19:39:32.3691203\u002B01:00",
   "ResourceVersion": 1,
   "__version": 1,
   "__references": []

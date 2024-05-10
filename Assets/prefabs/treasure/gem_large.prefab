@@ -1,17 +1,17 @@
 {
   "RootObject": {
-    "__guid": "5cf2c5b8-93b6-4f72-9742-91735ceb5a85",
+    "__guid": "85861a48-3f5d-4c06-9810-90417be5b0a0",
     "Flags": 0,
-    "Name": "gem_small",
+    "Name": "gem_large",
     "Enabled": true,
     "NetworkMode": 1,
     "NetworkInterpolation": true,
     "Components": [
       {
         "__type": "Sandbox.SkinnedModelRenderer",
-        "__guid": "0718e41f-7058-455a-970b-2ee3a065ea1b",
+        "__guid": "2e5cab97-3bc1-4e3a-924b-3213c38d5c41",
         "AnimationGraph": "animgraphs/item.vanmgrph",
-        "BodyGroups": 2,
+        "BodyGroups": 8,
         "CreateBoneObjects": true,
         "Model": "models/item.vmdl",
         "RenderType": "Off",
@@ -19,10 +19,10 @@
       },
       {
         "__type": "Mazing.Holdable",
-        "__guid": "efa83f6e-7642-4bf3-8135-a4fda7571063",
+        "__guid": "db947b6d-d06b-4791-a28d-bf6eb4c449f1",
         "PickedUp": {
           "__version": 7,
-          "__guid": "76cfc130-055a-43e5-98bb-52b6754aed06",
+          "__guid": "87b847d4-cc94-4bea-a49f-173dbf2bf357",
           "UserData": {
             "Title": "Picked Up",
             "ReferencedComponentTypes": []
@@ -37,11 +37,11 @@
               "Id": 2,
               "Type": "resource.ref",
               "Properties": {
-                "value": "sounds/treasure/gem1.collect.sound",
+                "value": "sounds/treasure/gem3.collect.sound",
                 "T": "Sandbox.Engine/Sandbox.SoundEvent"
               },
               "UserData": {
-                "Position": "0,112"
+                "Position": "-32,112"
               }
             },
             {
@@ -77,14 +77,14 @@
       },
       {
         "__type": "Mazing.MazeObject",
-        "__guid": "1d65aa57-1860-4126-b50c-77814e8361b1"
+        "__guid": "c8441450-70fa-4630-8eaf-bbfcb2fcb8a6"
       },
       {
         "__type": "Mazing.Throwable",
-        "__guid": "e748bc74-24c6-42d9-a905-cdf2e2d63932",
+        "__guid": "1e136e97-a2be-4597-917f-11fb0fa43ef0",
         "Landed": {
           "__version": 7,
-          "__guid": "57f0bcc5-b3bc-4e0f-a9ea-60c87fbbdc06",
+          "__guid": "8e60f680-692f-4596-af03-4bf36ce96bcf",
           "UserData": {
             "Title": "Landed",
             "ReferencedComponentTypes": []
@@ -99,18 +99,18 @@
               "Id": 2,
               "Type": "resource.ref",
               "Properties": {
-                "value": "sounds/treasure/gem1.drop.sound",
+                "value": "sounds/treasure/gem3.drop.sound",
                 "T": "Sandbox.Engine/Sandbox.SoundEvent"
               },
               "UserData": {
-                "Position": "16,112"
+                "Position": "-0,128"
               }
             },
             {
               "Id": 3,
               "Type": "sound.play",
               "UserData": {
-                "Position": "288,64"
+                "Position": "288,80"
               }
             }
           ],
@@ -143,7 +143,7 @@
       },
       {
         "__type": "Sandbox.SphereCollider",
-        "__guid": "52d9231c-241e-42d4-9acd-ebb2fee76535",
+        "__guid": "d8b05a5e-ec0c-42d5-ae12-9d0310493826",
         "Center": "0,0,32",
         "IsTrigger": true,
         "Radius": 16,
@@ -151,13 +151,13 @@
       },
       {
         "__type": "Mazing.Treasure",
-        "__guid": "caed0900-cfc3-4d6c-aa68-cfa05e60ae8f",
-        "Value": 1
+        "__guid": "8781889d-3c32-47f7-971f-59e11307b8ec",
+        "Value": 5
       }
     ],
     "Children": [
       {
-        "__guid": "fd0c016d-c52c-41c4-91d3-d01fef1eb896",
+        "__guid": "497be9ef-fa57-4eb0-857e-2cb5e3c37193",
         "Flags": 4,
         "Name": "Item",
         "Position": "0.0000180792,0.00002670288,119.9999",
@@ -169,18 +169,18 @@
         "Components": [
           {
             "__type": "Sandbox.PointLight",
-            "__guid": "ead84c6c-fc34-4421-b780-d8bfb43f1495",
+            "__guid": "561f4b06-2934-45ed-8a77-750cb32b3dfc",
             "Attenuation": 1,
             "FogMode": "Enabled",
             "FogStrength": 1,
-            "LightColor": "0.18431,0.76471,0.12941,1",
-            "Radius": 64,
+            "LightColor": "0.76471,0.12549,0.18824,1",
+            "Radius": 96,
             "Shadows": false
           }
         ],
         "Children": [
           {
-            "__guid": "3c07f831-1749-4747-882c-40bb4780ec4e",
+            "__guid": "75b2cfa1-1b67-447a-8cbc-f3e335d7bdac",
             "Flags": 4,
             "Name": "Item_end",
             "Position": "-0.00002288818,5.99995,0.00002067227",
@@ -191,7 +191,7 @@
         ]
       },
       {
-        "__guid": "3468ac11-5543-47b5-99c4-566209c6140f",
+        "__guid": "da541fd7-6f25-426a-9965-af2fd6e37827",
         "Flags": 4,
         "Name": "Root",
         "Position": "0.00001130809,0.00001703013,95.99996",

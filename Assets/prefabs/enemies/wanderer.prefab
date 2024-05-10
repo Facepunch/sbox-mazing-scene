@@ -1,6 +1,6 @@
 {
   "RootObject": {
-    "__guid": "27fd9ad4-226f-4de1-a894-6024203d7d25",
+    "__guid": "bf7ac129-cc4e-4dbb-9417-6f3208a7ca16",
     "Flags": 0,
     "Name": "wanderer",
     "Tags": "enemy",
@@ -10,7 +10,7 @@
     "Components": [
       {
         "__type": "Sandbox.SkinnedModelRenderer",
-        "__guid": "bfb28809-626c-44e4-9de9-7ee5a52a96a7",
+        "__guid": "3df2887c-d139-49a4-902d-c8256110e5ab",
         "BodyGroups": 0,
         "CreateBoneObjects": false,
         "MaterialGroup": "default",
@@ -20,28 +20,28 @@
       },
       {
         "__type": "Sandbox.Citizen.CitizenAnimationHelper",
-        "__guid": "f8f8959e-a4e1-4ba3-a934-2b29bc0e0293",
+        "__guid": "ddd5b82e-9e2d-403f-9778-beffd7d10174",
         "BodyWeight": 1,
         "EyeSource": {
           "_type": "gameobject",
-          "go": "b8bd7d09-ef3a-4cce-aa52-ec2c7d2c397c"
+          "go": "decb43d7-600c-475a-9898-7395154acb8d"
         },
         "EyesWeight": 1,
         "HeadWeight": 1,
         "LookAtEnabled": false,
         "Target": {
           "_type": "component",
-          "component_id": "bfb28809-626c-44e4-9de9-7ee5a52a96a7",
-          "go": "27fd9ad4-226f-4de1-a894-6024203d7d25",
+          "component_id": "3df2887c-d139-49a4-902d-c8256110e5ab",
+          "go": "bf7ac129-cc4e-4dbb-9417-6f3208a7ca16",
           "component_type": "SkinnedModelRenderer"
         }
       },
       {
         "__type": "Mazing.Mazer",
-        "__guid": "f1a78f05-5f51-4f65-ad70-44d74980a8a1",
+        "__guid": "7686d6e8-d1e1-478e-b96e-6b6320765b38",
         "Footstep": {
           "__version": 7,
-          "__guid": "ffc10680-a3cd-443c-9d22-a5a2a893679e",
+          "__guid": "922aac12-86ee-435a-863c-5d584bda493d",
           "UserData": {
             "Title": "Footstep",
             "ReferencedComponentTypes": []
@@ -215,8 +215,8 @@
         "MoveInput": "0,0",
         "MoveSpeed": 60,
         "NextVault": {
-          "Relative": -682.47754,
-          "Passed": 682.47754,
+          "Relative": -13970.924,
+          "Passed": 13970.924,
           "Fraction": 1
         },
         "State": "Walking",
@@ -224,21 +224,24 @@
       },
       {
         "__type": "Mazing.MazeObject",
-        "__guid": "bab893ef-2deb-4dd5-bc37-c6ffa03e6d45"
+        "__guid": "b4d2cec1-63ed-476c-ab0a-5e047d5c19ed"
       },
       {
         "__type": "Mazing.Throwable",
-        "__guid": "ecf43d20-ef43-4e52-bc29-5f112f8da1a6",
+        "__guid": "b29940f0-6d62-4fef-b054-f7ef73bd9591",
+        "CanExit": false,
+        "IndexOnFloor": 0,
+        "IsExiting": false,
         "ThrowDuration": 0.5,
         "ThrowHeight": 64
       },
       {
         "__type": "Mazing.Wander",
-        "__guid": "8f7f7879-e95a-4435-8939-08d05a1be943"
+        "__guid": "d6c3cb6f-ed01-41e4-83e5-f28cafe05407"
       },
       {
         "__type": "Sandbox.CapsuleCollider",
-        "__guid": "fba6e548-4669-476d-ad51-a73eecc97fd4",
+        "__guid": "c1601d22-da43-46ef-84cb-5b7d13721613",
         "End": "0,0,64",
         "IsTrigger": true,
         "Radius": 8,
@@ -247,7 +250,7 @@
       },
       {
         "__type": "Sandbox.CharacterController",
-        "__guid": "c31398d0-d402-4122-bcbd-5573de374943",
+        "__guid": "913f4381-4b6d-46fc-b7fb-2d7b7bc1da35",
         "Acceleration": 10,
         "Bounciness": 0.3,
         "GroundAngle": 45,
@@ -259,7 +262,7 @@
       },
       {
         "__type": "Mazing.ClothingSpawner",
-        "__guid": "ef48d9d0-c2a1-49b9-81ac-f68406b742e3",
+        "__guid": "b62772b6-3a11-4ba3-9ecf-f448a2a7a893",
         "Clothing": [
           "models/citizen_clothes/full_outfit/medieval_armour/medieval_armour.clothing",
           "models/citizen_clothes/hat/bucket_helmet/models/bucket_helmet.clothing"
@@ -267,12 +270,12 @@
       },
       {
         "__type": "Mazing.Enemy",
-        "__guid": "76751cdc-7330-4624-b56c-849b9f6f388d",
+        "__guid": "d6199de5-b2e0-429a-9c56-8576e3372c72",
         "Difficulty": 1,
         "MinLevel": 0,
         "OnComponentStart": {
           "__version": 7,
-          "__guid": "a0b1ae9a-3945-4dc9-b788-3dcba38ba75d",
+          "__guid": "5487446c-641c-4558-93f5-98995e5b4968",
           "UserData": {
             "Title": "On Component Start",
             "ReferencedComponentTypes": []
@@ -289,8 +292,8 @@
               "Properties": {
                 "component": {
                   "_type": "component",
-                  "component_id": "f8f8959e-a4e1-4ba3-a934-2b29bc0e0293",
-                  "go": "27fd9ad4-226f-4de1-a894-6024203d7d25",
+                  "component_id": "ddd5b82e-9e2d-403f-9778-beffd7d10174",
+                  "go": "bf7ac129-cc4e-4dbb-9417-6f3208a7ca16",
                   "component_type": "CitizenAnimationHelper"
                 }
               },
@@ -335,8 +338,8 @@
           "Defaults": {
             "$2.component": {
               "_type": "component",
-              "component_id": "f8f8959e-a4e1-4ba3-a934-2b29bc0e0293",
-              "go": "27fd9ad4-226f-4de1-a894-6024203d7d25",
+              "component_id": "ddd5b82e-9e2d-403f-9778-beffd7d10174",
+              "go": "bf7ac129-cc4e-4dbb-9417-6f3208a7ca16",
               "component_type": "CitizenAnimationHelper"
             }
           }
@@ -344,10 +347,10 @@
       },
       {
         "__type": "Mazing.MeleeAttacker",
-        "__guid": "6e828c32-785c-40b5-8988-730af20f37ae",
+        "__guid": "4cedc5d0-6938-44e8-8466-3be2111bcc45",
         "Attacked": {
           "__version": 7,
-          "__guid": "4bf5051b-0717-423f-a244-d94880c98866",
+          "__guid": "afb3d746-df0b-4336-990b-33a519d8045b",
           "UserData": {
             "Title": "Attacked",
             "ReferencedComponentTypes": []
@@ -401,8 +404,8 @@
               "Properties": {
                 "component": {
                   "_type": "component",
-                  "component_id": "f8f8959e-a4e1-4ba3-a934-2b29bc0e0293",
-                  "go": "27fd9ad4-226f-4de1-a894-6024203d7d25",
+                  "component_id": "ddd5b82e-9e2d-403f-9778-beffd7d10174",
+                  "go": "bf7ac129-cc4e-4dbb-9417-6f3208a7ca16",
                   "component_type": "CitizenAnimationHelper"
                 }
               },
@@ -428,8 +431,8 @@
               "Id": 12,
               "Type": "property",
               "Properties": {
-                "_name": "HoldType",
                 "_kind": "Set",
+                "_name": "HoldType",
                 "_type": "package.base/Sandbox.Citizen.CitizenAnimationHelper"
               },
               "UserData": {
@@ -442,8 +445,8 @@
               "Properties": {
                 "component": {
                   "_type": "component",
-                  "component_id": "bfb28809-626c-44e4-9de9-7ee5a52a96a7",
-                  "go": "27fd9ad4-226f-4de1-a894-6024203d7d25",
+                  "component_id": "3df2887c-d139-49a4-902d-c8256110e5ab",
+                  "go": "bf7ac129-cc4e-4dbb-9417-6f3208a7ca16",
                   "component_type": "SkinnedModelRenderer"
                 }
               },
@@ -653,21 +656,21 @@
           "Defaults": {
             "$8.component": {
               "_type": "component",
-              "component_id": "f8f8959e-a4e1-4ba3-a934-2b29bc0e0293",
-              "go": "27fd9ad4-226f-4de1-a894-6024203d7d25",
+              "component_id": "ddd5b82e-9e2d-403f-9778-beffd7d10174",
+              "go": "bf7ac129-cc4e-4dbb-9417-6f3208a7ca16",
               "component_type": "CitizenAnimationHelper"
             },
             "$19.component": {
               "_type": "component",
-              "component_id": "bfb28809-626c-44e4-9de9-7ee5a52a96a7",
-              "go": "27fd9ad4-226f-4de1-a894-6024203d7d25",
+              "component_id": "3df2887c-d139-49a4-902d-c8256110e5ab",
+              "go": "bf7ac129-cc4e-4dbb-9417-6f3208a7ca16",
               "component_type": "SkinnedModelRenderer"
             }
           }
         },
         "NextAttack": {
-          "Relative": -682.47754,
-          "Passed": 682.47754,
+          "Relative": -13970.924,
+          "Passed": 13970.924,
           "Fraction": 1
         },
         "Range": 32,
@@ -676,7 +679,7 @@
     ],
     "Children": [
       {
-        "__guid": "b8bd7d09-ef3a-4cce-aa52-ec2c7d2c397c",
+        "__guid": "decb43d7-600c-475a-9898-7395154acb8d",
         "Flags": 0,
         "Name": "Eyes",
         "Position": "0,0,64",
@@ -685,7 +688,7 @@
         "NetworkInterpolation": true
       },
       {
-        "__guid": "5890dfc3-2085-49e4-9a31-857ed68feda0",
+        "__guid": "a070083c-4e64-425c-b4b1-152cc03a3dd9",
         "Flags": 0,
         "Name": "Clothing - medieval_armour",
         "Tags": "clothing",
@@ -695,12 +698,12 @@
         "Components": [
           {
             "__type": "Sandbox.SkinnedModelRenderer",
-            "__guid": "48be5836-5ed4-467e-80d3-491e954ab416",
+            "__guid": "a63b9c0e-edb6-42ab-8484-7bcbd69c2d91",
             "BodyGroups": 18446744073709551615,
             "BoneMergeTarget": {
               "_type": "component",
-              "component_id": "bfb28809-626c-44e4-9de9-7ee5a52a96a7",
-              "go": "27fd9ad4-226f-4de1-a894-6024203d7d25",
+              "component_id": "3df2887c-d139-49a4-902d-c8256110e5ab",
+              "go": "bf7ac129-cc4e-4dbb-9417-6f3208a7ca16",
               "component_type": "SkinnedModelRenderer"
             },
             "CreateBoneObjects": false,
@@ -711,7 +714,7 @@
         ]
       },
       {
-        "__guid": "a11a4b74-c56c-4e36-9195-97ac4218845d",
+        "__guid": "8f1d7138-941c-4862-9775-787c933fb0bc",
         "Flags": 0,
         "Name": "Clothing - bucket_helmet",
         "Tags": "clothing",
@@ -721,12 +724,12 @@
         "Components": [
           {
             "__type": "Sandbox.SkinnedModelRenderer",
-            "__guid": "af2b156f-18f1-41bc-83b6-ef7a855966e2",
+            "__guid": "ed57f3bf-ef31-450b-9f49-ebcf28c9b721",
             "BodyGroups": 18446744073709551615,
             "BoneMergeTarget": {
               "_type": "component",
-              "component_id": "bfb28809-626c-44e4-9de9-7ee5a52a96a7",
-              "go": "27fd9ad4-226f-4de1-a894-6024203d7d25",
+              "component_id": "3df2887c-d139-49a4-902d-c8256110e5ab",
+              "go": "bf7ac129-cc4e-4dbb-9417-6f3208a7ca16",
               "component_type": "SkinnedModelRenderer"
             },
             "CreateBoneObjects": false,

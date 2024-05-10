@@ -1,6 +1,6 @@
 {
   "RootObject": {
-    "__guid": "1297c193-ff11-41a8-a75f-4c27e57ba8e7",
+    "__guid": "df3ad6e5-1157-433a-929f-2fa46157dd1b",
     "Flags": 0,
     "Name": "key",
     "Tags": "item,key",
@@ -10,7 +10,7 @@
     "Components": [
       {
         "__type": "Sandbox.SkinnedModelRenderer",
-        "__guid": "ba970c9a-a691-4b09-98bd-8696529b31b2",
+        "__guid": "67cf98a6-b353-4fd4-a12b-1e83092b3df0",
         "AnimationGraph": "animgraphs/item.vanmgrph",
         "BodyGroups": 1,
         "CreateBoneObjects": true,
@@ -20,22 +20,12 @@
       },
       {
         "__type": "Mazing.Throwable",
-        "__guid": "d0e759a1-42e4-4cb1-973b-41f8b889a986",
-        "ThrowDuration": 0.5,
-        "ThrowHeight": 64
-      },
-      {
-        "__type": "Mazing.MazeObject",
-        "__guid": "db312307-d12d-48cc-96b5-a07ba48b1654"
-      },
-      {
-        "__type": "Mazing.Holdable",
-        "__guid": "29757e91-43b2-4736-a0ff-7c6cdcdd446f",
-        "Dropped": {
+        "__guid": "343e6283-090e-4866-a908-0d19bcf0273a",
+        "Landed": {
           "__version": 7,
-          "__guid": "0dc4b0a3-53b7-4a4e-ac42-bae6d4302988",
+          "__guid": "2868dbcd-118a-4de8-82db-6793820e61f6",
           "UserData": {
-            "Title": "Dropped",
+            "Title": "Landed",
             "ReferencedComponentTypes": []
           },
           "Variables": [],
@@ -45,21 +35,21 @@
               "Type": "input"
             },
             {
-              "Id": 2,
+              "Id": 1,
               "Type": "resource.ref",
               "Properties": {
                 "T": "Sandbox.Engine/Sandbox.SoundEvent",
                 "value": "sounds/treasure/key.drop.sound"
               },
               "UserData": {
-                "Position": "-0,112"
+                "Position": "-32,112"
               }
             },
             {
-              "Id": 3,
+              "Id": 2,
               "Type": "sound.play",
               "UserData": {
-                "Position": "304,64"
+                "Position": "272,64"
               }
             }
           ],
@@ -67,26 +57,39 @@
             {
               "SrcId": 0,
               "SrcName": "_signal",
-              "DstId": 3,
+              "DstId": 2,
               "DstName": "_signal"
             },
             {
               "SrcId": 0,
               "SrcName": "_target",
-              "DstId": 3,
+              "DstId": 2,
               "DstName": "_this"
             },
             {
-              "SrcId": 2,
+              "SrcId": 1,
               "SrcName": "_result",
-              "DstId": 3,
+              "DstId": 2,
               "DstName": "soundEvent"
             }
           ]
         },
+        "CanExit": true,
+        "IndexOnFloor": 0,
+        "IsExiting": false,
+        "ThrowDuration": 0.5,
+        "ThrowHeight": 64
+      },
+      {
+        "__type": "Mazing.MazeObject",
+        "__guid": "fbec8888-5e5b-4ebe-97e0-d50365ad2726"
+      },
+      {
+        "__type": "Mazing.Holdable",
+        "__guid": "0e702b60-1f34-48f2-b894-7bb1d37bf7fa",
         "PickedUp": {
           "__version": 7,
-          "__guid": "09574bf5-7ccd-4f8d-b824-31321e1ac52e",
+          "__guid": "b38df1c6-fc71-42e9-b453-2c32fb66cc75",
           "UserData": {
             "Title": "Picked Up",
             "ReferencedComponentTypes": []
@@ -137,13 +140,11 @@
             }
           ]
         },
-        "IsHeavy": false,
-        "PickupOnLand": true,
-        "PickupOnTouch": true
+        "HeldVelocity": "0,0,0"
       },
       {
         "__type": "Sandbox.SphereCollider",
-        "__guid": "489a4ddc-b4df-4ce4-9904-20feab9e0257",
+        "__guid": "758bc8b1-9c38-4ab3-8eb6-5bc0cad2256b",
         "Center": "0,0,32",
         "IsTrigger": true,
         "Radius": 16,
@@ -151,12 +152,12 @@
       },
       {
         "__type": "Mazing.Key",
-        "__guid": "8d5609d4-faa0-4ad2-8abf-c2c614759105"
+        "__guid": "e1bcc5fe-203e-49dd-b973-897698b227db"
       }
     ],
     "Children": [
       {
-        "__guid": "02947de2-390e-436c-8ca4-bd996afbb30e",
+        "__guid": "bfeea46a-9437-4f88-a552-be14633d89c7",
         "Flags": 4,
         "Name": "Item",
         "Position": "0.0000180792,0.00002670288,119.9999",
@@ -166,7 +167,7 @@
         "NetworkInterpolation": true,
         "Children": [
           {
-            "__guid": "68fcf521-22b7-4fec-afa8-ee45661acdbb",
+            "__guid": "8f150259-085a-44de-b280-cc1687c2922c",
             "Flags": 4,
             "Name": "Item_end",
             "Position": "-0.00002527237,5.999949,0.00002031935",
@@ -175,7 +176,7 @@
             "NetworkInterpolation": true
           },
           {
-            "__guid": "9c459837-b2c2-42c7-b697-98046bee83ff",
+            "__guid": "ed0bab84-8376-41ed-a521-75d0ae716849",
             "Flags": 0,
             "Name": "Light",
             "Position": "0,0,0",
@@ -187,20 +188,20 @@
             "Components": [
               {
                 "__type": "Sandbox.PointLight",
-                "__guid": "424e1310-5193-4bbc-a2a8-a3910a764e00",
+                "__guid": "00fe61d2-a23a-4ac7-8e82-38e2c4805a17",
                 "Attenuation": 1,
                 "FogMode": "Enabled",
                 "FogStrength": 1,
                 "LightColor": "2,1.66791,0.8279,1",
                 "Radius": 96,
-                "Shadows": true
+                "Shadows": false
               }
             ]
           }
         ]
       },
       {
-        "__guid": "58a99d56-f649-453e-a005-2ee3ec34fbc2",
+        "__guid": "b9e51af9-93e6-4174-aa09-11471ea92f19",
         "Flags": 4,
         "Name": "Root",
         "Position": "0.00001130809,0.00001703013,95.99996",

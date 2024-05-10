@@ -45,6 +45,8 @@ public sealed class Player : Component
 			return;
 		}
 
+		Mazer.MoveSpeed = 120f * 8f / (8f + Holder.HeldItems.Count);
+
 		if ( Mazer.State != MazerState.Falling || !Mazer.Throwable.IsExiting )
 		{
 			return;
@@ -70,6 +72,8 @@ public sealed class Player : Component
 		Mazer.Throwable.Enabled = false;
 		Mazer.Throwable.IsExiting = false;
 		Mazer.Throwable.CanExit = true;
+
+		Mazer.CharacterController.Velocity = Vector3.Zero;
 
 		Holder.Enabled = true;
 
@@ -105,19 +109,12 @@ public sealed class Player : Component
 			SpawnRagdoll( force );
 		}
 
-		if ( Components.Get<Holder>( FindMode.Enabled | FindMode.InSelf ) is { } holder )
-		{
-			var dir = force.WithZ( 0f ).IsNearZeroLength
-				? (Direction)Random.Shared.Int( 0, 4 )
-				: ((Vector2)force).GetDirection();
+		var dir = force.WithZ( 0f ).IsNearZeroLength
+			? (Direction)Random.Shared.Int( 0, 4 )
+			: ((Vector2)force).GetDirection();
 
-			holder.Throw( dir, 1 );
-		}
-
-		if ( Components.Get<Holdable>( FindMode.Enabled | FindMode.InSelf ) is { } holdable )
-		{
-			holdable.Holder?.Drop();
-		}
+		Holder.Throw( dir, 1 );
+		Holder.Enabled = false;
 	}
 
 	[Broadcast]

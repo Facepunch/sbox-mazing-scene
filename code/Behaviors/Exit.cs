@@ -45,10 +45,19 @@ public sealed class Exit : Component
 
 		var (row, col) = MazeObject.CellIndex;
 
-		foreach ( var mazeObject in MazeObject.GetObjectsInSameCell() )
+		var objects = MazeObject.GetObjectsInSameCell().ToArray();
+
+		foreach ( var mazeObject in objects )
 		{
 			if ( !IsOpen && mazeObject.Components.Get<Key>() is { } key )
 			{
+				if ( objects.Any( x => x.Components.Get<Holder>() is not null ) )
+				{
+					// Key is about to be picked up!
+
+					continue;
+				}
+
 				Open( key );
 				continue;
 			}

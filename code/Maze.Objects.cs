@@ -62,6 +62,7 @@ partial class Maze
 
 		var treasureTypeQueue = new Queue<(PrefabFile Prefab, int Points)>(
 			Helpers.FindAllPrefabsWithInfo<Treasure, TreasureInfo>()
+				.OrderBy( x => x.Info.Value )
 				.Select( x => (x.Prefab, x.Info.Value) ) );
 
 		var enemyPoints = EnemyCount;

@@ -160,6 +160,7 @@ public sealed partial class Maze : Component
 			.Take( slice.Count )
 			.Where( x => x.Components.Get<Holdable>() is not { Holder: not null } )
 			.Where( x => x.Components.Get<Throwable>() is not { Enabled: true } )
-			.OrderBy( x => x.Components.Get<Throwable>()?.IndexOnFloor ?? -1 );
+			.Where( x => x.Components.Get<Mazer>() is not { State: not MazerState.Walking } )
+			.OrderByDescending( x => x.Components.Get<Throwable>( true )?.IndexOnFloor ?? -1 );
 	}
 }

@@ -16,7 +16,6 @@ public sealed class Mazer : Component
 {
 	[RequireComponent] public Throwable Throwable { get; set; } = null!;
 	[RequireComponent] public MazeObject MazeObject { get; set; } = null!;
-	[RequireComponent] public Collider Trigger { get; set; } = null!;
 	[RequireComponent] public CharacterController CharacterController { get; set; } = null!;
 	[RequireComponent] public CitizenAnimationHelper AnimationHelper { get; set; } = null!;
 	[RequireComponent] public SkinnedModelRenderer ModelRenderer { get; set; } = null!;

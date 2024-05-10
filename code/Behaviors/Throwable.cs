@@ -62,7 +62,7 @@ public sealed class Throwable : Component
 			++actualRange;
 		}
 
-		ThrowInternal( fromRow, fromCol );
+		ThrowInternal( fromRow, fromCol, range );
 
 		if ( IsProxy ) return;
 
@@ -74,16 +74,15 @@ public sealed class Throwable : Component
 		}
 	}
 
-	private void ThrowInternal( int row, int col )
+	private void ThrowInternal( int row, int col, int range )
 	{
 		Enabled = true;
 		IndexOnFloor = 0;
 
 		_throwStart = Transform.Position;
-
 		_throwEnd = MazeObject.Maze.MazeToWorldPos( row, col );
 
-		var dist = Math.Max( 0.5f, (_throwEnd - _throwStart).WithZ( 0f ).Length / 48f );
+		var dist = Math.Max( 0.5f, range );
 		var sqrtDist = MathF.Sqrt( dist );
 
 		_throwEndTime = sqrtDist * 0.5f;
