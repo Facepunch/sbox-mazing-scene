@@ -22,6 +22,7 @@ public sealed partial class Maze : Component
 
 	private readonly List<MazeObject> _allObjects = new();
 	private readonly Dictionary<(int Row, int Col), (int Offset, int Count)> _objectsInCells = new();
+	private readonly Dictionary<(int Row, int Col), int> _pathCosts = new();
 
 	[Button( "Run", "casino" ), Group( "Parameters" )]
 	public void Randomize()
@@ -102,6 +103,7 @@ public sealed partial class Maze : Component
 	{
 		_allObjects.Clear();
 		_objectsInCells.Clear();
+		_pathCosts.Clear();
 
 		foreach ( var mazeObject in Scene.Components.GetAll<MazeObject>( FindMode.Enabled | FindMode.InChildren ) )
 		{
@@ -117,6 +119,7 @@ public sealed partial class Maze : Component
 
 		var offset = 0;
 		var count = 0;
+		var cost = 0;
 
 		(int Row, int Col) prevIndex = (int.MinValue, int.MinValue);
 
@@ -139,7 +142,10 @@ public sealed partial class Maze : Component
 				prevIndex = index;
 				offset = i;
 				count = 1;
+				cost = 0;
 			}
+
+			cost += mazeObject.Components.Get<Enemy>() is null ? 0 : 32;
 		}
 
 		if ( count > 0 )
@@ -162,5 +168,10 @@ public sealed partial class Maze : Component
 			.Where( x => x.Components.Get<Throwable>() is not { Enabled: true } )
 			.Where( x => x.Components.Get<Mazer>() is not { State: not MazerState.Walking } )
 			.OrderByDescending( x => x.Components.Get<Throwable>( true )?.IndexOnFloor ?? -1 );
+	}
+
+	public int GetPathCost( int row, int col )
+	{
+		return CollectionExtensions.GetValueOrDefault( _pathCosts, (row, col), 0 );
 	}
 }

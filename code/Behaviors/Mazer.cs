@@ -30,6 +30,9 @@ public sealed class Mazer : Component
 	public MazerState State { get; set; }
 
 	[Property, Sync]
+	public float Friction { get; set; } = 4f;
+
+	[Property, Sync]
 	public float MoveSpeed { get; set; } = 120f;
 
 	[Property, Sync]
@@ -319,7 +322,7 @@ public sealed class Mazer : Component
 
 	private void Move( bool noclip )
 	{
-		CharacterController.ApplyFriction( 4f );
+		CharacterController.ApplyFriction( Friction );
 
 		var input = MoveInput.LengthSquared > 1f ? MoveInput.Normal : MoveInput;
 
