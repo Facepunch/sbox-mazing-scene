@@ -109,7 +109,8 @@ partial class Maze
 					if ( GetPrefab( ref enemyPoints, enemyTypeQueue ) is { } enemyPrefab )
 					{
 						var scene = SceneUtility.GetPrefabScene( enemyPrefab );
-						_spawnedObjects.Add( scene.Clone( MazeToWorldPos( row, col ) ) );
+						_spawnedObjects.Add( scene.Clone( MazeToWorldPos( row, col ),
+							Rotation.FromYaw( random.Next( 0, 4 ) * 90 ) ) );
 					}
 					break;
 
@@ -117,7 +118,8 @@ partial class Maze
 					if ( GetPrefab( ref treasurePoints, treasureTypeQueue ) is { } treasurePrefab )
 					{
 						var scene = SceneUtility.GetPrefabScene( treasurePrefab );
-						_spawnedObjects.Add( scene.Clone( MazeToWorldPos( row, col ) ) );
+						_spawnedObjects.Add( scene.Clone( MazeToWorldPos( row, col ),
+							Rotation.FromYaw( random.Next( 0, 4 ) * 90 ) ) );
 					}
 					break;
 
