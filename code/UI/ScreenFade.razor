@@ -23,7 +23,7 @@
 
 	    Opacity = game.State switch
 	    {
-		    GameState.EndingLevel => Math.Clamp( game.StateStart * 2f, 0f, 1f ),
+		    GameState.Victory or GameState.GameOver => Math.Clamp( game.StateStart * 2f, 0f, 1f ),
 		    GameState.StartingLevel => Math.Clamp( 1.5f - game.StateStart * 2f, 0f, 1f ),
 		    _ => 0f
 	    };

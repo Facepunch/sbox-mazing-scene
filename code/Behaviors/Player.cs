@@ -12,6 +12,12 @@ public sealed class Player : Component
 	public bool IsExiting { get; set; }
 
 	[Property, Sync]
+	public bool IsDead { get; set; }
+
+	[Property, Sync]
+	public TimeSince DeathTime { get; set; }
+
+	[Property, Sync]
 	public bool HasExited { get; set; }
 
 	[Property] public event Action? Exiting;
@@ -61,6 +67,8 @@ public sealed class Player : Component
 	[Authority( NetPermission.HostOnly )]
 	public void Respawn( Vector3 pos )
 	{
+		RemoveRagdoll();
+
 		Transform.Position = pos;
 
 		Mazer.State = MazerState.Falling;
@@ -69,6 +77,8 @@ public sealed class Player : Component
 
 		IsExiting = false;
 		HasExited = false;
+
+		IsDead = false;
 
 		Tags.Add( "player" );
 		Tags.Remove( "ghost" );
@@ -79,6 +89,14 @@ public sealed class Player : Component
 	[Authority( NetPermission.HostOnly )]
 	public void Kill( Vector3 force )
 	{
+		if ( IsDead )
+		{
+			return;
+		}
+
+		IsDead = true;
+		DeathTime = 0f;
+
 		Mazer.State = MazerState.Dead;
 
 		Tags.Remove( "player" );

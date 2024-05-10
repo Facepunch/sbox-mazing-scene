@@ -103,8 +103,6 @@ public sealed class Mazer : Component
 	{
 		if ( _lastState != State )
 		{
-			_lastState = State;
-
 			if ( State == MazerState.Dead )
 			{
 				OnBecomeGhost();
@@ -113,6 +111,8 @@ public sealed class Mazer : Component
 			{
 				OnBecomeAlive();
 			}
+
+			_lastState = State;
 		}
 
 		if ( State != MazerState.Dead )
@@ -156,6 +156,8 @@ public sealed class Mazer : Component
 			modelRenderer.MaterialOverride = null;
 			modelRenderer.Tint = Color.White;
 		}
+
+		_lastCooldownTick = 0;
 	}
 
 	private void OnAlive()
@@ -279,6 +281,7 @@ public sealed class Mazer : Component
 		}
 
 		AnimationHelper.IsGrounded = false;
+		AnimationHelper.IsNoclipping = false;
 		AnimationHelper.WithVelocity( CharacterController.Velocity );
 
 		CharacterController.Velocity = CharacterController.Velocity.WithX( 0f ).WithY( 0f );
@@ -302,6 +305,7 @@ public sealed class Mazer : Component
 		CharacterController.Velocity = Vector3.Zero;
 
 		AnimationHelper.IsGrounded = false;
+		AnimationHelper.IsNoclipping = false;
 		AnimationHelper.WithVelocity( Throwable.Velocity );
 
 		if ( IsProxy )

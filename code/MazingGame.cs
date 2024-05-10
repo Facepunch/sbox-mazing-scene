@@ -8,7 +8,8 @@ public enum GameState
 {
 	StartingLevel,
 	Playing,
-	EndingLevel
+	Victory,
+	GameOver
 }
 
 public class MazingGame : Component, Component.INetworkListener
@@ -36,6 +37,9 @@ public class MazingGame : Component, Component.INetworkListener
 
 	[Property]
 	public event Action? LevelCompleted;
+
+	[Property]
+	public event Action? GameOver;
 
 	public Maze Maze => Scene.Components.Get<Maze>( FindMode.Enabled | FindMode.InChildren )
 		?? throw new Exception( "No maze!" );
@@ -77,8 +81,12 @@ public class MazingGame : Component, Component.INetworkListener
 				OnPlaying();
 				break;
 
-			case GameState.EndingLevel:
-				OnEndingLevel();
+			case GameState.Victory:
+				OnVictory();
+				break;
+
+			case GameState.GameOver:
+				OnGameOver();
 				break;
 		}
 	}
@@ -88,12 +96,26 @@ public class MazingGame : Component, Component.INetworkListener
 		var anyPlayers = false;
 		var anyInMaze = false;
 		var anyExiting = false;
+		var anyEscaped = false;
 
-		foreach ( var player in Scene.Components.GetAll<Player>( FindMode.Enabled | FindMode.InChildren ) )
+		foreach ( var player in Scene.Components.GetAll<Player>( FindMode.Enabled | FindMode.InChildren ).ToArray() )
 		{
+			if ( !player.IsValid() )
+			{
+				continue;
+			}
+
 			anyPlayers = true;
-			anyInMaze |= !player.IsExiting;
+			anyInMaze |= !player.IsExiting && !player.IsDead;
+			anyEscaped |= player.HasExited;
 			anyExiting |= player is { IsExiting: true, HasExited: false };
+
+			if ( Level == 0 && player.IsDead && player.DeathTime > 5f )
+			{
+				var spawn = Maze.PlayerSpawns[Random.Shared.Next( Maze.PlayerSpawns.Count )];
+
+				player.Respawn( Maze.MazeToWorldPos( spawn.Row, spawn.Col ) + Vector3.Up * 1024f );
+			}
 		}
 
 		if ( !anyPlayers )
@@ -103,10 +125,18 @@ public class MazingGame : Component, Component.INetworkListener
 
 		if ( !anyInMaze && !anyExiting )
 		{
-			State = GameState.EndingLevel;
-			StateStart = 0f;
-
-			DispatchLevelCompleted();
+			if ( anyEscaped )
+			{
+				StateStart = 0f;
+				State = GameState.Victory;
+				DispatchLevelCompleted();
+			}
+			else if ( Level > 0 )
+			{
+				StateStart = -2f;
+				State = GameState.GameOver;
+				DispatchGameOver();
+			}
 		}
 	}
 
@@ -116,7 +146,13 @@ public class MazingGame : Component, Component.INetworkListener
 		LevelCompleted?.Invoke();
 	}
 
-	private void OnEndingLevel()
+	[Broadcast( NetPermission.HostOnly )]
+	public void DispatchGameOver()
+	{
+		GameOver?.Invoke();
+	}
+
+	private void OnVictory()
 	{
 		if ( StateStart > 1f )
 		{
@@ -126,6 +162,18 @@ public class MazingGame : Component, Component.INetworkListener
 				InitialMazeSize + (Level - 1) * MazeSizeIncrement,
 				InitialEnemyCount + (Level - 1) * EnemyCountIncrement,
 				Random.Shared.Next() );
+
+			State = GameState.StartingLevel;
+			StateStart = 0f;
+		}
+	}
+
+	private void OnGameOver()
+	{
+		if ( StateStart > 1f )
+		{
+			Level = 0;
+			Maze.NextLevel( Level, 4, 1, Random.Shared.Next() );
 
 			State = GameState.StartingLevel;
 			StateStart = 0f;
