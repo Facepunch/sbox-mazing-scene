@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Text.Json;
-using static Sandbox.PhysicsGroupDescription.BodyPart;
 
 namespace Mazing;
 
@@ -27,17 +24,6 @@ partial class Maze
 		_spawnedObjects.Clear();
 	}
 
-	private record EnemyInfo( int Difficulty, int MinLevel )
-	{
-		public static EnemyInfo? FromPrefab( PrefabFile prefab )
-		{
-			var component = prefab.RootObject?["Components"]?.AsArray()
-				.FirstOrDefault(x => x?["__type"]?.GetValue<string>() == "Mazing.Enemy" );
-
-			return component?.Deserialize<EnemyInfo>();
-		}
-	}
-
 	private void SpawnObjects()
 	{
 		if ( Network.IsProxy )
@@ -50,10 +36,7 @@ partial class Maze
 
 		var random = new Random( Seed );
 
-		var enemyTypes = ResourceLibrary.GetAll<PrefabFile>()
-			.Select( x => (Info: EnemyInfo.FromPrefab( x )!, Prefab: x) )
-			.Where( x => x.Info != null! )
-			.ToArray();
+		var enemyTypes = Helpers.FindAllPrefabsWithInfo<Enemy, EnemyInfo>();
 
 		var requiredEnemyTypes = enemyTypes
 			.Where( x => x.Info.MinLevel == Level )
@@ -71,32 +54,38 @@ partial class Maze
 		var enemyTypeCount = Math.Min( random.Next( minEnemyTypeCount, 4 ),
 			requiredEnemyTypes.Length + spareEnemyTypes.Length );
 
-		var enemyTypeQueue = new Queue<(EnemyInfo Info, PrefabFile Prefab)>(
+		var enemyTypeQueue = new Queue<(PrefabFile Prefab, int Points)>(
 			requiredEnemyTypes
 			.Concat( spareEnemyTypes )
-			.Take( enemyTypeCount ) );
+			.Take( enemyTypeCount )
+			.Select( x => (x.Prefab, x.Info.Difficulty) ));
+
+		var treasureTypeQueue = new Queue<(PrefabFile Prefab, int Points)>(
+			Helpers.FindAllPrefabsWithInfo<Treasure, TreasureInfo>()
+				.Select( x => (x.Prefab, x.Info.Value) ) );
 
 		var enemyPoints = EnemyCount;
+		var treasurePoints = TreasureCount;
 
-		PrefabFile? GetEnemyPrefab()
+		static PrefabFile? GetPrefab( ref int remainingPoints, Queue<(PrefabFile Prefab, int Points)> queue )
 		{
-			if ( enemyPoints <= 0 )
+			if ( remainingPoints <= 0 )
 			{
 				return null;
 			}
 
-			while ( enemyTypeQueue.Count > 0 )
+			while ( queue.Count > 0 )
 			{
-				var next = enemyTypeQueue.Dequeue();
+				var next = queue.Dequeue();
 
-				if ( next.Info.Difficulty > enemyPoints )
+				if ( next.Points > remainingPoints )
 				{
 					continue;
 				}
 
-				enemyPoints -= next.Info.Difficulty;
+				remainingPoints -= next.Points;
 
-				enemyTypeQueue.Enqueue( next );
+				queue.Enqueue( next );
 				return next.Prefab;
 			}
 
@@ -116,9 +105,17 @@ partial class Maze
 					break;
 
 				case CellState.Enemy:
-					if ( GetEnemyPrefab() is { } prefab )
+					if ( GetPrefab( ref enemyPoints, enemyTypeQueue ) is { } enemyPrefab )
 					{
-						var scene = SceneUtility.GetPrefabScene( prefab );
+						var scene = SceneUtility.GetPrefabScene( enemyPrefab );
+						_spawnedObjects.Add( scene.Clone( MazeToWorldPos( row, col ) ) );
+					}
+					break;
+
+				case CellState.Treasure:
+					if ( GetPrefab( ref treasurePoints, treasureTypeQueue ) is { } treasurePrefab )
+					{
+						var scene = SceneUtility.GetPrefabScene( treasurePrefab );
 						_spawnedObjects.Add( scene.Clone( MazeToWorldPos( row, col ) ) );
 					}
 					break;

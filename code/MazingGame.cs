@@ -27,10 +27,16 @@ public class MazingGame : Component, Component.INetworkListener
 	public int InitialEnemyCount { get; set; } = 2;
 
 	[Property]
-	public int MazeSizeIncrement { get; set; } = 1;
+	public int EnemyCountIncrement { get; set; } = 1;
 
 	[Property]
-	public int EnemyCountIncrement { get; set; } = 1;
+	public int InitialTreasureCount { get; set; } = 2;
+
+	[Property]
+	public int TreasureCountIncrement { get; set; } = 1;
+
+	[Property]
+	public int MazeSizeIncrement { get; set; } = 1;
 
 	[Property, Sync]
 	public int Level { get; set; } = 0;
@@ -106,9 +112,9 @@ public class MazingGame : Component, Component.INetworkListener
 			}
 
 			anyPlayers = true;
-			anyInMaze |= !player.IsExiting && !player.IsDead;
+			anyInMaze |= !player.Mazer.Throwable.IsExiting && !player.IsDead;
 			anyEscaped |= player.HasExited;
-			anyExiting |= player is { IsExiting: true, HasExited: false };
+			anyExiting |= player is { Mazer.Throwable.IsExiting: true, HasExited: false };
 
 			if ( Level == 0 && player.IsDead && player.DeathTime > 5f )
 			{
@@ -161,6 +167,7 @@ public class MazingGame : Component, Component.INetworkListener
 			Maze.NextLevel( Level,
 				InitialMazeSize + (Level - 1) * MazeSizeIncrement,
 				InitialEnemyCount + (Level - 1) * EnemyCountIncrement,
+				InitialTreasureCount + (Level - 1) * TreasureCountIncrement,
 				Random.Shared.Next() );
 
 			State = GameState.StartingLevel;
@@ -173,7 +180,7 @@ public class MazingGame : Component, Component.INetworkListener
 		if ( StateStart > 1f )
 		{
 			Level = 0;
-			Maze.NextLevel( Level, 4, 1, Random.Shared.Next() );
+			Maze.NextLevel( Level, 4, 1, 2, Random.Shared.Next() );
 
 			State = GameState.StartingLevel;
 			StateStart = 0f;

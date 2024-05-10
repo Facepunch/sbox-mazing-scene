@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Text.Json;
 
 namespace Mazing;
 
@@ -12,3 +8,4 @@ public sealed class Enemy : Component
 	[Property] public int MinLevel { get; set; } = 0;
 }
 
+public record EnemyInfo( int Difficulty, int MinLevel );

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using Sandbox.Physics;
 
 namespace Mazing;
@@ -6,10 +7,8 @@ namespace Mazing;
 public sealed class Player : Component
 {
 	[RequireComponent] public Mazer Mazer { get; set; } = null!;
+	[RequireComponent] public Holder Holder { get; set; } = null!;
 	[RequireComponent] public SkinnedModelRenderer ModelRenderer { get; set; } = null!;
-
-	[Property, Sync]
-	public bool IsExiting { get; set; }
 
 	[Property, Sync]
 	public bool IsDead { get; set; }
@@ -34,9 +33,9 @@ public sealed class Player : Component
 
 	protected override void OnUpdate()
 	{
-		if ( !_wasExiting && IsExiting )
+		if ( !_wasExiting && Mazer.Throwable.IsExiting )
 		{
-			_wasExiting = IsExiting;
+			_wasExiting = Mazer.Throwable.IsExiting;
 
 			Exiting?.Invoke();
 		}
@@ -46,17 +45,10 @@ public sealed class Player : Component
 			return;
 		}
 
-		if ( Mazer.State != MazerState.Falling )
+		if ( Mazer.State != MazerState.Falling || !Mazer.Throwable.IsExiting )
 		{
 			return;
 		}
-
-		if ( !(Transform.Position.z < -64f) )
-		{
-			return;
-		}
-
-		IsExiting = true;
 
 		if ( Transform.Position.z < -512f )
 		{
@@ -75,7 +67,12 @@ public sealed class Player : Component
 
 		_wasExiting = false;
 
-		IsExiting = false;
+		Mazer.Throwable.Enabled = false;
+		Mazer.Throwable.IsExiting = false;
+		Mazer.Throwable.CanExit = true;
+
+		Holder.Enabled = true;
+
 		HasExited = false;
 
 		IsDead = false;
@@ -98,6 +95,7 @@ public sealed class Player : Component
 		DeathTime = 0f;
 
 		Mazer.State = MazerState.Dead;
+		Mazer.Throwable.CanExit = false;
 
 		Tags.Remove( "player" );
 		Tags.Add( "ghost" );
@@ -109,7 +107,11 @@ public sealed class Player : Component
 
 		if ( Components.Get<Holder>( FindMode.Enabled | FindMode.InSelf ) is { } holder )
 		{
-			holder.Drop();
+			var dir = force.WithZ( 0f ).IsNearZeroLength
+				? (Direction)Random.Shared.Int( 0, 4 )
+				: ((Vector2)force).GetDirection();
+
+			holder.Throw( dir, 1 );
 		}
 
 		if ( Components.Get<Holdable>( FindMode.Enabled | FindMode.InSelf ) is { } holdable )

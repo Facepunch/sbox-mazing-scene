@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.Json;
 
 namespace Mazing;
 
@@ -64,6 +65,28 @@ public static class Helpers
 			var j = random.Next( i, list.Count );
 			(list[i], list[j]) = (list[j], list[i]);
 		}
+	}
+
+	public static TInfo? DeserializeFromPrefab<TComponent, TInfo>( PrefabFile prefab )
+		where TComponent : Component
+		where TInfo : class
+	{
+		var typeName = typeof(TComponent).FullName;
+
+		var component = prefab.RootObject?["Components"]?.AsArray()
+			.FirstOrDefault( x => x?["__type"]?.GetValue<string>() == typeName );
+
+		return component?.Deserialize<TInfo>();
+	}
+
+	public static IReadOnlyList<(PrefabFile Prefab, TInfo Info)> FindAllPrefabsWithInfo<TComponent, TInfo>()
+		where TComponent : Component
+		where TInfo : class
+	{
+		return ResourceLibrary.GetAll<PrefabFile>()
+			.Select( x => (Prefab: x, Info: DeserializeFromPrefab<TComponent, TInfo>( x )!) )
+			.Where( x => x.Info != null! )
+			.ToArray();
 	}
 }
 

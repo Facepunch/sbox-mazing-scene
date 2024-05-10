@@ -32,5 +32,12 @@ public sealed class MazeObject : Component
 			return ((int)MathF.Floor( mazePos.x ), (int)MathF.Floor( mazePos.y ));
 		}
 	}
+
+	public IEnumerable<MazeObject> GetObjectsInSameCell()
+	{
+		var (row, col) = CellIndex;
+		return Maze.GetObjectsInCell( row, col )
+			.Where( x => x != this );
+	}
 }
 

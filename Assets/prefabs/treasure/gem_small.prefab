@@ -1,0 +1,103 @@
+{
+  "RootObject": {
+    "__guid": "85861a48-3f5d-4c06-9810-90417be5b0a0",
+    "Flags": 0,
+    "Name": "gem_small",
+    "Enabled": true,
+    "NetworkMode": 1,
+    "NetworkInterpolation": true,
+    "Components": [
+      {
+        "__type": "Sandbox.SkinnedModelRenderer",
+        "__guid": "2e5cab97-3bc1-4e3a-924b-3213c38d5c41",
+        "AnimationGraph": "animgraphs/item.vanmgrph",
+        "BodyGroups": 2,
+        "CreateBoneObjects": true,
+        "Model": "models/item.vmdl",
+        "RenderType": "Off",
+        "Tint": "1,1,1,1"
+      },
+      {
+        "__type": "Mazing.Holdable",
+        "__guid": "db947b6d-d06b-4791-a28d-bf6eb4c449f1",
+        "HeldVelocity": "0,0,0"
+      },
+      {
+        "__type": "Mazing.MazeObject",
+        "__guid": "c8441450-70fa-4630-8eaf-bbfcb2fcb8a6"
+      },
+      {
+        "__type": "Mazing.Throwable",
+        "__guid": "1e136e97-a2be-4597-917f-11fb0fa43ef0",
+        "IndexOnFloor": 0,
+        "ThrowDuration": 0.5,
+        "ThrowHeight": 64
+      },
+      {
+        "__type": "Sandbox.SphereCollider",
+        "__guid": "d8b05a5e-ec0c-42d5-ae12-9d0310493826",
+        "Center": "0,0,32",
+        "IsTrigger": true,
+        "Radius": 16,
+        "Static": false
+      },
+      {
+        "__type": "Mazing.Treasure",
+        "__guid": "8781889d-3c32-47f7-971f-59e11307b8ec",
+        "Value": 1
+      }
+    ],
+    "Children": [
+      {
+        "__guid": "497be9ef-fa57-4eb0-857e-2cb5e3c37193",
+        "Flags": 4,
+        "Name": "Item",
+        "Position": "0.0000180792,0.00002670288,119.9999",
+        "Rotation": "0.6830127,0.1830128,0.6830126,0.1830128",
+        "Tags": "light_point,light",
+        "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkInterpolation": true,
+        "Components": [
+          {
+            "__type": "Sandbox.PointLight",
+            "__guid": "561f4b06-2934-45ed-8a77-750cb32b3dfc",
+            "Attenuation": 1,
+            "FogMode": "Enabled",
+            "FogStrength": 1,
+            "LightColor": "0.18431,0.76471,0.12941,1",
+            "Radius": 96,
+            "Shadows": false
+          }
+        ],
+        "Children": [
+          {
+            "__guid": "75b2cfa1-1b67-447a-8cbc-f3e335d7bdac",
+            "Flags": 4,
+            "Name": "Item_end",
+            "Position": "-0.00002288818,5.99995,0.00002067227",
+            "Enabled": true,
+            "NetworkMode": 2,
+            "NetworkInterpolation": true
+          }
+        ]
+      },
+      {
+        "__guid": "da541fd7-6f25-426a-9965-af2fd6e37827",
+        "Flags": 4,
+        "Name": "Root",
+        "Position": "0.00001130809,0.00001703013,95.99996",
+        "Rotation": "0.4999999,0.4999999,0.4999999,0.5000003",
+        "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkInterpolation": true
+      }
+    ]
+  },
+  "ShowInMenu": false,
+  "MenuPath": null,
+  "MenuIcon": null,
+  "ResourceVersion": 1,
+  "__version": 1,
+  "__references": []
+}

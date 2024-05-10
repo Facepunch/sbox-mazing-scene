@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.InteropServices;
 
 namespace Mazing;
 
@@ -18,6 +19,9 @@ public sealed partial class Maze : Component
 
 	[Property, Group( "Parameters" )]
 	public int Level { get; set; } = 1;
+
+	private readonly List<MazeObject> _allObjects = new();
+	private readonly Dictionary<(int Row, int Col), (int Offset, int Count)> _objectsInCells = new();
 
 	[Button( "Run", "casino" ), Group( "Parameters" )]
 	public void Randomize()
@@ -53,11 +57,12 @@ public sealed partial class Maze : Component
 	}
 
 	[Broadcast( NetPermission.HostOnly )]
-	public void NextLevel( int level, int size, int enemyCount, int seed )
+	public void NextLevel( int level, int size, int enemyCount, int treasureCount, int seed )
 	{
 		Level = level;
 		Size = size;
 		EnemyCount = enemyCount;
+		TreasureCount = treasureCount;
 		Seed = seed;
 
 		Generate();
@@ -91,5 +96,70 @@ public sealed partial class Maze : Component
 		base.OnStart();
 
 		Generate();
+	}
+
+	protected override void OnUpdate()
+	{
+		_allObjects.Clear();
+		_objectsInCells.Clear();
+
+		foreach ( var mazeObject in Scene.Components.GetAll<MazeObject>( FindMode.Enabled | FindMode.InChildren ) )
+		{
+			if ( mazeObject.Components.Get<Holdable>() is { Holder: not null } )
+			{
+				continue;
+			}
+
+			_allObjects.Add( mazeObject );
+		}
+
+		_allObjects.Sort( ( a, b ) => a.CellIndex.CompareTo( b.CellIndex ) );
+
+		var offset = 0;
+		var count = 0;
+
+		(int Row, int Col) prevIndex = (int.MinValue, int.MinValue);
+
+		for ( var i = 0; i < _allObjects.Count; i++ )
+		{
+			var mazeObject = _allObjects[i];
+			var index = mazeObject.CellIndex;
+
+			if ( index == prevIndex )
+			{
+				++count;
+			}
+			else
+			{
+				if ( count > 0 )
+				{
+					_objectsInCells[prevIndex] = (offset, count);
+				}
+
+				prevIndex = index;
+				offset = i;
+				count = 1;
+			}
+		}
+
+		if ( count > 0 )
+		{
+			_objectsInCells[prevIndex] = (offset, count);
+		}
+	}
+
+	public IEnumerable<MazeObject> GetObjectsInCell( int row, int col )
+	{
+		if ( !_objectsInCells.TryGetValue( (row, col), out var slice ) )
+		{
+			return Array.Empty<MazeObject>();
+		}
+
+		return _allObjects
+			.Skip( slice.Offset )
+			.Take( slice.Count )
+			.Where( x => x.Components.Get<Holdable>() is not { Holder: not null } )
+			.Where( x => x.Components.Get<Throwable>() is not { Enabled: true } )
+			.OrderBy( x => x.Components.Get<Throwable>()?.IndexOnFloor ?? -1 );
 	}
 }

@@ -1,20 +1,13 @@
-﻿
-using Sandbox.Citizen;
+﻿using Sandbox.Citizen;
 using System;
 
 namespace Mazing;
 
-public sealed class Holder : Component, Component.ITriggerListener, IThrowableListener
+public sealed class Holder : Component, IThrowableListener
 {
 	[RequireComponent] public MazeObject MazeObject { get; set; } = null!;
 
-	[Property]
-	public Holdable? HeldItem { get; set; }
-
-	[Property]
-	public GameObject? HoldParent { get; set; }
-
-	private Vector3 _heldVelocity;
+	public List<Holdable> HeldItems { get; } = new();
 
 	private GameObject? _leftHandIk;
 	private GameObject? _rightHandIk;
@@ -41,25 +34,6 @@ public sealed class Holder : Component, Component.ITriggerListener, IThrowableLi
 		_leftHandIk = null;
 	}
 
-	protected override void OnEnabled()
-	{
-		if ( HeldItem is not null )
-		{
-			return;
-		}
-
-		if ( Components.Get<Collider>() is { } collider )
-		{
-			foreach ( var touching in collider.Touching )
-			{
-				if ( touching.Components.Get<Holdable>() is { } holdable && TryPickUp( holdable ) )
-				{
-					break;
-				}
-			}
-		}
-	}
-
 	protected override void OnDisabled()
 	{
 		Drop();
@@ -73,7 +47,7 @@ public sealed class Holder : Component, Component.ITriggerListener, IThrowableLi
 	[Broadcast( NetPermission.OwnerOnly )]
 	public void Throw( Direction dir, int range )
 	{
-		if ( HeldItem is null )
+		if ( HeldItems.Count == 0 )
 		{
 			return;
 		}
@@ -90,14 +64,19 @@ public sealed class Holder : Component, Component.ITriggerListener, IThrowableLi
 			animHelper.IkRightHand = null;
 		}
 
-		var item = HeldItem;
+		for ( var i = 0; i < HeldItems.Count; i++ )
+		{
+			var item = HeldItems[i];
 
-		HeldItem.Holder = null;
-		HeldItem = null;
+			item.Holder = null;
+			item.DispatchDropped();
 
-		item.DispatchDropped();
+			var (row, col) = MazeObject.CellIndex;
 
-		item.Throwable.Throw( dir, range );
+			item.Throwable.Throw( row, col, dir, range == 0 ? 0 : range + i );
+		}
+
+		HeldItems.Clear();
 	}
 
 	public bool TryPickUp( Holdable item )
@@ -107,36 +86,31 @@ public sealed class Holder : Component, Component.ITriggerListener, IThrowableLi
 			return false;
 		}
 
-		if ( !Enabled || HeldItem == item || item.Holder is not null )
+		if ( !Enabled || item.Holder is not null )
 		{
 			return false;
 		}
 
-		if ( HeldItem is null )
+		if ( HeldItems.Count > 0 && HeldItems[0].Components.Get<Holder>() is { } heldholder )
 		{
-			PickUp( item.GameObject.Id );
-			return true;
+			return heldholder.TryPickUp( item );
 		}
 
-		if ( HeldItem.Components.Get<Holder>() is { } heldHolder )
-		{
-			return heldHolder.TryPickUp( item );
-		}
-
-		return false;
+		PickUp( item.GameObject.Id );
+		return true;
 	}
 
-	[Broadcast( NetPermission.OwnerOnly )]
 	public void PickUp( Guid itemId )
 	{
 		var item = Scene.Directory.FindByGuid( itemId )
-			?.Components.Get<Holdable>();
+			?.Components.Get<Holdable>()
+			?? throw new Exception( "Can't find item" );
 
-		HeldItem = item ?? throw new Exception( "Can't find item" );
-		HeldItem.Holder = this;
+		item.Holder = this;
 
-		_heldVelocity = 0f;
+		HeldItems.Insert( 0, item );
 
+		item.HeldVelocity = 0f;
 		item.DispatchPickedUp();
 
 		if ( Components.Get<CitizenAnimationHelper>() is { } animHelper )
@@ -149,56 +123,73 @@ public sealed class Holder : Component, Component.ITriggerListener, IThrowableLi
 		}
 	}
 
-	protected override void OnFixedUpdate()
+	protected override void OnUpdate()
 	{
-		if ( HeldItem is null )
+		UpdateHeldItemPositions();
+
+		if ( IsProxy )
 		{
 			return;
 		}
 
-		var holdTransform = (HoldParent ?? GameObject).Transform;
-		var currentPos = HeldItem.Transform.Position;
-		var targetPos = holdTransform.Position;
+		foreach ( var mazeObject in MazeObject.GetObjectsInSameCell() )
+		{
+			if ( mazeObject.Components.Get<Holdable>() is not {} holdable )
+			{
+				continue;
+			}
 
-		var accel = (targetPos - currentPos) * 150f;
+			if ( mazeObject.Components.Get<Holder>() is not null )
+			{
+				continue;
+			}
+
+			TryPickUp( holdable );
+		}
+	}
+
+	private void UpdateHeldItemPositions()
+	{
+		if ( HeldItems.Count == 0 )
+		{
+			return;
+		}
+
+		var up = Vector3.Up;
 
 		if ( Components.Get<CharacterController>() is { } charController )
 		{
-			accel += charController.Velocity * 20f;
+			up = (new Vector3( 0f, 0f, 300f ) + charController.Velocity).Normal;
 		}
 
-		_heldVelocity = Vector3.Lerp( _heldVelocity, 0f, Helpers.Ease( 0.2f ) );
-		_heldVelocity += accel * Time.Delta;
+		var targetPos = Transform.Position + up * 64f;
 
-		HeldItem.Transform.Position += _heldVelocity * Time.Delta;
+		foreach ( var item in HeldItems )
+		{
+			var currentPos = item.Transform.Position;
+
+			var accel = (targetPos - currentPos) * 150f;
+
+			item.HeldVelocity = Vector3.Lerp( item.HeldVelocity, 0f, Helpers.Ease( 0.2f ) );
+			item.HeldVelocity += accel * Time.Delta;
+
+			item.Transform.Position += item.HeldVelocity * Time.Delta;
+
+			targetPos = currentPos + up * 16f;
+		}
 
 		if ( _leftHandIk.IsValid() && _rightHandIk.IsValid() )
 		{
-			var pos = HeldItem.Transform.Position + Transform.Rotation.Up * 16f;
+			var pos = HeldItems[0].Transform.Position + Transform.Rotation.Up * 16f;
 			var right = Transform.Rotation.Right * 12f;
 
 			_leftHandIk.Transform.Position = pos - right;
 			_rightHandIk.Transform.Position = pos + right;
 
-			var forwardAmount = Math.Clamp( Vector3.Dot( Transform.Rotation.Forward, currentPos - targetPos ) / 16f, -0.75f, 0.75f );
+			var forwardAmount = Math.Clamp( Vector3.Dot( Transform.Rotation.Forward, pos - Transform.Position ) / 16f, -0.75f, 0.75f );
 
 			_leftHandIk.Transform.LocalRotation = Rotation.From( -45f, 90f, 0f + MathF.Asin( forwardAmount ).RadianToDegree() );
 			_rightHandIk.Transform.LocalRotation = Rotation.From( -45f, -90f, 180f - MathF.Asin( forwardAmount ).RadianToDegree() );
 		}
-	}
-
-	void ITriggerListener.OnTriggerEnter( Collider other )
-	{
-		if ( other.Components.Get<Holdable>() is not { } holdable )
-		{
-			return;
-		}
-
-		if ( !holdable.PickupOnTouch || holdable.Throwable.Enabled || holdable.Holder is not null )
-		{
-			return;
-		}
-
-		TryPickUp( holdable );
 	}
 }

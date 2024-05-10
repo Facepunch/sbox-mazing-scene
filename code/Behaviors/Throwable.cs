@@ -18,6 +18,14 @@ public sealed class Throwable : Component
 	[Property]
 	public float ThrowDuration { get; set; } = 0.5f;
 
+	[Property]
+	public int IndexOnFloor { get; set; }
+
+	[Property, Sync]
+	public bool IsExiting { get; set; }
+
+	[Property, Sync] public bool CanExit { get; set; } = true;
+
 	public Vector3 Velocity { get; private set; }
 
 	public delegate void ThrownAction( Direction direction, int range );
@@ -30,33 +38,31 @@ public sealed class Throwable : Component
 	private TimeUntil _throwEndTime;
 	private float _throwHeight;
 
-	protected override void OnStart()
+	protected override void OnAwake()
 	{
 		Enabled = false;
 	}
 
 	[Broadcast]
-	public void Throw( Direction dir, int range )
+	public void Throw( int fromRow, int fromCol, Direction dir, int range )
 	{
-		var (row, col) = MazeObject.CellIndex;
-
 		var increment = dir.GetNeighbor( 0, 0 );
 		var actualRange = 0;
 
 		while ( actualRange < range )
 		{
-			if ( MazeObject.View[row + increment.Row, col + increment.Col] == CellState.Empty )
+			if ( MazeObject.View[fromRow + increment.Row, fromCol + increment.Col] == CellState.Empty )
 			{
 				break;
 			}
 
-			row += increment.Row;
-			col += increment.Col;
+			fromRow += increment.Row;
+			fromCol += increment.Col;
 
 			++actualRange;
 		}
 
-		ThrowInternal( row, col );
+		ThrowInternal( fromRow, fromCol );
 
 		if ( IsProxy ) return;
 
@@ -68,23 +74,16 @@ public sealed class Throwable : Component
 		}
 	}
 
-	[Broadcast]
-	public void Throw( int row, int col )
-	{
-		ThrowInternal( row, col );
-
-		Thrown?.Invoke( Direction.North, 0 );
-	}
-
 	private void ThrowInternal( int row, int col )
 	{
 		Enabled = true;
+		IndexOnFloor = 0;
 
 		_throwStart = Transform.Position;
 
 		_throwEnd = MazeObject.Maze.MazeToWorldPos( row, col );
 
-		var dist = (_throwEnd - _throwStart).WithZ( 0f ).Length / 48f;
+		var dist = Math.Max( 0.5f, (_throwEnd - _throwStart).WithZ( 0f ).Length / 48f );
 		var sqrtDist = MathF.Sqrt( dist );
 
 		_throwEndTime = sqrtDist * 0.5f;
@@ -95,6 +94,16 @@ public sealed class Throwable : Component
 
 	protected override void OnUpdate()
 	{
+		if ( IsExiting )
+		{
+			if ( Transform.Position.z > -1024f )
+			{
+				Transform.Position -= new Vector3( 0f, 0f, 400f ) * Time.Delta;
+			}
+
+			return;
+		}
+
 		var duration = _throwEndTime.Passed + _throwEndTime;
 
 		var x = Math.Clamp( _throwEndTime.Fraction, 0f, 1f );
@@ -110,17 +119,49 @@ public sealed class Throwable : Component
 
 		Velocity = along * dt + up * dydx * dt;
 
+		if ( IsProxy ) return;
 		if ( x < 1f ) return;
+
+		if ( MazeObject.GetObjectsInSameCell().Any( x => x.Components.Get<Exit>() is { IsOpen: true } ) )
+		{
+			IsExiting = true;
+			return;
+		}
 
 		Enabled = false;
 
-		if ( IsProxy ) return;
+		var cellIndex = MazeObject.CellIndex;
 
 		Landed?.Invoke();
 
 		foreach ( var listener in Components.GetAll<IThrowableListener>( FindMode.Enabled | FindMode.Disabled | FindMode.InSelf ) )
 		{
 			listener.Landed();
+		}
+
+		var landedOn = Scene.Components
+			.GetAll<Throwable>( FindMode.InChildren | FindMode.Disabled )
+			.Where( other => other.GameObject != GameObject )
+			.Where( other => other.GameObject.Enabled && !other.Enabled )
+			.Where( other => other.MazeObject.CellIndex == cellIndex )
+			.MaxBy( other => other.IndexOnFloor );
+
+		if ( landedOn != null )
+		{
+			if ( Components.Get<Holdable>() is {} holdable
+				&& landedOn.Components.Get<Holder>() is { } holder
+				&& holder.TryPickUp( holdable ) )
+			{
+				return;
+			}
+
+			IndexOnFloor = landedOn.IndexOnFloor + 1;
+			Transform.Position = Transform.Position.WithZ( IndexOnFloor * 16f );
+		}
+		else
+		{
+			IndexOnFloor = 0;
+			Transform.Position = Transform.Position.WithZ( 0f );
 		}
 	}
 }

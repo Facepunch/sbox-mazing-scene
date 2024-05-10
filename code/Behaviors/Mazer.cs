@@ -92,7 +92,7 @@ public sealed class Mazer : Component
 
 		NextVault = VaultCooldown;
 
-		Throwable.Throw( dir, 1 );
+		Throwable.Throw( row, col, dir, 1 );
 
 		Vaulted?.Invoke();
 
@@ -187,17 +187,6 @@ public sealed class Mazer : Component
 	private void OnWalking()
 	{
 		Move( false );
-
-		if ( IsProxy )
-		{
-			return;
-		}
-
-		if ( !CharacterController.IsOnGround )
-		{
-			var (row, col) = MazeObject.CellIndex;
-			Throwable.Throw( row, col );
-		}
 	}
 
 	private void AlignMovementToGrid( ref Vector2 input, bool noclip )

@@ -39,31 +39,24 @@ public sealed class Exit : Component
 			_wasOpen = IsOpen;
 
 			Opened?.Invoke();
-			return;
-		}
-
-		if ( IsOpen )
-		{
-			return;
 		}
 
 		if ( IsProxy ) return;
 
-		foreach ( var collider in Trigger.Touching )
+		var (row, col) = MazeObject.CellIndex;
+
+		foreach ( var mazeObject in MazeObject.GetObjectsInSameCell() )
 		{
-			if ( collider.Components.Get<Key>() is { } key )
+			if ( !IsOpen && mazeObject.Components.Get<Key>() is { } key )
 			{
 				Open( key );
 				continue;
 			}
 
-			if ( collider.Components.Get<Holder>() is { HeldItem: {} heldItem } )
+			if ( IsOpen && mazeObject.Components.Get<Throwable>( true ) is { IsExiting: false, CanExit: true } throwable )
 			{
-				if ( heldItem.Components.Get<Key>() is { } heldKey )
-				{
-					Open( heldKey );
-					continue;
-				}
+				throwable.Throw( row, col, Direction.North, 0 );
+				continue;
 			}
 		}
 	}

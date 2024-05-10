@@ -590,10 +590,10 @@
             "prefab": "prefabs/player.prefab"
           },
           "PostModel": "models/post.vmdl",
-          "Seed": 865794800,
+          "Seed": 2043635520,
           "Size": 4,
           "TileModel": "models/tile.vmdl",
-          "TreasureCount": 8,
+          "TreasureCount": 2,
           "WallModel": "models/wall.vmdl"
         }
       ],
@@ -666,12 +666,14 @@
           "EnemyCountIncrement": 1,
           "InitialEnemyCount": 2,
           "InitialMazeSize": 4,
+          "InitialTreasureCount": 2,
           "Level": 0,
           "MazeSizeIncrement": 1,
           "State": "StartingLevel",
           "StateStart": {
-            "Relative": 3085.0972
-          }
+            "Relative": 13379.721
+          },
+          "TreasureCountIncrement": 1
         }
       ]
     }
@@ -699,7 +701,7 @@
   },
   "Title": "minimal",
   "Description": "",
-  "LastSaved": "2024-05-10T16:16:12.5844191\u002B01:00",
+  "LastSaved": "2024-05-10T19:07:47.4710028\u002B01:00",
   "ResourceVersion": 1,
   "__version": 1,
   "__references": []
