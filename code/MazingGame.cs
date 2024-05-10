@@ -61,7 +61,7 @@ public class MazingGame : Component, Component.INetworkListener
 
 	public void OnActive( Connection connection )
 	{
-		Maze.SpawnPlayer( connection );
+		Maze.SpawnPlayer( connection, Level == 0 );
 	}
 
 	protected override void OnUpdate()

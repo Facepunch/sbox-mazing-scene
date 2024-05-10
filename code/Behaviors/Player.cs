@@ -87,7 +87,7 @@ public sealed class Player : Component
 	}
 
 	[Authority( NetPermission.HostOnly )]
-	public void Kill( Vector3 force )
+	public void Kill( Vector3 force, bool ragdoll = true )
 	{
 		if ( IsDead )
 		{
@@ -102,7 +102,10 @@ public sealed class Player : Component
 		Tags.Remove( "player" );
 		Tags.Add( "ghost" );
 
-		SpawnRagdoll( force );
+		if ( ragdoll )
+		{
+			SpawnRagdoll( force );
+		}
 
 		if ( Components.Get<Holder>( FindMode.Enabled | FindMode.InSelf ) is { } holder )
 		{
