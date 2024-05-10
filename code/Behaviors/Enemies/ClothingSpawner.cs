@@ -14,13 +14,11 @@ public sealed class ClothingSpawner : Component
 	[Property]
 	public List<Clothing?> Clothing { get; set; } = new();
 
-	protected override void OnEnabled()
+	[Button( "Run", Icon = "checkroom" )]
+	public void Apply()
 	{
-		Apply();
-	}
+		using var _ = Scene.Push();
 
-	private void Apply()
-	{
 		var clothing = new ClothingContainer();
 
 		foreach ( var item in Clothing )

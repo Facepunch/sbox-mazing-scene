@@ -8,7 +8,8 @@ public enum MazerState
 {
 	Falling,
 	Walking,
-	Vaulting
+	Vaulting,
+	Dead
 }
 
 public sealed class Mazer : Component
@@ -50,6 +51,12 @@ public sealed class Mazer : Component
 	protected override void OnStart()
 	{
 		AnimationHelper.Target.OnFootstepEvent += Footstep;
+	}
+
+	[Broadcast( NetPermission.HostOnly )]
+	public void Kill()
+	{
+		State = MazerState.Dead;
 	}
 
 	public bool TryVault()

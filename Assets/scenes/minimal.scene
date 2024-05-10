@@ -122,8 +122,8 @@
                 "Id": 49,
                 "Type": "var",
                 "Properties": {
-                  "_kind": "Set",
-                  "_var": "target"
+                  "_var": "target",
+                  "_kind": "Set"
                 },
                 "UserData": {
                   "Position": "-432,256"
@@ -260,9 +260,9 @@
                 "Id": 63,
                 "Type": "call",
                 "Properties": {
-                  "_isStatic": false,
-                  "_name": "GetAll",
                   "T": "package.ziks.mazing/Mazing.Player",
+                  "_name": "GetAll",
+                  "_isStatic": false,
                   "_type": "Sandbox.Game/Sandbox.IComponentLister"
                 },
                 "UserData": {
@@ -639,10 +639,18 @@
           "MazeSizeIncrement": 1,
           "State": "StartingLevel",
           "StateStart": {
-            "Relative": 6325.937
+            "Relative": 3221.6565
           }
         }
       ]
+    },
+    {
+      "__guid": "1a448c74-794f-4f92-a9c9-348cbf0af311",
+      "Flags": 0,
+      "Name": "GameObject",
+      "Enabled": true,
+      "NetworkMode": 2,
+      "NetworkInterpolation": true
     }
   ],
   "SceneProperties": {
@@ -668,7 +676,7 @@
   },
   "Title": "minimal",
   "Description": "",
-  "LastSaved": "2024-05-09T17:57:56.4139588\u002B01:00",
+  "LastSaved": "2024-05-10T10:17:46.3291759\u002B01:00",
   "ResourceVersion": 1,
   "__version": 1,
   "__references": []
