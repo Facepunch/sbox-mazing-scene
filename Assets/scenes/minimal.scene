@@ -62,87 +62,22 @@
               "Title": "On Component Update",
               "ReferencedComponentTypes": []
             },
-            "Variables": [
-              {
-                "Name": "target",
-                "Type": "package.ziks.mazing/Mazing.Player"
-              }
-            ],
+            "Variables": [],
             "Nodes": [
               {
                 "Id": 43,
                 "Type": "input",
                 "UserData": {
-                  "Position": "-176,-160",
-                  "Labels": {
-                    "_signal": "find target"
-                  }
-                }
-              },
-              {
-                "Id": 44,
-                "Type": "foreach",
-                "UserData": {
-                  "Position": "-176,256",
-                  "Labels": {
-                    "body.value": "mazer"
-                  }
-                }
-              },
-              {
-                "Id": 45,
-                "Type": "var",
-                "Properties": {
-                  "_var": "target"
-                },
-                "UserData": {
-                  "Position": "608,368"
-                }
-              },
-              {
-                "Id": 46,
-                "Type": "property",
-                "ParentId": 44,
-                "Properties": {
-                  "_name": "GameObject",
-                  "_type": "Sandbox.Game/Sandbox.Component"
-                }
-              },
-              {
-                "Id": 47,
-                "Type": "mazing.isowner",
-                "UserData": {
-                  "Position": "128,384"
-                }
-              },
-              {
-                "Id": 48,
-                "Type": "if",
-                "UserData": {
-                  "Position": "384,288",
-                  "Labels": {
-                    "_signal": "after find target"
-                  }
-                }
-              },
-              {
-                "Id": 49,
-                "Type": "var",
-                "Properties": {
-                  "_kind": "Set",
-                  "_var": "target"
-                },
-                "UserData": {
-                  "Position": "-432,256"
+                  "Position": "-176,-160"
                 }
               },
               {
                 "Id": 50,
                 "Type": "if",
                 "UserData": {
-                  "Position": "192,-160",
+                  "Position": "240,-144",
                   "Labels": {
-                    "true": "follow target"
+                    "true": "run"
                   }
                 }
               },
@@ -157,42 +92,11 @@
                 }
               },
               {
-                "Id": 52,
-                "Type": "var",
-                "Properties": {
-                  "_var": "target"
-                },
-                "UserData": {
-                  "Position": "-352,656"
-                }
-              },
-              {
-                "Id": 53,
-                "Type": "property",
-                "ParentId": 52,
-                "Properties": {
-                  "_type": "Sandbox.Game/Sandbox.Component",
-                  "_name": "Transform"
-                },
-                "UserData": {
-                  "Visible": false
-                }
-              },
-              {
-                "Id": 54,
-                "Type": "property",
-                "ParentId": 53,
-                "Properties": {
-                  "_type": "Sandbox.Game/Sandbox.GameTransform",
-                  "_name": "Position"
-                }
-              },
-              {
                 "Id": 55,
                 "Type": "property",
                 "Properties": {
-                  "_type": "Sandbox.Game/Sandbox.GameObject",
-                  "_name": "Transform"
+                  "_name": "Transform",
+                  "_type": "Sandbox.Game/Sandbox.GameObject"
                 },
                 "UserData": {
                   "Position": "-32,-32",
@@ -206,8 +110,8 @@
                 "Type": "property",
                 "ParentId": 55,
                 "Properties": {
-                  "_type": "Sandbox.Game/Sandbox.GameTransform",
-                  "_name": "Rotation"
+                  "_name": "Rotation",
+                  "_type": "Sandbox.Game/Sandbox.GameTransform"
                 },
                 "UserData": {
                   "Visible": false
@@ -218,8 +122,8 @@
                 "Type": "property",
                 "ParentId": 56,
                 "Properties": {
-                  "_type": "Sandbox.System/Rotation",
-                  "_name": "Forward"
+                  "_name": "Forward",
+                  "_type": "Sandbox.System/Rotation"
                 },
                 "UserData": {
                   "Labels": {
@@ -253,48 +157,14 @@
                 }
               },
               {
-                "Id": 62,
-                "Type": "property",
-                "Properties": {
-                  "_type": "Sandbox.Game/Sandbox.GameObject",
-                  "_name": "Scene"
-                },
-                "UserData": {
-                  "Position": "-672,352"
-                }
-              },
-              {
-                "Id": 63,
-                "Type": "call",
-                "Properties": {
-                  "T": "package.ziks.mazing/Mazing.Player",
-                  "_type": "Sandbox.Game/Sandbox.IComponentLister",
-                  "_name": "GetAll",
-                  "_isStatic": false
-                },
-                "UserData": {
-                  "Position": "-464,384"
-                }
-              },
-              {
                 "Id": 68,
                 "Type": "property",
                 "Properties": {
-                  "_type": "Sandbox.System/Vector3",
-                  "_name": "z"
+                  "_name": "z",
+                  "_type": "Sandbox.System/Vector3"
                 },
                 "UserData": {
                   "Position": "-96,656"
-                }
-              },
-              {
-                "Id": 71,
-                "Type": "comment",
-                "UserData": {
-                  "Position": "-704,192",
-                  "Size": "1472,314",
-                  "Title": "Find Target",
-                  "Layer": 1
                 }
               },
               {
@@ -303,67 +173,138 @@
                 "UserData": {
                   "Position": "-384,576",
                   "Size": "988,267",
-                  "Title": "Follow Target"
+                  "Title": "Follow Target",
+                  "Layer": 1
+                }
+              },
+              {
+                "Id": 77,
+                "Type": "mazing.localplayer",
+                "UserData": {
+                  "Position": "-416,48"
+                }
+              },
+              {
+                "Id": 78,
+                "Type": "property",
+                "ParentId": 77,
+                "Properties": {
+                  "_name": "Transform",
+                  "_type": "Sandbox.Game/Sandbox.Component"
+                },
+                "UserData": {
+                  "Visible": false
+                }
+              },
+              {
+                "Id": 79,
+                "Type": "property",
+                "ParentId": 78,
+                "Properties": {
+                  "_name": "Position",
+                  "_type": "Sandbox.Game/Sandbox.GameTransform"
+                },
+                "UserData": {
+                  "Labels": {
+                    "_result": "player pos"
+                  }
+                }
+              },
+              {
+                "Id": 91,
+                "Type": "property",
+                "ParentId": 77,
+                "Properties": {
+                  "_name": "IsDead",
+                  "_type": "package.ziks.mazing/Mazing.Player"
+                },
+                "UserData": {
+                  "Labels": {
+                    "_result": "is dead"
+                  }
+                }
+              },
+              {
+                "Id": 94,
+                "Type": "property",
+                "Properties": {
+                  "_name": "Saturation",
+                  "_type": "Sandbox.Game/Sandbox.ColorAdjustments"
+                },
+                "UserData": {
+                  "Position": "-400,288"
+                }
+              },
+              {
+                "Id": 95,
+                "Type": "scene.ref",
+                "ParentId": 94,
+                "Properties": {
+                  "component": {
+                    "_type": "component",
+                    "component_id": "0dc86950-f66e-4ecf-a39c-4add7b3e26f2",
+                    "go": "3ee1c9f4-07be-4e0b-8b23-67bee2d8ec8a",
+                    "component_type": "ColorAdjustments"
+                  }
+                }
+              },
+              {
+                "Id": 99,
+                "Type": "op.conditional",
+                "UserData": {
+                  "Position": "-272,368"
+                }
+              },
+              {
+                "Id": 109,
+                "Type": "property",
+                "Properties": {
+                  "_name": "Saturation",
+                  "_type": "Sandbox.Game/Sandbox.ColorAdjustments"
+                },
+                "UserData": {
+                  "Position": "336,320"
+                }
+              },
+              {
+                "Id": 110,
+                "Type": "scene.ref",
+                "ParentId": 109,
+                "Properties": {
+                  "component": {
+                    "_type": "component",
+                    "component_id": "0dc86950-f66e-4ecf-a39c-4add7b3e26f2",
+                    "go": "3ee1c9f4-07be-4e0b-8b23-67bee2d8ec8a",
+                    "component_type": "ColorAdjustments"
+                  }
+                }
+              },
+              {
+                "Id": 116,
+                "Type": "call",
+                "Properties": {
+                  "_name": "LerpTo",
+                  "_isStatic": true,
+                  "_type": "package.ziks.mazing/Mazing.Helpers"
+                },
+                "UserData": {
+                  "Position": "16,320"
+                }
+              },
+              {
+                "Id": 123,
+                "Type": "comment",
+                "UserData": {
+                  "Position": "-432,224",
+                  "Size": "1100,275",
+                  "Title": "Desaturate when dead",
+                  "Color": 3
                 }
               }
             ],
             "Links": [
               {
-                "SrcId": 49,
-                "SrcName": "_signal",
-                "DstId": 44,
-                "DstName": "_signal"
-              },
-              {
-                "SrcId": 63,
-                "SrcName": "_result",
-                "DstId": 44,
-                "DstName": "enumerable"
-              },
-              {
-                "SrcId": 48,
-                "SrcName": "true",
-                "DstId": 45,
-                "DstName": "_signal"
-              },
-              {
-                "SrcId": 44,
-                "SrcName": "body.value",
-                "DstId": 45,
-                "DstName": "_value"
-              },
-              {
-                "SrcId": 44,
-                "SrcName": "body.value",
-                "DstId": 46,
-                "DstName": "_target"
-              },
-              {
-                "SrcId": 46,
-                "SrcName": "_result",
-                "DstId": 47,
-                "DstName": "go"
-              },
-              {
-                "SrcId": 44,
-                "SrcName": "body",
-                "DstId": 48,
-                "DstName": "_signal"
-              },
-              {
-                "SrcId": 47,
-                "SrcName": "_result",
-                "DstId": 48,
-                "DstName": "condition"
-              },
-              {
                 "SrcId": 43,
-                "SrcName": "_signal",
-                "DstId": 49,
-                "DstName": "_signal"
-              },
-              {
-                "SrcId": 48,
                 "SrcName": "_signal",
                 "DstId": 50,
                 "DstName": "_signal"
@@ -375,21 +316,10 @@
                 "DstName": "condition"
               },
               {
-                "VarName": "target",
+                "SrcId": 77,
+                "SrcName": "_result",
                 "DstId": 51,
                 "DstName": "input"
-              },
-              {
-                "SrcId": 52,
-                "SrcName": "_result",
-                "DstId": 53,
-                "DstName": "_target"
-              },
-              {
-                "SrcId": 53,
-                "SrcName": "_result",
-                "DstId": 54,
-                "DstName": "_target"
               },
               {
                 "SrcId": 43,
@@ -455,24 +385,7 @@
                 "DstName": "_value"
               },
               {
-                "SrcId": 43,
-                "SrcName": "_target",
-                "DstId": 62,
-                "DstName": "_target"
-              },
-              {
-                "SrcId": 62,
-                "SrcName": "_result",
-                "DstId": 63,
-                "DstName": "_target"
-              },
-              {
-                "Value": "Enabled, InChildren",
-                "DstId": 63,
-                "DstName": "search"
-              },
-              {
-                "SrcId": 54,
+                "SrcId": 79,
                 "SrcName": "_result",
                 "DstId": 68,
                 "DstName": "_target"
@@ -481,8 +394,111 @@
                 "Value": 64,
                 "DstId": 68,
                 "DstName": "_value"
+              },
+              {
+                "SrcId": 43,
+                "SrcName": "_target",
+                "DstId": 77,
+                "DstName": "go"
+              },
+              {
+                "SrcId": 77,
+                "SrcName": "_result",
+                "DstId": 78,
+                "DstName": "_target"
+              },
+              {
+                "SrcId": 78,
+                "SrcName": "_result",
+                "DstId": 79,
+                "DstName": "_target"
+              },
+              {
+                "SrcId": 77,
+                "SrcName": "_result",
+                "DstId": 91,
+                "DstName": "_target"
+              },
+              {
+                "SrcId": 95,
+                "SrcName": "_result",
+                "DstId": 94,
+                "DstName": "_target"
+              },
+              {
+                "Value": {
+                  "$type": "Simple",
+                  "Type": "System.Private.CoreLib/System.Single",
+                  "Value": 0.25
+                },
+                "DstId": 99,
+                "DstName": "a"
+              },
+              {
+                "Value": {
+                  "$type": "Simple",
+                  "Type": "System.Private.CoreLib/System.Single",
+                  "Value": 1
+                },
+                "DstId": 99,
+                "DstName": "b"
+              },
+              {
+                "SrcId": 91,
+                "SrcName": "_result",
+                "DstId": 99,
+                "DstName": "x"
+              },
+              {
+                "SrcId": 50,
+                "SrcName": "true",
+                "DstId": 109,
+                "DstName": "_signal"
+              },
+              {
+                "SrcId": 110,
+                "SrcName": "_result",
+                "DstId": 109,
+                "DstName": "_target"
+              },
+              {
+                "SrcId": 116,
+                "SrcName": "_result",
+                "DstId": 109,
+                "DstName": "_value"
+              },
+              {
+                "SrcId": 94,
+                "SrcName": "_result",
+                "DstId": 116,
+                "DstName": "a"
+              },
+              {
+                "SrcId": 99,
+                "SrcName": "_result",
+                "DstId": 116,
+                "DstName": "b"
+              },
+              {
+                "Value": 0.5,
+                "DstId": 116,
+                "DstName": "speed"
               }
-            ]
+            ],
+            "Defaults": {
+              "$110.component": {
+                "_type": "component",
+                "component_id": "0dc86950-f66e-4ecf-a39c-4add7b3e26f2",
+                "go": "3ee1c9f4-07be-4e0b-8b23-67bee2d8ec8a",
+                "component_type": "ColorAdjustments"
+              },
+              "$95.component": {
+                "_type": "component",
+                "component_id": "0dc86950-f66e-4ecf-a39c-4add7b3e26f2",
+                "go": "3ee1c9f4-07be-4e0b-8b23-67bee2d8ec8a",
+                "component_type": "ColorAdjustments"
+              }
+            }
           },
           "Orthographic": false,
           "OrthographicHeight": 1204,
@@ -535,6 +551,14 @@
           "__type": "Sandbox.Sharpen",
           "__guid": "1ffe16a5-1439-4421-9a64-fc605595e4c8",
           "Scale": 0.2
+        },
+        {
+          "__type": "Sandbox.ColorAdjustments",
+          "__guid": "0dc86950-f66e-4ecf-a39c-4add7b3e26f2",
+          "Brightness": 1,
+          "Contrast": 1,
+          "HueRotate": 0,
+          "Saturation": 0.42
         }
       ]
     },
@@ -603,8 +627,8 @@
                 "Id": 2,
                 "Type": "resource.ref",
                 "Properties": {
-                  "T": "Sandbox.Engine/Sandbox.SoundEvent",
-                  "value": "sounds/player/player.victory.sound"
+                  "value": "sounds/player/player.victory.sound",
+                  "T": "Sandbox.Engine/Sandbox.SoundEvent"
                 },
                 "UserData": {
                   "Position": "0,96"
@@ -646,7 +670,7 @@
           "MazeSizeIncrement": 1,
           "State": "StartingLevel",
           "StateStart": {
-            "Relative": 79.915825
+            "Relative": 3085.0972
           }
         }
       ]
@@ -675,7 +699,7 @@
   },
   "Title": "minimal",
   "Description": "",
-  "LastSaved": "2024-05-10T15:26:07.4033192\u002B01:00",
+  "LastSaved": "2024-05-10T16:16:12.5844191\u002B01:00",
   "ResourceVersion": 1,
   "__version": 1,
   "__references": []

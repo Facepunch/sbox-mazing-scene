@@ -9,11 +9,13 @@ public static class Helpers
 		Direction.West, Direction.North, Direction.East, Direction.South
 	};
 
+	[Pure]
 	public static float Ease( float frac )
 	{
 		return Ease( frac, Time.Delta );
 	}
 
+	[Pure]
 	public static float Ease( float frac, float dt )
 	{
 		if ( float.IsPositiveInfinity( dt ) ) return 1f;
@@ -25,6 +27,34 @@ public static class Helpers
 	public static bool IsOwner( this GameObject go )
 	{
 		return go.Network.IsOwner;
+	}
+
+	[ActionGraphNode( "mazing.localplayer" ), Pure]
+	public static Player? GetLocalPlayer( this GameObject go )
+	{
+		return go.Scene.Components
+			.GetAll<Player>( FindMode.Enabled | FindMode.InChildren )
+			.FirstOrDefault( x => x.GameObject.IsOwner() );
+	}
+
+	[Pure]
+	public static float EaseTo( float a, float b, float frac )
+	{
+		return MathX.Lerp( a, b, Ease( frac ) );
+	}
+
+	[Pure]
+	public static float LerpTo( float a, float b, float speed )
+	{
+		var diff = b - a;
+		var delta = speed * Time.Delta;
+
+		if ( Math.Abs( diff ) < delta )
+		{
+			return b;
+		}
+
+		return a + delta * Math.Sign( diff );
 	}
 
 	public static void Shuffle<T>( this IList<T> list, Random random )
