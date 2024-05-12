@@ -97,6 +97,7 @@ public static class DirectionExtensions
 
 		return tuple.Col < 0f ? Direction.West : Direction.East;
 	}
+
 	public static Direction GetDirectionTo( this (int Row, int Col) start, (int Row, int Col) end )
 	{
 		return (end.Row - start.Row, end.Col - start.Col).GetDirection();

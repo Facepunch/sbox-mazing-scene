@@ -9,16 +9,25 @@ public sealed partial class Maze : Component
 	public int Seed { get; set; } = 0x12345678;
 
 	[Property, Group( "Parameters" )]
-	public int Size { get; set; } = 4;
-
-	[Property, Group( "Parameters" )]
-	public int TreasureCount { get; set; } = 8;
-
-	[Property, Group( "Parameters" )]
-	public int EnemyCount { get; set; } = 4;
-
-	[Property, Group( "Parameters" )]
 	public int Level { get; set; } = 1;
+
+	[Property]
+	public int InitialMazeSize { get; set; } = 4;
+
+	[Property]
+	public int InitialEnemyCount { get; set; } = 2;
+
+	[Property]
+	public int EnemyCountIncrement { get; set; } = 1;
+
+	[Property]
+	public int InitialTreasureCount { get; set; } = 2;
+
+	[Property]
+	public int TreasureCountIncrement { get; set; } = 1;
+
+	[Property]
+	public int MazeSizeIncrement { get; set; } = 1;
 
 	private readonly List<MazeObject> _allObjects = new();
 	private readonly Dictionary<(int Row, int Col), (int Offset, int Count)> _objectsInCells = new();
@@ -58,15 +67,25 @@ public sealed partial class Maze : Component
 	}
 
 	[Broadcast( NetPermission.HostOnly )]
-	public void NextLevel( int level, int size, int enemyCount, int treasureCount, int seed )
+	public void NextLevel( int level, int seed )
 	{
 		Level = level;
-		Size = size;
-		EnemyCount = enemyCount;
-		TreasureCount = treasureCount;
 		Seed = seed;
 
 		Generate();
+	}
+
+	private MazeGeneratorParameters GetParameters( int seed, int level )
+	{
+		if ( level == 0 )
+		{
+			return new MazeGeneratorParameters( seed, 4, 2, 1 );
+		}
+
+		return new MazeGeneratorParameters( seed,
+			InitialMazeSize + (level - 1) * MazeSizeIncrement,
+			InitialTreasureCount + (Level - 1) * TreasureCountIncrement,
+			InitialEnemyCount + (Level - 1) * EnemyCountIncrement );
 	}
 
 	[Button( "Run", "casino" ), Group( "Parameters" )]
@@ -83,13 +102,14 @@ public sealed partial class Maze : Component
 
 		IMazeGenerator generator = Level == 0 ? new LobbyMazeGenerator() : new MazeGenerator();
 
-		var result = generator.Generate( new MazeGeneratorParameters( Seed, Size, TreasureCount, EnemyCount ) );
+		var parameters = GetParameters( Seed, Level );
+		var result = generator.Generate( parameters );
 
 		View = result.View;
 
 		UpdateGeometry( result );
 
-		SpawnObjects();
+		SpawnObjects( parameters );
 	}
 
 	protected override void OnStart()

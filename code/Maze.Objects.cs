@@ -24,7 +24,7 @@ partial class Maze
 		_spawnedObjects.Clear();
 	}
 
-	private void SpawnObjects()
+	private void SpawnObjects( MazeGeneratorParameters parameters )
 	{
 		if ( Network.IsProxy )
 		{
@@ -65,8 +65,8 @@ partial class Maze
 				.OrderBy( x => x.Info.Value )
 				.Select( x => (x.Prefab, x.Info.Value) ) );
 
-		var enemyPoints = EnemyCount;
-		var treasurePoints = TreasureCount;
+		var enemyPoints = parameters.EnemyCount;
+		var treasurePoints = parameters.TreasureCount;
 
 		static PrefabFile? GetPrefab( ref int remainingPoints, Queue<(PrefabFile Prefab, int Points)> queue )
 		{
@@ -93,7 +93,12 @@ partial class Maze
 			return null;
 		}
 
-		foreach ( var (row, col, state) in View!.Cells )
+		var cells = View!.Cells
+			.ToArray();
+
+		cells.Shuffle( random );
+
+		foreach ( var (row, col, state) in cells )
 		{
 			switch ( state )
 			{
@@ -128,8 +133,6 @@ partial class Maze
 					break;
 			}
 		}
-
-		_playerSpawns.Shuffle( Random.Shared );
 
 		if ( !Game.IsPlaying )
 		{
