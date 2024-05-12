@@ -168,14 +168,14 @@ public sealed class Holder : Component, IThrowableListener
 		{
 			var currentPos = item.Transform.Position;
 
-			var accel = (targetPos - currentPos) * 150f;
+			var accel = (targetPos - currentPos) * 250f;
 
-			item.HeldVelocity = Vector3.Lerp( item.HeldVelocity, 0f, Helpers.Ease( 0.2f ) );
+			item.HeldVelocity = Vector3.Lerp( item.HeldVelocity, 0f, Helpers.Ease( 0.5f ) );
 			item.HeldVelocity += accel * Time.Delta;
 
 			item.Transform.Position += item.HeldVelocity * Time.Delta;
 
-			targetPos = currentPos + up * 16f;
+			targetPos = (targetPos + currentPos) * 0.5f + up * 16f;
 		}
 
 		if ( _leftHandIk.IsValid() && _rightHandIk.IsValid() )
