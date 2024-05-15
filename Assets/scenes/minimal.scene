@@ -717,7 +717,5 @@
   "LastSaved": "2024-05-15T17:42:11.7971043\u002B02:00",
   "ResourceVersion": 1,
   "__version": 1,
-  "__references": [
-    "nolankicks.2d_game_test"
-  ]
+  "__references": []
 }

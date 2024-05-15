@@ -1051,7 +1051,5 @@
   "MenuIcon": null,
   "ResourceVersion": 1,
   "__version": 1,
-  "__references": [
-    "nolankicks.2d_game_test"
-  ]
+  "__references": []
 }
