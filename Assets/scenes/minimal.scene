@@ -4,7 +4,7 @@
     {
       "__guid": "73ab3cfa-8b0d-4fa6-b13b-a70414419728",
       "Flags": 0,
-      "Name": "HUD",
+      "Name": "UI",
       "Position": "-0.0001983643,-0.0002441406,-0.0002441406",
       "Enabled": true,
       "NetworkMode": 2,
@@ -33,6 +33,21 @@
               "__type": "ScreenFade",
               "__guid": "c598c54a-c83a-4b01-9565-a5195567b03c",
               "Opacity": 0
+            }
+          ]
+        },
+        {
+          "__guid": "8e975ed9-1fa4-463b-a0e9-c200d1bf239d",
+          "Flags": 0,
+          "Name": "HUD",
+          "Position": "0,0,0",
+          "Enabled": true,
+          "NetworkMode": 2,
+          "NetworkInterpolation": true,
+          "Components": [
+            {
+              "__type": "Hud",
+              "__guid": "0f2343d7-67c4-4962-b1e7-14d7f9131608"
             }
           ]
         }
@@ -95,8 +110,8 @@
                 "Id": 55,
                 "Type": "property",
                 "Properties": {
-                  "_type": "Sandbox.Game/Sandbox.GameObject",
-                  "_name": "Transform"
+                  "_name": "Transform",
+                  "_type": "Sandbox.GameObject"
                 },
                 "UserData": {
                   "Position": "-32,-32",
@@ -110,8 +125,8 @@
                 "Type": "property",
                 "ParentId": 55,
                 "Properties": {
-                  "_type": "Sandbox.Game/Sandbox.GameTransform",
-                  "_name": "Rotation"
+                  "_name": "Rotation",
+                  "_type": "Sandbox.GameTransform"
                 },
                 "UserData": {
                   "Visible": false
@@ -122,8 +137,8 @@
                 "Type": "property",
                 "ParentId": 56,
                 "Properties": {
-                  "_type": "Sandbox.System/Rotation",
-                  "_name": "Forward"
+                  "_name": "Forward",
+                  "_type": "Rotation"
                 },
                 "UserData": {
                   "Labels": {
@@ -149,8 +164,8 @@
                 "Id": 61,
                 "Type": "property",
                 "Properties": {
-                  "_type": "Sandbox.Game/Sandbox.GameTransform",
-                  "_name": "Position"
+                  "_name": "Position",
+                  "_type": "Sandbox.GameTransform"
                 },
                 "UserData": {
                   "Position": "352,720"
@@ -160,8 +175,8 @@
                 "Id": 68,
                 "Type": "property",
                 "Properties": {
-                  "_type": "Sandbox.System/Vector3",
-                  "_name": "z"
+                  "_name": "z",
+                  "_type": "Vector3"
                 },
                 "UserData": {
                   "Position": "-96,656"
@@ -189,8 +204,8 @@
                 "Type": "property",
                 "ParentId": 77,
                 "Properties": {
-                  "_type": "Sandbox.Game/Sandbox.Component",
-                  "_name": "Transform"
+                  "_name": "Transform",
+                  "_type": "Sandbox.Component"
                 },
                 "UserData": {
                   "Visible": false
@@ -201,8 +216,8 @@
                 "Type": "property",
                 "ParentId": 78,
                 "Properties": {
-                  "_type": "Sandbox.Game/Sandbox.GameTransform",
-                  "_name": "Position"
+                  "_name": "Position",
+                  "_type": "Sandbox.GameTransform"
                 },
                 "UserData": {
                   "Labels": {
@@ -215,8 +230,8 @@
                 "Type": "property",
                 "ParentId": 77,
                 "Properties": {
-                  "_type": "package.ziks.mazing/Mazing.Player",
-                  "_name": "IsDead"
+                  "_name": "IsDead",
+                  "_type": "Mazing.Player"
                 },
                 "UserData": {
                   "Labels": {
@@ -228,8 +243,8 @@
                 "Id": 94,
                 "Type": "property",
                 "Properties": {
-                  "_type": "Sandbox.Game/Sandbox.ColorAdjustments",
-                  "_name": "Saturation"
+                  "_name": "Saturation",
+                  "_type": "Sandbox.ColorAdjustments"
                 },
                 "UserData": {
                   "Position": "-400,288"
@@ -259,8 +274,8 @@
                 "Id": 109,
                 "Type": "property",
                 "Properties": {
-                  "_type": "Sandbox.Game/Sandbox.ColorAdjustments",
-                  "_name": "Saturation"
+                  "_name": "Saturation",
+                  "_type": "Sandbox.ColorAdjustments"
                 },
                 "UserData": {
                   "Position": "336,320"
@@ -283,9 +298,9 @@
                 "Id": 116,
                 "Type": "call",
                 "Properties": {
+                  "_name": "LerpTo",
                   "_isStatic": true,
-                  "_type": "package.ziks.mazing/Mazing.Helpers",
-                  "_name": "LerpTo"
+                  "_type": "Mazing.Helpers"
                 },
                 "UserData": {
                   "Position": "16,320"
@@ -348,7 +363,7 @@
               {
                 "Value": {
                   "$type": "Simple",
-                  "Type": "System.Private.CoreLib/System.Single",
+                  "Type": "System.Single",
                   "Value": 1500
                 },
                 "DstId": 59,
@@ -428,7 +443,7 @@
               {
                 "Value": {
                   "$type": "Simple",
-                  "Type": "System.Private.CoreLib/System.Single",
+                  "Type": "System.Single",
                   "Value": 0.25
                 },
                 "DstId": 99,
@@ -437,7 +452,7 @@
               {
                 "Value": {
                   "$type": "Simple",
-                  "Type": "System.Private.CoreLib/System.Single",
+                  "Type": "System.Single",
                   "Value": 1
                 },
                 "DstId": 99,
@@ -582,7 +597,7 @@
           "FloorMaterial": "materials/floor/mazing_floor.vmat",
           "InitialEnemyCount": 2,
           "InitialMazeSize": 4,
-          "InitialTreasureCount": 2,
+          "InitialTreasureCount": 5,
           "KeyPrefab": {
             "_type": "gameobject",
             "prefab": "prefabs/key.prefab"
@@ -596,11 +611,10 @@
           "PostModel": "models/post.vmdl",
           "Seed": 1662167065,
           "TileModel": "models/tile.vmdl",
-          "TreasureCountIncrement": 1,
+          "TreasureCountIncrement": 2,
           "WallModel": "models/wall.vmdl"
         }
-      ],
-      "Children": []
+      ]
     },
     {
       "__guid": "64e3759a-f77b-42ce-bca5-622faf25cefd",
@@ -631,7 +645,7 @@
                 "Type": "resource.ref",
                 "Properties": {
                   "value": "sounds/player/player.victory.sound",
-                  "T": "Sandbox.Engine/Sandbox.SoundEvent"
+                  "T": "Sandbox.SoundEvent"
                 },
                 "UserData": {
                   "Position": "0,96"
@@ -667,9 +681,10 @@
             ]
           },
           "Level": 0,
+          "Score": 0,
           "State": "StartingLevel",
           "StateStart": {
-            "Relative": 3175.8425
+            "Relative": 1552.7505
           }
         }
       ]
@@ -698,8 +713,10 @@
   },
   "Title": "minimal",
   "Description": "",
-  "LastSaved": "2024-05-12T15:10:58.8676437\u002B01:00",
+  "LastSaved": "2024-05-15T14:43:11.584258\u002B02:00",
   "ResourceVersion": 1,
   "__version": 1,
-  "__references": []
+  "__references": [
+    "nolankicks.2d_game_test"
+  ]
 }

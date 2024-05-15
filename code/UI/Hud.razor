@@ -1,0 +1,31 @@
+@using System
+@using Sandbox;
+@using Sandbox.UI;
+@using Mazing;
+
+@inherits PanelComponent
+
+<root>
+    <div class="item"><i>layers</i>@Level</div>
+    <div class="item"><i>timer</i>@(Time.ToString( "mm\\:ss" ))</div>
+    <div class="item"><i>savings</i>@($"${Score:N0}")</div>
+</root>
+
+@code
+{
+	public MazingGame Game { get; private set; } = null!;
+
+	public int Score => Game.Score * 100;
+    public TimeSpan Time => TimeSpan.FromSeconds( Game.CompletedTimeSeconds + (Game is { State: GameState.Playing, Level: > 0 } ? Game.StateStart : 0) );
+	public string Level => Game.Level == 0 ? "Lobby" : $"Level {Game.Level}";
+
+    protected override void OnAwake()
+    {
+	    Game = Scene.Components.Get<MazingGame>( FindMode.Enabled | FindMode.InChildren );
+    }
+
+    /// <summary>
+    /// the hash determines if the system should be rebuilt. If it changes, it will be rebuilt
+    /// </summary>
+    protected override int BuildHash() => System.HashCode.Combine( Game.Score, Game.Level, (int) Time.TotalSeconds );
+}

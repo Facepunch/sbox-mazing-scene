@@ -23,6 +23,12 @@ public class MazingGame : Component, Component.INetworkListener
 	[Property, Sync]
 	public int Level { get; set; } = 0;
 
+	[Property, Sync]
+	public int Score { get; set; } = 0;
+
+	[Property, Sync]
+	public float CompletedTimeSeconds { get; set; }
+
 	[Property]
 	public event Action? LevelCompleted;
 
@@ -115,12 +121,19 @@ public class MazingGame : Component, Component.INetworkListener
 		{
 			if ( anyEscaped )
 			{
+				if ( Level > 0 )
+				{
+					CompletedTimeSeconds += StateStart;
+				}
+
 				StateStart = 0f;
 				State = GameState.Victory;
 				DispatchLevelCompleted();
 			}
 			else if ( Level > 0 )
 			{
+				CompletedTimeSeconds += StateStart;
+
 				StateStart = -2f;
 				State = GameState.GameOver;
 				DispatchGameOver();
@@ -157,6 +170,8 @@ public class MazingGame : Component, Component.INetworkListener
 		if ( StateStart > 1f )
 		{
 			Level = 0;
+			Score = 0;
+			CompletedTimeSeconds = 0f;
 			Maze.NextLevel( Level, Random.Shared.Next() );
 
 			State = GameState.StartingLevel;

@@ -1,0 +1,32 @@
+Hud {
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 0;
+	margin: 1em;
+	flex-direction: row;
+	justify-content: space-evenly;
+	align-items: flex-start;
+	font-size: 32px;
+	color: #fff;
+	font-family: Poppins;
+	font-weight: bold;
+	gap: 2em;
+
+	.item {
+		padding: 0.5em 1em;
+		background-color: rgba(0,0,0,0.5);
+		border-radius: 0.5em;
+		backdrop-filter: blur(10px);
+
+		i {
+			font-size: 48px;
+			margin-right: 0.5em;
+		}
+
+		label {
+			min-width: 5em;
+			text-align: right;
+		}
+	}
+}
