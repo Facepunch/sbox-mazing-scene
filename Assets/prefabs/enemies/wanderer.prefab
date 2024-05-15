@@ -125,7 +125,7 @@
               "Id": 7,
               "Type": "property",
               "Properties": {
-                "_type": "Sandbox.Engine/Sandbox.SoundHandle",
+                "_type": "Sandbox.SoundHandle",
                 "_name": "Volume"
               },
               "UserData": {
@@ -204,7 +204,7 @@
             {
               "Value": {
                 "$type": "Simple",
-                "Type": "System.Private.CoreLib/System.Single",
+                "Type": "System.Single",
                 "Value": 0.125
               },
               "DstId": 8,
@@ -216,9 +216,7 @@
         "MoveInput": "0,0",
         "MoveSpeed": 60,
         "NextVault": {
-          "Relative": -14320.885,
-          "Passed": 14320.885,
-          "Fraction": 1
+          "Fraction": "NaN"
         },
         "State": "Walking",
         "VaultCooldown": 3
@@ -357,13 +355,13 @@
               "Name": "old hold type",
               "Type": {
                 "$type": "Nested",
-                "DeclaringType": "package.base/Sandbox.Citizen.CitizenAnimationHelper",
+                "DeclaringType": "Sandbox.Citizen.CitizenAnimationHelper",
                 "Name": "HoldTypes"
               }
             },
             {
               "Name": "was weapon lowered",
-              "Type": "System.Private.CoreLib/System.Boolean"
+              "Type": "System.Boolean"
             }
           ],
           "Nodes": [
@@ -428,9 +426,9 @@
               "Id": 12,
               "Type": "property",
               "Properties": {
-                "_type": "package.base/Sandbox.Citizen.CitizenAnimationHelper",
-                "_name": "HoldType",
-                "_kind": "Set"
+                "_type": "Sandbox.Citizen.CitizenAnimationHelper",
+                "_kind": "Set",
+                "_name": "HoldType"
               },
               "UserData": {
                 "Position": "480,-48"
@@ -666,9 +664,7 @@
           }
         },
         "NextAttack": {
-          "Relative": -14320.885,
-          "Passed": 14320.885,
-          "Fraction": 1
+          "Fraction": "NaN"
         },
         "Range": 32,
         "ResetTime": 1
@@ -677,6 +673,10 @@
         "__type": "Mazing.Wanderer",
         "__guid": "e75059b8-538f-47c2-97c2-3af5b340d3ec",
         "MinTargetUpdatePeriod": 0.5
+      },
+      {
+        "__type": "Mazing.Holder",
+        "__guid": "d05b0453-3a64-4359-bd7e-c8ce0078c17a"
       }
     ],
     "Children": [
@@ -748,5 +748,7 @@
   "MenuIcon": null,
   "ResourceVersion": 1,
   "__version": 1,
-  "__references": []
+  "__references": [
+    "nolankicks.2d_game_test"
+  ]
 }

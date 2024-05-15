@@ -1,5 +1,6 @@
 ﻿using Sandbox.Citizen;
 using System;
+using System.Text;
 
 namespace Mazing;
 
@@ -9,12 +10,17 @@ public sealed class Holder : Component, IThrowableListener
 
 	public List<Holdable> HeldItems { get; } = new();
 
+	[Property] public bool AutoThrow { get; set; } = true;
+
+	[Property, HideIf( nameof(AutoThrow), false )]
+	public float AutoThrowTime { get; set; } = 0.5f;
+
 	private GameObject? _leftHandIk;
 	private GameObject? _rightHandIk;
 
 	void IThrowableListener.Thrown( Direction dir, int range )
 	{
-		Throw( dir, range == 0 ? 0 : range + 1 );
+		ThrowAll( dir, range == 0 ? 0 : range + 1 );
 		Enabled = false;
 	}
 
@@ -41,14 +47,49 @@ public sealed class Holder : Component, IThrowableListener
 
 	public void Drop()
 	{
-		Throw( Direction.North, 0 );
+		ThrowAll( Direction.North, 0 );
 	}
 
 	[Broadcast( NetPermission.OwnerOnly )]
-	public void Throw( Direction dir, int range )
+	public void ThrowAll( Direction dir, int range )
+	{
+		while ( HeldItems.Count > 0 )
+		{
+			ThrowOne( dir, range );
+
+			if ( range != 0 )
+			{
+				range += 1;
+			}
+		}
+	}
+
+	[Broadcast( NetPermission.OwnerOnly )]
+	public void ThrowOne( Direction dir, int range )
+	{
+		ThrowOneInternal( dir, range );
+	}
+
+	private void ThrowOneInternal( Direction dir, int range )
 	{
 		if ( HeldItems.Count == 0 )
 		{
+			return;
+		}
+
+		var item = HeldItems[0];
+		HeldItems.RemoveAt( 0 );
+
+		item.Holder = null;
+		item.DispatchDropped();
+
+		var (row, col) = MazeObject.CellIndex;
+
+		item.Throwable.Throw( row, col, dir, range );
+
+		if ( HeldItems.Count > 0 )
+		{
+			HeldItems[0].HeldTime = 0f;
 			return;
 		}
 
@@ -63,23 +104,9 @@ public sealed class Holder : Component, IThrowableListener
 			animHelper.IkLeftHand = null;
 			animHelper.IkRightHand = null;
 		}
-
-		for ( var i = 0; i < HeldItems.Count; i++ )
-		{
-			var item = HeldItems[i];
-
-			item.Holder = null;
-			item.DispatchDropped();
-
-			var (row, col) = MazeObject.CellIndex;
-
-			item.Throwable.Throw( row, col, dir, range == 0 ? 0 : range + i );
-		}
-
-		HeldItems.Clear();
 	}
 
-	public bool TryPickUp( Holdable item )
+	public bool TryPickUp( Holdable item, bool airborne )
 	{
 		if ( IsProxy )
 		{
@@ -93,14 +120,15 @@ public sealed class Holder : Component, IThrowableListener
 
 		if ( HeldItems.Count > 0 && HeldItems[0].Components.Get<Holder>() is { } heldholder )
 		{
-			return heldholder.TryPickUp( item );
+			return heldholder.TryPickUp( item, airborne );
 		}
 
-		PickUp( item.GameObject.Id );
+		PickUp( item.GameObject.Id, airborne );
 		return true;
 	}
 
-	public void PickUp( Guid itemId )
+	[Broadcast]
+	public void PickUp( Guid itemId, bool airborne )
 	{
 		var item = Scene.Directory.FindByGuid( itemId )
 			?.Components.Get<Holdable>()
@@ -108,19 +136,36 @@ public sealed class Holder : Component, IThrowableListener
 
 		item.Holder = this;
 
-		HeldItems.Insert( 0, item );
+		Log.Info( $"PickUp( {item.GameObject.Name}, {airborne} )" );
+
+		if ( airborne )
+		{
+			HeldItems.Add( item );
+		}
+		else
+		{
+			HeldItems.Insert( 0, item );
+		}
 
 		item.HeldVelocity = 0f;
+		item.HeldTime = 0f;
 		item.DispatchPickedUp();
 
-		if ( Components.Get<CitizenAnimationHelper>() is { } animHelper )
+		if ( _leftHandIk is not null )
 		{
-			_leftHandIk = new GameObject { Name = "Left Hand Target", Parent = GameObject };
-			_rightHandIk = new GameObject { Name = "Right Hand Target", Parent = GameObject };
-
-			animHelper.IkLeftHand = _leftHandIk;
-			animHelper.IkRightHand = _rightHandIk;
+			return;
 		}
+
+		if ( Components.Get<CitizenAnimationHelper>() is not { } animHelper )
+		{
+			return;
+		}
+
+		_leftHandIk = new GameObject { Name = "Left Hand Target", Parent = GameObject };
+		_rightHandIk = new GameObject { Name = "Right Hand Target", Parent = GameObject };
+
+		animHelper.IkLeftHand = _leftHandIk;
+		animHelper.IkRightHand = _rightHandIk;
 	}
 
 	protected override void OnUpdate()
@@ -144,7 +189,14 @@ public sealed class Holder : Component, IThrowableListener
 				continue;
 			}
 
-			TryPickUp( holdable );
+			TryPickUp( holdable, false );
+		}
+
+		if ( AutoThrow && HeldItems.Count > 0 && HeldItems[0].HeldTime > AutoThrowTime )
+		{
+			var dir = ((Vector2)Transform.Rotation.Forward).GetDirection();
+
+			ThrowOne( (Direction)(((int)dir + Random.Shared.Int( 1, 4 )) % 4), 1 );
 		}
 	}
 

@@ -126,7 +126,7 @@
               "Id": 7,
               "Type": "property",
               "Properties": {
-                "_type": "Sandbox.Engine/Sandbox.SoundHandle",
+                "_type": "Sandbox.SoundHandle",
                 "_name": "Volume"
               },
               "UserData": {
@@ -205,7 +205,7 @@
             {
               "Value": {
                 "$type": "Simple",
-                "Type": "System.Private.CoreLib/System.Single",
+                "Type": "System.Single",
                 "Value": 0.125
               },
               "DstId": 8,
@@ -217,9 +217,7 @@
         "MoveInput": "0,0",
         "MoveSpeed": 40,
         "NextVault": {
-          "Relative": -13873.951,
-          "Passed": 13873.951,
-          "Fraction": 1
+          "Fraction": "NaN"
         },
         "State": "Walking",
         "VaultCooldown": 3
@@ -358,13 +356,13 @@
               "Name": "old hold type",
               "Type": {
                 "$type": "Nested",
-                "DeclaringType": "package.base/Sandbox.Citizen.CitizenAnimationHelper",
+                "DeclaringType": "Sandbox.Citizen.CitizenAnimationHelper",
                 "Name": "HoldTypes"
               }
             },
             {
               "Name": "was weapon lowered",
-              "Type": "System.Private.CoreLib/System.Boolean"
+              "Type": "System.Boolean"
             }
           ],
           "Nodes": [
@@ -476,9 +474,7 @@
           }
         },
         "NextAttack": {
-          "Relative": -13873.951,
-          "Passed": 13873.951,
-          "Fraction": 1
+          "Fraction": "NaN"
         },
         "Range": 32,
         "ResetTime": 1
@@ -487,6 +483,10 @@
         "__type": "Mazing.Seeker",
         "__guid": "a83944f4-88cb-4391-a6a0-021b5d09b641",
         "MinTargetUpdatePeriod": 0.5
+      },
+      {
+        "__type": "Mazing.Holder",
+        "__guid": "ed8466cd-9460-46fc-a045-42a07b45d7b1"
       }
     ],
     "Children": [
@@ -558,5 +558,7 @@
   "MenuIcon": null,
   "ResourceVersion": 1,
   "__version": 1,
-  "__references": []
+  "__references": [
+    "nolankicks.2d_game_test"
+  ]
 }

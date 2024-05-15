@@ -126,7 +126,7 @@
               "Id": 7,
               "Type": "property",
               "Properties": {
-                "_type": "Sandbox.Engine/Sandbox.SoundHandle",
+                "_type": "Sandbox.SoundHandle",
                 "_name": "Volume"
               },
               "UserData": {
@@ -205,7 +205,7 @@
             {
               "Value": {
                 "$type": "Simple",
-                "Type": "System.Private.CoreLib/System.Single",
+                "Type": "System.Single",
                 "Value": 0.125
               },
               "DstId": 8,
@@ -217,9 +217,7 @@
         "MoveInput": "0,0",
         "MoveSpeed": 40,
         "NextVault": {
-          "Relative": -16412.754,
-          "Passed": 16412.754,
-          "Fraction": 1
+          "Fraction": "NaN"
         },
         "State": "Walking",
         "VaultCooldown": 3
@@ -286,13 +284,13 @@
               "Name": "old hold type",
               "Type": {
                 "$type": "Nested",
-                "DeclaringType": "package.base/Sandbox.Citizen.CitizenAnimationHelper",
+                "DeclaringType": "Sandbox.Citizen.CitizenAnimationHelper",
                 "Name": "HoldTypes"
               }
             },
             {
               "Name": "was weapon lowered",
-              "Type": "System.Private.CoreLib/System.Boolean"
+              "Type": "System.Boolean"
             }
           ],
           "Nodes": [
@@ -357,9 +355,9 @@
               "Id": 12,
               "Type": "property",
               "Properties": {
-                "_type": "package.base/Sandbox.Citizen.CitizenAnimationHelper",
-                "_name": "HoldType",
-                "_kind": "Set"
+                "_type": "Sandbox.Citizen.CitizenAnimationHelper",
+                "_kind": "Set",
+                "_name": "HoldType"
               },
               "UserData": {
                 "Position": "480,-48"
@@ -595,9 +593,7 @@
           }
         },
         "NextAttack": {
-          "Relative": -16412.754,
-          "Passed": 16412.754,
-          "Fraction": 1
+          "Fraction": "NaN"
         },
         "Range": 32,
         "ResetTime": 1
@@ -646,7 +642,7 @@
               "Id": 104,
               "Type": "property",
               "Properties": {
-                "_type": "package.ziks.mazing/Mazing.Mazer",
+                "_type": "Mazing.Mazer",
                 "_name": "MoveSpeed"
               },
               "UserData": {
@@ -685,7 +681,7 @@
               "Id": 117,
               "Type": "property",
               "Properties": {
-                "_type": "package.base/Sandbox.Citizen.CitizenAnimationHelper",
+                "_type": "Sandbox.Citizen.CitizenAnimationHelper",
                 "_name": "HoldType"
               },
               "UserData": {
@@ -847,7 +843,7 @@
               "Id": 3,
               "Type": "property",
               "Properties": {
-                "_type": "package.ziks.mazing/Mazing.Mazer",
+                "_type": "Mazing.Mazer",
                 "_name": "MoveSpeed"
               },
               "UserData": {
@@ -886,7 +882,7 @@
               "Id": 6,
               "Type": "property",
               "Properties": {
-                "_type": "package.base/Sandbox.Citizen.CitizenAnimationHelper",
+                "_type": "Sandbox.Citizen.CitizenAnimationHelper",
                 "_name": "HoldType"
               },
               "UserData": {
@@ -1006,6 +1002,10 @@
         },
         "MinTargetUpdatePeriod": 0.1,
         "StunTime": 1.5
+      },
+      {
+        "__type": "Mazing.Holder",
+        "__guid": "09243558-aa22-4e12-8dbf-f5fc201604ba"
       }
     ],
     "Children": [
@@ -1051,5 +1051,7 @@
   "MenuIcon": null,
   "ResourceVersion": 1,
   "__version": 1,
-  "__references": []
+  "__references": [
+    "nolankicks.2d_game_test"
+  ]
 }

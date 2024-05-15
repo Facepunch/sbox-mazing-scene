@@ -113,7 +113,7 @@ public sealed class Player : Component
 			? (Direction)Random.Shared.Int( 0, 4 )
 			: ((Vector2)force).GetDirection();
 
-		Holder.Throw( dir, 1 );
+		Holder.ThrowAll( dir, 1 );
 		Holder.Enabled = false;
 	}
 

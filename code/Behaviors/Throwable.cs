@@ -138,18 +138,17 @@ public sealed class Throwable : Component
 			listener.Landed();
 		}
 
-		var landedOn = Scene.Components
-			.GetAll<Throwable>( FindMode.InChildren | FindMode.Disabled )
-			.Where( other => other.GameObject != GameObject )
-			.Where( other => other.GameObject.Enabled && !other.Enabled )
-			.Where( other => other.MazeObject.CellIndex == cellIndex )
-			.MaxBy( other => other.IndexOnFloor );
+		var landedOn = MazeObject.GetObjectsInSameCell()
+			.Select( obj => obj.Components.Get<Throwable>( true ) )
+			.FirstOrDefault( obj => obj != null );
 
-		if ( landedOn != null )
+		if ( landedOn is not null )
 		{
+			Log.Info( $"Landed on {landedOn.GameObject.Name}" );
+
 			if ( Components.Get<Holdable>() is {} holdable
 				&& landedOn.Components.Get<Holder>() is { } holder
-				&& holder.TryPickUp( holdable ) )
+				&& holder.TryPickUp( holdable, true ) )
 			{
 				return;
 			}

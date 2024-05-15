@@ -110,8 +110,8 @@
                 "Id": 55,
                 "Type": "property",
                 "Properties": {
-                  "_name": "Transform",
-                  "_type": "Sandbox.GameObject"
+                  "_type": "Sandbox.GameObject",
+                  "_name": "Transform"
                 },
                 "UserData": {
                   "Position": "-32,-32",
@@ -125,8 +125,8 @@
                 "Type": "property",
                 "ParentId": 55,
                 "Properties": {
-                  "_name": "Rotation",
-                  "_type": "Sandbox.GameTransform"
+                  "_type": "Sandbox.GameTransform",
+                  "_name": "Rotation"
                 },
                 "UserData": {
                   "Visible": false
@@ -137,8 +137,8 @@
                 "Type": "property",
                 "ParentId": 56,
                 "Properties": {
-                  "_name": "Forward",
-                  "_type": "Rotation"
+                  "_type": "Rotation",
+                  "_name": "Forward"
                 },
                 "UserData": {
                   "Labels": {
@@ -164,8 +164,8 @@
                 "Id": 61,
                 "Type": "property",
                 "Properties": {
-                  "_name": "Position",
-                  "_type": "Sandbox.GameTransform"
+                  "_type": "Sandbox.GameTransform",
+                  "_name": "Position"
                 },
                 "UserData": {
                   "Position": "352,720"
@@ -175,8 +175,8 @@
                 "Id": 68,
                 "Type": "property",
                 "Properties": {
-                  "_name": "z",
-                  "_type": "Vector3"
+                  "_type": "Vector3",
+                  "_name": "z"
                 },
                 "UserData": {
                   "Position": "-96,656"
@@ -204,8 +204,8 @@
                 "Type": "property",
                 "ParentId": 77,
                 "Properties": {
-                  "_name": "Transform",
-                  "_type": "Sandbox.Component"
+                  "_type": "Sandbox.Component",
+                  "_name": "Transform"
                 },
                 "UserData": {
                   "Visible": false
@@ -216,8 +216,8 @@
                 "Type": "property",
                 "ParentId": 78,
                 "Properties": {
-                  "_name": "Position",
-                  "_type": "Sandbox.GameTransform"
+                  "_type": "Sandbox.GameTransform",
+                  "_name": "Position"
                 },
                 "UserData": {
                   "Labels": {
@@ -230,8 +230,8 @@
                 "Type": "property",
                 "ParentId": 77,
                 "Properties": {
-                  "_name": "IsDead",
-                  "_type": "Mazing.Player"
+                  "_type": "Mazing.Player",
+                  "_name": "IsDead"
                 },
                 "UserData": {
                   "Labels": {
@@ -243,8 +243,8 @@
                 "Id": 94,
                 "Type": "property",
                 "Properties": {
-                  "_name": "Saturation",
-                  "_type": "Sandbox.ColorAdjustments"
+                  "_type": "Sandbox.ColorAdjustments",
+                  "_name": "Saturation"
                 },
                 "UserData": {
                   "Position": "-400,288"
@@ -274,8 +274,8 @@
                 "Id": 109,
                 "Type": "property",
                 "Properties": {
-                  "_name": "Saturation",
-                  "_type": "Sandbox.ColorAdjustments"
+                  "_type": "Sandbox.ColorAdjustments",
+                  "_name": "Saturation"
                 },
                 "UserData": {
                   "Position": "336,320"
@@ -298,9 +298,9 @@
                 "Id": 116,
                 "Type": "call",
                 "Properties": {
-                  "_name": "LerpTo",
+                  "_type": "Mazing.Helpers",
                   "_isStatic": true,
-                  "_type": "Mazing.Helpers"
+                  "_name": "LerpTo"
                 },
                 "UserData": {
                   "Position": "16,320"
@@ -680,11 +680,12 @@
               }
             ]
           },
+          "CompletedTimeSeconds": 0,
           "Level": 0,
           "Score": 0,
           "State": "StartingLevel",
           "StateStart": {
-            "Relative": 1552.7505
+            "Relative": 276.18036
           }
         }
       ]
@@ -713,7 +714,7 @@
   },
   "Title": "minimal",
   "Description": "",
-  "LastSaved": "2024-05-15T14:43:11.584258\u002B02:00",
+  "LastSaved": "2024-05-15T17:42:11.7971043\u002B02:00",
   "ResourceVersion": 1,
   "__version": 1,
   "__references": [

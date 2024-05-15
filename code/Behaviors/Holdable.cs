@@ -19,6 +19,9 @@ public sealed class Holdable : Component
 	[Property]
 	public Vector3 HeldVelocity { get; set; }
 
+	[Property]
+	public TimeSince HeldTime { get; set; }
+
 	protected override void OnDisabled()
 	{
 		Holder?.Drop();
