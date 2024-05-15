@@ -53,14 +53,11 @@ public sealed class Holder : Component, IThrowableListener
 	[Broadcast( NetPermission.OwnerOnly )]
 	public void ThrowAll( Direction dir, int range )
 	{
-		while ( HeldItems.Count > 0 )
-		{
-			ThrowOne( dir, range );
+		var count = HeldItems.Count;
 
-			if ( range != 0 )
-			{
-				range += 1;
-			}
+		for ( var i = 0; i < count; ++i)
+		{
+			ThrowOne( dir, range == 0 ? 0 : range + i );
 		}
 	}
 
@@ -80,6 +77,7 @@ public sealed class Holder : Component, IThrowableListener
 		var item = HeldItems[0];
 		HeldItems.RemoveAt( 0 );
 
+		item.GameObject.SetParent( null );
 		item.Holder = null;
 		item.DispatchDropped();
 
@@ -108,7 +106,7 @@ public sealed class Holder : Component, IThrowableListener
 
 	public bool TryPickUp( Holdable item, bool airborne )
 	{
-		if ( IsProxy )
+		if ( IsProxy && item.IsProxy )
 		{
 			return false;
 		}
@@ -136,8 +134,6 @@ public sealed class Holder : Component, IThrowableListener
 
 		item.Holder = this;
 
-		Log.Info( $"PickUp( {item.GameObject.Name}, {airborne} )" );
-
 		if ( airborne )
 		{
 			HeldItems.Add( item );
@@ -147,6 +143,7 @@ public sealed class Holder : Component, IThrowableListener
 			HeldItems.Insert( 0, item );
 		}
 
+		item.GameObject.SetParent( GameObject );
 		item.HeldVelocity = 0f;
 		item.HeldTime = 0f;
 		item.DispatchPickedUp();
@@ -205,29 +202,6 @@ public sealed class Holder : Component, IThrowableListener
 		if ( HeldItems.Count == 0 )
 		{
 			return;
-		}
-
-		var up = Vector3.Up;
-
-		if ( Components.Get<CharacterController>() is { } charController )
-		{
-			up = (new Vector3( 0f, 0f, 300f ) + charController.Velocity).Normal;
-		}
-
-		var targetPos = Transform.Position + up * 64f;
-
-		foreach ( var item in HeldItems )
-		{
-			var currentPos = item.Transform.Position;
-
-			var accel = (targetPos - currentPos) * 250f;
-
-			item.HeldVelocity = Vector3.Lerp( item.HeldVelocity, 0f, Helpers.Ease( 0.5f ) );
-			item.HeldVelocity += accel * Time.Delta;
-
-			item.Transform.Position += item.HeldVelocity * Time.Delta;
-
-			targetPos = (targetPos + currentPos) * 0.5f + up * 16f;
 		}
 
 		if ( _leftHandIk.IsValid() && _rightHandIk.IsValid() )

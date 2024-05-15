@@ -69,7 +69,7 @@ public sealed class Player : Component
 
 		_wasExiting = false;
 
-		Mazer.Throwable.Enabled = false;
+		Mazer.Throwable.IsAirborne = false;
 		Mazer.Throwable.IsExiting = false;
 		Mazer.Throwable.CanExit = true;
 

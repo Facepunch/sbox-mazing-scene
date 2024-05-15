@@ -43,4 +43,21 @@ public sealed class Holdable : Component
 	{
 		Dropped?.Invoke();
 	}
+
+	protected override void OnUpdate()
+	{
+		if ( IsProxy || Holder is null )
+		{
+			return;
+		}
+
+		var index = Holder.HeldItems.IndexOf( this );
+
+		if ( index < 0 )
+		{
+			return;
+		}
+
+		Transform.LocalPosition = Vector3.Lerp( Transform.LocalPosition, Vector3.Up * (64f + index * 16f), Helpers.Ease( 0.125f ) );
+	}
 }

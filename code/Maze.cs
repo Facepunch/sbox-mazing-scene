@@ -185,7 +185,7 @@ public sealed partial class Maze : Component
 			.Skip( slice.Offset )
 			.Take( slice.Count )
 			.Where( x => x.Components.Get<Holdable>() is not { Holder: not null } )
-			.Where( x => x.Components.Get<Throwable>() is not { Enabled: true } )
+			.Where( x => x.Components.Get<Throwable>() is not { IsAirborne: true } )
 			.Where( x => x.Components.Get<Mazer>() is not { State: not MazerState.Walking } )
 			.OrderByDescending( x => x.Components.Get<Throwable>( true )?.IndexOnFloor ?? -1 );
 	}

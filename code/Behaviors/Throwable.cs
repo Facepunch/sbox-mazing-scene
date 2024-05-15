@@ -18,11 +18,14 @@ public sealed class Throwable : Component
 	[Property]
 	public float ThrowDuration { get; set; } = 0.5f;
 
-	[Property]
+	[Property, Sync]
 	public int IndexOnFloor { get; set; }
 
 	[Property, Sync]
 	public bool IsExiting { get; set; }
+
+	[Property, Sync]
+	public bool IsAirborne { get; set; }
 
 	[Property, Sync] public bool CanExit { get; set; } = true;
 
@@ -37,11 +40,6 @@ public sealed class Throwable : Component
 	private Vector3 _throwEnd;
 	private TimeUntil _throwEndTime;
 	private float _throwHeight;
-
-	protected override void OnAwake()
-	{
-		Enabled = false;
-	}
 
 	[Broadcast]
 	public void Throw( int fromRow, int fromCol, Direction dir, int range )
@@ -76,7 +74,7 @@ public sealed class Throwable : Component
 
 	private void ThrowInternal( int row, int col, int range )
 	{
-		Enabled = true;
+		IsAirborne = true;
 		IndexOnFloor = 0;
 
 		_throwStart = Transform.Position;
@@ -93,6 +91,11 @@ public sealed class Throwable : Component
 
 	protected override void OnUpdate()
 	{
+		if ( !IsAirborne )
+		{
+			return;
+		}
+
 		if ( IsExiting )
 		{
 			if ( Transform.Position.z > -1024f )
@@ -127,9 +130,13 @@ public sealed class Throwable : Component
 			return;
 		}
 
-		Enabled = false;
+		var landedOn = MazeObject.GetObjectsInSameCell()
+			.Select( obj => obj.Components.Get<Throwable>( true ) )
+			.FirstOrDefault( obj => obj != null );
 
-		var cellIndex = MazeObject.CellIndex;
+		Log.Info( $"{GameObject.Name} landed on {landedOn?.GameObject.Name}" );
+
+		IsAirborne = false;
 
 		Landed?.Invoke();
 
@@ -138,14 +145,8 @@ public sealed class Throwable : Component
 			listener.Landed();
 		}
 
-		var landedOn = MazeObject.GetObjectsInSameCell()
-			.Select( obj => obj.Components.Get<Throwable>( true ) )
-			.FirstOrDefault( obj => obj != null );
-
 		if ( landedOn is not null )
 		{
-			Log.Info( $"Landed on {landedOn.GameObject.Name}" );
-
 			if ( Components.Get<Holdable>() is {} holdable
 				&& landedOn.Components.Get<Holder>() is { } holder
 				&& holder.TryPickUp( holdable, true ) )

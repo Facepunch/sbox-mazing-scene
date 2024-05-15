@@ -76,6 +76,7 @@
         },
         "CanExit": true,
         "IndexOnFloor": 0,
+        "IsAirborne": false,
         "IsExiting": false,
         "ThrowDuration": 0.5,
         "ThrowHeight": 64
@@ -140,6 +141,7 @@
             }
           ]
         },
+        "HeldTime": {},
         "HeldVelocity": "0,0,0"
       },
       {

@@ -9,12 +9,14 @@ public enum MazerState
 	Falling,
 	Walking,
 	Vaulting,
+	Held,
 	Dead
 }
 
 public sealed class Mazer : Component
 {
 	[RequireComponent] public Throwable Throwable { get; set; } = null!;
+	[RequireComponent] public Holdable Holdable { get; set; } = null!;
 	[RequireComponent] public MazeObject MazeObject { get; set; } = null!;
 	[RequireComponent] public CharacterController CharacterController { get; set; } = null!;
 	[RequireComponent] public CitizenAnimationHelper AnimationHelper { get; set; } = null!;
@@ -136,6 +138,10 @@ public sealed class Mazer : Component
 				OnVaulting();
 				return;
 
+			case MazerState.Held:
+				OnHeld();
+				return;
+
 			case MazerState.Dead:
 				OnDead();
 				return;
@@ -178,11 +184,21 @@ public sealed class Mazer : Component
 			}
 		}
 
-		if ( State != MazerState.Vaulting && Throwable.Enabled )
+		if ( State != MazerState.Vaulting && Throwable.IsAirborne )
 		{
 			State = MazerState.Vaulting;
 
 			AnimationHelper.TriggerJump();
+		}
+
+		if ( State != MazerState.Held && Holdable.Holder is not null )
+		{
+			State = MazerState.Held;
+		}
+		
+		if ( State == MazerState.Held && Holdable.Holder is null )
+		{
+			State = MazerState.Falling;
 		}
 	}
 
@@ -271,6 +287,7 @@ public sealed class Mazer : Component
 			return;
 		}
 
+		AnimationHelper.DuckLevel = 0f;
 		AnimationHelper.IsGrounded = false;
 		AnimationHelper.IsNoclipping = false;
 		AnimationHelper.WithVelocity( CharacterController.Velocity );
@@ -295,6 +312,7 @@ public sealed class Mazer : Component
 		CharacterController.Enabled = false;
 		CharacterController.Velocity = Vector3.Zero;
 
+		AnimationHelper.DuckLevel = 0f;
 		AnimationHelper.IsGrounded = false;
 		AnimationHelper.IsNoclipping = false;
 		AnimationHelper.WithVelocity( Throwable.Velocity );
@@ -311,6 +329,17 @@ public sealed class Mazer : Component
 
 			State = MazerState.Falling;
 		}
+	}
+
+	private void OnHeld()
+	{
+		AnimationHelper.DuckLevel = 1f;
+		AnimationHelper.IsGrounded = true;
+		AnimationHelper.IsNoclipping = false;
+		AnimationHelper.WithVelocity( 0f );
+		AnimationHelper.WithWishVelocity( 0f );
+
+		Transform.Rotation = Holdable.Holder?.Transform.Rotation ?? Transform.Rotation;
 	}
 
 	private void OnDead()
@@ -339,6 +368,7 @@ public sealed class Mazer : Component
 
 		CharacterController.Accelerate( input * MoveSpeed );
 
+		AnimationHelper.DuckLevel = 0f;
 		AnimationHelper.IsNoclipping = noclip;
 		AnimationHelper.IsGrounded = !noclip;
 		AnimationHelper.WithWishVelocity( input * MoveSpeed );
