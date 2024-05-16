@@ -92,6 +92,16 @@ public sealed class Holder : Component, IThrowableListener
 			return;
 		}
 
+		StopHolding();
+	}
+
+	private void StopHolding()
+	{
+		if ( _leftHandIk is null && _rightHandIk is null )
+		{
+			return;
+		}
+
 		_rightHandIk?.Destroy();
 		_rightHandIk = null;
 
@@ -199,6 +209,7 @@ public sealed class Holder : Component, IThrowableListener
 	{
 		if ( HeldItems.Count == 0 )
 		{
+			StopHolding();
 			return;
 		}
 

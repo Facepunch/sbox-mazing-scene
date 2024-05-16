@@ -116,6 +116,8 @@ public sealed class Mazer : Component
 				OnBecomeAlive();
 			}
 
+			Tags.Set( "airborne", State is MazerState.Falling or MazerState.Vaulting or MazerState.Held );
+
 			_lastState = State;
 		}
 
@@ -333,13 +335,27 @@ public sealed class Mazer : Component
 
 	private void OnHeld()
 	{
+		var input = MoveInput.LengthSquared > 1f ? MoveInput.Normal : MoveInput;
+
+		if ( input.LengthSquared <= 0.01f )
+		{
+			input = Vector2.Zero;
+		}
+		else
+		{
+			_targetLook = input.Normal;
+		}
+
 		AnimationHelper.DuckLevel = 1f;
 		AnimationHelper.IsGrounded = true;
 		AnimationHelper.IsNoclipping = false;
 		AnimationHelper.WithVelocity( 0f );
-		AnimationHelper.WithWishVelocity( 0f );
+		AnimationHelper.WithWishVelocity( input * MoveSpeed );
 
-		Transform.Rotation = Holdable.Holder?.Transform.Rotation ?? Transform.Rotation;
+		var curRot = Transform.Rotation;
+		var targetRot = Rotation.LookAt( _targetLook, Vector3.Up );
+
+		Transform.Rotation = Rotation.Slerp( curRot, targetRot, Helpers.Ease( 0.125f ) );
 	}
 
 	private void OnDead()

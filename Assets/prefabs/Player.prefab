@@ -136,8 +136,8 @@
               "Id": 7,
               "Type": "property",
               "Properties": {
-                "_name": "Volume",
-                "_type": "Sandbox.SoundHandle"
+                "_type": "Sandbox.SoundHandle",
+                "_name": "Volume"
               },
               "UserData": {
                 "Position": "608,-64"
@@ -626,9 +626,7 @@
         "MoveInput": "0,0",
         "MoveSpeed": 120,
         "NextVault": {
-          "Relative": -328.0961,
-          "Passed": 328.0961,
-          "Fraction": 1
+          "Fraction": "NaN"
         },
         "OnComponentUpdate": {
           "__version": 7,
@@ -670,8 +668,8 @@
               "Id": 7,
               "Type": "property",
               "Properties": {
-                "_name": "MoveInput",
-                "_type": "Mazing.Mazer"
+                "_type": "Mazing.Mazer",
+                "_name": "MoveInput"
               },
               "UserData": {
                 "Position": "1008,80"
@@ -701,11 +699,11 @@
               "Id": 12,
               "Type": "property",
               "Properties": {
-                "_type": "package.ziks.mazing/Mazing.Mazer",
-                "_name": "State"
+                "_name": "State",
+                "_type": "Mazing.Mazer"
               },
               "UserData": {
-                "Position": "-368,-32"
+                "Position": "-528,-32"
               }
             },
             {
@@ -725,14 +723,14 @@
               "Id": 14,
               "Type": "op.equal",
               "UserData": {
-                "Position": "-48,-32"
+                "Position": "-208,-32"
               }
             },
             {
               "Id": 17,
               "Type": "op.andalso",
               "UserData": {
-                "Position": "288,-48",
+                "Position": "288,16",
                 "Labels": {
                   "_result": "can control"
                 }
@@ -872,14 +870,14 @@
               "Id": 70,
               "Type": "op.equal",
               "UserData": {
-                "Position": "-48,48"
+                "Position": "-208,48"
               }
             },
             {
               "Id": 73,
               "Type": "op.orelse",
               "UserData": {
-                "Position": "112,-0"
+                "Position": "-32,16"
               }
             },
             {
@@ -938,11 +936,11 @@
               "Id": 98,
               "Type": "comment",
               "UserData": {
-                "Position": "-400,-128",
-                "Size": "896,267",
+                "Position": "-576,-128",
+                "Size": "1088,400",
                 "Title": "Can Control",
                 "Color": 4,
-                "Layer": 3
+                "Layer": 1
               }
             },
             {
@@ -965,6 +963,20 @@
                 "Title": "Audio Listener / Camera",
                 "Color": 5,
                 "Layer": 1
+              }
+            },
+            {
+              "Id": 107,
+              "Type": "op.equal",
+              "UserData": {
+                "Position": "-208,128"
+              }
+            },
+            {
+              "Id": 109,
+              "Type": "op.orelse",
+              "UserData": {
+                "Position": "112,112"
               }
             }
           ],
@@ -1033,7 +1045,7 @@
               "DstName": "a"
             },
             {
-              "SrcId": 73,
+              "SrcId": 109,
               "SrcName": "_result",
               "DstId": 17,
               "DstName": "b"
@@ -1218,6 +1230,33 @@
               "SrcName": "_result",
               "DstId": 90,
               "DstName": "condition"
+            },
+            {
+              "SrcId": 12,
+              "SrcName": "_result",
+              "DstId": 107,
+              "DstName": "a"
+            },
+            {
+              "Value": {
+                "$type": "Simple",
+                "Type": "Mazing.MazerState",
+                "Value": "Held"
+              },
+              "DstId": 107,
+              "DstName": "b"
+            },
+            {
+              "SrcId": 73,
+              "SrcName": "_result",
+              "DstId": 109,
+              "DstName": "a"
+            },
+            {
+              "SrcId": 107,
+              "SrcName": "_result",
+              "DstId": 109,
+              "DstName": "b"
             }
           ],
           "Defaults": {
@@ -1341,9 +1380,7 @@
       {
         "__type": "Mazing.Holdable",
         "__guid": "90af1d23-32f9-4c91-9d91-4f482256a55f",
-        "HeldTime": {
-          "Relative": 328.0961
-        },
+        "HeldTime": {},
         "HeldVelocity": "0,0,0"
       },
       {
@@ -1402,9 +1439,7 @@
             }
           ]
         },
-        "DeathTime": {
-          "Relative": 328.0961
-        },
+        "DeathTime": {},
         "HasExited": false,
         "IsDead": false
       }
