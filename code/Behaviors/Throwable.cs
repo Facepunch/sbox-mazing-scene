@@ -74,6 +74,8 @@ public sealed class Throwable : Component
 
 	private void ThrowInternal( int row, int col, int range )
 	{
+		GameObject.SetParent( null );
+
 		IsAirborne = true;
 		IndexOnFloor = 0;
 

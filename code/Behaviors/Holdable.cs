@@ -8,7 +8,7 @@ public sealed class Holdable : Component
 	[RequireComponent] public MazeObject MazeObject { get; set; } = null!;
 	[RequireComponent] public Throwable Throwable { get; set; } = null!;
 
-	[Property] public Holder? Holder { get; set; }
+	public Holder? Holder => GameObject.Parent?.Components.Get<Holder>();
 
 	[Property]
 	public event Action? PickedUp;
@@ -51,7 +51,7 @@ public sealed class Holdable : Component
 			return;
 		}
 
-		var index = Holder.HeldItems.IndexOf( this );
+		var index = Holder.HeldItems.TakeWhile( x => x != this ).Count();
 
 		if ( index < 0 )
 		{

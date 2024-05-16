@@ -74,7 +74,7 @@ public sealed class Mazer : Component
 
 	public bool TryVault()
 	{
-		if ( State != MazerState.Walking || NextVault > 0f )
+		if ( State is not MazerState.Walking and not MazerState.Held || NextVault > 0f )
 		{
 			return false;
 		}

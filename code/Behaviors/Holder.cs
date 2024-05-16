@@ -8,7 +8,10 @@ public sealed class Holder : Component, IThrowableListener
 {
 	[RequireComponent] public MazeObject MazeObject { get; set; } = null!;
 
-	public List<Holdable> HeldItems { get; } = new();
+	public IReadOnlyList<Holdable> HeldItems => GameObject.Children
+		.Select( x => x.Components.Get<Holdable>() )
+		.Where( x => x is not null )
+		.ToArray();
 
 	[Property] public bool AutoThrow { get; set; } = true;
 
@@ -75,10 +78,8 @@ public sealed class Holder : Component, IThrowableListener
 		}
 
 		var item = HeldItems[0];
-		HeldItems.RemoveAt( 0 );
 
 		item.GameObject.SetParent( null );
-		item.Holder = null;
 		item.DispatchDropped();
 
 		var (row, col) = MazeObject.CellIndex;
@@ -132,18 +133,15 @@ public sealed class Holder : Component, IThrowableListener
 			?.Components.Get<Holdable>()
 			?? throw new Exception( "Can't find item" );
 
-		item.Holder = this;
-
-		if ( airborne )
+		if ( !airborne && HeldItems.FirstOrDefault() is {} first )
 		{
-			HeldItems.Add( item );
+			first.GameObject.AddSibling( item.GameObject, true );
 		}
 		else
 		{
-			HeldItems.Insert( 0, item );
+			item.GameObject.SetParent( GameObject );
 		}
 
-		item.GameObject.SetParent( GameObject );
 		item.HeldVelocity = 0f;
 		item.HeldTime = 0f;
 		item.DispatchPickedUp();
