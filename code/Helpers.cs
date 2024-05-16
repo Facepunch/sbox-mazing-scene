@@ -30,14 +30,6 @@ public static class Helpers
 		return go.Network.IsOwner;
 	}
 
-	[ActionGraphNode( "mazing.localplayer" ), Pure]
-	public static Player? GetLocalPlayer( this GameObject go )
-	{
-		return go.Scene.Components
-			.GetAll<Player>( FindMode.Enabled | FindMode.InChildren )
-			.FirstOrDefault( x => x.GameObject.IsOwner() );
-	}
-
 	[Pure]
 	public static float EaseTo( float a, float b, float frac )
 	{

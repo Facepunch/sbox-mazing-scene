@@ -193,7 +193,7 @@ public sealed class Holder : Component, IThrowableListener
 		{
 			var dir = ((Vector2)Transform.Rotation.Forward).GetDirection();
 
-			ThrowOne( (Direction)(((int)dir + Random.Shared.Int( 1, 4 )) % 4), 1 );
+			ThrowOne( (Direction)(((int)dir + Random.Shared.Next( 1, 4 )) % 4), 1 );
 		}
 	}
 

@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Diagnostics.CodeAnalysis;
-using Sandbox.Physics;
 
 namespace Mazing;
 
@@ -31,8 +29,18 @@ public sealed class Player : Component
 		Mazer.SetClothing( ClothingContainer.CreateFromLocalUser() );
 	}
 
+	protected override void OnStart()
+	{
+		Network.SetOrphanedMode( NetworkOrphaned.ClearOwner );
+	}
+
 	protected override void OnUpdate()
 	{
+		if ( Networking.IsHost && Network.OwnerId.Equals( Guid.Empty ) && !IsDead )
+		{
+			Kill( Vector3.Up * 300f );
+		}
+
 		if ( !_wasExiting && Mazer.Throwable.IsExiting )
 		{
 			_wasExiting = Mazer.Throwable.IsExiting;
@@ -56,6 +64,12 @@ public sealed class Player : Component
 		{
 			HasExited = true;
 		}
+	}
+
+	protected override void OnDestroy()
+	{
+		_ragdoll?.Destroy();
+		_ragdoll = null;
 	}
 
 	[Authority( NetPermission.HostOnly )]
@@ -110,7 +124,7 @@ public sealed class Player : Component
 		}
 
 		var dir = force.WithZ( 0f ).IsNearZeroLength
-			? (Direction)Random.Shared.Int( 0, 4 )
+			? (Direction)Random.Shared.Next( 0, 4 )
 			: ((Vector2)force).GetDirection();
 
 		Holder.ThrowAll( dir, 1 );

@@ -151,7 +151,7 @@ partial class Maze
 
 		var pawns = Scene.Components
 			.GetAll<Player>( FindMode.InChildren | FindMode.Enabled )
-			.ToArray();
+			.ToHashSet();
 
 		var index = 0;
 
@@ -163,7 +163,18 @@ partial class Maze
 			var pawn = pawns.FirstOrDefault( x => x.Network.OwnerConnection == connection )
 				?? SpawnPlayer( connection, true, spawnPos );
 
-			pawn?.Respawn( spawnPos );
+			if ( pawn is not null )
+			{
+				pawns.Remove( pawn );
+				pawn.Respawn( spawnPos );
+			}
+		}
+
+		// Remove disconnected players
+
+		foreach ( var pawn in pawns )
+		{
+			pawn.GameObject.Destroy();
 		}
 	}
 

@@ -4,6 +4,8 @@ namespace Mazing;
 
 public sealed class FollowCamera : Component
 {
+	[RequireComponent] public ColorAdjustments ColorAdjustments { get; set; } = null!;
+
 	[Property]
 	public GameObject? Target { get; set; }
 
@@ -18,5 +20,9 @@ public sealed class FollowCamera : Component
 		}
 
 		Transform.Position = Target.Transform.Position.WithZ( 64f ) - Transform.Rotation.Forward * Distance;
+
+		var player = Target.Components.Get<Player>();
+
+		ColorAdjustments.Saturation = Helpers.LerpTo( ColorAdjustments.Saturation, player?.IsDead is true ? 0.25f : 1f, 0.5f );
 	}
 }

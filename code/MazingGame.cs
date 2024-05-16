@@ -104,7 +104,7 @@ public class MazingGame : Component, Component.INetworkListener
 			anyEscaped |= player.HasExited;
 			anyExiting |= player is { Mazer.Throwable.IsExiting: true, HasExited: false };
 
-			if ( Level == 0 && player.IsDead && player.DeathTime > 5f )
+			if ( Level == 0 && player.IsDead && player.DeathTime > 5f && !player.Network.OwnerId.Equals( Guid.Empty ) )
 			{
 				var spawn = Maze.PlayerSpawns[Random.Shared.Next( Maze.PlayerSpawns.Count )];
 
