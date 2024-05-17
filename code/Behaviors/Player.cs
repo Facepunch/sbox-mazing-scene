@@ -131,17 +131,18 @@ public sealed class Player : Component
 		Holder.Enabled = false;
 	}
 
-	[Broadcast]
+	[Broadcast( NetPermission.HostOnly )]
 	public void RemoveRagdoll()
 	{
 		_ragdoll?.Destroy();
 		_ragdoll = null;
 	}
 
-	[Broadcast]
-	private void SpawnRagdoll( Vector3 force )
+	[Broadcast( NetPermission.HostOnly )]
+	public void SpawnRagdoll( Vector3 force )
 	{
-		RemoveRagdoll();
+		_ragdoll?.Destroy();
+		_ragdoll = null;
 
 		_ragdoll = new GameObject( true, $"{GameObject.Name} (Ragdoll)" )
 		{
