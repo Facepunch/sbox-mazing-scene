@@ -109,6 +109,8 @@ public sealed class Player : Component
 			return;
 		}
 
+		Sandbox.Services.Stats.Increment( "deaths", 1 );
+
 		IsDead = true;
 		DeathTime = 0f;
 

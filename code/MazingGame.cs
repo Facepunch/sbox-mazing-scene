@@ -1,6 +1,7 @@
 ﻿using Sandbox.Network;
 using System;
 using System.Threading.Tasks;
+using Sandbox.Services;
 
 namespace Mazing;
 
@@ -153,12 +154,21 @@ public class MazingGame : Component, Component.INetworkListener
 		GameOver?.Invoke();
 	}
 
+	[Broadcast( NetPermission.HostOnly )]
+	public void UpdateStats( int level, int money )
+	{
+		Stats.SetValue( "level", level );
+		Stats.SetValue( "money", money );
+	}
+
 	private void OnVictory()
 	{
 		if ( StateStart > 1f )
 		{
 			Level += 1;
 			Maze.NextLevel( Level, Random.Shared.Next() );
+
+			UpdateStats( Level, Score * 100 );
 
 			State = GameState.StartingLevel;
 			StateStart = 0f;
@@ -169,6 +179,8 @@ public class MazingGame : Component, Component.INetworkListener
 	{
 		if ( StateStart > 1f )
 		{
+			UpdateStats( Level, Score * 100 );
+
 			Level = 0;
 			Score = 0;
 			CompletedTimeSeconds = 0f;

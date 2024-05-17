@@ -136,8 +136,6 @@ public sealed class Throwable : Component
 			.Select( obj => obj.Components.Get<Throwable>( true ) )
 			.FirstOrDefault( obj => obj != null );
 
-		Log.Info( $"{GameObject.Name} landed on {landedOn?.GameObject.Name}" );
-
 		IsAirborne = false;
 
 		Landed?.Invoke();
