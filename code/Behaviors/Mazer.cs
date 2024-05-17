@@ -126,6 +126,13 @@ public sealed class Mazer : Component
 			OnAlive();
 		}
 
+		var collider = Components.Get<Collider>( FindMode.EverythingInSelf );
+
+		if ( collider is not null )
+		{
+			collider.Enabled = State == MazerState.Walking;
+		}
+
 		switch ( State )
 		{
 			case MazerState.Walking:
