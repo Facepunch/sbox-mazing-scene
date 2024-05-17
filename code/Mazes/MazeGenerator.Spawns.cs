@@ -60,6 +60,11 @@ partial class BaseMazeGenerator
 
 		foreach ( var (state, count) in remainingCounts )
 		{
+			if ( count <= 0 )
+			{
+				continue;
+			}
+
 			if ( state == CellState.Exit )
 			{
 				var cell = PlaceExit( data, validCells, treasureCount );
