@@ -27,7 +27,7 @@
 						[
 							{
 								from = "door.vmat"
-								to = "models/rust_props/portacabins/portacabin_wood_panels.vmat"
+								to = "materials/dev/dev_metal_rough30.vmat"
 							},
 							{
 								from = "frame.vmat"
@@ -84,6 +84,8 @@
 						hidden = false
 						anim_markup_ordered = false
 						disable_compression = false
+						disable_interpolation = false
+						enable_scale = false
 						source_filename = "models/hatch.fbx"
 						start_frame = 0
 						end_frame = 30
