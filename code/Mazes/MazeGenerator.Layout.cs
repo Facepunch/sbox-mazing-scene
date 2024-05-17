@@ -20,8 +20,10 @@ partial class MazeGenerator
 		_resources.Sort( ( a, b ) => a.ResourceId - b.ResourceId );
 	}
 
-	private MazeData GenerateLayout( int size, Random random )
+	protected override MazeData GenerateLayout( int seed, int size )
 	{
+		var random = new Random( seed );
+
 		var resources = _resources
 			.Select( x => (Size: (x.Data.Width / 4) * (x.Data.Height / 4), x.Data) )
 			.ToList();
@@ -215,6 +217,8 @@ partial class MazeGenerator
 		{
 			finalData.CopyFrom( view, (row - minRow) * 4, (col - minCol) * 4 );
 		}
+
+		FixConnectivity( finalData, random );
 
 		return finalData;
 	}

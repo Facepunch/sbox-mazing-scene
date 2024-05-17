@@ -8,7 +8,6 @@ partial class Maze
 	[Property, Group( "Prefabs" )] public GameObject ExitPrefab { get; set; } = null!;
 	[Property, Group( "Prefabs" )] public GameObject PlayerPrefab { get; set; } = null!;
 
-
 	private readonly List<(int Row, int Col)> _playerSpawns = new ();
 	private readonly List<GameObject> _spawnedObjects = new();
 
@@ -24,7 +23,7 @@ partial class Maze
 		_spawnedObjects.Clear();
 	}
 
-	private void SpawnObjects( MazeGeneratorParameters parameters )
+	private void SpawnObjects( GeneratedMaze result )
 	{
 		if ( Network.IsProxy )
 		{
@@ -34,102 +33,33 @@ partial class Maze
 		_playerSpawns.Clear();
 		_spawnedObjects.Clear();
 
-		var random = new Random( Seed );
-
-		var enemyTypes = Helpers.FindAllPrefabsWithInfo<Enemy, EnemyInfo>();
-
-		var requiredEnemyTypes = enemyTypes
-			.Where( x => x.Info.MinLevel == Level )
-			.ToArray();
-
-		requiredEnemyTypes.Shuffle( random );
-
-		var spareEnemyTypes = enemyTypes
-			.Where( x => x.Info.MinLevel < Level )
-			.ToArray();
-
-		spareEnemyTypes.Shuffle( random );
-
-		var minEnemyTypeCount = Math.Max( requiredEnemyTypes.Length, random.NextSingle() < 0.25f ? 1 : 2 );
-		var enemyTypeCount = Math.Min( random.Next( minEnemyTypeCount, 4 ),
-			requiredEnemyTypes.Length + spareEnemyTypes.Length );
-
-		var enemyTypeQueue = new Queue<(PrefabFile Prefab, int Points)>(
-			requiredEnemyTypes
-			.Concat( spareEnemyTypes )
-			.Take( enemyTypeCount )
-			.Select( x => (x.Prefab, x.Info.Difficulty) ));
-
-		var treasureTypeQueue = new Queue<(PrefabFile Prefab, int Points)>(
-			Helpers.FindAllPrefabsWithInfo<Treasure, TreasureInfo>()
-				.OrderBy( x => x.Info.Value )
-				.Select( x => (x.Prefab, x.Info.Value) ) );
-
-		var enemyPoints = parameters.EnemyCount;
-		var treasurePoints = parameters.TreasureCount;
-
-		static PrefabFile? GetPrefab( ref int remainingPoints, Queue<(PrefabFile Prefab, int Points)> queue )
+		foreach ( var spawn in result.Spawns )
 		{
-			if ( remainingPoints <= 0 )
+			switch ( spawn )
 			{
-				return null;
-			}
-
-			while ( queue.Count > 0 )
-			{
-				var next = queue.Dequeue();
-
-				if ( next.Points > remainingPoints )
-				{
-					continue;
-				}
-
-				remainingPoints -= next.Points;
-
-				queue.Enqueue( next );
-				return next.Prefab;
-			}
-
-			return null;
-		}
-
-		var cells = View!.Cells
-			.ToArray();
-
-		cells.Shuffle( random );
-
-		foreach ( var (row, col, state) in cells )
-		{
-			switch ( state )
-			{
-				case CellState.Key:
-					_spawnedObjects.Add( KeyPrefab.Clone( MazeToWorldPos( row, col ) ) );
+				case MazePlayerSpawn playerSpawn:
+					_playerSpawns.Add( (playerSpawn.Row, playerSpawn.Col) );
 					break;
 
-				case CellState.Exit:
-					_spawnedObjects.Add( ExitPrefab.Clone( MazeToWorldPos( row, col ) ) );
+				case MazeKeySpawn keySpawn:
+					_spawnedObjects.Add( KeyPrefab.Clone( MazeToWorldPos( keySpawn.Row, keySpawn.Col ) ) );
 					break;
 
-				case CellState.Enemy:
-					if ( GetPrefab( ref enemyPoints, enemyTypeQueue ) is { } enemyPrefab )
-					{
-						var scene = SceneUtility.GetPrefabScene( enemyPrefab );
-						_spawnedObjects.Add( scene.Clone( MazeToWorldPos( row, col ),
-							Rotation.FromYaw( random.Next( 0, 4 ) * 90 ) ) );
-					}
+				case MazeExitSpawn exitSpawn:
+					_spawnedObjects.Add( ExitPrefab.Clone( MazeToWorldPos( exitSpawn.Row, exitSpawn.Col ) ) );
 					break;
 
-				case CellState.Treasure:
-					if ( GetPrefab( ref treasurePoints, treasureTypeQueue ) is { } treasurePrefab )
-					{
-						var scene = SceneUtility.GetPrefabScene( treasurePrefab );
-						_spawnedObjects.Add( scene.Clone( MazeToWorldPos( row, col ),
-							Rotation.FromYaw( random.Next( 0, 4 ) * 90 ) ) );
-					}
+				case MazeEnemySpawn enemySpawn:
+					_spawnedObjects.Add(
+						SceneUtility.GetPrefabScene( enemySpawn.Prefab )
+							.Clone( MazeToWorldPos( enemySpawn.Row, enemySpawn.Col ),
+								Rotation.LookAt( enemySpawn.Direction.GetNormal(), Vector3.Up ) ) );
 					break;
 
-				case CellState.Player:
-					_playerSpawns.Add( (row, col) );
+				case MazeTreasureSpawn treasureSpawn:
+					_spawnedObjects.Add(
+						SceneUtility.GetPrefabScene( treasureSpawn.Prefab )
+							.Clone( MazeToWorldPos( treasureSpawn.Row, treasureSpawn.Col ) ) );
 					break;
 			}
 		}

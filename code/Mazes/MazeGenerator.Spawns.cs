@@ -1,21 +1,26 @@
 ﻿
 using System;
+using System.Collections.Immutable;
 
 namespace Mazing;
 
 partial class BaseMazeGenerator
 {
-	protected void PlaceSpawns( MazeData data, int treasureCount, int enemyCount, Random random )
+	protected IReadOnlyDictionary<CellState, IReadOnlyList<(int Row, int Col)>> PlaceSpawns( int seed, MazeData data, int enemyCount, int treasureCount )
 	{
+		var random = new Random( seed );
 		var validCells = new Queue<(int Row, int Col)>();
 		var remainingCounts = new Dictionary<CellState, int>
 		{
 			{ CellState.Key, 1 },
 			{ CellState.Exit, 1 },
 			{ CellState.Player, 8 },
-			{ CellState.Treasure, treasureCount },
-			{ CellState.Enemy, enemyCount }
+			{ CellState.Enemy, enemyCount },
+			{ CellState.Treasure, treasureCount }
 		};
+
+		var results = remainingCounts.Keys
+			.ToDictionary( x => x, x => new List<(int Row, int Col)>() );
 
 		var indices = Enumerable.Range( 0, data.Height )
 			.SelectMany( j => Enumerable.Range( 0, data.Width )
@@ -37,7 +42,10 @@ partial class BaseMazeGenerator
 				{
 					if ( remaining > 0 )
 					{
+						Log.Info( $"{state}, {remaining}, {index}" );
+
 						remainingCounts[state] = remaining - 1;
+						results[state].Add( index );
 						continue;
 					}
 
@@ -54,7 +62,10 @@ partial class BaseMazeGenerator
 			{
 				var cell = validCells.Dequeue();
 				data[cell.Row, cell.Col] = state;
+				results[state].Add( cell );
 			}
 		}
+
+		return results.ToImmutableDictionary( x => x.Key, x => (IReadOnlyList<(int, int)>) x.Value );
 	}
 }

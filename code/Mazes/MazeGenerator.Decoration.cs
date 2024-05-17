@@ -4,8 +4,9 @@ namespace Mazing;
 
 partial class BaseMazeGenerator
 {
-	protected IReadOnlyList<MazeLight> GenerateLights( IMazeDataView data, Random random )
+	protected IReadOnlyList<MazeLight> GenerateLights( int seed, IMazeDataView data )
 	{
+		var random = new Random( seed );
 		var mainHue = random.NextSingle() * 360f;
 
 		var lightColors = new[]

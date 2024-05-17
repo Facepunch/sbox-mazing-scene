@@ -1,11 +1,23 @@
 ﻿using System;
+using System.Linq;
 
 namespace Mazing;
 
 /// <param name="Size">How big is the maze, in 4x4 blocks.</param>
-public record struct MazeGeneratorParameters( int Seed, int Size, int TreasureCount, int EnemyCount );
-public record struct MazeLight( Vector3 Position, Color Color, float Radius );
-public record GeneratedMaze( IMazeDataView View, IReadOnlyList<MazeLight> Lights );
+public record MazeGeneratorParameters( int Seed, int Level, int Size, int TreasureCount, int EnemyCount );
+public record MazeLight( Vector3 Position, Color Color, float Radius );
+
+public record MazeObjectSpawn( int Row, int Col );
+public record MazeTreasureSpawn( int Row, int Col, PrefabFile Prefab ) : MazeObjectSpawn( Row, Col );
+public record MazeEnemySpawn( int Row, int Col, Direction Direction, PrefabFile Prefab ) : MazeObjectSpawn( Row, Col );
+public record MazePlayerSpawn( int Row, int Col ) : MazeObjectSpawn( Row, Col );
+public record MazeKeySpawn( int Row, int Col ) : MazeObjectSpawn( Row, Col );
+public record MazeExitSpawn( int Row, int Col ) : MazeObjectSpawn( Row, Col );
+
+public record GeneratedMaze(
+	IMazeDataView View,
+	IReadOnlyList<MazeObjectSpawn> Spawns,
+	IReadOnlyList<MazeLight> Lights );
 
 public interface IMazeGenerator
 {
@@ -14,7 +26,38 @@ public interface IMazeGenerator
 
 public abstract partial class BaseMazeGenerator : IMazeGenerator
 {
-	public abstract GeneratedMaze Generate( MazeGeneratorParameters parameters );
+	public GeneratedMaze Generate( MazeGeneratorParameters parameters )
+	{
+		var random = new Random( parameters.Seed );
+		var layout = GenerateLayout( random.Next(), parameters.Size );
+		var enemies = GenerateEnemyList( random.Next(), parameters.Level, parameters.EnemyCount );
+		var treasure = GenerateTreasureList( random.Next(), parameters.Level, parameters.TreasureCount );
+		var spawns = PlaceSpawns( random.Next(), layout, enemies.Count, treasure.Count );
+		var lights = GenerateLights( random.Next(), layout );
+
+		Log.Info( $"Enemy: {spawns[CellState.Enemy].Count}, {enemies.Count}" );
+
+		var finalSpawns = new List<MazeObjectSpawn>();
+
+		finalSpawns.AddRange( spawns[CellState.Player].Select( x =>
+			new MazePlayerSpawn( x.Row, x.Col ) ) );
+
+		finalSpawns.AddRange( spawns[CellState.Key].Select( x =>
+			new MazeKeySpawn( x.Row, x.Col ) ) );
+
+		finalSpawns.AddRange( spawns[CellState.Exit].Select( x =>
+			new MazeExitSpawn( x.Row, x.Col ) ) );
+
+		finalSpawns.AddRange( spawns[CellState.Enemy].Select( ( x, i ) =>
+			new MazeEnemySpawn( x.Row, x.Col, (Direction)random.Next( 4 ), enemies[i] ) ) );
+
+		finalSpawns.AddRange( spawns[CellState.Treasure].Select( ( x, i ) =>
+			new MazeTreasureSpawn( x.Row, x.Col, treasure[i] ) ) );
+
+		return new GeneratedMaze( layout, finalSpawns, lights );
+	}
+
+	protected abstract MazeData GenerateLayout( int seed, int size );
 }
 
 public partial class MazeGenerator : BaseMazeGenerator
@@ -23,41 +66,22 @@ public partial class MazeGenerator : BaseMazeGenerator
 	{
 		AddAllChunkResources();
 	}
-
-	public override GeneratedMaze Generate( MazeGeneratorParameters parameters )
-	{
-		var random = new Random( parameters.Seed );
-		var data = GenerateLayout( parameters.Size, random );
-
-		FixConnectivity( data, random );
-		PlaceSpawns( data, parameters.TreasureCount, parameters.EnemyCount, random );
-
-		var lights = GenerateLights( data, random );
-
-		return new GeneratedMaze( data, lights );
-	}
 }
 
 public sealed class LobbyMazeGenerator : BaseMazeGenerator
 {
-	public override GeneratedMaze Generate( MazeGeneratorParameters parameters )
+	protected override MazeData GenerateLayout( int seed, int size )
 	{
-		var random = new Random( parameters.Seed );
+		var random = new Random( seed );
 		var chunks = ResourceLibrary.GetAll<MazeChunkResource>()
 			.Where( x => (x.Flags & MazeChunkFlags.IsLobby) != 0 )
 			.ToArray();
 
 		var chunk = chunks[random.Next( chunks.Length )];
 
-		var data = new MazeData( chunk.Data.Width, chunk.Data.Height,
+		return new MazeData( chunk.Data.Width, chunk.Data.Height,
 			chunk.Data.VertWalls.ToArray(),
 			chunk.Data.HorzWalls.ToArray(),
 			chunk.Data.Cells.ToArray() );
-
-		PlaceSpawns( data, parameters.TreasureCount, parameters.EnemyCount, random );
-
-		var lights = GenerateLights( data, random );
-
-		return new GeneratedMaze( data, lights );
 	}
 }

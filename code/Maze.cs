@@ -79,10 +79,10 @@ public sealed partial class Maze : Component
 	{
 		if ( level == 0 )
 		{
-			return new MazeGeneratorParameters( seed, 4, 2, 1 );
+			return new MazeGeneratorParameters( seed, level, 4, 2, 1 );
 		}
 
-		return new MazeGeneratorParameters( seed,
+		return new MazeGeneratorParameters( seed, level,
 			InitialMazeSize + (level - 1) * MazeSizeIncrement,
 			InitialTreasureCount + (Level - 1) * TreasureCountIncrement,
 			InitialEnemyCount + (Level - 1) * EnemyCountIncrement );
@@ -109,7 +109,7 @@ public sealed partial class Maze : Component
 
 		UpdateGeometry( result );
 
-		SpawnObjects( parameters );
+		SpawnObjects( result );
 	}
 
 	protected override void OnStart()
