@@ -35,8 +35,6 @@ public abstract partial class BaseMazeGenerator : IMazeGenerator
 		var spawns = PlaceSpawns( random.Next(), layout, enemies.Count, treasure.Count );
 		var lights = GenerateLights( random.Next(), layout );
 
-		Log.Info( $"Enemy: {spawns[CellState.Enemy].Count}, {enemies.Count}" );
-
 		var finalSpawns = new List<MazeObjectSpawn>();
 
 		finalSpawns.AddRange( spawns[CellState.Player].Select( x =>
