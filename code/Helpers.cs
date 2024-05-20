@@ -80,5 +80,47 @@ public static class Helpers
 			.Where( x => x.Info != null! )
 			.ToArray();
 	}
+
+	public static int GetMaxRange( this IMazeDataView mazeData, int row, int col, Direction dir )
+	{
+		var max = Math.Max( mazeData.Width, mazeData.Height );
+		var range = 0;
+
+		for ( var i = 0; i < max; ++i )
+		{
+			if ( mazeData[row, col, dir] != WallState.Open )
+			{
+				break;
+			}
+
+			++range;
+			(row, col) = dir.GetNeighbor( row, col );
+		}
+
+		return range;
+	}
+
+	public static Direction NextDirection( this Random random, IMazeDataView mazeData, int row, int col )
+	{
+		var scores = Directions
+			.Select( x => (Direction: x, Score: GetMaxRange( mazeData, row, col, x )) )
+			.Select( x => x with { Score = x.Score * x.Score } )
+			.ToArray();
+
+		var total = scores.Sum( x => x.Score );
+		var selected = random.Next( 0, total );
+
+		foreach ( var (dir, score) in scores )
+		{
+			selected -= score;
+
+			if ( selected < 0 )
+			{
+				return dir;
+			}
+		}
+
+		return (Direction)random.Next( 0, 4 );
+	}
 }
 

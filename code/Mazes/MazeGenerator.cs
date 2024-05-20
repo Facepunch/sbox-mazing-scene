@@ -47,7 +47,7 @@ public abstract partial class BaseMazeGenerator : IMazeGenerator
 			new MazeExitSpawn( x.Row, x.Col ) ) );
 
 		finalSpawns.AddRange( spawns[CellState.Enemy].Select( ( x, i ) =>
-			new MazeEnemySpawn( x.Row, x.Col, (Direction)random.Next( 4 ), enemies[i] ) ) );
+			new MazeEnemySpawn( x.Row, x.Col, random.NextDirection( layout, x.Row, x.Col ), enemies[i] ) ) );
 
 		finalSpawns.AddRange( spawns[CellState.Treasure].Select( ( x, i ) =>
 			new MazeTreasureSpawn( x.Row, x.Col, treasure[i] ) ) );
