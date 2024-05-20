@@ -92,15 +92,23 @@ partial class BaseMazeGenerator
 		var bestIndex = -1;
 		var bestScore = int.MaxValue;
 
-		var idealHeldCount = Math.Max( treasureCount / 2, 1 );
+		var idealHeldCount = Math.Clamp( treasureCount / 2, 1, 4 );
 
 		for ( var i = 0; i < validCells.Count; ++i )
 		{
 			var cell = validCells[i];
 			var score = 0;
+			var possible = false;
 
 			foreach ( var direction in Helpers.Directions )
 			{
+				var neighbor = direction.GetNeighbor( cell.Row, cell.Col );
+
+				if ( data[neighbor.Row, neighbor.Col] == CellState.Empty )
+				{
+					score += 4;
+				}
+
 				for ( var heldTreasure = -1; heldTreasure <= treasureCount; ++heldTreasure )
 				{
 					var from = direction.GetNeighbor( cell.Row, cell.Col, heldTreasure + 2 );
@@ -120,14 +128,13 @@ partial class BaseMazeGenerator
 						continue;
 					}
 
-					score += 1 + Math.Abs( idealHeldCount - heldTreasure );
+					possible = true;
+					score += Math.Max( idealHeldCount - heldTreasure, 0 );
 				}
 			}
 
-			if ( score <= 0 )
+			if ( !possible )
 			{
-				// No valid solutions
-
 				continue;
 			}
 
