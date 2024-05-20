@@ -157,6 +157,7 @@ public sealed partial class Maze : Component
 				if ( count > 0 )
 				{
 					_objectsInCells[prevIndex] = (offset, count);
+					_pathCosts[prevIndex] = cost;
 				}
 
 				prevIndex = index;
@@ -171,6 +172,7 @@ public sealed partial class Maze : Component
 		if ( count > 0 )
 		{
 			_objectsInCells[prevIndex] = (offset, count);
+			_pathCosts[prevIndex] = cost;
 		}
 	}
 
