@@ -1,15 +1,17 @@
 {
-	"UI": true,
-	"Volume": 0.100000,
-	"VolumeRandom": 0,
-	"Pitch": 1,
-	"PitchRandom": 0,
-	"Decibels": 35,
-	"Sounds":
-	[
-		"sounds/player/player.recharge1.vsnd"
-	],
-	"SelectionMode": "Random",
-	"MaximumDistance": 309.983370,
-	"MinimumDistance": 15.499168
+  "UI": true,
+  "Volume": "0.10,0.10,0",
+  "Pitch": "1.00,1.00,0",
+  "Decibels": 35,
+  "SelectionMode": "Random",
+  "Sounds": [
+    "sounds/player/player.recharge1.vsnd"
+  ],
+  "Occlusion": false,
+  "AirAbsorption": true,
+  "Transmission": true,
+  "OcclusionRadius": 64,
+  "DistanceAttenuation": true,
+  "__version": 0,
+  "__references": []
 }

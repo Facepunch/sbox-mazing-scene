@@ -1,15 +1,17 @@
 {
-	"UI": false,
-	"Volume": 1,
-	"VolumeRandom": 0,
-	"Pitch": 1,
-	"PitchRandom": 0.100000,
-	"Decibels": 50,
-	"Sounds":
-	[
-		"sounds/player/stamina_recharge_louder.vsnd"
-	],
-	"SelectionMode": "Random",
-	"MaximumDistance": 599.313050,
-	"MinimumDistance": 29.965652
+  "UI": false,
+  "Volume": "1.00,1.00,0",
+  "Pitch": "1.00,1.00,0",
+  "Decibels": 50,
+  "SelectionMode": "Random",
+  "Sounds": [
+    "sounds/player/stamina_recharge_louder.vsnd"
+  ],
+  "Occlusion": false,
+  "AirAbsorption": true,
+  "Transmission": true,
+  "OcclusionRadius": 64,
+  "DistanceAttenuation": true,
+  "__version": 0,
+  "__references": []
 }

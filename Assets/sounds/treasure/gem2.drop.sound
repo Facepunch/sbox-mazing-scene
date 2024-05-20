@@ -7,7 +7,7 @@
   "Sounds": [
     "sounds/treasure/gemb.vsnd"
   ],
-  "Occlusion": true,
+  "Occlusion": false,
   "AirAbsorption": true,
   "Transmission": true,
   "OcclusionRadius": 64,

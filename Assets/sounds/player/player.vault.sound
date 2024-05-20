@@ -8,12 +8,11 @@
     "sounds/player/vault_1.vsnd",
     "sounds/player/vault_2.vsnd"
   ],
-  "Occlusion": true,
+  "Occlusion": false,
   "AirAbsorption": true,
   "Transmission": true,
   "OcclusionRadius": 64,
   "DistanceAttenuation": true,
-  "ResourceVersion": 0,
   "__version": 0,
   "__references": []
 }

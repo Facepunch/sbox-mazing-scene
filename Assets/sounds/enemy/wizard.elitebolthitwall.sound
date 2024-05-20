@@ -1,15 +1,17 @@
 {
-	"UI": false,
-	"Volume": 1,
-	"VolumeRandom": 0,
-	"Pitch": 1.250000,
-	"PitchRandom": 0.100000,
-	"Decibels": 45,
-	"Sounds":
-	[
-		"sounds/enemy/wizard_projectile_hit_wall.vsnd"
-	],
-	"SelectionMode": "Random",
-	"MaximumDistance": 491.523560,
-	"MinimumDistance": 24.576178
+  "UI": false,
+  "Volume": "1.00,1.00,0",
+  "Pitch": "1.25,1.25,0",
+  "Decibels": 45,
+  "SelectionMode": "Random",
+  "Sounds": [
+    "sounds/enemy/wizard_projectile_hit_wall.vsnd"
+  ],
+  "Occlusion": false,
+  "AirAbsorption": true,
+  "Transmission": true,
+  "OcclusionRadius": 64,
+  "DistanceAttenuation": true,
+  "__version": 0,
+  "__references": []
 }

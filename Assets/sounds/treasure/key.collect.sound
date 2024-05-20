@@ -1,15 +1,17 @@
 {
-	"UI": false,
-	"Volume": 1,
-	"VolumeRandom": 0,
-	"Pitch": 1.100000,
-	"PitchRandom": 0.050000,
-	"Decibels": 70,
-	"Sounds":
-	[
-		"sounds/treasure/key_landing.vsnd"
-	],
-	"SelectionMode": "Random",
-	"MaximumDistance": 1143.933500,
-	"MinimumDistance": 57.196674
+  "UI": false,
+  "Volume": "1.00,1.00,0",
+  "Pitch": "1.10,1.10,0",
+  "Decibels": 70,
+  "SelectionMode": "Random",
+  "Sounds": [
+    "sounds/treasure/key_landing.vsnd"
+  ],
+  "Occlusion": false,
+  "AirAbsorption": true,
+  "Transmission": true,
+  "OcclusionRadius": 64,
+  "DistanceAttenuation": true,
+  "__version": 0,
+  "__references": []
 }

@@ -1,15 +1,17 @@
 {
-	"UI": false,
-	"Volume": 1,
-	"VolumeRandom": 0,
-	"Pitch": 1,
-	"PitchRandom": 0.050000,
-	"Decibels": 25,
-	"Sounds":
-	[
-		"sounds/enemy/spike_trap_retract.vsnd"
-	],
-	"SelectionMode": "Random",
-	"MaximumDistance": 173.828260,
-	"MinimumDistance": 8.691413
+  "UI": false,
+  "Volume": "1.00,1.00,0",
+  "Pitch": "1.00,1.00,0",
+  "Decibels": 25,
+  "SelectionMode": "Random",
+  "Sounds": [
+    "sounds/enemy/spike_trap_retract.vsnd"
+  ],
+  "Occlusion": false,
+  "AirAbsorption": true,
+  "Transmission": true,
+  "OcclusionRadius": 64,
+  "DistanceAttenuation": true,
+  "__version": 0,
+  "__references": []
 }
