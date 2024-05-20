@@ -4,10 +4,13 @@ namespace Mazing;
 
 public abstract class Navigator : Component
 {
+	private static int NextOrdinal { get; set; }
+
 	[RequireComponent] public MazeObject MazeObject { get; set; } = null!;
 	[RequireComponent] public Mazer Mazer { get; set; } = null!;
 
 	private Dictionary<(int, int), TimeSince> _lastVisited = new();
+	private int _ordinal = ++NextOrdinal;
 
 	protected TimeSince LastVisited( (int row, int col) cell )
 	{
@@ -62,7 +65,17 @@ public abstract class Navigator : Component
 		var targetPos = MazeObject.Maze.MazeToWorldPos( target.Row, target.Col );
 		var diff = (Vector2)(targetPos - Transform.Position);
 
-		Mazer.MoveInput = Direction.GetNormal();
+		var input = Direction.GetNormal();
+		var otherNavigatorCount = MazeObject
+			.GetObjectsInSameCell()
+			.Count( x => x.GameObject != GameObject
+				&& x.Components.Get<Navigator>() is { } navi
+				&& (Math.Abs( navi.Mazer.MoveSpeed - Mazer.MoveSpeed ) < 1f)
+				&& navi._ordinal < _ordinal );
+
+		input *= 4f / (4f + otherNavigatorCount);
+
+		Mazer.MoveInput = input;
 
 		if ( Vector2.Dot( Direction.GetNormal(), diff ) <= 4f || dist > 1 )
 		{
