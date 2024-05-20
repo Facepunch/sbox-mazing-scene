@@ -7,6 +7,14 @@ public abstract class Navigator : Component
 	[RequireComponent] public MazeObject MazeObject { get; set; } = null!;
 	[RequireComponent] public Mazer Mazer { get; set; } = null!;
 
+	private Dictionary<(int, int), TimeSince> _lastVisited = new();
+
+	protected TimeSince LastVisited( (int row, int col) cell )
+	{
+		return _lastVisited.TryGetValue( cell, out var since )
+			? since : 60f;
+	}
+
 	[Property]
 	public float MinTargetUpdatePeriod { get; set; } = 1f;
 
@@ -31,6 +39,8 @@ public abstract class Navigator : Component
 		}
 
 		var (row, col) = MazeObject.CellIndex;
+
+		_lastVisited[(row, col)] = 0f;
 
 		if ( _target is null && _nextTargetUpdate <= 0f )
 		{
