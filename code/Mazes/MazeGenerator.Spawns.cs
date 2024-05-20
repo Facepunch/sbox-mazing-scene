@@ -67,7 +67,7 @@ partial class BaseMazeGenerator
 
 			if ( state == CellState.Exit )
 			{
-				var cell = PlaceExit( data, validCells, treasureCount );
+				var cell = PlaceExit( random, data, validCells, treasureCount );
 				data[cell.Row, cell.Col] = state;
 				results[state].Add( cell );
 
@@ -87,12 +87,12 @@ partial class BaseMazeGenerator
 		return results.ToImmutableDictionary( x => x.Key, x => (IReadOnlyList<(int, int)>) x.Value );
 	}
 
-	private (int Row, int Col) PlaceExit( MazeData data, List<(int Row, int Col)> validCells, int treasureCount )
+	private (int Row, int Col) PlaceExit( Random random, MazeData data, List<(int Row, int Col)> validCells, int treasureCount )
 	{
 		var bestIndex = -1;
 		var bestScore = int.MaxValue;
 
-		var idealHeldCount = Math.Clamp( treasureCount / 2, 1, 4 );
+		var idealHeldCount = random.Next( 1, Math.Clamp( treasureCount / 2, 1, 4 ) );
 
 		for ( var i = 0; i < validCells.Count; ++i )
 		{
@@ -129,7 +129,7 @@ partial class BaseMazeGenerator
 					}
 
 					possible = true;
-					score += Math.Max( idealHeldCount - heldTreasure, 0 );
+					score += Math.Abs( idealHeldCount - heldTreasure ) * (Math.Max( idealHeldCount - heldTreasure, 0 ) + 1);
 				}
 			}
 

@@ -25,7 +25,7 @@ partial class MazeGenerator
 		var random = new Random( seed );
 
 		var resources = _resources
-			.Select( x => (Size: (x.Data.Width / 4) * (x.Data.Height / 4), x.Data) )
+			.Select( x => (TileCount: x.Data.Cells.Count( x => x != CellState.Empty ), x.Data) )
 			.ToList();
 
 		var blocks = new Dictionary<(int Row, int Col), IMazeDataView>();
@@ -99,13 +99,16 @@ partial class MazeGenerator
 			}
 		}
 
-		while ( blocks.Count < size )
+		var placedTiles = 0;
+		var targetTiles = size * 16;
+
+		while ( placedTiles < targetTiles && resources.Count > 0 )
 		{
 			var next = resources[random.Next( resources.Count )];
 
-			if ( next.Size + blocks.Count > size )
+			if ( next.TileCount + placedTiles > targetTiles )
 			{
-				resources.RemoveAll( x => x.Size + blocks.Count > size );
+				resources.RemoveAll( x => x.TileCount + placedTiles > targetTiles );
 				continue;
 			}
 
@@ -154,6 +157,8 @@ partial class MazeGenerator
 
 			var placement = possible[BiasedRandom( possible.Count, 16 )];
 			var view = (IMazeDataView)next.Data;
+
+			placedTiles += next.TileCount;
 
 			if ( placement.Transpose )
 			{
