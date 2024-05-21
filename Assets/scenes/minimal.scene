@@ -156,14 +156,14 @@
           },
           "FloorMaterial": "materials/floor/mazing_floor.vmat",
           "InitialEnemyCount": 2,
-          "InitialMazeSize": 4,
+          "InitialMazeSize": 64,
           "InitialTreasureCount": 5,
           "KeyPrefab": {
             "_type": "gameobject",
             "prefab": "prefabs/key.prefab"
           },
           "Level": 0,
-          "MazeSizeIncrement": 1,
+          "MazeSizeIncrement": 8,
           "PlayerPrefab": {
             "_type": "gameobject",
             "prefab": "prefabs/player.prefab"

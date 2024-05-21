@@ -22,10 +22,12 @@ partial class MazeGenerator
 
 	protected override MazeData GenerateLayout( int seed, int size )
 	{
+		size = Math.Max( size, 16 );
+
 		var random = new Random( seed );
 
 		var resources = _resources
-			.Select( x => (TileCount: x.Data.Cells.Count( x => x != CellState.Empty ), x.Data) )
+			.Select( x => (TileCount: x.Data.Cells.Count( y => y != CellState.Empty ), x.Data) )
 			.ToList();
 
 		var blocks = new Dictionary<(int Row, int Col), IMazeDataView>();
@@ -100,15 +102,14 @@ partial class MazeGenerator
 		}
 
 		var placedTiles = 0;
-		var targetTiles = size * 16;
 
-		while ( placedTiles < targetTiles && resources.Count > 0 )
+		while ( placedTiles < size && resources.Count > 0 )
 		{
 			var next = resources[random.Next( resources.Count )];
 
-			if ( next.TileCount + placedTiles > targetTiles )
+			if ( next.TileCount + placedTiles > size )
 			{
-				resources.RemoveAll( x => x.TileCount + placedTiles > targetTiles );
+				resources.RemoveAll( x => x.TileCount + placedTiles > size );
 				continue;
 			}
 
