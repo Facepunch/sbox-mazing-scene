@@ -1,0 +1,278 @@
+{
+  "RootObject": {
+    "__guid": "28886d66-1a34-4602-a9d6-fa9bd4091460",
+    "Flags": 0,
+    "Name": "wizard_chargeup",
+    "Enabled": true,
+    "NetworkMode": 0,
+    "NetworkInterpolation": true,
+    "Components": [
+      {
+        "__type": "Mazing.EmptyComponent",
+        "__guid": "55f5e896-dffa-43af-bf83-48f3d840fd35",
+        "OnComponentStart": {
+          "__version": 7,
+          "__guid": "c7412a22-4967-4499-92f9-10d4dca356f5",
+          "UserData": {
+            "Title": "On Component Start",
+            "ReferencedComponentTypes": []
+          },
+          "Variables": [],
+          "Nodes": [
+            {
+              "Id": 0,
+              "Type": "input"
+            },
+            {
+              "Id": 1,
+              "Type": "time.delay",
+              "UserData": {
+                "Position": "224,-0"
+              }
+            },
+            {
+              "Id": 3,
+              "Type": "call",
+              "Properties": {
+                "_name": "Destroy",
+                "_isStatic": false,
+                "_type": "Sandbox.GameObject"
+              },
+              "UserData": {
+                "Position": "400,0"
+              }
+            }
+          ],
+          "Links": [
+            {
+              "SrcId": 0,
+              "SrcName": "_signal",
+              "DstId": 1,
+              "DstName": "_signal"
+            },
+            {
+              "Value": 4,
+              "DstId": 1,
+              "DstName": "seconds"
+            },
+            {
+              "SrcId": 1,
+              "SrcName": "_signal",
+              "DstId": 3,
+              "DstName": "_signal"
+            },
+            {
+              "SrcId": 0,
+              "SrcName": "_target",
+              "DstId": 3,
+              "DstName": "_target"
+            }
+          ]
+        }
+      }
+    ],
+    "Children": [
+      {
+        "__guid": "0b18d263-4db7-4da9-a474-e703886d3ac1",
+        "Flags": 0,
+        "Name": "Ring",
+        "Rotation": "0,-0.7071067,0,0.7071068",
+        "Tags": "particles",
+        "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkInterpolation": true,
+        "Components": [
+          {
+            "__type": "Sandbox.ParticleEffect",
+            "__guid": "ed3ae1fe-c250-48c3-9e47-1a3d00e2a6a6",
+            "Alpha": {
+              "Type": "Curve",
+              "CurveA": [
+                {
+                  "y": 1
+                },
+                {
+                  "x": 0.48029557,
+                  "y": 1,
+                  "in": 1.5365853,
+                  "out": -1.5365853
+                },
+                {
+                  "x": 1,
+                  "in": 1.312303,
+                  "out": -1.312303
+                }
+              ],
+              "Constants": "1,0,0,0"
+            },
+            "ApplyColor": true,
+            "ApplyRotation": false,
+            "ApplyShape": true,
+            "Bounce": {
+              "Constants": "1,0,0,0"
+            },
+            "Brightness": {
+              "Constants": "4,0,0,0"
+            },
+            "Bumpiness": {},
+            "Collision": false,
+            "CollisionIgnore": "ghost",
+            "CollisionRadius": 1,
+            "Damping": {
+              "Constants": "2,0,0,0"
+            },
+            "DieOnCollisionChance": {},
+            "Force": true,
+            "ForceDirection": "0,0,-100",
+            "ForceScale": {
+              "Constants": "1,0,0,0"
+            },
+            "Friction": {
+              "Constants": "1,0,0,0"
+            },
+            "Gradient": {
+              "Evaluation": "Particle",
+              "GradientA": {
+                "color": [
+                  {
+                    "t": 0.5,
+                    "c": "1,1,1,1"
+                  }
+                ],
+                "alpha": []
+              },
+              "GradientB": {
+                "color": [
+                  {
+                    "t": 0.5,
+                    "c": "1,1,1,1"
+                  }
+                ],
+                "alpha": []
+              },
+              "ConstantA": "1,1,1,1",
+              "ConstantB": "0.7451,0.57255,1,1"
+            },
+            "Lifetime": {
+              "Type": "Range",
+              "Evaluation": "Particle",
+              "Constants": "0.25,0.5,0,0"
+            },
+            "MaxParticles": 5000,
+            "PerParticleTimeScale": {
+              "Constants": "1,0.4,0,0"
+            },
+            "PreWarm": 0,
+            "PushStrength": {},
+            "Roll": {
+              "Type": "Range",
+              "Evaluation": "Particle",
+              "Constants": "0,360,0,0"
+            },
+            "Scale": {
+              "Type": "Curve",
+              "CurveA": {
+                "rangey": "0,3",
+                "frames": [
+                  {},
+                  {
+                    "x": 0.5,
+                    "y": 1
+                  },
+                  {
+                    "x": 1
+                  }
+                ]
+              },
+              "Constants": "1,0,0,0"
+            },
+            "SequenceId": {},
+            "SequenceSpeed": {
+              "Constants": "1,0,0,0"
+            },
+            "SequenceTime": {
+              "Constants": "1,0,0,0"
+            },
+            "SheetSequence": false,
+            "Space": "World",
+            "StartVelocity": {
+              "Type": "Range",
+              "Evaluation": "Particle",
+              "Constants": "25,50,0,0"
+            },
+            "Stretch": {},
+            "TimeScale": 1,
+            "Tint": "0.7451,0.57255,1,1"
+          },
+          {
+            "__type": "Sandbox.ParticleSpriteRenderer",
+            "__guid": "c0855c42-50bf-4251-99e2-42dc61f38c84",
+            "Additive": false,
+            "BlurAmount": 0.5,
+            "BlurOpacity": 0.91,
+            "BlurSpacing": 0.73,
+            "DepthFeather": 0,
+            "FaceVelocity": false,
+            "FogStrength": 1,
+            "LeadingTrail": true,
+            "MotionBlur": false,
+            "Opaque": false,
+            "RotationOffset": 0,
+            "Scale": 1,
+            "Shadows": false,
+            "SortMode": "Unsorted",
+            "Texture": "materials/particles/glow_simple_01.vtex"
+          },
+          {
+            "__type": "Sandbox.ParticleConeEmitter",
+            "__guid": "39ea9053-1cdb-4631-b538-97d4160586c8",
+            "Burst": 0,
+            "ConeAngle": 45,
+            "ConeFar": 16,
+            "ConeNear": 16,
+            "Delay": 1,
+            "DestroyOnEnd": false,
+            "Duration": 2,
+            "InVolume": true,
+            "Loop": false,
+            "OnEdge": false,
+            "Rate": 100
+          },
+          {
+            "__type": "Sandbox.ParticleAttractor",
+            "__guid": "562fa0d7-108f-4f47-a865-a6fcbfbc4b29",
+            "Force": {
+              "Constants": "2,0,0,0"
+            },
+            "MaxForce": {
+              "Constants": "2,0,0,0"
+            },
+            "Radius": 16,
+            "Randomness": {
+              "Constants": "1,0,0,0"
+            },
+            "Target": {
+              "_type": "gameobject",
+              "go": "353569d8-d5ee-4930-a187-0c3d51567236"
+            }
+          }
+        ]
+      },
+      {
+        "__guid": "353569d8-d5ee-4930-a187-0c3d51567236",
+        "Flags": 0,
+        "Name": "Attractor",
+        "Position": "0,0,32",
+        "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkInterpolation": true
+      }
+    ]
+  },
+  "ShowInMenu": false,
+  "MenuPath": null,
+  "MenuIcon": null,
+  "ResourceVersion": 1,
+  "__references": [],
+  "__version": 1
+}

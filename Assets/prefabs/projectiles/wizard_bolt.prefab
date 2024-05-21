@@ -433,7 +433,7 @@
             "MotionBlur": false,
             "Opaque": false,
             "RotationOffset": 0,
-            "Scale": 4,
+            "Scale": 2,
             "Shadows": false,
             "SortMode": "Unsorted",
             "Texture": "materials/particles/glow_simple_01.vtex"
@@ -652,6 +652,6 @@
   "MenuPath": null,
   "MenuIcon": null,
   "ResourceVersion": 1,
-  "__version": 1,
-  "__references": []
+  "__references": [],
+  "__version": 1
 }
