@@ -68,6 +68,11 @@ public sealed class Mazer : Component
 		AnimationHelper.Target.OnFootstepEvent += Footstep;
 	}
 
+	protected override void OnEnabled()
+	{
+		_targetLook = Transform.Rotation.Forward.WithZ( 0f ).Normal;
+	}
+
 	public void SetClothing( ClothingContainer clothing )
 	{
 		ClothingJson = clothing.Serialize();
