@@ -72,6 +72,12 @@ public static class Helpers
 			LerpTo( a.a, b.a, speed ) );
 	}
 
+	[Pure]
+	public static int FloorToInt( float x )
+	{
+		return (int) MathF.Floor( x );
+	}
+
 	public static void Shuffle<T>( this IList<T> list, Random random )
 	{
 		for ( var i = 0; i < list.Count - 1; ++i )

@@ -10,23 +10,9 @@ public sealed partial class Maze : Component
 	[Property, Group( "Parameters" )]
 	public int Level { get; set; } = 1;
 
-	[Property]
-	public int InitialMazeSize { get; set; } = 4;
+	public delegate void MazeParamFunc( int level, out int size, out int treasureCount, out int enemyCount );
 
-	[Property]
-	public int InitialEnemyCount { get; set; } = 2;
-
-	[Property]
-	public int EnemyCountIncrement { get; set; } = 1;
-
-	[Property]
-	public int InitialTreasureCount { get; set; } = 2;
-
-	[Property]
-	public int TreasureCountIncrement { get; set; } = 1;
-
-	[Property]
-	public int MazeSizeIncrement { get; set; } = 1;
+	[Property] public MazeParamFunc GetLevelParameters { get; set; } = null!;
 
 	private readonly List<MazeObject> _allObjects = new();
 	private readonly Dictionary<(int Row, int Col), (int Offset, int Count)> _objectsInCells = new();
@@ -85,10 +71,9 @@ public sealed partial class Maze : Component
 			return new MazeGeneratorParameters( seed, level, 4, 2, 1 );
 		}
 
-		return new MazeGeneratorParameters( seed, level,
-			InitialMazeSize + (level - 1) * MazeSizeIncrement,
-			InitialTreasureCount + (Level - 1) * TreasureCountIncrement,
-			InitialEnemyCount + (Level - 1) * EnemyCountIncrement );
+		GetLevelParameters( level, out var size, out var treasureCount, out var enemyCount );
+
+		return new MazeGeneratorParameters( seed, level, size, treasureCount, enemyCount );
 	}
 
 	[Button( "Run", "casino" ), Group( "Parameters" )]
