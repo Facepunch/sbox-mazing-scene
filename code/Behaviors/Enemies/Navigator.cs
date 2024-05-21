@@ -19,7 +19,7 @@ public abstract class Navigator : Component
 	}
 
 	[Property]
-	public float MinTargetUpdatePeriod { get; set; } = 1f;
+	public float MinTargetUpdatePeriod { get; set; } = 0.5f;
 
 	private (int Row, int Col)? _target = null;
 
@@ -32,6 +32,12 @@ public abstract class Navigator : Component
 		_nextTargetUpdate = 3f + Random.Shared.NextSingle();
 
 		Direction = ((Vector2)Transform.Rotation.Forward).GetDirection();
+	}
+
+	public void ClearTarget()
+	{
+		_target = null;
+		_nextTargetUpdate = 0f;
 	}
 
 	protected override void OnUpdate()

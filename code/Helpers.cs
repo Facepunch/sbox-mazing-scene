@@ -62,6 +62,16 @@ public static class Helpers
 		return a + delta * Math.Sign( diff );
 	}
 
+	[Pure]
+	public static Color LerpTo( Color a, Color b, float speed )
+	{
+		return new Color(
+			LerpTo( a.r, b.r, speed ),
+			LerpTo( a.g, b.g, speed ),
+			LerpTo( a.b, b.b, speed ),
+			LerpTo( a.a, b.a, speed ) );
+	}
+
 	public static void Shuffle<T>( this IList<T> list, Random random )
 	{
 		for ( var i = 0; i < list.Count - 1; ++i )
