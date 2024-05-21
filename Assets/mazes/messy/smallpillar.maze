@@ -1,0 +1,12 @@
+{
+  "Data": {
+    "Width": 4,
+    "Height": 4,
+    "VertWalls": "11011111111011111011",
+    "HorzWalls": "11110110110111101111",
+    "Cells": "0000010000000000"
+  },
+  "Flags": "None",
+  "__references": [],
+  "__version": 0
+}
