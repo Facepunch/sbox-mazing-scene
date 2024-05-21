@@ -86,12 +86,22 @@ partial class Maze
 		{
 			for ( var i = 0; i <= View.Width; ++i )
 			{
-				var west = View[j, i - 1, Direction.North];
-				var east = View[j, i, Direction.North];
-				var north = View[j - 1, i, Direction.West];
-				var south = View[j, i, Direction.West];
+				var west = View[j, i - 1, Direction.North] == WallState.Closed;
+				var east = View[j, i, Direction.North] == WallState.Closed;
+				var north = View[j - 1, i, Direction.West] == WallState.Closed;
+				var south = View[j, i, Direction.West] == WallState.Closed;
 
-				if ( west == east && north == south )
+				if ( !west && !east && !north && !south )
+				{
+					continue;
+				}
+
+				if ( west && east && !north && !south )
+				{
+					continue;
+				}
+
+				if ( !west && !east && north && south )
 				{
 					continue;
 				}
