@@ -138,4 +138,9 @@ public static class MazeDataViewExtensions
 			_ => throw new ArgumentException()
 		};
 	}
+
+	public static Rotation GetRotation( this Direction dir )
+	{
+		return Rotation.LookAt( dir.GetNormal() );
+	}
 }

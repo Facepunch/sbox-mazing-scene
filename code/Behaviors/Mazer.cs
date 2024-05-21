@@ -1,5 +1,4 @@
 using System;
-using Sandbox;
 using Sandbox.Citizen;
 
 namespace Mazing;
@@ -48,7 +47,11 @@ public sealed class Mazer : Component
 
 	public bool CanVault => NextVault > 0f;
 
-	public Direction Direction => _targetLook.GetDirection();
+	public Direction Direction
+	{
+		get => _targetLook.GetDirection();
+		set => _targetLook = value.GetNormal();
+	}
 
 	[Property] public event Action? Vaulted;
 	[Property] public event Action<int>? VaultCooldownTick;
@@ -360,7 +363,7 @@ public sealed class Mazer : Component
 		AnimationHelper.WithWishVelocity( input * MoveSpeed );
 
 		var curRot = Transform.Rotation;
-		var targetRot = Rotation.LookAt( _targetLook, Vector3.Up );
+		var targetRot = Rotation.LookAt( _targetLook );
 
 		Transform.Rotation = Rotation.Slerp( curRot, targetRot, Helpers.Ease( 0.125f ) );
 	}
@@ -398,7 +401,7 @@ public sealed class Mazer : Component
 		AnimationHelper.WithVelocity( CharacterController.Velocity * (noclip ? 4f : 1f) );
 
 		var curRot = Transform.Rotation;
-		var targetRot = Rotation.LookAt( _targetLook, Vector3.Up );
+		var targetRot = Rotation.LookAt( _targetLook );
 
 		Transform.Rotation = Rotation.Slerp( curRot, targetRot, Helpers.Ease( 0.125f ) );
 

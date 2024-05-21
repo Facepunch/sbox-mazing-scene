@@ -52,8 +52,7 @@ partial class Maze
 				case MazeEnemySpawn enemySpawn:
 					_spawnedObjects.Add(
 						SceneUtility.GetPrefabScene( enemySpawn.Prefab )
-							.Clone( MazeToWorldPos( enemySpawn.Row, enemySpawn.Col ),
-								Rotation.LookAt( enemySpawn.Direction.GetNormal(), Vector3.Up ) ) );
+							.Clone( MazeToWorldPos( enemySpawn.Row, enemySpawn.Col ), enemySpawn.Direction.GetRotation() ) );
 					break;
 
 				case MazeTreasureSpawn treasureSpawn:

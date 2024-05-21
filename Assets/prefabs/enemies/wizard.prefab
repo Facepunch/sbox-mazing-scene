@@ -1,6 +1,6 @@
 {
   "RootObject": {
-    "__guid": "ccbc1b9f-2a49-49b8-a8b8-b194d01d6979",
+    "__guid": "0b26e9a0-b285-4865-9910-e20cb333e091",
     "Flags": 0,
     "Name": "wizard",
     "Tags": "enemy",
@@ -10,7 +10,7 @@
     "Components": [
       {
         "__type": "Sandbox.SkinnedModelRenderer",
-        "__guid": "95272fcd-ba26-4a27-a3af-e572826a0a34",
+        "__guid": "902d3848-2017-495b-b3bc-3dbc197fcbcc",
         "BodyGroups": 341,
         "CreateBoneObjects": false,
         "MaterialGroup": "default",
@@ -20,28 +20,28 @@
       },
       {
         "__type": "Sandbox.Citizen.CitizenAnimationHelper",
-        "__guid": "ee845ca7-ec39-4b47-8dd6-f35ea6783cd1",
+        "__guid": "69690b10-39db-442a-8167-358385846ccd",
         "BodyWeight": 1,
         "EyeSource": {
           "_type": "gameobject",
-          "go": "7e18d1d5-d516-4460-8051-d051db49afab"
+          "go": "d2bd8328-1e5b-4496-b1ef-f4077797230b"
         },
         "EyesWeight": 1,
         "HeadWeight": 1,
         "LookAtEnabled": false,
         "Target": {
           "_type": "component",
-          "component_id": "95272fcd-ba26-4a27-a3af-e572826a0a34",
-          "go": "ccbc1b9f-2a49-49b8-a8b8-b194d01d6979",
+          "component_id": "902d3848-2017-495b-b3bc-3dbc197fcbcc",
+          "go": "0b26e9a0-b285-4865-9910-e20cb333e091",
           "component_type": "SkinnedModelRenderer"
         }
       },
       {
         "__type": "Mazing.Mazer",
-        "__guid": "d91e5c5b-aab0-49c8-b6f8-d41a282923c5",
+        "__guid": "5a699e85-8568-48de-8eaf-7843ffba8d45",
         "Footstep": {
           "__version": 7,
-          "__guid": "2cdd48f8-5209-4cd7-994c-1742acd053f8",
+          "__guid": "6ff6d0c6-1c82-4495-859b-40686a959eed",
           "UserData": {
             "Title": "Footstep",
             "ReferencedComponentTypes": []
@@ -216,8 +216,8 @@
         "MoveInput": "0,0",
         "MoveSpeed": 60,
         "NextVault": {
-          "Relative": -8009.7227,
-          "Passed": 8009.7227,
+          "Relative": -3007.354,
+          "Passed": 3007.354,
           "Fraction": 1
         },
         "State": "Walking",
@@ -225,11 +225,11 @@
       },
       {
         "__type": "Mazing.MazeObject",
-        "__guid": "fc4ae695-7522-406b-9dc8-acf391853ed2"
+        "__guid": "da223ced-97e1-4199-b623-25594415c3cf"
       },
       {
         "__type": "Mazing.Throwable",
-        "__guid": "f78b292b-4207-4105-8f6f-1dda84e5ac62",
+        "__guid": "9eeeb632-cd13-4d6d-bb58-51e758e3ea23",
         "CanExit": false,
         "IndexOnFloor": 0,
         "IsAirborne": false,
@@ -239,7 +239,7 @@
       },
       {
         "__type": "Sandbox.CapsuleCollider",
-        "__guid": "f331ec18-0060-48d6-bfeb-d5f574ba819c",
+        "__guid": "8ff69b4e-f1f5-4154-8b7e-78686c0f6ea9",
         "End": "0,0,64",
         "IsTrigger": true,
         "Radius": 8,
@@ -248,7 +248,7 @@
       },
       {
         "__type": "Sandbox.CharacterController",
-        "__guid": "ad77c5da-6fcc-4492-849e-4b03ee9db746",
+        "__guid": "239fcc53-0a61-4fbe-8435-a0488bdaa333",
         "Acceleration": 10,
         "Bounciness": 0.3,
         "GroundAngle": 45,
@@ -260,7 +260,7 @@
       },
       {
         "__type": "Mazing.ClothingSpawner",
-        "__guid": "6f824a44-dcae-41bf-b3b5-37e44f35a028",
+        "__guid": "fdbdca20-c455-4d61-a5ec-3a70fc1c397a",
         "Clothing": [
           "models/citizen_clothes/skin05.clothing",
           "models/citizen_clothes/dress/office_skirt/office_skirt.clothing",
@@ -271,16 +271,16 @@
       },
       {
         "__type": "Mazing.Enemy",
-        "__guid": "547cc015-7393-48dd-8878-10b99c4b07a3",
+        "__guid": "21194247-59aa-450d-868b-65ba51f72132",
         "Difficulty": 2,
         "MinLevel": 6
       },
       {
         "__type": "Mazing.MeleeAttacker",
-        "__guid": "a5a22c92-b536-48df-8816-b5010ef8f90f",
+        "__guid": "8a9133ae-51a0-4ace-b5aa-fdfe255d56df",
         "Attacked": {
           "__version": 7,
-          "__guid": "a23d528d-c9c4-436f-8d41-1d441cb56523",
+          "__guid": "90397afd-e79d-4759-915f-acb71e42fe53",
           "UserData": {
             "Title": "Attacked",
             "ReferencedComponentTypes": []
@@ -334,8 +334,8 @@
               "Properties": {
                 "component": {
                   "_type": "component",
-                  "component_id": "ee845ca7-ec39-4b47-8dd6-f35ea6783cd1",
-                  "go": "ccbc1b9f-2a49-49b8-a8b8-b194d01d6979",
+                  "component_id": "69690b10-39db-442a-8167-358385846ccd",
+                  "go": "0b26e9a0-b285-4865-9910-e20cb333e091",
                   "component_type": "CitizenAnimationHelper"
                 }
               },
@@ -361,9 +361,9 @@
               "Id": 12,
               "Type": "property",
               "Properties": {
+                "_kind": "Set",
                 "_name": "HoldType",
-                "_type": "Sandbox.Citizen.CitizenAnimationHelper",
-                "_kind": "Set"
+                "_type": "Sandbox.Citizen.CitizenAnimationHelper"
               },
               "UserData": {
                 "Position": "480,-48"
@@ -375,8 +375,8 @@
               "Properties": {
                 "component": {
                   "_type": "component",
-                  "component_id": "95272fcd-ba26-4a27-a3af-e572826a0a34",
-                  "go": "ccbc1b9f-2a49-49b8-a8b8-b194d01d6979",
+                  "component_id": "902d3848-2017-495b-b3bc-3dbc197fcbcc",
+                  "go": "0b26e9a0-b285-4865-9910-e20cb333e091",
                   "component_type": "SkinnedModelRenderer"
                 }
               },
@@ -391,8 +391,8 @@
               "Id": 20,
               "Type": "call",
               "Properties": {
-                "_isStatic": false,
                 "_name": "Set",
+                "_isStatic": false,
                 "_type": "Sandbox.SkinnedModelRenderer"
               },
               "UserData": {
@@ -413,9 +413,9 @@
               "Id": 29,
               "Type": "property",
               "Properties": {
+                "_kind": "Set",
                 "_name": "IsWeaponLowered",
-                "_type": "Sandbox.Citizen.CitizenAnimationHelper",
-                "_kind": "Set"
+                "_type": "Sandbox.Citizen.CitizenAnimationHelper"
               },
               "UserData": {
                 "Position": "176,240"
@@ -447,9 +447,9 @@
               "Id": 39,
               "Type": "property",
               "Properties": {
+                "_kind": "Set",
                 "_name": "HoldType",
-                "_type": "Sandbox.Citizen.CitizenAnimationHelper",
-                "_kind": "Set"
+                "_type": "Sandbox.Citizen.CitizenAnimationHelper"
               },
               "UserData": {
                 "Position": "624,240"
@@ -586,21 +586,21 @@
           "Defaults": {
             "$8.component": {
               "_type": "component",
-              "component_id": "ee845ca7-ec39-4b47-8dd6-f35ea6783cd1",
-              "go": "ccbc1b9f-2a49-49b8-a8b8-b194d01d6979",
+              "component_id": "69690b10-39db-442a-8167-358385846ccd",
+              "go": "0b26e9a0-b285-4865-9910-e20cb333e091",
               "component_type": "CitizenAnimationHelper"
             },
             "$19.component": {
               "_type": "component",
-              "component_id": "95272fcd-ba26-4a27-a3af-e572826a0a34",
-              "go": "ccbc1b9f-2a49-49b8-a8b8-b194d01d6979",
+              "component_id": "902d3848-2017-495b-b3bc-3dbc197fcbcc",
+              "go": "0b26e9a0-b285-4865-9910-e20cb333e091",
               "component_type": "SkinnedModelRenderer"
             }
           }
         },
         "NextAttack": {
-          "Relative": -8009.7227,
-          "Passed": 8009.7227,
+          "Relative": -3007.354,
+          "Passed": 3007.354,
           "Fraction": 1
         },
         "Range": 32,
@@ -608,24 +608,24 @@
       },
       {
         "__type": "Mazing.Holder",
-        "__guid": "810b4187-52c5-4272-bc89-9190724e307b",
+        "__guid": "678bdb8f-4535-4298-8475-6df694829480",
         "AutoThrow": true,
         "AutoThrowTime": 0.5
       },
       {
         "__type": "Mazing.Holdable",
-        "__guid": "c3c11c27-f312-4ab7-8dfe-3229241ae47d",
+        "__guid": "1fd7e12c-8e0c-4eca-86e3-7211c4c8ea4c",
         "HeldTime": {
-          "Relative": 8009.7227
+          "Relative": 3007.354
         },
         "HeldVelocity": "0,0,0"
       },
       {
         "__type": "Mazing.Shooter",
-        "__guid": "14136c9e-74eb-43dd-8759-5b4ad813dc79",
+        "__guid": "e9a16c9b-5705-4828-85c3-2abfb04b3006",
         "Shot": {
           "__version": 7,
-          "__guid": "69e895e1-f34c-4c5b-90fb-eaf093e4ee49",
+          "__guid": "ab8b5e1d-cc67-4b6d-be8e-e7ed86d2cf7c",
           "UserData": {
             "Title": "Shot",
             "ReferencedComponentTypes": []
@@ -645,8 +645,8 @@
               "Properties": {
                 "component": {
                   "_type": "component",
-                  "component_id": "ee845ca7-ec39-4b47-8dd6-f35ea6783cd1",
-                  "go": "ccbc1b9f-2a49-49b8-a8b8-b194d01d6979",
+                  "component_id": "69690b10-39db-442a-8167-358385846ccd",
+                  "go": "0b26e9a0-b285-4865-9910-e20cb333e091",
                   "component_type": "CitizenAnimationHelper"
                 }
               },
@@ -703,8 +703,8 @@
               "Properties": {
                 "component": {
                   "_type": "component",
-                  "component_id": "95272fcd-ba26-4a27-a3af-e572826a0a34",
-                  "go": "ccbc1b9f-2a49-49b8-a8b8-b194d01d6979",
+                  "component_id": "902d3848-2017-495b-b3bc-3dbc197fcbcc",
+                  "go": "0b26e9a0-b285-4865-9910-e20cb333e091",
                   "component_type": "SkinnedModelRenderer"
                 }
               },
@@ -854,23 +854,31 @@
           "Defaults": {
             "$2.component": {
               "_type": "component",
-              "component_id": "ee845ca7-ec39-4b47-8dd6-f35ea6783cd1",
-              "go": "ccbc1b9f-2a49-49b8-a8b8-b194d01d6979",
+              "component_id": "69690b10-39db-442a-8167-358385846ccd",
+              "go": "0b26e9a0-b285-4865-9910-e20cb333e091",
               "component_type": "CitizenAnimationHelper"
             },
             "$17.component": {
               "_type": "component",
-              "component_id": "95272fcd-ba26-4a27-a3af-e572826a0a34",
-              "go": "ccbc1b9f-2a49-49b8-a8b8-b194d01d6979",
+              "component_id": "902d3848-2017-495b-b3bc-3dbc197fcbcc",
+              "go": "0b26e9a0-b285-4865-9910-e20cb333e091",
               "component_type": "SkinnedModelRenderer"
             }
           }
         },
-        "OnComponentStart": {
+        "ProjectilePrefab": {
+          "_type": "gameobject",
+          "prefab": "prefabs/enemies/wizard_bolt.prefab"
+        }
+      },
+      {
+        "__type": "Mazing.Teleporter",
+        "__guid": "7f248f49-ae2a-4bee-9675-e6dbd256b52c",
+        "Arrived": {
           "__version": 7,
-          "__guid": "8980c802-2314-46c8-8f1b-9a99ae130ff2",
+          "__guid": "d6dd4e7e-b078-4c0f-ab03-0e2c0020ffd0",
           "UserData": {
-            "Title": "On Component Start",
+            "Title": "Arrived",
             "ReferencedComponentTypes": []
           },
           "Variables": [],
@@ -880,55 +888,55 @@
               "Type": "input"
             },
             {
-              "Id": 1,
-              "Type": "while",
+              "Id": 2,
+              "Type": "resource.ref",
+              "Properties": {
+                "T": "Sandbox.SoundEvent",
+                "value": "sounds/enemy/wizard.appear.sound"
+              },
               "UserData": {
-                "Position": "288,48"
+                "Position": "-32,80"
               }
             },
             {
-              "Id": 2,
-              "Type": "property",
-              "Properties": {
-                "_name": "Active",
-                "_type": "Sandbox.GameObject"
-              },
+              "Id": 3,
+              "Type": "sound.play",
               "UserData": {
-                "Position": "16,80"
+                "Position": "240,-0"
               }
             },
             {
               "Id": 4,
+              "Type": "time.delayobj",
+              "UserData": {
+                "Position": "480,0"
+              }
+            },
+            {
+              "Id": 9,
               "Type": "scene.ref",
               "Properties": {
                 "component": {
                   "_type": "component",
-                  "component_id": "14136c9e-74eb-43dd-8759-5b4ad813dc79",
-                  "go": "ccbc1b9f-2a49-49b8-a8b8-b194d01d6979",
-                  "component_type": "Shooter"
+                  "component_id": "69690b10-39db-442a-8167-358385846ccd",
+                  "go": "0b26e9a0-b285-4865-9910-e20cb333e091",
+                  "component_type": "CitizenAnimationHelper"
                 }
               },
               "UserData": {
-                "Position": "288,144"
+                "Position": "400,128"
               }
             },
             {
-              "Id": 5,
-              "Type": "call",
+              "Id": 10,
+              "Type": "property",
               "Properties": {
-                "_isStatic": false,
-                "_name": "Shoot",
-                "_type": "Mazing.Shooter"
+                "_kind": "Set",
+                "_name": "HoldType",
+                "_type": "Sandbox.Citizen.CitizenAnimationHelper"
               },
               "UserData": {
-                "Position": "528,96"
-              }
-            },
-            {
-              "Id": 7,
-              "Type": "time.delayobj",
-              "UserData": {
-                "Position": "768,96"
+                "Position": "736,0"
               }
             }
           ],
@@ -936,69 +944,619 @@
             {
               "SrcId": 0,
               "SrcName": "_signal",
-              "DstId": 1,
+              "DstId": 3,
               "DstName": "_signal"
-            },
-            {
-              "SrcId": 2,
-              "SrcName": "_result",
-              "DstId": 1,
-              "DstName": "condition"
             },
             {
               "SrcId": 0,
               "SrcName": "_target",
-              "DstId": 2,
-              "DstName": "_target"
+              "DstId": 3,
+              "DstName": "_this"
             },
             {
-              "SrcId": 1,
-              "SrcName": "body",
-              "DstId": 5,
-              "DstName": "_signal"
-            },
-            {
-              "SrcId": 4,
+              "SrcId": 2,
               "SrcName": "_result",
-              "DstId": 5,
-              "DstName": "_target"
+              "DstId": 3,
+              "DstName": "soundEvent"
             },
             {
-              "SrcId": 5,
+              "SrcId": 3,
               "SrcName": "_signal",
-              "DstId": 7,
+              "DstId": 4,
               "DstName": "_signal"
             },
             {
-              "Value": 2,
-              "DstId": 7,
+              "Value": 0.5,
+              "DstId": 4,
               "DstName": "seconds"
             },
             {
               "SrcId": 0,
               "SrcName": "_target",
+              "DstId": 4,
+              "DstName": "target"
+            },
+            {
+              "SrcId": 4,
+              "SrcName": "_signal",
+              "DstId": 10,
+              "DstName": "_signal"
+            },
+            {
+              "SrcId": 9,
+              "SrcName": "_result",
+              "DstId": 10,
+              "DstName": "_target"
+            },
+            {
+              "Value": "None",
+              "DstId": 10,
+              "DstName": "_value"
+            }
+          ],
+          "Defaults": {
+            "$9.component": {
+              "_type": "component",
+              "component_id": "69690b10-39db-442a-8167-358385846ccd",
+              "go": "0b26e9a0-b285-4865-9910-e20cb333e091",
+              "component_type": "CitizenAnimationHelper"
+            }
+          }
+        },
+        "ChargingUp": {
+          "__version": 7,
+          "__guid": "84321a10-1092-4e36-ac52-2e3aa8f67faa",
+          "UserData": {
+            "Title": "Charging Up",
+            "ReferencedComponentTypes": []
+          },
+          "Variables": [],
+          "Nodes": [
+            {
+              "Id": 0,
+              "Type": "input"
+            },
+            {
+              "Id": 2,
+              "Type": "scene.ref",
+              "Properties": {
+                "component": {
+                  "_type": "component",
+                  "component_id": "69690b10-39db-442a-8167-358385846ccd",
+                  "go": "0b26e9a0-b285-4865-9910-e20cb333e091",
+                  "component_type": "CitizenAnimationHelper"
+                }
+              },
+              "UserData": {
+                "Position": "-80,64"
+              }
+            },
+            {
+              "Id": 3,
+              "Type": "property",
+              "Properties": {
+                "_name": "HoldType",
+                "_type": "Sandbox.Citizen.CitizenAnimationHelper"
+              },
+              "UserData": {
+                "Position": "256,0"
+              }
+            }
+          ],
+          "Links": [
+            {
+              "SrcId": 0,
+              "SrcName": "_signal",
+              "DstId": 3,
+              "DstName": "_signal"
+            },
+            {
+              "SrcId": 2,
+              "SrcName": "_result",
+              "DstId": 3,
+              "DstName": "_target"
+            },
+            {
+              "Value": "Shotgun",
+              "DstId": 3,
+              "DstName": "_value"
+            }
+          ],
+          "Defaults": {
+            "$2.component": {
+              "_type": "component",
+              "component_id": "69690b10-39db-442a-8167-358385846ccd",
+              "go": "0b26e9a0-b285-4865-9910-e20cb333e091",
+              "component_type": "CitizenAnimationHelper"
+            }
+          }
+        },
+        "Departed": {
+          "__version": 7,
+          "__guid": "ff14c3b6-58cd-4a35-885a-bcd45a452550",
+          "UserData": {
+            "Title": "Departed",
+            "ReferencedComponentTypes": []
+          },
+          "Variables": [],
+          "Nodes": [
+            {
+              "Id": 0,
+              "Type": "input"
+            },
+            {
+              "Id": 3,
+              "Type": "resource.ref",
+              "Properties": {
+                "T": "Sandbox.SoundEvent",
+                "value": "sounds/enemy/wizard.portal.sound"
+              },
+              "UserData": {
+                "Position": "-48,64"
+              }
+            },
+            {
+              "Id": 4,
+              "Type": "sound.play",
+              "UserData": {
+                "Position": "240,0"
+              }
+            }
+          ],
+          "Links": [
+            {
+              "SrcId": 0,
+              "SrcName": "_signal",
+              "DstId": 4,
+              "DstName": "_signal"
+            },
+            {
+              "SrcId": 0,
+              "SrcName": "_target",
+              "DstId": 4,
+              "DstName": "_this"
+            },
+            {
+              "SrcId": 3,
+              "SrcName": "_result",
+              "DstId": 4,
+              "DstName": "soundEvent"
+            }
+          ]
+        },
+        "ArriveDirection": "West",
+        "ArrivePosition": "0,0,0",
+        "DepartDirection": "West",
+        "DepartPosition": "0,0,0",
+        "MaxPlayerDistance": 8,
+        "MinPlayerDistance": 1,
+        "OnComponentStart": {
+          "__version": 7,
+          "__guid": "6e988d4b-a942-458f-a0e7-522e9bbeabdc",
+          "UserData": {
+            "Title": "On Component Start",
+            "ReferencedComponentTypes": []
+          },
+          "Variables": [],
+          "Nodes": [
+            {
+              "Id": 0,
+              "Type": "input",
+              "UserData": {
+                "Position": "-288,-48"
+              }
+            },
+            {
+              "Id": 4,
+              "Type": "property",
+              "Properties": {
+                "_name": "Enabled",
+                "_type": "Sandbox.GameObject"
+              },
+              "UserData": {
+                "Position": "176,-0"
+              }
+            },
+            {
+              "Id": 7,
+              "Type": "property",
+              "Properties": {
+                "_name": "Scene",
+                "_type": "Sandbox.GameObject"
+              },
+              "UserData": {
+                "Position": "176,-256",
+                "Labels": {
+                  "_result": "scene"
+                }
+              }
+            },
+            {
+              "Id": 8,
+              "Type": "time.delayobj",
+              "UserData": {
+                "Position": "464,0"
+              }
+            },
+            {
+              "Id": 14,
+              "Type": "random.float",
+              "UserData": {
+                "Position": "176,-352",
+                "Labels": {
+                  "_result": "spawn delay"
+                }
+              }
+            },
+            {
+              "Id": 18,
+              "Type": "scene.ref",
+              "Properties": {
+                "component": {
+                  "_type": "component",
+                  "component_id": "7f248f49-ae2a-4bee-9675-e6dbd256b52c",
+                  "go": "0b26e9a0-b285-4865-9910-e20cb333e091",
+                  "component_type": "Teleporter"
+                }
+              },
+              "UserData": {
+                "Position": "176,-192",
+                "Labels": {
+                  "_result": "teleporter"
+                }
+              }
+            },
+            {
+              "Id": 19,
+              "Type": "call",
+              "Properties": {
+                "_name": "Arrive",
+                "_isStatic": false,
+                "_type": "Mazing.Teleporter"
+              },
+              "UserData": {
+                "Position": "-288,160"
+              }
+            },
+            {
+              "Id": 20,
+              "Type": "mazing.isproxy",
+              "UserData": {
+                "Position": "-272,32"
+              }
+            },
+            {
+              "Id": 21,
+              "Type": "if",
+              "UserData": {
+                "Position": "-80,-48"
+              }
+            },
+            {
+              "Id": 25,
+              "Type": "time.delayobj",
+              "UserData": {
+                "Position": "-48,160"
+              }
+            },
+            {
+              "Id": 26,
+              "Type": "scene.ref",
+              "Properties": {
+                "component": {
+                  "_type": "component",
+                  "component_id": "e9a16c9b-5705-4828-85c3-2abfb04b3006",
+                  "go": "0b26e9a0-b285-4865-9910-e20cb333e091",
+                  "component_type": "Shooter"
+                }
+              },
+              "UserData": {
+                "Position": "176,-128",
+                "Labels": {
+                  "_result": "shooter"
+                }
+              }
+            },
+            {
+              "Id": 27,
+              "Type": "call",
+              "Properties": {
+                "_name": "Shoot",
+                "_isStatic": false,
+                "_type": "Mazing.Shooter"
+              },
+              "UserData": {
+                "Position": "192,160"
+              }
+            },
+            {
+              "Id": 28,
+              "Type": "time.delayobj",
+              "UserData": {
+                "Position": "416,160"
+              }
+            },
+            {
+              "Id": 30,
+              "Type": "call",
+              "Properties": {
+                "_isStatic": false,
+                "_name": "Depart",
+                "_type": "Mazing.Teleporter"
+              },
+              "UserData": {
+                "Position": "1136,160"
+              }
+            },
+            {
+              "Id": 35,
+              "Type": "while",
+              "UserData": {
+                "Position": "864,-0",
+                "Labels": {
+                  "body": "Main Loop"
+                }
+              }
+            },
+            {
+              "Id": 37,
+              "Type": "mazing.isvalid",
+              "UserData": {
+                "Position": "672,32"
+              }
+            },
+            {
+              "Id": 45,
+              "Type": "time.delayobj",
+              "UserData": {
+                "Position": "1392,160"
+              }
+            },
+            {
+              "Id": 56,
+              "Type": "call",
+              "Properties": {
+                "_isStatic": false,
+                "_name": "ChargeUp",
+                "_type": "Mazing.Teleporter"
+              },
+              "UserData": {
+                "Position": "672,160"
+              }
+            },
+            {
+              "Id": 58,
+              "Type": "time.delayobj",
+              "UserData": {
+                "Position": "896,160"
+              }
+            }
+          ],
+          "Links": [
+            {
+              "SrcId": 21,
+              "SrcName": "false",
+              "DstId": 4,
+              "DstName": "_signal"
+            },
+            {
+              "SrcId": 0,
+              "SrcName": "_target",
+              "DstId": 4,
+              "DstName": "_target"
+            },
+            {
+              "Value": false,
+              "DstId": 4,
+              "DstName": "_value"
+            },
+            {
+              "SrcId": 0,
+              "SrcName": "_target",
               "DstId": 7,
+              "DstName": "_target"
+            },
+            {
+              "SrcId": 4,
+              "SrcName": "_signal",
+              "DstId": 8,
+              "DstName": "_signal"
+            },
+            {
+              "SrcId": 14,
+              "SrcName": "_result",
+              "DstId": 8,
+              "DstName": "seconds"
+            },
+            {
+              "SrcId": 7,
+              "SrcName": "_result",
+              "DstId": 8,
+              "DstName": "target"
+            },
+            {
+              "Value": 4,
+              "DstId": 14,
+              "DstName": "max"
+            },
+            {
+              "Value": 3,
+              "DstId": 14,
+              "DstName": "min"
+            },
+            {
+              "SrcId": 35,
+              "SrcName": "body",
+              "DstId": 19,
+              "DstName": "_signal"
+            },
+            {
+              "SrcId": 18,
+              "SrcName": "_result",
+              "DstId": 19,
+              "DstName": "_target"
+            },
+            {
+              "SrcId": 0,
+              "SrcName": "_target",
+              "DstId": 20,
+              "DstName": "go"
+            },
+            {
+              "SrcId": 0,
+              "SrcName": "_signal",
+              "DstId": 21,
+              "DstName": "_signal"
+            },
+            {
+              "SrcId": 20,
+              "SrcName": "_result",
+              "DstId": 21,
+              "DstName": "condition"
+            },
+            {
+              "SrcId": 19,
+              "SrcName": "_signal",
+              "DstId": 25,
+              "DstName": "_signal"
+            },
+            {
+              "Value": 1,
+              "DstId": 25,
+              "DstName": "seconds"
+            },
+            {
+              "SrcId": 0,
+              "SrcName": "_target",
+              "DstId": 25,
+              "DstName": "target"
+            },
+            {
+              "SrcId": 25,
+              "SrcName": "_signal",
+              "DstId": 27,
+              "DstName": "_signal"
+            },
+            {
+              "SrcId": 26,
+              "SrcName": "_result",
+              "DstId": 27,
+              "DstName": "_target"
+            },
+            {
+              "SrcId": 27,
+              "SrcName": "_signal",
+              "DstId": 28,
+              "DstName": "_signal"
+            },
+            {
+              "Value": 2.5,
+              "DstId": 28,
+              "DstName": "seconds"
+            },
+            {
+              "SrcId": 0,
+              "SrcName": "_target",
+              "DstId": 28,
+              "DstName": "target"
+            },
+            {
+              "SrcId": 58,
+              "SrcName": "_signal",
+              "DstId": 30,
+              "DstName": "_signal"
+            },
+            {
+              "SrcId": 18,
+              "SrcName": "_result",
+              "DstId": 30,
+              "DstName": "_target"
+            },
+            {
+              "SrcId": 8,
+              "SrcName": "_signal",
+              "DstId": 35,
+              "DstName": "_signal"
+            },
+            {
+              "SrcId": 37,
+              "SrcName": "_result",
+              "DstId": 35,
+              "DstName": "condition"
+            },
+            {
+              "SrcId": 0,
+              "SrcName": "_target",
+              "DstId": 37,
+              "DstName": "go"
+            },
+            {
+              "SrcId": 30,
+              "SrcName": "_signal",
+              "DstId": 45,
+              "DstName": "_signal"
+            },
+            {
+              "Value": 3,
+              "DstId": 45,
+              "DstName": "seconds"
+            },
+            {
+              "SrcId": 7,
+              "SrcName": "_result",
+              "DstId": 45,
+              "DstName": "target"
+            },
+            {
+              "SrcId": 28,
+              "SrcName": "_signal",
+              "DstId": 56,
+              "DstName": "_signal"
+            },
+            {
+              "SrcId": 18,
+              "SrcName": "_result",
+              "DstId": 56,
+              "DstName": "_target"
+            },
+            {
+              "SrcId": 56,
+              "SrcName": "_signal",
+              "DstId": 58,
+              "DstName": "_signal"
+            },
+            {
+              "Value": 0.5,
+              "DstId": 58,
+              "DstName": "seconds"
+            },
+            {
+              "SrcId": 0,
+              "SrcName": "_target",
+              "DstId": 58,
               "DstName": "target"
             }
           ],
           "Defaults": {
-            "$4.component": {
+            "$18.component": {
               "_type": "component",
-              "component_id": "14136c9e-74eb-43dd-8759-5b4ad813dc79",
-              "go": "ccbc1b9f-2a49-49b8-a8b8-b194d01d6979",
+              "component_id": "7f248f49-ae2a-4bee-9675-e6dbd256b52c",
+              "go": "0b26e9a0-b285-4865-9910-e20cb333e091",
+              "component_type": "Teleporter"
+            },
+            "$26.component": {
+              "_type": "component",
+              "component_id": "e9a16c9b-5705-4828-85c3-2abfb04b3006",
+              "go": "0b26e9a0-b285-4865-9910-e20cb333e091",
               "component_type": "Shooter"
             }
           }
-        },
-        "ProjectilePrefab": {
-          "_type": "gameobject",
-          "prefab": "prefabs/enemies/wizard_bolt.prefab"
         }
       }
     ],
     "Children": [
       {
-        "__guid": "7e18d1d5-d516-4460-8051-d051db49afab",
+        "__guid": "d2bd8328-1e5b-4496-b1ef-f4077797230b",
         "Flags": 0,
         "Name": "Eyes",
         "Position": "0,0,64",
@@ -1007,7 +1565,7 @@
         "NetworkInterpolation": true
       },
       {
-        "__guid": "45ae91d8-55d1-42fe-92e7-0b25d456acd6",
+        "__guid": "7362d813-d580-4843-ba8c-487052d074b9",
         "Flags": 0,
         "Name": "Clothing - office_skirt",
         "Tags": "clothing",
@@ -1017,12 +1575,12 @@
         "Components": [
           {
             "__type": "Sandbox.SkinnedModelRenderer",
-            "__guid": "10499770-f175-4649-a41d-ee357eaf14f1",
+            "__guid": "937fa0d5-9c4b-4198-b1a1-a721883ca183",
             "BodyGroups": 18446744073709551615,
             "BoneMergeTarget": {
               "_type": "component",
-              "component_id": "95272fcd-ba26-4a27-a3af-e572826a0a34",
-              "go": "ccbc1b9f-2a49-49b8-a8b8-b194d01d6979",
+              "component_id": "902d3848-2017-495b-b3bc-3dbc197fcbcc",
+              "go": "0b26e9a0-b285-4865-9910-e20cb333e091",
               "component_type": "SkinnedModelRenderer"
             },
             "CreateBoneObjects": false,
@@ -1033,7 +1591,7 @@
         ]
       },
       {
-        "__guid": "680a8c72-c37a-4b54-80c8-92ef9fe2fe9c",
+        "__guid": "9e754aa4-7497-4bfe-867e-95ff57093ba2",
         "Flags": 0,
         "Name": "Clothing - necklace",
         "Tags": "clothing",
@@ -1043,12 +1601,12 @@
         "Components": [
           {
             "__type": "Sandbox.SkinnedModelRenderer",
-            "__guid": "6b821c51-e586-49e9-a4bd-c199f06f63e1",
+            "__guid": "b8a13b58-21f5-48a0-af43-5c286dc275a8",
             "BodyGroups": 18446744073709551615,
             "BoneMergeTarget": {
               "_type": "component",
-              "component_id": "95272fcd-ba26-4a27-a3af-e572826a0a34",
-              "go": "ccbc1b9f-2a49-49b8-a8b8-b194d01d6979",
+              "component_id": "902d3848-2017-495b-b3bc-3dbc197fcbcc",
+              "go": "0b26e9a0-b285-4865-9910-e20cb333e091",
               "component_type": "SkinnedModelRenderer"
             },
             "CreateBoneObjects": false,
@@ -1059,7 +1617,7 @@
         ]
       },
       {
-        "__guid": "66dab5ef-980a-4b16-9659-121deec4b878",
+        "__guid": "ce4337b6-8060-4340-b8e6-213ca1e1ca6b",
         "Flags": 0,
         "Name": "Clothing - hair_baldingbrown",
         "Tags": "clothing",
@@ -1069,12 +1627,12 @@
         "Components": [
           {
             "__type": "Sandbox.SkinnedModelRenderer",
-            "__guid": "10993672-e00e-4d69-a123-802a6875f800",
+            "__guid": "bfd7d1ed-c4e0-479a-be24-ffe815cad27e",
             "BodyGroups": 18446744073709551615,
             "BoneMergeTarget": {
               "_type": "component",
-              "component_id": "95272fcd-ba26-4a27-a3af-e572826a0a34",
-              "go": "ccbc1b9f-2a49-49b8-a8b8-b194d01d6979",
+              "component_id": "902d3848-2017-495b-b3bc-3dbc197fcbcc",
+              "go": "0b26e9a0-b285-4865-9910-e20cb333e091",
               "component_type": "SkinnedModelRenderer"
             },
             "CreateBoneObjects": false,
@@ -1085,7 +1643,7 @@
         ]
       },
       {
-        "__guid": "6cccc079-9019-401d-b270-6176af486736",
+        "__guid": "1f40bf85-01e1-4204-8109-572aa530cc90",
         "Flags": 0,
         "Name": "Clothing - big_scruffy_beard",
         "Tags": "clothing",
@@ -1095,12 +1653,12 @@
         "Components": [
           {
             "__type": "Sandbox.SkinnedModelRenderer",
-            "__guid": "15bdc976-0518-4035-84b3-2e5f5640953d",
+            "__guid": "c2b5fb41-aab7-42b7-8bd5-77f27b6200bc",
             "BodyGroups": 18446744073709551615,
             "BoneMergeTarget": {
               "_type": "component",
-              "component_id": "95272fcd-ba26-4a27-a3af-e572826a0a34",
-              "go": "ccbc1b9f-2a49-49b8-a8b8-b194d01d6979",
+              "component_id": "902d3848-2017-495b-b3bc-3dbc197fcbcc",
+              "go": "0b26e9a0-b285-4865-9910-e20cb333e091",
               "component_type": "SkinnedModelRenderer"
             },
             "CreateBoneObjects": false,
@@ -1116,6 +1674,6 @@
   "MenuPath": null,
   "MenuIcon": null,
   "ResourceVersion": 1,
-  "__version": 1,
-  "__references": []
+  "__references": [],
+  "__version": 1
 }

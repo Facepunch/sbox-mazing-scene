@@ -24,10 +24,22 @@ public static class Helpers
 		return 1f - MathF.Pow( 1f - Math.Clamp( frac, 0f, 1f ), dt * 60f );
 	}
 
+	[ActionGraphNode( "mazing.isproxy" ), Pure]
+	public static bool IsProxy( this GameObject go )
+	{
+		return go.Network.IsProxy;
+	}
+
 	[ActionGraphNode( "mazing.isowner" ), Pure]
 	public static bool IsOwner( this GameObject go )
 	{
 		return go.Network.IsOwner;
+	}
+
+	[ActionGraphNode( "mazing.isvalid" ), Pure]
+	public static bool Exists( this GameObject go )
+	{
+		return go.IsValid;
 	}
 
 	[Pure]

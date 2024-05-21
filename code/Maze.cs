@@ -1,5 +1,4 @@
 using System;
-using System.Runtime.InteropServices;
 
 namespace Mazing;
 
@@ -32,6 +31,10 @@ public sealed partial class Maze : Component
 	private readonly List<MazeObject> _allObjects = new();
 	private readonly Dictionary<(int Row, int Col), (int Offset, int Count)> _objectsInCells = new();
 	private readonly Dictionary<(int Row, int Col), int> _pathCosts = new();
+
+	public record struct RangedUnitSpawn( int Row, int Col, Direction Direction, int Range );
+
+	public IReadOnlyList<RangedUnitSpawn> RangedUnitSpawns { get; private set; } = Array.Empty<RangedUnitSpawn>();
 
 	[Button( "Run", "casino" ), Group( "Parameters" )]
 	public void Randomize()
@@ -106,6 +109,15 @@ public sealed partial class Maze : Component
 		var result = generator.Generate( parameters );
 
 		View = result.View;
+
+		RangedUnitSpawns = View.Cells
+			.Where( x => x.State != CellState.Empty )
+			.SelectMany( x => Helpers.Directions
+				.Select( dir =>
+					new RangedUnitSpawn( x.Row, x.Col, dir, result.View.GetMaxRange( x.Row, x.Col, dir ) ) ) )
+			.Where( x => x.Range > 0 )
+			.Where( x => result.View[x.Row, x.Col, x.Direction.Opposite()] == WallState.Closed )
+			.ToArray();
 
 		UpdateGeometry( result );
 
