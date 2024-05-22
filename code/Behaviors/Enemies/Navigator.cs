@@ -24,8 +24,31 @@ public abstract class Navigator : Component
 	private (int Row, int Col)? _target = null;
 
 	private TimeUntil _nextTargetUpdate;
+	private bool _justSpawned = true;
 
 	protected Direction Direction { get; private set; }
+
+	protected IEnumerable<Direction> ValidDirections => Helpers.Directions.Where( IsValidDirection );
+
+	protected bool IsValidDirection( int row, int col, Direction dir )
+	{
+		if ( MazeObject.View[row, col, dir] != WallState.Open )
+		{
+			return false;
+		}
+
+		(row, col) = dir.GetNeighbor( row, col );
+
+		return !MazeObject.Maze
+			.GetObjectsInCell( row, col )
+			.Any( x => x.Components.Get<Exit>() is { IsOpen: true } );
+	}
+
+	protected bool IsValidDirection( Direction dir )
+	{
+		var (row, col) = MazeObject.CellIndex;
+		return IsValidDirection( row, col, dir );
+	}
 
 	protected override void OnStart()
 	{
@@ -53,13 +76,18 @@ public abstract class Navigator : Component
 
 		if ( _target is null && _nextTargetUpdate <= 0f )
 		{
-			if ( GetNewTarget() is { } targetDir )
+			if ( _justSpawned && IsValidDirection( Direction ) )
+			{
+				_target = Direction.GetNeighbor( row, col );
+			}
+			else if ( GetNewTarget() is { } targetDir )
 			{
 				_target = targetDir.GetNeighbor( row, col );
 				Direction = targetDir;
 			}
 
 			_nextTargetUpdate = MinTargetUpdatePeriod;
+			_justSpawned = false;
 		}
 
 		if ( _target is not {} target )

@@ -19,7 +19,7 @@ public class Charger : Wanderer
 
 		if ( _isCharging )
 		{
-			if ( MazeObject.View[row, col, _chargeDirection] != WallState.Open )
+			if ( !IsValidDirection( _chargeDirection ) )
 			{
 				StopCharging();
 				return null;
@@ -44,7 +44,7 @@ public class Charger : Wanderer
 
 			for ( var i = 1; i < 32; ++i )
 			{
-				if ( MazeObject.View[row, col, Direction] != WallState.Open )
+				if ( !IsValidDirection( row, col, Direction ) )
 				{
 					break;
 				}

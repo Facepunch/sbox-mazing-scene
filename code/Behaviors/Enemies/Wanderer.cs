@@ -8,8 +8,7 @@ public class Wanderer : Navigator
 	{
 		var (row, col) = MazeObject.CellIndex;
 
-		var dir = Helpers.Directions
-			.Where( x => MazeObject.View[row, col, x] == WallState.Open )
+		var dir = ValidDirections
 			.MaxBy( x => LastVisited( x.GetNeighbor( row, col ) ) + Random.Shared.NextSingle() );
 
 		return dir;

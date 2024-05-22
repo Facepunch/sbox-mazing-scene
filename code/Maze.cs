@@ -96,7 +96,7 @@ public sealed partial class Maze : Component
 		View = result.View;
 
 		RangedUnitSpawns = View.Cells
-			.Where( x => x.State != CellState.Empty )
+			.Where( x => x.State is not CellState.Empty and not CellState.Exit )
 			.SelectMany( x => Helpers.Directions
 				.Select( dir =>
 					new RangedUnitSpawn( x.Row, x.Col, dir, result.View.GetMaxRange( x.Row, x.Col, dir ) ) ) )
@@ -164,6 +164,7 @@ public sealed partial class Maze : Component
 			}
 
 			cost += mazeObject.Components.Get<Enemy>() is null ? 0 : 32;
+			cost += mazeObject.Components.Get<Exit>() is { IsOpen: true } ? 256 : 0;
 		}
 
 		if ( count > 0 )
