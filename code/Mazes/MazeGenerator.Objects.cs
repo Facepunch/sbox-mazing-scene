@@ -43,11 +43,10 @@ partial class BaseMazeGenerator
 
 		var spareEnemyTypes = enemyTypes
 			.Where( x => x.Info.MinLevel < level )
+			.OrderByDescending( x => x.Info.MinLevel + random.Next( 5 ) )
 			.ToArray();
 
-		spareEnemyTypes.Shuffle( random );
-
-		var minEnemyTypeCount = Math.Max( requiredEnemyTypes.Length, random.NextSingle() < 0.25f ? 1 : 2 );
+		var minEnemyTypeCount = Math.Max( requiredEnemyTypes.Length, 2 );
 		var enemyTypeCount = Math.Min( random.Next( minEnemyTypeCount, 4 ),
 			requiredEnemyTypes.Length + spareEnemyTypes.Length );
 
