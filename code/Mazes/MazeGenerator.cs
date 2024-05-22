@@ -8,8 +8,8 @@ public record MazeGeneratorParameters( int Seed, int Level, int Size, int Treasu
 public record MazeLight( Vector3 Position, Color Color, float Radius );
 
 public record MazeObjectSpawn( int Row, int Col );
-public record MazeTreasureSpawn( int Row, int Col, PrefabFile Prefab ) : MazeObjectSpawn( Row, Col );
-public record MazeEnemySpawn( int Row, int Col, Direction Direction, PrefabFile Prefab ) : MazeObjectSpawn( Row, Col );
+public record MazeTreasureSpawn( int Row, int Col, PrefabFile Prefab, TreasureInfo Info ) : MazeObjectSpawn( Row, Col );
+public record MazeEnemySpawn( int Row, int Col, Direction Direction, PrefabFile Prefab, EnemyInfo Info ) : MazeObjectSpawn( Row, Col );
 public record MazePlayerSpawn( int Row, int Col ) : MazeObjectSpawn( Row, Col );
 public record MazeKeySpawn( int Row, int Col ) : MazeObjectSpawn( Row, Col );
 public record MazeExitSpawn( int Row, int Col ) : MazeObjectSpawn( Row, Col );
@@ -47,10 +47,10 @@ public abstract partial class BaseMazeGenerator : IMazeGenerator
 			new MazeExitSpawn( x.Row, x.Col ) ) );
 
 		finalSpawns.AddRange( spawns[CellState.Enemy].Select( ( x, i ) =>
-			new MazeEnemySpawn( x.Row, x.Col, random.NextDirection( layout, x.Row, x.Col ), enemies[i] ) ) );
+			new MazeEnemySpawn( x.Row, x.Col, random.NextDirection( layout, x.Row, x.Col ), enemies[i].Prefab, enemies[i].Info ) ) );
 
 		finalSpawns.AddRange( spawns[CellState.Treasure].Select( ( x, i ) =>
-			new MazeTreasureSpawn( x.Row, x.Col, treasure[i] ) ) );
+			new MazeTreasureSpawn( x.Row, x.Col, treasure[i].Prefab, treasure[i].Info ) ) );
 
 		return new GeneratedMaze( layout, finalSpawns, lights );
 	}

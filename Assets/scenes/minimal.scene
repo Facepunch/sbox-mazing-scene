@@ -138,6 +138,27 @@
       ]
     },
     {
+      "__guid": "4af20cf1-97c4-4ba6-a17c-5d1300e4e3b5",
+      "Flags": 0,
+      "Name": "Gradient Fog",
+      "Position": "0,0,-64",
+      "Enabled": true,
+      "NetworkMode": 2,
+      "NetworkInterpolation": true,
+      "Components": [
+        {
+          "__type": "Sandbox.GradientFog",
+          "__guid": "733937ef-e5cc-4d1d-8678-8a49b15c7926",
+          "Color": "0,0,0,1",
+          "EndDistance": 512,
+          "FalloffExponent": 1,
+          "Height": 64,
+          "StartDistance": 64,
+          "VerticalFalloffExponent": 2
+        }
+      ]
+    },
+    {
       "__guid": "69bed0b6-cf8c-4f54-abbe-37d38cc2c1f7",
       "Flags": 0,
       "Name": "Maze",

@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Mazing;
 
 partial class BaseMazeGenerator
 {
-	private static PrefabFile? GetPrefab( ref int remainingPoints, Queue<(PrefabFile Prefab, int Points)> queue )
+	private static (PrefabFile Prefab, T Info)? GetPrefab<T>( ref int remainingPoints, Queue<(PrefabFile Prefab, T Info, int Points)> queue )
 	{
 		if ( remainingPoints <= 0 )
 		{
@@ -27,13 +23,13 @@ partial class BaseMazeGenerator
 			remainingPoints -= next.Points;
 
 			queue.Enqueue( next );
-			return next.Prefab;
+			return (next.Prefab, next.Info);
 		}
 
 		return null;
 	}
 
-	public IReadOnlyList<PrefabFile> GenerateEnemyList( int seed, int level, int count )
+	public IReadOnlyList<(PrefabFile Prefab, EnemyInfo Info)> GenerateEnemyList( int seed, int level, int count )
 	{
 		var random = new Random( seed );
 
@@ -55,14 +51,14 @@ partial class BaseMazeGenerator
 		var enemyTypeCount = Math.Min( random.Next( minEnemyTypeCount, 4 ),
 			requiredEnemyTypes.Length + spareEnemyTypes.Length );
 
-		var enemyTypeQueue = new Queue<(PrefabFile Prefab, int Points)>(
+		var enemyTypeQueue = new Queue<(PrefabFile Prefab, EnemyInfo Info, int Points)>(
 			requiredEnemyTypes
 				.Concat( spareEnemyTypes )
 				.Take( enemyTypeCount )
-				.Select( x => (x.Prefab, x.Info.Difficulty) ) );
+				.Select( x => (x.Prefab, x.Info, x.Info.Difficulty) ) );
 
 		var enemyPoints = count;
-		var result = new List<PrefabFile>();
+		var result = new List<(PrefabFile Prefab, EnemyInfo Info)>();
 
 		while ( enemyPoints > 0 && GetPrefab( ref enemyPoints, enemyTypeQueue ) is { } enemyPrefab )
 		{
@@ -72,15 +68,15 @@ partial class BaseMazeGenerator
 		return result;
 	}
 
-	public IReadOnlyList<PrefabFile> GenerateTreasureList( int seed, int level, int count )
+	public IReadOnlyList<(PrefabFile Prefab, TreasureInfo Info)> GenerateTreasureList( int seed, int level, int count )
 	{
-		var treasureTypeQueue = new Queue<(PrefabFile Prefab, int Points)>(
+		var treasureTypeQueue = new Queue<(PrefabFile Prefab, TreasureInfo Info, int Points)>(
 			Helpers.FindAllPrefabsWithInfo<Treasure, TreasureInfo>()
 				.OrderBy( x => x.Info.Value )
-				.Select( x => (x.Prefab, x.Info.Value) ) );
+				.Select( x => (x.Prefab, x.Info, x.Info.Value) ) );
 
 		var treasurePoints = count;
-		var result = new List<PrefabFile>();
+		var result = new List<(PrefabFile Prefab, TreasureInfo Info)>();
 
 		while ( treasurePoints > 0 && GetPrefab( ref treasurePoints, treasureTypeQueue ) is { } treasurePrefab )
 		{

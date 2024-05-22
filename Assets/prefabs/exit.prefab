@@ -1,6 +1,6 @@
 {
   "RootObject": {
-    "__guid": "ec42d50f-da41-446d-82aa-cb969da8d58d",
+    "__guid": "22adf00d-e18b-4843-a787-197eb61681b9",
     "Flags": 0,
     "Name": "exit",
     "Tags": "solid",
@@ -10,7 +10,7 @@
     "Components": [
       {
         "__type": "Sandbox.SkinnedModelRenderer",
-        "__guid": "3ec557f1-adcb-47ed-9a96-1c568c41151c",
+        "__guid": "9b3f2acf-e684-46f4-9242-234f9bfd062c",
         "AnimationGraph": "animgraphs/hatch.vanmgrph",
         "BodyGroups": 18446744073709551615,
         "CreateBoneObjects": false,
@@ -20,11 +20,11 @@
       },
       {
         "__type": "Mazing.MazeObject",
-        "__guid": "8a9627fb-49c6-4057-be7c-ec3304dde2e6"
+        "__guid": "eca01a2e-2697-4ab4-9ce9-b7f06fd64408"
       },
       {
         "__type": "Sandbox.BoxCollider",
-        "__guid": "d27b0ec7-9544-4e93-a431-34b5e339ae68",
+        "__guid": "508c44db-e396-40a5-a8d4-60730abcf022",
         "Center": "0,0,-16",
         "IsTrigger": false,
         "Scale": "48,48,32",
@@ -32,10 +32,10 @@
       },
       {
         "__type": "Mazing.Exit",
-        "__guid": "8d6d05d1-ea31-4c3f-b80c-ea4410af81ad",
+        "__guid": "a4c1a341-2d85-4838-889e-4228f390147c",
         "Opened": {
           "__version": 7,
-          "__guid": "5a8ad5a9-3584-4350-93e0-409c310b9b60",
+          "__guid": "921bfd54-7a63-4b19-b6b3-68966a363ff8",
           "UserData": {
             "Title": "Opened",
             "ReferencedComponentTypes": []
@@ -55,8 +55,8 @@
               "Properties": {
                 "component": {
                   "_type": "component",
-                  "component_id": "3ec557f1-adcb-47ed-9a96-1c568c41151c",
-                  "go": "ec42d50f-da41-446d-82aa-cb969da8d58d",
+                  "component_id": "9b3f2acf-e684-46f4-9242-234f9bfd062c",
+                  "go": "22adf00d-e18b-4843-a787-197eb61681b9",
                   "component_type": "SkinnedModelRenderer"
                 }
               },
@@ -219,8 +219,8 @@
           "Defaults": {
             "$7.component": {
               "_type": "component",
-              "component_id": "3ec557f1-adcb-47ed-9a96-1c568c41151c",
-              "go": "ec42d50f-da41-446d-82aa-cb969da8d58d",
+              "component_id": "9b3f2acf-e684-46f4-9242-234f9bfd062c",
+              "go": "22adf00d-e18b-4843-a787-197eb61681b9",
               "component_type": "SkinnedModelRenderer"
             }
           }
@@ -228,15 +228,15 @@
         "IsOpen": false,
         "Trigger": {
           "_type": "component",
-          "component_id": "8e5d5194-0892-4c69-b7ac-b8be3fea3a83",
-          "go": "ac5a8945-9fa5-4288-9f07-1606ab5075a8",
+          "component_id": "4a69bbdf-48f2-43c0-83f0-e7c5939b3070",
+          "go": "6d232ce7-e028-4584-968a-8423b3d54e6b",
           "component_type": "BoxCollider"
         }
       }
     ],
     "Children": [
       {
-        "__guid": "ac5a8945-9fa5-4288-9f07-1606ab5075a8",
+        "__guid": "6d232ce7-e028-4584-968a-8423b3d54e6b",
         "Flags": 0,
         "Name": "Trigger",
         "Enabled": true,
@@ -245,7 +245,7 @@
         "Components": [
           {
             "__type": "Sandbox.BoxCollider",
-            "__guid": "8e5d5194-0892-4c69-b7ac-b8be3fea3a83",
+            "__guid": "4a69bbdf-48f2-43c0-83f0-e7c5939b3070",
             "Center": "0,0,32",
             "IsTrigger": true,
             "Scale": "24,24,64",
@@ -259,6 +259,6 @@
   "MenuPath": null,
   "MenuIcon": null,
   "ResourceVersion": 1,
-  "__version": 1,
-  "__references": []
+  "__references": [],
+  "__version": 1
 }

@@ -136,8 +136,8 @@
               "Id": 7,
               "Type": "property",
               "Properties": {
-                "_type": "Sandbox.SoundHandle",
-                "_name": "Volume"
+                "_name": "Volume",
+                "_type": "Sandbox.SoundHandle"
               },
               "UserData": {
                 "Position": "608,-64"
@@ -668,8 +668,8 @@
               "Id": 7,
               "Type": "property",
               "Properties": {
-                "_type": "Mazing.Mazer",
-                "_name": "MoveInput"
+                "_name": "MoveInput",
+                "_type": "Mazing.Mazer"
               },
               "UserData": {
                 "Position": "1008,80"
@@ -1414,7 +1414,7 @@
               "Id": 3,
               "Type": "sound.play",
               "UserData": {
-                "Position": "288,16"
+                "Position": "288,32"
               }
             }
           ],
@@ -2637,6 +2637,6 @@
   "MenuPath": null,
   "MenuIcon": null,
   "ResourceVersion": 1,
-  "__version": 1,
-  "__references": []
+  "__references": [],
+  "__version": 1
 }
