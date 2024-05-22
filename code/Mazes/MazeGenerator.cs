@@ -30,9 +30,9 @@ public abstract partial class BaseMazeGenerator : IMazeGenerator
 	{
 		var random = new Random( parameters.Seed );
 		var layout = GenerateLayout( random.Next(), parameters.Size );
-		var enemies = GenerateEnemyList( random.Next(), parameters.Level, parameters.EnemyCount );
 		var treasure = GenerateTreasureList( random.Next(), parameters.Level, parameters.TreasureCount );
-		var spawns = PlaceSpawns( random.Next(), layout, enemies.Count, treasure.Count );
+		var enemies = GenerateEnemyList( random.Next(), parameters.Level, parameters.EnemyCount );
+		var spawns = PlaceSpawns( random.Next(), layout, treasure.Count, enemies.Count );
 		var lights = GenerateLights( random.Next(), layout );
 
 		var finalSpawns = new List<MazeObjectSpawn>();
@@ -46,11 +46,11 @@ public abstract partial class BaseMazeGenerator : IMazeGenerator
 		finalSpawns.AddRange( spawns[CellState.Exit].Select( x =>
 			new MazeExitSpawn( x.Row, x.Col ) ) );
 
-		finalSpawns.AddRange( spawns[CellState.Enemy].Select( ( x, i ) =>
-			new MazeEnemySpawn( x.Row, x.Col, random.NextDirection( layout, x.Row, x.Col ), enemies[i].Prefab, enemies[i].Info ) ) );
-
 		finalSpawns.AddRange( spawns[CellState.Treasure].Select( ( x, i ) =>
 			new MazeTreasureSpawn( x.Row, x.Col, treasure[i].Prefab, treasure[i].Info ) ) );
+
+		finalSpawns.AddRange( spawns[CellState.Enemy].Select( ( x, i ) =>
+			new MazeEnemySpawn( x.Row, x.Col, x.Dir, enemies[i].Prefab, enemies[i].Info ) ) );
 
 		return new GeneratedMaze( layout, finalSpawns, lights );
 	}

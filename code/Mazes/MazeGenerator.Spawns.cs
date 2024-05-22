@@ -6,7 +6,7 @@ namespace Mazing;
 
 partial class BaseMazeGenerator
 {
-	protected IReadOnlyDictionary<CellState, IReadOnlyList<(int Row, int Col)>> PlaceSpawns( int seed, MazeData data, int enemyCount, int treasureCount )
+	protected IReadOnlyDictionary<CellState, IReadOnlyList<(int Row, int Col, Direction Dir)>> PlaceSpawns( int seed, MazeData data, int treasureCount, int enemyCount )
 	{
 		var random = new Random( seed );
 		var validCells = new List<(int Row, int Col)>();
@@ -15,12 +15,12 @@ partial class BaseMazeGenerator
 			{ CellState.Key, 1 },
 			{ CellState.Exit, 1 },
 			{ CellState.Player, 8 },
-			{ CellState.Enemy, enemyCount },
-			{ CellState.Treasure, treasureCount }
+			{ CellState.Treasure, treasureCount },
+			{ CellState.Enemy, enemyCount }
 		};
 
 		var results = remainingCounts.Keys
-			.ToDictionary( x => x, x => new List<(int Row, int Col)>() );
+			.ToDictionary( x => x, x => new List<(int Row, int Col, Direction Dir)>() );
 
 		var indices = Enumerable.Range( 0, data.Height )
 			.SelectMany( j => Enumerable.Range( 0, data.Width )
@@ -45,7 +45,8 @@ partial class BaseMazeGenerator
 					if ( remaining > 0 )
 					{
 						remainingCounts[state] = remaining - 1;
-						results[state].Add( index );
+						results[state].Add( (index.Row, index.Col,
+							random.NextDirection( data, index.Row, index.Col )) );
 						continue;
 					}
 
@@ -65,26 +66,63 @@ partial class BaseMazeGenerator
 				continue;
 			}
 
-			if ( state == CellState.Exit )
+			switch ( state )
 			{
-				var cell = PlaceExit( random, data, validCells, treasureCount );
-				data[cell.Row, cell.Col] = state;
-				results[state].Add( cell );
+				case CellState.Exit:
+					{
+						var cell = PlaceExit( random, data, validCells, treasureCount );
+						data[cell.Row, cell.Col] = state;
+						results[state].Add( (cell.Row, cell.Col, Direction.North) );
 
-				continue;
+						continue;
+					}
+				case CellState.Enemy:
+					for ( var i = 0; i < count && validCells.Count > 0; )
+					{
+						var cell = validCells[^1];
+						validCells.RemoveAt( validCells.Count - 1 );
+
+						var validDirections = Helpers.Directions
+							.Where( x => data[cell.Row, cell.Col, x] != WallState.Closed )
+							.Where( x =>
+							{
+								var neighbor = x.GetNeighbor( cell.Row, cell.Col );
+								return data[neighbor.Row, neighbor.Col] == CellState.Default;
+							} )
+							.ToArray();
+
+						if ( validDirections.Length > 0 )
+						{
+							var direction = validDirections[random.Next( validDirections.Length )];
+							var neighbor = direction.GetNeighbor( cell.Row, cell.Col );
+
+							data[cell.Row, cell.Col] = state;
+							data[neighbor.Row, neighbor.Col] = state;
+							results[state].Add( (cell.Row, cell.Col, direction) );
+
+							validCells.Remove( neighbor );
+
+							++i;
+						}
+					}
+					break;
+
+				default:
+					for ( var i = 0; i < count && validCells.Count > 0; ++i )
+					{
+						var cell = validCells[^1];
+						validCells.RemoveAt( validCells.Count - 1 );
+
+						data[cell.Row, cell.Col] = state;
+						results[state].Add( (cell.Row, cell.Col,
+							random.NextDirection( data, cell.Row, cell.Col )) );
+					}
+					break;
 			}
 
-			for ( var i = 0; i < count && validCells.Count > 0; ++i )
-			{
-				var cell = validCells[^1];
-				validCells.RemoveAt( validCells.Count - 1 );
-
-				data[cell.Row, cell.Col] = state;
-				results[state].Add( cell );
-			}
 		}
 
-		return results.ToImmutableDictionary( x => x.Key, x => (IReadOnlyList<(int, int)>) x.Value );
+		return results.ToImmutableDictionary( x => x.Key, x => (IReadOnlyList<(int, int, Direction)>) x.Value );
 	}
 
 	private (int Row, int Col) PlaceExit( Random random, MazeData data, List<(int Row, int Col)> validCells, int treasureCount )

@@ -24,7 +24,11 @@ partial class Maze
 			.Union( result.Spawns
 				.OfType<MazeEnemySpawn>()
 				.Where( x => x.Info.IsFloorTrap )
-				.Select( x => (x.Row, x.Col) )
+				.SelectMany( x =>
+				{
+					var neighbor = x.Direction.GetNeighbor( x.Row, x.Col );
+					return new [] { (x.Row, x.Col), neighbor };
+				} )
 			).ToHashSet();
 
 		void CheckForWall( int j, int i, Direction dir, Vector3 offset, float yaw )

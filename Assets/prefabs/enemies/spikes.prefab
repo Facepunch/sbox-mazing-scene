@@ -548,6 +548,7 @@
         "__guid": "18cc7041-1b38-4698-ba86-cc766bb70a2f",
         "Flags": 0,
         "Name": "Model",
+        "Rotation": "0,0,0.7071068,0.7071068",
         "Scale": "0.24,0.24,0.24",
         "Enabled": true,
         "NetworkMode": 2,

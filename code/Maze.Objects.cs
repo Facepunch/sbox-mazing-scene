@@ -53,6 +53,16 @@ partial class Maze
 					_spawnedObjects.Add(
 						SceneUtility.GetPrefabScene( enemySpawn.Prefab )
 							.Clone( MazeToWorldPos( enemySpawn.Row, enemySpawn.Col ), enemySpawn.Direction.GetRotation() ) );
+
+					if ( enemySpawn.Info.IsFloorTrap )
+					{
+						var neighbor = enemySpawn.Direction.GetNeighbor( enemySpawn.Row, enemySpawn.Col );
+
+						_spawnedObjects.Add(
+							SceneUtility.GetPrefabScene( enemySpawn.Prefab )
+								.Clone( MazeToWorldPos( neighbor.Row, neighbor.Col ), enemySpawn.Direction.GetRotation() ) );
+					}
+
 					break;
 
 				case MazeTreasureSpawn treasureSpawn:
