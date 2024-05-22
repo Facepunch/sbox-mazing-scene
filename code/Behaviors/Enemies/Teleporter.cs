@@ -73,8 +73,7 @@ public sealed class Teleporter : Component
 	{
 		var maze = MazeObject.Maze;
 
-		var playerCells = Scene.Components
-			.GetAll<Player>( FindMode.Enabled | FindMode.InChildren )
+		var playerCells = MazeObject.Maze.Players
 			.Where( x => x.Mazer.State is MazerState.Walking or MazerState.Vaulting )
 			.Select( x => x.Mazer.MazeObject.CellIndex )
 			.ToArray();

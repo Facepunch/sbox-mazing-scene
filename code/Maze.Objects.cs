@@ -88,8 +88,7 @@ partial class Maze
 			go.NetworkSpawn( Connection.Host );
 		}
 
-		var pawns = Scene.Components
-			.GetAll<Player>( FindMode.InChildren | FindMode.Enabled )
+		var pawns = Players
 			.ToHashSet();
 
 		var index = 0;
@@ -114,6 +113,7 @@ partial class Maze
 		foreach ( var pawn in pawns )
 		{
 			pawn.GameObject.Destroy();
+			_players.Remove( pawn );
 		}
 	}
 
@@ -131,6 +131,8 @@ partial class Maze
 		var obj = PlayerPrefab.Clone( pos.Value );
 
 		var player = obj.Components.Get<Player>();
+
+		_players.Add( player );
 
 		if ( !alive )
 		{

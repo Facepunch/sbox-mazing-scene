@@ -18,9 +18,12 @@ public sealed partial class Maze : Component
 	private readonly Dictionary<(int Row, int Col), (int Offset, int Count)> _objectsInCells = new();
 	private readonly Dictionary<(int Row, int Col), int> _pathCosts = new();
 
+	private readonly List<Player> _players = new();
+
 	public record struct RangedUnitSpawn( int Row, int Col, Direction Direction, int Range );
 
 	public IReadOnlyList<RangedUnitSpawn> RangedUnitSpawns { get; private set; } = Array.Empty<RangedUnitSpawn>();
+	public IReadOnlyList<Player> Players => _players;
 
 	[Button( "Run", "casino" ), Group( "Parameters" )]
 	public void Randomize()
@@ -121,6 +124,8 @@ public sealed partial class Maze : Component
 		_allObjects.Clear();
 		_objectsInCells.Clear();
 		_pathCosts.Clear();
+
+		_players.RemoveAll( x => !x.IsValid );
 
 		foreach ( var mazeObject in Scene.Components.GetAll<MazeObject>( FindMode.Enabled | FindMode.InChildren ) )
 		{

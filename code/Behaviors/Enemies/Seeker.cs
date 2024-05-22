@@ -5,7 +5,7 @@ public sealed class Seeker : Wanderer
 {
 	protected override Direction? GetNewTarget()
 	{
-		var ends = Scene.Components.GetAll<Player>( FindMode.Enabled | FindMode.InChildren )
+		var ends = MazeObject.Maze.Players
 			.Where( x => x.Mazer.State is MazerState.Walking or MazerState.Vaulting )
 			.Select( x => x.Mazer.MazeObject.CellIndex )
 			.ToArray();
