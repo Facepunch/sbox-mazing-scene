@@ -45,6 +45,8 @@ public sealed class Seeker : Wanderer
 			return base.GetNewTarget();
 		}
 
+		var target = path[^1];
+
 		if ( !CanVault || _lastVault < VaultPeriod )
 		{
 			return path[0].GetDirectionTo( path[1] );
@@ -60,14 +62,14 @@ public sealed class Seeker : Wanderer
 			}
 
 			var neighbor = direction.GetNeighbor( row, col );
-			var vaultedPath = MazeObject.View.FindPath( neighbor, path[^1], path.Count, MazeObject.Maze.GetPathCost );
+			var vaultedPath = MazeObject.View.FindPath( neighbor, target, path.Count - 2, MazeObject.Maze.GetPathCost );
 
-			if ( vaultedPath is not null && vaultedPath.Count < path.Count )
+			if ( vaultedPath is not null )
 			{
 				_vaulted = false;
 				_preVault = 0.5f;
 
-				path = vaultedPath;
+				path = new[] { path[0] }.Concat( vaultedPath ).ToArray();
 			}
 		}
 
