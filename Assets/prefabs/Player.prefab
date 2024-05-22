@@ -624,7 +624,7 @@
         "Friction": 4,
         "GhostMaterial": "materials/ghost.vmat",
         "MoveInput": "0,0",
-        "MoveSpeed": 120,
+        "MoveSpeed": 160,
         "NextVault": {
           "Fraction": "NaN"
         },
@@ -1293,7 +1293,7 @@
           }
         },
         "State": "Falling",
-        "VaultCooldown": 3
+        "VaultCooldown": 3.5
       },
       {
         "__type": "Mazing.Throwable",
