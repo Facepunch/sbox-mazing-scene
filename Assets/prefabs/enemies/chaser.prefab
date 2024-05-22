@@ -2,7 +2,7 @@
   "RootObject": {
     "__guid": "0414df9e-a83b-4fcb-9014-00e27ec83b65",
     "Flags": 0,
-    "Name": "charger",
+    "Name": "chaser",
     "Tags": "enemy",
     "Enabled": true,
     "NetworkMode": 1,
@@ -11,12 +11,12 @@
       {
         "__type": "Sandbox.SkinnedModelRenderer",
         "__guid": "930885b9-f4f4-476b-a91d-5c325b599548",
-        "BodyGroups": 85,
+        "BodyGroups": 21,
         "CreateBoneObjects": false,
         "MaterialGroup": "default",
         "Model": "models/citizen/citizen.vmdl",
         "RenderType": "On",
-        "Tint": "1,1,1,1"
+        "Tint": "1,0.75,1,1"
       },
       {
         "__type": "Sandbox.Citizen.CitizenAnimationHelper",
@@ -28,6 +28,7 @@
         },
         "EyesWeight": 1,
         "HeadWeight": 1,
+        "Height": 1.2,
         "LookAtEnabled": false,
         "Target": {
           "_type": "component",
@@ -59,8 +60,8 @@
               "Id": 2,
               "Type": "resource.ref",
               "Properties": {
-                "value": "sounds/player/player.footstep.sound",
-                "T": "Sandbox.Engine/Sandbox.SoundEvent"
+                "T": "Sandbox.SoundEvent",
+                "value": "sounds/player/player.footstep.sound"
               },
               "UserData": {
                 "Position": "64,368"
@@ -78,12 +79,12 @@
               "Type": "property",
               "ParentId": 1,
               "Properties": {
+                "_name": "Transform",
                 "_type": {
                   "$type": "Nested",
-                  "DeclaringType": "Sandbox.Engine/Sandbox.SceneModel",
+                  "DeclaringType": "Sandbox.SceneModel",
                   "Name": "FootstepEvent"
-                },
-                "_name": "Transform"
+                }
               },
               "UserData": {
                 "Visible": false
@@ -94,8 +95,8 @@
               "Type": "property",
               "ParentId": 4,
               "Properties": {
-                "_type": "Sandbox.System/Transform",
-                "_name": "Position"
+                "_name": "Position",
+                "_type": "Transform"
               },
               "UserData": {
                 "Labels": {
@@ -108,12 +109,12 @@
               "Type": "property",
               "ParentId": 1,
               "Properties": {
+                "_name": "Volume",
                 "_type": {
                   "$type": "Nested",
-                  "DeclaringType": "Sandbox.Engine/Sandbox.SceneModel",
+                  "DeclaringType": "Sandbox.SceneModel",
                   "Name": "FootstepEvent"
-                },
-                "_name": "Volume"
+                }
               },
               "UserData": {
                 "Labels": {
@@ -216,8 +217,8 @@
         "MoveInput": "0,0",
         "MoveSpeed": 85,
         "NextVault": {
-          "Relative": -1457.0266,
-          "Passed": 1457.0266,
+          "Relative": -1499.6207,
+          "Passed": 1499.6207,
           "Fraction": 1
         },
         "State": "Walking",
@@ -263,16 +264,18 @@
         "__guid": "414b0a21-725b-4069-a82b-bf530296abc2",
         "Clothing": [
           "models/citizen_clothes/hat/hard_hat/hard_hat.clothing",
-          "models/citizen_clothes/shoes/smartshoes/smartshoes.clothing"
+          "models/citizen_clothes/skin04.clothing",
+          "models/citizen_clothes/gloves/leather_gloves/leather_gloves.clothing",
+          "models/citizen_clothes/shoes/boots/army_boots.clothing"
         ],
-        "Color": "1,1,1,1"
+        "Color": "0,0,0,1"
       },
       {
         "__type": "Mazing.Enemy",
         "__guid": "e4bdb570-cbe6-4ffc-b996-8a9649a25e30",
-        "Difficulty": 2,
+        "Difficulty": 4,
         "IsFloorTrap": false,
-        "MinLevel": 4
+        "MinLevel": 16
       },
       {
         "__type": "Mazing.MeleeAttacker",
@@ -313,8 +316,8 @@
               "Id": 2,
               "Type": "resource.ref",
               "Properties": {
-                "value": "sounds/enemy/enemy.punch.sound",
-                "T": "Sandbox.Engine/Sandbox.SoundEvent"
+                "T": "Sandbox.SoundEvent",
+                "value": "sounds/enemy/enemy.punch.sound"
               },
               "UserData": {
                 "Position": "-544,-48"
@@ -349,8 +352,8 @@
               "Id": 9,
               "Type": "property",
               "Properties": {
-                "_type": "package.base/Sandbox.Citizen.CitizenAnimationHelper",
-                "_name": "IsWeaponLowered"
+                "_name": "IsWeaponLowered",
+                "_type": "Sandbox.Citizen.CitizenAnimationHelper"
               },
               "UserData": {
                 "Position": "48,-48"
@@ -390,9 +393,9 @@
               "Id": 20,
               "Type": "call",
               "Properties": {
-                "_type": "Sandbox.Game/Sandbox.SkinnedModelRenderer",
                 "_name": "Set",
-                "_isStatic": false
+                "_isStatic": false,
+                "_type": "Sandbox.SkinnedModelRenderer"
               },
               "UserData": {
                 "Position": "864,-48",
@@ -412,9 +415,9 @@
               "Id": 29,
               "Type": "property",
               "Properties": {
-                "_type": "package.base/Sandbox.Citizen.CitizenAnimationHelper",
                 "_name": "IsWeaponLowered",
-                "_kind": "Set"
+                "_kind": "Set",
+                "_type": "Sandbox.Citizen.CitizenAnimationHelper"
               },
               "UserData": {
                 "Position": "176,240"
@@ -446,9 +449,9 @@
               "Id": 39,
               "Type": "property",
               "Properties": {
-                "_type": "package.base/Sandbox.Citizen.CitizenAnimationHelper",
                 "_name": "HoldType",
-                "_kind": "Set"
+                "_kind": "Set",
+                "_type": "Sandbox.Citizen.CitizenAnimationHelper"
               },
               "UserData": {
                 "Position": "624,240"
@@ -598,8 +601,8 @@
           }
         },
         "NextAttack": {
-          "Relative": -1457.0266,
-          "Passed": 1457.0266,
+          "Relative": -1499.6207,
+          "Passed": 1499.6207,
           "Fraction": 1
         },
         "Range": 32,
@@ -699,8 +702,8 @@
               "Id": 122,
               "Type": "resource.ref",
               "Properties": {
-                "value": "sounds/enemy/charger.alert.sound",
-                "T": "Sandbox.Engine/Sandbox.SoundEvent"
+                "T": "Sandbox.SoundEvent",
+                "value": "sounds/enemy/charger.alert.sound"
               },
               "UserData": {
                 "Position": "1008,144"
@@ -728,7 +731,7 @@
               "DstName": "_target"
             },
             {
-              "Value": "1,0,0,1",
+              "Value": "1,0,0.4,1",
               "DstId": 3,
               "DstName": "_value"
             },
@@ -826,8 +829,8 @@
               "Id": 1,
               "Type": "property",
               "Properties": {
-                "_type": "Sandbox.Game/Sandbox.SkinnedModelRenderer",
-                "_name": "Tint"
+                "_name": "Tint",
+                "_type": "Sandbox.SkinnedModelRenderer"
               },
               "UserData": {
                 "Position": "208,-0"
@@ -900,8 +903,8 @@
               "Id": 11,
               "Type": "resource.ref",
               "Properties": {
-                "value": "sounds/enemy/charger.hitwall.sound",
-                "T": "Sandbox.Engine/Sandbox.SoundEvent"
+                "T": "Sandbox.SoundEvent",
+                "value": "sounds/enemy/charger.hitwall.sound"
               },
               "UserData": {
                 "Position": "976,160"
@@ -929,7 +932,7 @@
               "DstName": "_target"
             },
             {
-              "Value": "1,1,1,1",
+              "Value": "1,0.75,1,1",
               "DstId": 1,
               "DstName": "_value"
             },
@@ -1007,7 +1010,7 @@
             }
           }
         },
-        "Chase": false,
+        "Chase": true,
         "MinTargetUpdatePeriod": 0.1,
         "StunTime": 1.5
       },
@@ -1021,7 +1024,7 @@
         "__type": "Mazing.Holdable",
         "__guid": "c83e0b64-03ba-49a4-b62f-a9777a647b62",
         "HeldTime": {
-          "Relative": 1457.0266
+          "Relative": 1499.6207
         },
         "HeldVelocity": "0,0,0"
       }
@@ -1037,7 +1040,7 @@
         "NetworkInterpolation": true
       },
       {
-        "__guid": "1dbeb676-af4b-430d-83f6-fbc29a3d65dd",
+        "__guid": "5866f0d4-c1f9-4f7f-a322-d28cd58309f3",
         "Flags": 0,
         "Name": "Clothing - hard_hat",
         "Tags": "clothing",
@@ -1047,7 +1050,7 @@
         "Components": [
           {
             "__type": "Sandbox.SkinnedModelRenderer",
-            "__guid": "805d115a-7de5-456c-8c62-b65c8e95dcc3",
+            "__guid": "c6638e14-3095-493c-951f-6ac7b7ae175b",
             "BodyGroups": 18446744073709551615,
             "BoneMergeTarget": {
               "_type": "component",
@@ -1058,14 +1061,14 @@
             "CreateBoneObjects": false,
             "Model": "models/citizen_clothes/hat/hard_hat/models/hard_hat.vmdl",
             "RenderType": "On",
-            "Tint": "1,1,1,1"
+            "Tint": "0,0,0,1"
           }
         ]
       },
       {
-        "__guid": "37baa732-d77a-40c9-9452-b22abc165a5b",
+        "__guid": "f41af790-ecc1-4d1e-9173-ed7fdca5eafc",
         "Flags": 0,
-        "Name": "Clothing - smartshoes",
+        "Name": "Clothing - leather_gloves",
         "Tags": "clothing",
         "Enabled": true,
         "NetworkMode": 2,
@@ -1073,7 +1076,7 @@
         "Components": [
           {
             "__type": "Sandbox.SkinnedModelRenderer",
-            "__guid": "c71005a9-d833-4686-a5e9-677696789e32",
+            "__guid": "f9383902-4996-421e-aa60-b5ff376970b2",
             "BodyGroups": 18446744073709551615,
             "BoneMergeTarget": {
               "_type": "component",
@@ -1082,9 +1085,35 @@
               "component_type": "SkinnedModelRenderer"
             },
             "CreateBoneObjects": false,
-            "Model": "models/citizen_clothes/shoes/smartshoes/smartshoes.vmdl",
+            "Model": "models/citizen_clothes/gloves/leather_gloves/models/leather_gloves.vmdl",
             "RenderType": "On",
-            "Tint": "1,1,1,1"
+            "Tint": "0,0,0,1"
+          }
+        ]
+      },
+      {
+        "__guid": "54146bb1-10d2-4378-9e1c-aeeec0807ee4",
+        "Flags": 0,
+        "Name": "Clothing - army_boots",
+        "Tags": "clothing",
+        "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkInterpolation": true,
+        "Components": [
+          {
+            "__type": "Sandbox.SkinnedModelRenderer",
+            "__guid": "a489976c-9949-4b12-a22c-99623428dab3",
+            "BodyGroups": 18446744073709551615,
+            "BoneMergeTarget": {
+              "_type": "component",
+              "component_id": "930885b9-f4f4-476b-a91d-5c325b599548",
+              "go": "0414df9e-a83b-4fcb-9014-00e27ec83b65",
+              "component_type": "SkinnedModelRenderer"
+            },
+            "CreateBoneObjects": false,
+            "Model": "models/citizen_clothes/shoes/boots/models/army_boots.vmdl",
+            "RenderType": "On",
+            "Tint": "0,0,0,1"
           }
         ]
       }

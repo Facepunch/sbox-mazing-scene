@@ -14,6 +14,8 @@ public sealed class ClothingSpawner : Component
 	[Property]
 	public List<Clothing?> Clothing { get; set; } = new();
 
+	[Property] public Color Color { get; set; } = Color.White;
+
 	[Button( "Run", Icon = "checkroom" )]
 	public void Apply()
 	{
@@ -32,5 +34,13 @@ public sealed class ClothingSpawner : Component
 		}
 
 		clothing.Apply( ModelRenderer );
+
+		foreach ( var tintable in ModelRenderer.Components.GetAll<ITintable>( FindMode.EverythingInDescendants ) )
+		{
+			if ( tintable is Component comp && comp.GameObject.Tags.Has( "clothing" ) )
+			{
+				tintable.Color = Color;
+			}
+		}
 	}
 }
