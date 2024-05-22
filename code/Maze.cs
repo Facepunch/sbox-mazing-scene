@@ -168,7 +168,7 @@ public sealed partial class Maze : Component
 				cost = 0;
 			}
 
-			cost += mazeObject.Components.Get<Enemy>() is null ? 0 : 32;
+			cost += mazeObject.Components.GetAll<Enemy>().All( x => !x.IsFloorTrap ) ? 0 : 32;
 			cost += mazeObject.Components.Get<Exit>() is { IsOpen: true } ? 256 : 0;
 		}
 

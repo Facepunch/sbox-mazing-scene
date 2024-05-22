@@ -1,0 +1,580 @@
+{
+  "RootObject": {
+    "__guid": "29357b66-8c47-4224-8291-0d0d47e73ce2",
+    "Flags": 0,
+    "Name": "vaulter",
+    "Tags": "enemy",
+    "Enabled": true,
+    "NetworkMode": 1,
+    "NetworkInterpolation": true,
+    "Components": [
+      {
+        "__type": "Sandbox.SkinnedModelRenderer",
+        "__guid": "a6451a40-5ea4-4dc6-8c5c-e66a9f4ceda9",
+        "BodyGroups": 69,
+        "CreateBoneObjects": false,
+        "MaterialGroup": "default",
+        "Model": "models/citizen/citizen.vmdl",
+        "RenderType": "On",
+        "Tint": "1,0.3,0.7,1"
+      },
+      {
+        "__type": "Sandbox.Citizen.CitizenAnimationHelper",
+        "__guid": "7461ac8c-0fc6-4e2e-8955-589eca22b319",
+        "BodyWeight": 1,
+        "EyeSource": {
+          "_type": "gameobject",
+          "go": "6f4659b2-b550-4168-8034-7c9094a18dce"
+        },
+        "EyesWeight": 1,
+        "HeadWeight": 1,
+        "LookAtEnabled": false,
+        "Target": {
+          "_type": "component",
+          "component_id": "a6451a40-5ea4-4dc6-8c5c-e66a9f4ceda9",
+          "go": "29357b66-8c47-4224-8291-0d0d47e73ce2",
+          "component_type": "SkinnedModelRenderer"
+        }
+      },
+      {
+        "__type": "Mazing.Mazer",
+        "__guid": "8413b922-f3d4-43db-8eec-0f01a9c4ab21",
+        "Footstep": {
+          "__version": 7,
+          "__guid": "731d27ab-87b4-426a-888e-74916c5c5247",
+          "UserData": {
+            "Title": "Footstep",
+            "ReferencedComponentTypes": []
+          },
+          "Variables": [],
+          "Nodes": [
+            {
+              "Id": 1,
+              "Type": "input",
+              "UserData": {
+                "Position": "96,192"
+              }
+            },
+            {
+              "Id": 2,
+              "Type": "resource.ref",
+              "Properties": {
+                "T": "Sandbox.SoundEvent",
+                "value": "sounds/player/player.footstep.sound"
+              },
+              "UserData": {
+                "Position": "64,368"
+              }
+            },
+            {
+              "Id": 3,
+              "Type": "sound.playat",
+              "UserData": {
+                "Position": "432,192"
+              }
+            },
+            {
+              "Id": 4,
+              "Type": "property",
+              "ParentId": 1,
+              "Properties": {
+                "_type": {
+                  "$type": "Nested",
+                  "DeclaringType": "Sandbox.SceneModel",
+                  "Name": "FootstepEvent"
+                },
+                "_name": "Transform"
+              },
+              "UserData": {
+                "Visible": false
+              }
+            },
+            {
+              "Id": 5,
+              "Type": "property",
+              "ParentId": 4,
+              "Properties": {
+                "_type": "Transform",
+                "_name": "Position"
+              },
+              "UserData": {
+                "Labels": {
+                  "_result": "pos"
+                }
+              }
+            },
+            {
+              "Id": 6,
+              "Type": "property",
+              "ParentId": 1,
+              "Properties": {
+                "_type": {
+                  "$type": "Nested",
+                  "DeclaringType": "Sandbox.SceneModel",
+                  "Name": "FootstepEvent"
+                },
+                "_name": "Volume"
+              },
+              "UserData": {
+                "Labels": {
+                  "_result": "volume"
+                }
+              }
+            },
+            {
+              "Id": 7,
+              "Type": "property",
+              "Properties": {
+                "_type": "Sandbox.SoundHandle",
+                "_name": "Volume"
+              },
+              "UserData": {
+                "Position": "720,192"
+              }
+            },
+            {
+              "Id": 8,
+              "Type": "op.multiply",
+              "UserData": {
+                "Position": "496,304"
+              }
+            }
+          ],
+          "Links": [
+            {
+              "SrcId": 1,
+              "SrcName": "_signal",
+              "DstId": 3,
+              "DstName": "_signal"
+            },
+            {
+              "SrcId": 5,
+              "SrcName": "_result",
+              "DstId": 3,
+              "DstName": "position"
+            },
+            {
+              "SrcId": 2,
+              "SrcName": "_result",
+              "DstId": 3,
+              "DstName": "soundEvent"
+            },
+            {
+              "SrcId": 1,
+              "SrcName": "obj",
+              "DstId": 4,
+              "DstName": "_target"
+            },
+            {
+              "SrcId": 4,
+              "SrcName": "_result",
+              "DstId": 5,
+              "DstName": "_target"
+            },
+            {
+              "SrcId": 1,
+              "SrcName": "obj",
+              "DstId": 6,
+              "DstName": "_target"
+            },
+            {
+              "SrcId": 3,
+              "SrcName": "_signal",
+              "DstId": 7,
+              "DstName": "_signal"
+            },
+            {
+              "SrcId": 3,
+              "SrcName": "_result",
+              "DstId": 7,
+              "DstName": "_target"
+            },
+            {
+              "SrcId": 8,
+              "SrcName": "_result",
+              "DstId": 7,
+              "DstName": "_value"
+            },
+            {
+              "SrcId": 6,
+              "SrcName": "_result",
+              "DstId": 8,
+              "DstName": "a"
+            },
+            {
+              "Value": {
+                "$type": "Simple",
+                "Type": "System.Single",
+                "Value": 0.125
+              },
+              "DstId": 8,
+              "DstName": "b"
+            }
+          ]
+        },
+        "Friction": 2,
+        "MoveInput": "0,0",
+        "MoveSpeed": 45,
+        "NextVault": {
+          "Relative": -3880.8823,
+          "Passed": 3880.8823,
+          "Fraction": 1
+        },
+        "State": "Walking",
+        "VaultCooldown": 3
+      },
+      {
+        "__type": "Mazing.MazeObject",
+        "__guid": "9979c88b-851e-4976-848b-d21136442033"
+      },
+      {
+        "__type": "Mazing.Throwable",
+        "__guid": "54761559-dae0-4463-9768-d3c3a8888ed2",
+        "CanExit": false,
+        "IndexOnFloor": 0,
+        "IsAirborne": false,
+        "IsExiting": false,
+        "ThrowDuration": 0.5,
+        "ThrowHeight": 64
+      },
+      {
+        "__type": "Sandbox.CapsuleCollider",
+        "__guid": "840cc60c-52ac-401c-b2d2-247a68a01fdd",
+        "End": "0,0,64",
+        "IsTrigger": true,
+        "Radius": 8,
+        "Start": "0,0,8",
+        "Static": false
+      },
+      {
+        "__type": "Sandbox.CharacterController",
+        "__guid": "fc2d74cd-7611-4348-87b3-e1cbf33a7e51",
+        "Acceleration": 10,
+        "Bounciness": 0.3,
+        "GroundAngle": 45,
+        "Height": 64,
+        "IgnoreLayers": "",
+        "Radius": 16,
+        "StepHeight": 18,
+        "UseCollisionRules": true
+      },
+      {
+        "__type": "Mazing.ClothingSpawner",
+        "__guid": "b7ceda8a-3e7d-4285-9955-044ca1a99c7c",
+        "Clothing": [
+          "models/citizen_clothes/skin01.clothing",
+          "models/citizen_clothes/trousers/legarmour/leg_armour.clothing",
+          "models/citizen_clothes/shoes/boots/army_boots.clothing"
+        ]
+      },
+      {
+        "__type": "Mazing.Enemy",
+        "__guid": "4893d02b-1cb2-4db9-894c-4968fdc2f7ab",
+        "Difficulty": 3,
+        "IsFloorTrap": false,
+        "MinLevel": 14,
+        "OnComponentStart": {
+          "__version": 7,
+          "__guid": "f57c7afa-cd0b-4391-bf8f-aed67e4319db",
+          "UserData": {
+            "Title": "On Component Start",
+            "ReferencedComponentTypes": []
+          },
+          "Variables": [],
+          "Nodes": [
+            {
+              "Id": 0,
+              "Type": "input"
+            },
+            {
+              "Id": 2,
+              "Type": "scene.ref",
+              "Properties": {
+                "component": {
+                  "_type": "component",
+                  "component_id": "7461ac8c-0fc6-4e2e-8955-589eca22b319",
+                  "go": "29357b66-8c47-4224-8291-0d0d47e73ce2",
+                  "component_type": "CitizenAnimationHelper"
+                }
+              },
+              "UserData": {
+                "Position": "64,-96",
+                "Labels": {
+                  "_result": "anim helper"
+                }
+              }
+            },
+            {
+              "Id": 5,
+              "Type": "property",
+              "Properties": {
+                "_type": "Sandbox.Citizen.CitizenAnimationHelper",
+                "_name": "HoldType"
+              },
+              "UserData": {
+                "Position": "272,-0"
+              }
+            }
+          ],
+          "Links": [
+            {
+              "SrcId": 0,
+              "SrcName": "_signal",
+              "DstId": 5,
+              "DstName": "_signal"
+            },
+            {
+              "SrcId": 2,
+              "SrcName": "_result",
+              "DstId": 5,
+              "DstName": "_target"
+            },
+            {
+              "Value": "Punch",
+              "DstId": 5,
+              "DstName": "_value"
+            }
+          ],
+          "Defaults": {
+            "$2.component": {
+              "_type": "component",
+              "component_id": "7461ac8c-0fc6-4e2e-8955-589eca22b319",
+              "go": "29357b66-8c47-4224-8291-0d0d47e73ce2",
+              "component_type": "CitizenAnimationHelper"
+            }
+          }
+        }
+      },
+      {
+        "__type": "Mazing.MeleeAttacker",
+        "__guid": "b50bbad3-da9d-4bbc-a9db-881bd72bc367",
+        "Attacked": {
+          "__version": 7,
+          "__guid": "f3c8ee7b-8511-4785-bee6-517d6905cfc2",
+          "UserData": {
+            "Title": "Attacked",
+            "ReferencedComponentTypes": []
+          },
+          "Variables": [
+            {
+              "Name": "old hold type",
+              "Type": {
+                "$type": "Nested",
+                "DeclaringType": "Sandbox.Citizen.CitizenAnimationHelper",
+                "Name": "HoldTypes"
+              }
+            },
+            {
+              "Name": "was weapon lowered",
+              "Type": "System.Boolean"
+            }
+          ],
+          "Nodes": [
+            {
+              "Id": 0,
+              "Type": "input",
+              "UserData": {
+                "Position": "-576,-320"
+              }
+            },
+            {
+              "Id": 2,
+              "Type": "resource.ref",
+              "Properties": {
+                "T": "Sandbox.SoundEvent",
+                "value": "sounds/enemy/enemy.punch.sound"
+              },
+              "UserData": {
+                "Position": "-624,-208"
+              }
+            },
+            {
+              "Id": 3,
+              "Type": "sound.play",
+              "UserData": {
+                "Position": "-304,-272"
+              }
+            },
+            {
+              "Id": 19,
+              "Type": "scene.ref",
+              "Properties": {
+                "component": {
+                  "_type": "component",
+                  "component_id": "a6451a40-5ea4-4dc6-8c5c-e66a9f4ceda9",
+                  "go": "29357b66-8c47-4224-8291-0d0d47e73ce2",
+                  "component_type": "SkinnedModelRenderer"
+                }
+              },
+              "UserData": {
+                "Position": "-352,-416",
+                "Labels": {
+                  "_result": "renderer"
+                }
+              }
+            },
+            {
+              "Id": 20,
+              "Type": "call",
+              "Properties": {
+                "_type": "Sandbox.SkinnedModelRenderer",
+                "_isStatic": false,
+                "_name": "Set"
+              },
+              "UserData": {
+                "Position": "-48,-272"
+              }
+            }
+          ],
+          "Links": [
+            {
+              "SrcId": 0,
+              "SrcName": "_signal",
+              "DstId": 3,
+              "DstName": "_signal"
+            },
+            {
+              "SrcId": 0,
+              "SrcName": "_target",
+              "DstId": 3,
+              "DstName": "_this"
+            },
+            {
+              "SrcId": 2,
+              "SrcName": "_result",
+              "DstId": 3,
+              "DstName": "soundEvent"
+            },
+            {
+              "SrcId": 3,
+              "SrcName": "_signal",
+              "DstId": 20,
+              "DstName": "_signal"
+            },
+            {
+              "SrcId": 19,
+              "SrcName": "_result",
+              "DstId": 20,
+              "DstName": "_target"
+            },
+            {
+              "Value": "b_attack",
+              "DstId": 20,
+              "DstName": "v"
+            },
+            {
+              "Value": true,
+              "DstId": 20,
+              "DstName": "value"
+            }
+          ],
+          "Defaults": {
+            "$19.component": {
+              "_type": "component",
+              "component_id": "a6451a40-5ea4-4dc6-8c5c-e66a9f4ceda9",
+              "go": "29357b66-8c47-4224-8291-0d0d47e73ce2",
+              "component_type": "SkinnedModelRenderer"
+            }
+          }
+        },
+        "NextAttack": {
+          "Relative": -3880.8823,
+          "Passed": 3880.8823,
+          "Fraction": 1
+        },
+        "Range": 32,
+        "ResetTime": 1
+      },
+      {
+        "__type": "Mazing.Seeker",
+        "__guid": "a83944f4-88cb-4391-a6a0-021b5d09b641",
+        "CanVault": true,
+        "MinTargetUpdatePeriod": 0.5,
+        "VaultPeriod": 4
+      },
+      {
+        "__type": "Mazing.Holder",
+        "__guid": "ed8466cd-9460-46fc-a045-42a07b45d7b1",
+        "AutoThrow": true,
+        "AutoThrowTime": 0.5
+      },
+      {
+        "__type": "Mazing.Holdable",
+        "__guid": "15b7bac6-2d90-4d02-93ae-6faf5100f9e9",
+        "HeldTime": {
+          "Relative": 3880.8823
+        },
+        "HeldVelocity": "0,0,0"
+      }
+    ],
+    "Children": [
+      {
+        "__guid": "6f4659b2-b550-4168-8034-7c9094a18dce",
+        "Flags": 0,
+        "Name": "Eyes",
+        "Position": "0,0,64",
+        "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkInterpolation": true
+      },
+      {
+        "__guid": "44ad0d9a-bfa9-4e61-b589-6d3bb584a931",
+        "Flags": 0,
+        "Name": "Clothing - leg_armour",
+        "Tags": "clothing",
+        "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkInterpolation": true,
+        "Components": [
+          {
+            "__type": "Sandbox.SkinnedModelRenderer",
+            "__guid": "681228f7-c56b-47b4-a804-597d807f504e",
+            "BodyGroups": 18446744073709551615,
+            "BoneMergeTarget": {
+              "_type": "component",
+              "component_id": "a6451a40-5ea4-4dc6-8c5c-e66a9f4ceda9",
+              "go": "29357b66-8c47-4224-8291-0d0d47e73ce2",
+              "component_type": "SkinnedModelRenderer"
+            },
+            "CreateBoneObjects": false,
+            "Model": "models/citizen_clothes/trousers/legarmour/models/leg_armour.vmdl",
+            "RenderType": "On",
+            "Tint": "1,1,1,1"
+          }
+        ]
+      },
+      {
+        "__guid": "0262db09-a77f-4fa6-9011-15cd5baf22fc",
+        "Flags": 0,
+        "Name": "Clothing - army_boots",
+        "Tags": "clothing",
+        "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkInterpolation": true,
+        "Components": [
+          {
+            "__type": "Sandbox.SkinnedModelRenderer",
+            "__guid": "ad3d4db0-15c3-4081-abce-66638db2eca7",
+            "BodyGroups": 18446744073709551615,
+            "BoneMergeTarget": {
+              "_type": "component",
+              "component_id": "a6451a40-5ea4-4dc6-8c5c-e66a9f4ceda9",
+              "go": "29357b66-8c47-4224-8291-0d0d47e73ce2",
+              "component_type": "SkinnedModelRenderer"
+            },
+            "CreateBoneObjects": false,
+            "Model": "models/citizen_clothes/shoes/boots/models/army_boots.vmdl",
+            "RenderType": "On",
+            "Tint": "1,1,1,1"
+          }
+        ]
+      }
+    ]
+  },
+  "ShowInMenu": false,
+  "MenuPath": null,
+  "MenuIcon": null,
+  "ResourceVersion": 1,
+  "__references": [],
+  "__version": 1
+}

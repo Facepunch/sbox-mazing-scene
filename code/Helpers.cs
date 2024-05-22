@@ -150,5 +150,19 @@ public static class Helpers
 
 		return (Direction)random.Next( 0, 4 );
 	}
+
+	public static int IndexOf<T>( this IReadOnlyList<T> list, T item )
+		where T : IEquatable<T>
+	{
+		for ( var i = 0; i < list.Count; ++i )
+		{
+			if ( item.Equals( list[i] ) )
+			{
+				return i;
+			}
+		}
+
+		return -1;
+	}
 }
 
