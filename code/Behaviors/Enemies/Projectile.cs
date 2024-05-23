@@ -28,12 +28,14 @@ internal sealed class Projectile : Component
 	public event Action<Player, Vector3>? HitPlayer;
 
 	[Property]
-	public event Action<Vector3>? HitWall;
+	public event Action<Vector3, bool>? HitWall;
 
 	public void Fire( Direction direction )
 	{
 		Moving = true;
 		Direction = direction;
+
+		Transform.Rotation = direction.GetRotation();
 	}
 
 	[Broadcast( NetPermission.OwnerOnly )]
@@ -97,12 +99,14 @@ internal sealed class Projectile : Component
 				return;
 			}
 
+			Log.Info( $"{wallHit}, {emptyHit}, {IgnoreWalls}" );
+
 			var hitPos = ((MazeObject.Maze.MazeToWorldPos( prevIndex.Row, prevIndex.Col )
 				+ MazeObject.Maze.MazeToWorldPos( nextIndex.Row, nextIndex.Col )) * 0.5f)
 				.WithZ( Transform.Position.z )
 				- direction * 4f;
 
-			HitWall?.Invoke( hitPos );
+			HitWall?.Invoke( hitPos, !IgnoreWalls || emptyHit );
 
 			if ( !IgnoreWalls || emptyHit )
 			{

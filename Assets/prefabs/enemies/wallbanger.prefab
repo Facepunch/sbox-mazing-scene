@@ -1,0 +1,1908 @@
+{
+  "RootObject": {
+    "__guid": "c7e51f88-4346-4332-91ab-5ac907297bf4",
+    "Flags": 0,
+    "Name": "wallbanger",
+    "Tags": "enemy",
+    "Enabled": true,
+    "NetworkMode": 1,
+    "NetworkInterpolation": true,
+    "Components": [
+      {
+        "__type": "Sandbox.SkinnedModelRenderer",
+        "__guid": "9102ce73-149c-4b0d-9947-3c3f25d50c90",
+        "BodyGroups": 277,
+        "CreateBoneObjects": false,
+        "MaterialGroup": "default",
+        "Model": "models/citizen/citizen.vmdl",
+        "RenderType": "On",
+        "Tint": "0,0,1,1"
+      },
+      {
+        "__type": "Sandbox.Citizen.CitizenAnimationHelper",
+        "__guid": "bf41de05-7f34-46f5-a13c-600fc36e7a1a",
+        "BodyWeight": 1,
+        "EyeSource": {
+          "_type": "gameobject",
+          "go": "cb9d8af5-f11a-4046-988f-92923037c3e5"
+        },
+        "EyesWeight": 1,
+        "HeadWeight": 1,
+        "Height": 1.15,
+        "LookAtEnabled": false,
+        "Target": {
+          "_type": "component",
+          "component_id": "9102ce73-149c-4b0d-9947-3c3f25d50c90",
+          "go": "c7e51f88-4346-4332-91ab-5ac907297bf4",
+          "component_type": "SkinnedModelRenderer"
+        }
+      },
+      {
+        "__type": "Mazing.Mazer",
+        "__guid": "75a854d4-de2d-4488-ad79-d2cef10624dd",
+        "Footstep": {
+          "__version": 7,
+          "__guid": "d244c4ab-50eb-4805-a77c-79ad7ac0c914",
+          "UserData": {
+            "Title": "Footstep",
+            "ReferencedComponentTypes": []
+          },
+          "Variables": [],
+          "Nodes": [
+            {
+              "Id": 1,
+              "Type": "input",
+              "UserData": {
+                "Position": "96,192"
+              }
+            },
+            {
+              "Id": 2,
+              "Type": "resource.ref",
+              "Properties": {
+                "value": "sounds/player/player.footstep.sound",
+                "T": "Sandbox.SoundEvent"
+              },
+              "UserData": {
+                "Position": "64,368"
+              }
+            },
+            {
+              "Id": 3,
+              "Type": "sound.playat",
+              "UserData": {
+                "Position": "432,192"
+              }
+            },
+            {
+              "Id": 4,
+              "Type": "property",
+              "ParentId": 1,
+              "Properties": {
+                "_name": "Transform",
+                "_type": {
+                  "$type": "Nested",
+                  "DeclaringType": "Sandbox.SceneModel",
+                  "Name": "FootstepEvent"
+                }
+              },
+              "UserData": {
+                "Visible": false
+              }
+            },
+            {
+              "Id": 5,
+              "Type": "property",
+              "ParentId": 4,
+              "Properties": {
+                "_name": "Position",
+                "_type": "Transform"
+              },
+              "UserData": {
+                "Labels": {
+                  "_result": "pos"
+                }
+              }
+            },
+            {
+              "Id": 6,
+              "Type": "property",
+              "ParentId": 1,
+              "Properties": {
+                "_name": "Volume",
+                "_type": {
+                  "$type": "Nested",
+                  "DeclaringType": "Sandbox.SceneModel",
+                  "Name": "FootstepEvent"
+                }
+              },
+              "UserData": {
+                "Labels": {
+                  "_result": "volume"
+                }
+              }
+            },
+            {
+              "Id": 7,
+              "Type": "property",
+              "Properties": {
+                "_type": "Sandbox.SoundHandle",
+                "_name": "Volume"
+              },
+              "UserData": {
+                "Position": "720,192"
+              }
+            },
+            {
+              "Id": 8,
+              "Type": "op.multiply",
+              "UserData": {
+                "Position": "496,304"
+              }
+            }
+          ],
+          "Links": [
+            {
+              "SrcId": 1,
+              "SrcName": "_signal",
+              "DstId": 3,
+              "DstName": "_signal"
+            },
+            {
+              "SrcId": 5,
+              "SrcName": "_result",
+              "DstId": 3,
+              "DstName": "position"
+            },
+            {
+              "SrcId": 2,
+              "SrcName": "_result",
+              "DstId": 3,
+              "DstName": "soundEvent"
+            },
+            {
+              "SrcId": 1,
+              "SrcName": "obj",
+              "DstId": 4,
+              "DstName": "_target"
+            },
+            {
+              "SrcId": 4,
+              "SrcName": "_result",
+              "DstId": 5,
+              "DstName": "_target"
+            },
+            {
+              "SrcId": 1,
+              "SrcName": "obj",
+              "DstId": 6,
+              "DstName": "_target"
+            },
+            {
+              "SrcId": 3,
+              "SrcName": "_signal",
+              "DstId": 7,
+              "DstName": "_signal"
+            },
+            {
+              "SrcId": 3,
+              "SrcName": "_result",
+              "DstId": 7,
+              "DstName": "_target"
+            },
+            {
+              "SrcId": 8,
+              "SrcName": "_result",
+              "DstId": 7,
+              "DstName": "_value"
+            },
+            {
+              "SrcId": 6,
+              "SrcName": "_result",
+              "DstId": 8,
+              "DstName": "a"
+            },
+            {
+              "Value": {
+                "$type": "Simple",
+                "Type": "System.Single",
+                "Value": 0.125
+              },
+              "DstId": 8,
+              "DstName": "b"
+            }
+          ]
+        },
+        "Friction": 2,
+        "MoveInput": "0,0",
+        "MoveSpeed": 60,
+        "NextVault": {
+          "Fraction": "NaN"
+        },
+        "State": "Walking",
+        "VaultCooldown": 3
+      },
+      {
+        "__type": "Mazing.MazeObject",
+        "__guid": "4d213334-2c78-485e-b74f-cc7be4a9323a"
+      },
+      {
+        "__type": "Mazing.Throwable",
+        "__guid": "941f4b73-44e9-4085-98c0-b446bc746e9f",
+        "CanExit": false,
+        "IndexOnFloor": 0,
+        "IsAirborne": false,
+        "IsExiting": false,
+        "ThrowDuration": 0.5,
+        "ThrowHeight": 64
+      },
+      {
+        "__type": "Sandbox.CapsuleCollider",
+        "__guid": "ff1aeffb-d048-4dbf-9dd0-edd79e33e9f3",
+        "End": "0,0,64",
+        "IsTrigger": true,
+        "Radius": 8,
+        "Start": "0,0,8",
+        "Static": false
+      },
+      {
+        "__type": "Sandbox.CharacterController",
+        "__guid": "7ada8933-93a5-405a-85e7-ef05d39d561b",
+        "Acceleration": 10,
+        "Bounciness": 0.3,
+        "GroundAngle": 45,
+        "Height": 64,
+        "IgnoreLayers": "",
+        "Radius": 16,
+        "StepHeight": 18,
+        "UseCollisionRules": true
+      },
+      {
+        "__type": "Mazing.ClothingSpawner",
+        "__guid": "6eff2d8c-1455-4aae-9979-3d28048babc6",
+        "Clothing": [
+          "models/citizen_clothes/skin01.clothing",
+          "models/citizen_clothes/dress/office_skirt/office_skirt.clothing",
+          "models/citizen_clothes/gloves/long_white_gloves/long_white_gloves.clothing",
+          "models/citizen_clothes/hair/hair_longbrown/models/hair_longbrown.clothing",
+          "models/citizen_clothes/hair/big_scruffy_bread/big_scruffy_beard.clothing"
+        ],
+        "Color": "0,0.5,1,1"
+      },
+      {
+        "__type": "Mazing.Enemy",
+        "__guid": "393a9dd3-d2e6-42e3-a6ee-6ab4d696916d",
+        "Difficulty": 2,
+        "IsFloorTrap": false,
+        "MinLevel": 18
+      },
+      {
+        "__type": "Mazing.MeleeAttacker",
+        "__guid": "97de71fb-e310-40a2-8b63-9c5ea0ee7b69",
+        "Attacked": {
+          "__version": 7,
+          "__guid": "58604af0-cbe9-427c-b8de-593543a5201e",
+          "UserData": {
+            "Title": "Attacked",
+            "ReferencedComponentTypes": []
+          },
+          "Variables": [
+            {
+              "Name": "old hold type",
+              "Type": {
+                "$type": "Nested",
+                "DeclaringType": "Sandbox.Citizen.CitizenAnimationHelper",
+                "Name": "HoldTypes"
+              }
+            },
+            {
+              "Name": "was weapon lowered",
+              "Type": "System.Boolean"
+            }
+          ],
+          "Nodes": [
+            {
+              "Id": 0,
+              "Type": "input",
+              "UserData": {
+                "Position": "-576,-320",
+                "Labels": {
+                  "_signal": "attack"
+                }
+              }
+            },
+            {
+              "Id": 2,
+              "Type": "resource.ref",
+              "Properties": {
+                "value": "sounds/enemy/enemy.punch.sound",
+                "T": "Sandbox.SoundEvent"
+              },
+              "UserData": {
+                "Position": "-544,-48"
+              }
+            },
+            {
+              "Id": 3,
+              "Type": "sound.play",
+              "UserData": {
+                "Position": "-240,-48"
+              }
+            },
+            {
+              "Id": 8,
+              "Type": "scene.ref",
+              "Properties": {
+                "component": {
+                  "_type": "component",
+                  "component_id": "bf41de05-7f34-46f5-a13c-600fc36e7a1a",
+                  "go": "c7e51f88-4346-4332-91ab-5ac907297bf4",
+                  "component_type": "CitizenAnimationHelper"
+                }
+              },
+              "UserData": {
+                "Position": "-672,-432",
+                "Labels": {
+                  "_result": "anim helper"
+                }
+              }
+            },
+            {
+              "Id": 9,
+              "Type": "property",
+              "Properties": {
+                "_name": "IsWeaponLowered",
+                "_type": "Sandbox.Citizen.CitizenAnimationHelper"
+              },
+              "UserData": {
+                "Position": "48,-48"
+              }
+            },
+            {
+              "Id": 12,
+              "Type": "property",
+              "Properties": {
+                "_type": "Sandbox.Citizen.CitizenAnimationHelper",
+                "_name": "HoldType",
+                "_kind": "Set"
+              },
+              "UserData": {
+                "Position": "480,-48"
+              }
+            },
+            {
+              "Id": 19,
+              "Type": "scene.ref",
+              "Properties": {
+                "component": {
+                  "_type": "component",
+                  "component_id": "9102ce73-149c-4b0d-9947-3c3f25d50c90",
+                  "go": "c7e51f88-4346-4332-91ab-5ac907297bf4",
+                  "component_type": "SkinnedModelRenderer"
+                }
+              },
+              "UserData": {
+                "Position": "-656,-512",
+                "Labels": {
+                  "_result": "renderer"
+                }
+              }
+            },
+            {
+              "Id": 20,
+              "Type": "call",
+              "Properties": {
+                "_name": "Set",
+                "_isStatic": false,
+                "_type": "Sandbox.SkinnedModelRenderer"
+              },
+              "UserData": {
+                "Position": "864,-48",
+                "Labels": {
+                  "_signal": "post attack"
+                }
+              }
+            },
+            {
+              "Id": 25,
+              "Type": "time.delayobj",
+              "UserData": {
+                "Position": "-128,240"
+              }
+            },
+            {
+              "Id": 29,
+              "Type": "property",
+              "Properties": {
+                "_kind": "Set",
+                "_name": "IsWeaponLowered",
+                "_type": "Sandbox.Citizen.CitizenAnimationHelper"
+              },
+              "UserData": {
+                "Position": "176,240"
+              }
+            },
+            {
+              "Id": 36,
+              "Type": "comment",
+              "UserData": {
+                "Position": "-576,-128",
+                "Size": "1792,210",
+                "Title": "Attack effects",
+                "Layer": 2,
+                "Color": 1
+              }
+            },
+            {
+              "Id": 37,
+              "Type": "comment",
+              "UserData": {
+                "Position": "-256,160",
+                "Size": "1184,224",
+                "Title": "Post attack",
+                "Color": 3,
+                "Layer": 1
+              }
+            },
+            {
+              "Id": 39,
+              "Type": "property",
+              "Properties": {
+                "_kind": "Set",
+                "_name": "HoldType",
+                "_type": "Sandbox.Citizen.CitizenAnimationHelper"
+              },
+              "UserData": {
+                "Position": "624,240"
+              }
+            }
+          ],
+          "Links": [
+            {
+              "SrcId": 0,
+              "SrcName": "_signal",
+              "DstId": 3,
+              "DstName": "_signal"
+            },
+            {
+              "SrcId": 0,
+              "SrcName": "_target",
+              "DstId": 3,
+              "DstName": "_this"
+            },
+            {
+              "SrcId": 2,
+              "SrcName": "_result",
+              "DstId": 3,
+              "DstName": "soundEvent"
+            },
+            {
+              "SrcId": 3,
+              "SrcName": "_signal",
+              "DstId": 9,
+              "DstName": "_signal"
+            },
+            {
+              "SrcId": 8,
+              "SrcName": "_result",
+              "DstId": 9,
+              "DstName": "_target"
+            },
+            {
+              "Value": false,
+              "DstId": 9,
+              "DstName": "_value"
+            },
+            {
+              "SrcId": 9,
+              "SrcName": "_signal",
+              "DstId": 12,
+              "DstName": "_signal"
+            },
+            {
+              "SrcId": 8,
+              "SrcName": "_result",
+              "DstId": 12,
+              "DstName": "_target"
+            },
+            {
+              "Value": "Punch",
+              "DstId": 12,
+              "DstName": "_value"
+            },
+            {
+              "SrcId": 12,
+              "SrcName": "_signal",
+              "DstId": 20,
+              "DstName": "_signal"
+            },
+            {
+              "SrcId": 19,
+              "SrcName": "_result",
+              "DstId": 20,
+              "DstName": "_target"
+            },
+            {
+              "Value": "b_attack",
+              "DstId": 20,
+              "DstName": "v"
+            },
+            {
+              "Value": true,
+              "DstId": 20,
+              "DstName": "value"
+            },
+            {
+              "SrcId": 20,
+              "SrcName": "_signal",
+              "DstId": 25,
+              "DstName": "_signal"
+            },
+            {
+              "Value": 0.8,
+              "DstId": 25,
+              "DstName": "seconds"
+            },
+            {
+              "SrcId": 0,
+              "SrcName": "_target",
+              "DstId": 25,
+              "DstName": "target"
+            },
+            {
+              "SrcId": 25,
+              "SrcName": "_signal",
+              "DstId": 29,
+              "DstName": "_signal"
+            },
+            {
+              "SrcId": 8,
+              "SrcName": "_result",
+              "DstId": 29,
+              "DstName": "_target"
+            },
+            {
+              "Value": true,
+              "DstId": 29,
+              "DstName": "_value"
+            },
+            {
+              "SrcId": 29,
+              "SrcName": "_signal",
+              "DstId": 39,
+              "DstName": "_signal"
+            },
+            {
+              "SrcId": 8,
+              "SrcName": "_result",
+              "DstId": 39,
+              "DstName": "_target"
+            },
+            {
+              "Value": "HoldItem",
+              "DstId": 39,
+              "DstName": "_value"
+            }
+          ],
+          "Defaults": {
+            "$8.component": {
+              "_type": "component",
+              "component_id": "bf41de05-7f34-46f5-a13c-600fc36e7a1a",
+              "go": "c7e51f88-4346-4332-91ab-5ac907297bf4",
+              "component_type": "CitizenAnimationHelper"
+            },
+            "$19.component": {
+              "_type": "component",
+              "component_id": "9102ce73-149c-4b0d-9947-3c3f25d50c90",
+              "go": "c7e51f88-4346-4332-91ab-5ac907297bf4",
+              "component_type": "SkinnedModelRenderer"
+            }
+          }
+        },
+        "NextAttack": {
+          "Fraction": "NaN"
+        },
+        "Range": 32,
+        "ResetTime": 1
+      },
+      {
+        "__type": "Mazing.Holder",
+        "__guid": "2041e3d9-9396-418f-acf6-2bdd74e002eb",
+        "AutoThrow": true,
+        "AutoThrowTime": 0.5
+      },
+      {
+        "__type": "Mazing.Holdable",
+        "__guid": "eafaca5f-fc25-4f3c-a05f-54b09da313b6",
+        "HeldTime": {},
+        "HeldVelocity": "0,0,0"
+      },
+      {
+        "__type": "Mazing.Shooter",
+        "__guid": "aa4ea5ef-6ad7-4dff-a5a8-179071ba66ec",
+        "Shot": {
+          "__version": 7,
+          "__guid": "c3539a74-edb5-4fe4-b5a8-017479e0ca52",
+          "UserData": {
+            "Title": "Shot",
+            "ReferencedComponentTypes": []
+          },
+          "Variables": [],
+          "Nodes": [
+            {
+              "Id": 0,
+              "Type": "input",
+              "UserData": {
+                "Position": "-496,0"
+              }
+            },
+            {
+              "Id": 2,
+              "Type": "scene.ref",
+              "Properties": {
+                "component": {
+                  "_type": "component",
+                  "component_id": "bf41de05-7f34-46f5-a13c-600fc36e7a1a",
+                  "go": "c7e51f88-4346-4332-91ab-5ac907297bf4",
+                  "component_type": "CitizenAnimationHelper"
+                }
+              },
+              "UserData": {
+                "Position": "16,-96",
+                "Labels": {
+                  "_result": "anim helper"
+                }
+              }
+            },
+            {
+              "Id": 3,
+              "Type": "property",
+              "Properties": {
+                "_name": "HoldType",
+                "_type": "Sandbox.Citizen.CitizenAnimationHelper"
+              },
+              "UserData": {
+                "Position": "-272,0"
+              }
+            },
+            {
+              "Id": 6,
+              "Type": "property",
+              "Properties": {
+                "_type": "Sandbox.Citizen.CitizenAnimationHelper",
+                "_name": "IsWeaponLowered"
+              },
+              "UserData": {
+                "Position": "96,0"
+              }
+            },
+            {
+              "Id": 9,
+              "Type": "time.delayobj",
+              "UserData": {
+                "Position": "-224,176"
+              }
+            },
+            {
+              "Id": 11,
+              "Type": "property",
+              "Properties": {
+                "_name": "IsWeaponLowered",
+                "_type": "Sandbox.Citizen.CitizenAnimationHelper"
+              },
+              "UserData": {
+                "Position": "64,176"
+              }
+            },
+            {
+              "Id": 17,
+              "Type": "scene.ref",
+              "Properties": {
+                "component": {
+                  "_type": "component",
+                  "component_id": "9102ce73-149c-4b0d-9947-3c3f25d50c90",
+                  "go": "c7e51f88-4346-4332-91ab-5ac907297bf4",
+                  "component_type": "SkinnedModelRenderer"
+                }
+              },
+              "UserData": {
+                "Position": "32,-192",
+                "Labels": {
+                  "_result": "renderer"
+                }
+              }
+            },
+            {
+              "Id": 25,
+              "Type": "call",
+              "Properties": {
+                "_type": "Sandbox.SkinnedModelRenderer",
+                "_name": "Set",
+                "_isStatic": false
+              },
+              "UserData": {
+                "Position": "592,-0",
+                "Labels": {
+                  "_signal": "post attack"
+                }
+              }
+            },
+            {
+              "Id": 35,
+              "Type": "property",
+              "Properties": {
+                "_type": "Sandbox.Citizen.CitizenAnimationHelper",
+                "_name": "HoldType"
+              },
+              "UserData": {
+                "Position": "480,176"
+              }
+            }
+          ],
+          "Links": [
+            {
+              "SrcId": 0,
+              "SrcName": "_signal",
+              "DstId": 3,
+              "DstName": "_signal"
+            },
+            {
+              "SrcId": 2,
+              "SrcName": "_result",
+              "DstId": 3,
+              "DstName": "_target"
+            },
+            {
+              "Value": "Punch",
+              "DstId": 3,
+              "DstName": "_value"
+            },
+            {
+              "SrcId": 3,
+              "SrcName": "_signal",
+              "DstId": 6,
+              "DstName": "_signal"
+            },
+            {
+              "SrcId": 2,
+              "SrcName": "_result",
+              "DstId": 6,
+              "DstName": "_target"
+            },
+            {
+              "Value": false,
+              "DstId": 6,
+              "DstName": "_value"
+            },
+            {
+              "SrcId": 25,
+              "SrcName": "_signal",
+              "DstId": 9,
+              "DstName": "_signal"
+            },
+            {
+              "Value": 0.5,
+              "DstId": 9,
+              "DstName": "seconds"
+            },
+            {
+              "SrcId": 0,
+              "SrcName": "_target",
+              "DstId": 9,
+              "DstName": "target"
+            },
+            {
+              "SrcId": 9,
+              "SrcName": "_signal",
+              "DstId": 11,
+              "DstName": "_signal"
+            },
+            {
+              "SrcId": 2,
+              "SrcName": "_result",
+              "DstId": 11,
+              "DstName": "_target"
+            },
+            {
+              "Value": true,
+              "DstId": 11,
+              "DstName": "_value"
+            },
+            {
+              "SrcId": 6,
+              "SrcName": "_signal",
+              "DstId": 25,
+              "DstName": "_signal"
+            },
+            {
+              "SrcId": 17,
+              "SrcName": "_result",
+              "DstId": 25,
+              "DstName": "_target"
+            },
+            {
+              "Value": "b_attack",
+              "DstId": 25,
+              "DstName": "v"
+            },
+            {
+              "Value": true,
+              "DstId": 25,
+              "DstName": "value"
+            },
+            {
+              "SrcId": 11,
+              "SrcName": "_signal",
+              "DstId": 35,
+              "DstName": "_signal"
+            },
+            {
+              "SrcId": 2,
+              "SrcName": "_result",
+              "DstId": 35,
+              "DstName": "_target"
+            },
+            {
+              "Value": "None",
+              "DstId": 35,
+              "DstName": "_value"
+            }
+          ],
+          "Defaults": {
+            "$2.component": {
+              "_type": "component",
+              "component_id": "bf41de05-7f34-46f5-a13c-600fc36e7a1a",
+              "go": "c7e51f88-4346-4332-91ab-5ac907297bf4",
+              "component_type": "CitizenAnimationHelper"
+            },
+            "$17.component": {
+              "_type": "component",
+              "component_id": "9102ce73-149c-4b0d-9947-3c3f25d50c90",
+              "go": "c7e51f88-4346-4332-91ab-5ac907297bf4",
+              "component_type": "SkinnedModelRenderer"
+            }
+          }
+        },
+        "ProjectilePrefab": {
+          "_type": "gameobject",
+          "prefab": "prefabs/projectiles/wallbanger_bolt.prefab"
+        }
+      },
+      {
+        "__type": "Mazing.Teleporter",
+        "__guid": "680e5f65-fdb1-424a-8eab-10a9035920f7",
+        "Arrived": {
+          "__version": 7,
+          "__guid": "b7657520-523f-459d-aa5b-9172e23b0b61",
+          "UserData": {
+            "Title": "Arrived",
+            "ReferencedComponentTypes": []
+          },
+          "Variables": [],
+          "Nodes": [
+            {
+              "Id": 0,
+              "Type": "input",
+              "UserData": {
+                "Position": "-336,-0"
+              }
+            },
+            {
+              "Id": 2,
+              "Type": "resource.ref",
+              "Properties": {
+                "value": "sounds/enemy/wizard.appear.sound",
+                "T": "Sandbox.SoundEvent"
+              },
+              "UserData": {
+                "Position": "-96,224"
+              }
+            },
+            {
+              "Id": 3,
+              "Type": "sound.play",
+              "UserData": {
+                "Position": "240,-0"
+              }
+            },
+            {
+              "Id": 4,
+              "Type": "time.delayobj",
+              "UserData": {
+                "Position": "480,0"
+              }
+            },
+            {
+              "Id": 9,
+              "Type": "scene.ref",
+              "Properties": {
+                "component": {
+                  "_type": "component",
+                  "component_id": "bf41de05-7f34-46f5-a13c-600fc36e7a1a",
+                  "go": "c7e51f88-4346-4332-91ab-5ac907297bf4",
+                  "component_type": "CitizenAnimationHelper"
+                }
+              },
+              "UserData": {
+                "Position": "400,128"
+              }
+            },
+            {
+              "Id": 10,
+              "Type": "property",
+              "Properties": {
+                "_kind": "Set",
+                "_name": "HoldType",
+                "_type": "Sandbox.Citizen.CitizenAnimationHelper"
+              },
+              "UserData": {
+                "Position": "736,0"
+              }
+            },
+            {
+              "Id": 14,
+              "Type": "resource.ref",
+              "Properties": {
+                "value": "prefabs/particles/wallbanger_appear.prefab",
+                "T": "Sandbox.PrefabFile"
+              },
+              "UserData": {
+                "Position": "-384,64"
+              }
+            },
+            {
+              "Id": 15,
+              "Type": "scene.instantiate",
+              "UserData": {
+                "Position": "-96,-0"
+              }
+            },
+            {
+              "Id": 18,
+              "Type": "scene.ref",
+              "Properties": {
+                "component": {
+                  "_type": "component",
+                  "component_id": "680e5f65-fdb1-424a-8eab-10a9035920f7",
+                  "go": "c7e51f88-4346-4332-91ab-5ac907297bf4",
+                  "component_type": "Teleporter"
+                }
+              },
+              "UserData": {
+                "Position": "-384,176"
+              }
+            },
+            {
+              "Id": 19,
+              "Type": "property",
+              "ParentId": 18,
+              "Properties": {
+                "_name": "ArrivePosition",
+                "_type": "Mazing.Teleporter"
+              }
+            }
+          ],
+          "Links": [
+            {
+              "SrcId": 15,
+              "SrcName": "_signal",
+              "DstId": 3,
+              "DstName": "_signal"
+            },
+            {
+              "SrcId": 0,
+              "SrcName": "_target",
+              "DstId": 3,
+              "DstName": "_this"
+            },
+            {
+              "SrcId": 2,
+              "SrcName": "_result",
+              "DstId": 3,
+              "DstName": "soundEvent"
+            },
+            {
+              "SrcId": 3,
+              "SrcName": "_signal",
+              "DstId": 4,
+              "DstName": "_signal"
+            },
+            {
+              "Value": 0.5,
+              "DstId": 4,
+              "DstName": "seconds"
+            },
+            {
+              "SrcId": 0,
+              "SrcName": "_target",
+              "DstId": 4,
+              "DstName": "target"
+            },
+            {
+              "SrcId": 4,
+              "SrcName": "_signal",
+              "DstId": 10,
+              "DstName": "_signal"
+            },
+            {
+              "SrcId": 9,
+              "SrcName": "_result",
+              "DstId": 10,
+              "DstName": "_target"
+            },
+            {
+              "Value": "None",
+              "DstId": 10,
+              "DstName": "_value"
+            },
+            {
+              "SrcId": 0,
+              "SrcName": "_signal",
+              "DstId": 15,
+              "DstName": "_signal"
+            },
+            {
+              "SrcId": 19,
+              "SrcName": "_result",
+              "DstId": 15,
+              "DstName": "position"
+            },
+            {
+              "SrcId": 14,
+              "SrcName": "_result",
+              "DstId": 15,
+              "DstName": "prefab"
+            },
+            {
+              "SrcId": 18,
+              "SrcName": "_result",
+              "DstId": 19,
+              "DstName": "_target"
+            }
+          ],
+          "Defaults": {
+            "$9.component": {
+              "_type": "component",
+              "component_id": "bf41de05-7f34-46f5-a13c-600fc36e7a1a",
+              "go": "c7e51f88-4346-4332-91ab-5ac907297bf4",
+              "component_type": "CitizenAnimationHelper"
+            },
+            "$18.component": {
+              "_type": "component",
+              "component_id": "680e5f65-fdb1-424a-8eab-10a9035920f7",
+              "go": "c7e51f88-4346-4332-91ab-5ac907297bf4",
+              "component_type": "Teleporter"
+            }
+          }
+        },
+        "ChargingUp": {
+          "__version": 7,
+          "__guid": "1ba62102-7dae-4793-9653-d2d9d8305d71",
+          "UserData": {
+            "Title": "Charging Up",
+            "ReferencedComponentTypes": []
+          },
+          "Variables": [],
+          "Nodes": [
+            {
+              "Id": 0,
+              "Type": "input"
+            },
+            {
+              "Id": 2,
+              "Type": "scene.ref",
+              "Properties": {
+                "component": {
+                  "_type": "component",
+                  "component_id": "bf41de05-7f34-46f5-a13c-600fc36e7a1a",
+                  "go": "c7e51f88-4346-4332-91ab-5ac907297bf4",
+                  "component_type": "CitizenAnimationHelper"
+                }
+              },
+              "UserData": {
+                "Position": "-32,64"
+              }
+            },
+            {
+              "Id": 3,
+              "Type": "property",
+              "Properties": {
+                "_name": "HoldType",
+                "_type": "Sandbox.Citizen.CitizenAnimationHelper"
+              },
+              "UserData": {
+                "Position": "320,16"
+              }
+            }
+          ],
+          "Links": [
+            {
+              "SrcId": 0,
+              "SrcName": "_signal",
+              "DstId": 3,
+              "DstName": "_signal"
+            },
+            {
+              "SrcId": 2,
+              "SrcName": "_result",
+              "DstId": 3,
+              "DstName": "_target"
+            },
+            {
+              "Value": "Shotgun",
+              "DstId": 3,
+              "DstName": "_value"
+            }
+          ],
+          "Defaults": {
+            "$2.component": {
+              "_type": "component",
+              "component_id": "bf41de05-7f34-46f5-a13c-600fc36e7a1a",
+              "go": "c7e51f88-4346-4332-91ab-5ac907297bf4",
+              "component_type": "CitizenAnimationHelper"
+            }
+          }
+        },
+        "Departed": {
+          "__version": 7,
+          "__guid": "355ace6f-54eb-4e9b-93c8-7c0f2dd0dd4b",
+          "UserData": {
+            "Title": "Departed",
+            "ReferencedComponentTypes": []
+          },
+          "Variables": [],
+          "Nodes": [
+            {
+              "Id": 0,
+              "Type": "input"
+            },
+            {
+              "Id": 3,
+              "Type": "resource.ref",
+              "Properties": {
+                "value": "sounds/enemy/wizard.portal.sound",
+                "T": "Sandbox.SoundEvent"
+              },
+              "UserData": {
+                "Position": "-48,64"
+              }
+            },
+            {
+              "Id": 4,
+              "Type": "sound.play",
+              "UserData": {
+                "Position": "240,0"
+              }
+            },
+            {
+              "Id": 6,
+              "Type": "resource.ref",
+              "Properties": {
+                "value": "prefabs/particles/wallbanger_appear.prefab",
+                "T": "Sandbox.PrefabFile"
+              },
+              "UserData": {
+                "Position": "224,96"
+              }
+            },
+            {
+              "Id": 8,
+              "Type": "resource.ref",
+              "Properties": {
+                "value": "prefabs/particles/wallbanger_chargeup.prefab",
+                "T": "Sandbox.PrefabFile"
+              },
+              "UserData": {
+                "Position": "208,240"
+              }
+            },
+            {
+              "Id": 9,
+              "Type": "scene.instantiate",
+              "UserData": {
+                "Position": "512,-0"
+              }
+            },
+            {
+              "Id": 11,
+              "Type": "scene.ref",
+              "Properties": {
+                "component": {
+                  "_type": "component",
+                  "component_id": "680e5f65-fdb1-424a-8eab-10a9035920f7",
+                  "go": "c7e51f88-4346-4332-91ab-5ac907297bf4",
+                  "component_type": "Teleporter"
+                }
+              },
+              "UserData": {
+                "Position": "-64,-224",
+                "Labels": {
+                  "_result": "teleporter"
+                }
+              }
+            },
+            {
+              "Id": 12,
+              "Type": "property",
+              "Properties": {
+                "_name": "DepartPosition",
+                "_type": "Mazing.Teleporter"
+              },
+              "UserData": {
+                "Position": "192,-128"
+              }
+            },
+            {
+              "Id": 13,
+              "Type": "scene.instantiate",
+              "UserData": {
+                "Position": "512,240"
+              }
+            },
+            {
+              "Id": 14,
+              "Type": "property",
+              "Properties": {
+                "_name": "ArrivePosition",
+                "_type": "Mazing.Teleporter"
+              },
+              "UserData": {
+                "Position": "192,368"
+              }
+            }
+          ],
+          "Links": [
+            {
+              "SrcId": 0,
+              "SrcName": "_signal",
+              "DstId": 4,
+              "DstName": "_signal"
+            },
+            {
+              "SrcId": 0,
+              "SrcName": "_target",
+              "DstId": 4,
+              "DstName": "_this"
+            },
+            {
+              "SrcId": 3,
+              "SrcName": "_result",
+              "DstId": 4,
+              "DstName": "soundEvent"
+            },
+            {
+              "SrcId": 4,
+              "SrcName": "_signal",
+              "DstId": 9,
+              "DstName": "_signal"
+            },
+            {
+              "SrcId": 12,
+              "SrcName": "_result",
+              "DstId": 9,
+              "DstName": "position"
+            },
+            {
+              "SrcId": 6,
+              "SrcName": "_result",
+              "DstId": 9,
+              "DstName": "prefab"
+            },
+            {
+              "SrcId": 11,
+              "SrcName": "_result",
+              "DstId": 12,
+              "DstName": "_target"
+            },
+            {
+              "SrcId": 4,
+              "SrcName": "_signal",
+              "DstId": 13,
+              "DstName": "_signal"
+            },
+            {
+              "SrcId": 14,
+              "SrcName": "_result",
+              "DstId": 13,
+              "DstName": "position"
+            },
+            {
+              "SrcId": 8,
+              "SrcName": "_result",
+              "DstId": 13,
+              "DstName": "prefab"
+            },
+            {
+              "SrcId": 11,
+              "SrcName": "_result",
+              "DstId": 14,
+              "DstName": "_target"
+            }
+          ],
+          "Defaults": {
+            "$11.component": {
+              "_type": "component",
+              "component_id": "680e5f65-fdb1-424a-8eab-10a9035920f7",
+              "go": "c7e51f88-4346-4332-91ab-5ac907297bf4",
+              "component_type": "Teleporter"
+            }
+          }
+        },
+        "ArriveDirection": "West",
+        "ArrivePosition": "0,0,0",
+        "DepartDirection": "West",
+        "DepartPosition": "0,0,0",
+        "MaxPlayerDistance": 8,
+        "MinPlayerDistance": 1,
+        "OnComponentStart": {
+          "__version": 7,
+          "__guid": "a0d53746-0953-4066-84a6-6bd598ba3ee2",
+          "UserData": {
+            "Title": "On Component Start",
+            "ReferencedComponentTypes": []
+          },
+          "Variables": [],
+          "Nodes": [
+            {
+              "Id": 0,
+              "Type": "input",
+              "UserData": {
+                "Position": "-288,-48"
+              }
+            },
+            {
+              "Id": 4,
+              "Type": "property",
+              "Properties": {
+                "_name": "Enabled",
+                "_type": "Sandbox.GameObject"
+              },
+              "UserData": {
+                "Position": "608,-0"
+              }
+            },
+            {
+              "Id": 7,
+              "Type": "property",
+              "Properties": {
+                "_name": "Scene",
+                "_type": "Sandbox.GameObject"
+              },
+              "UserData": {
+                "Position": "176,-256",
+                "Labels": {
+                  "_result": "scene"
+                }
+              }
+            },
+            {
+              "Id": 8,
+              "Type": "time.delayobj",
+              "UserData": {
+                "Position": "928,0"
+              }
+            },
+            {
+              "Id": 14,
+              "Type": "random.float",
+              "UserData": {
+                "Position": "176,-352",
+                "Labels": {
+                  "_result": "spawn delay"
+                }
+              }
+            },
+            {
+              "Id": 18,
+              "Type": "scene.ref",
+              "Properties": {
+                "component": {
+                  "_type": "component",
+                  "component_id": "680e5f65-fdb1-424a-8eab-10a9035920f7",
+                  "go": "c7e51f88-4346-4332-91ab-5ac907297bf4",
+                  "component_type": "Teleporter"
+                }
+              },
+              "UserData": {
+                "Position": "176,-192",
+                "Labels": {
+                  "_result": "teleporter"
+                }
+              }
+            },
+            {
+              "Id": 19,
+              "Type": "call",
+              "Properties": {
+                "_name": "Arrive",
+                "_isStatic": false,
+                "_type": "Mazing.Teleporter"
+              },
+              "UserData": {
+                "Position": "-288,160"
+              }
+            },
+            {
+              "Id": 20,
+              "Type": "mazing.isproxy",
+              "UserData": {
+                "Position": "-272,32"
+              }
+            },
+            {
+              "Id": 21,
+              "Type": "if",
+              "UserData": {
+                "Position": "-80,-48"
+              }
+            },
+            {
+              "Id": 25,
+              "Type": "time.delayobj",
+              "UserData": {
+                "Position": "-48,160"
+              }
+            },
+            {
+              "Id": 26,
+              "Type": "scene.ref",
+              "Properties": {
+                "component": {
+                  "_type": "component",
+                  "component_id": "aa4ea5ef-6ad7-4dff-a5a8-179071ba66ec",
+                  "go": "c7e51f88-4346-4332-91ab-5ac907297bf4",
+                  "component_type": "Shooter"
+                }
+              },
+              "UserData": {
+                "Position": "176,-128",
+                "Labels": {
+                  "_result": "shooter"
+                }
+              }
+            },
+            {
+              "Id": 27,
+              "Type": "call",
+              "Properties": {
+                "_name": "Shoot",
+                "_isStatic": false,
+                "_type": "Mazing.Shooter"
+              },
+              "UserData": {
+                "Position": "192,160"
+              }
+            },
+            {
+              "Id": 28,
+              "Type": "time.delayobj",
+              "UserData": {
+                "Position": "416,160"
+              }
+            },
+            {
+              "Id": 30,
+              "Type": "call",
+              "Properties": {
+                "_name": "Depart",
+                "_isStatic": false,
+                "_type": "Mazing.Teleporter"
+              },
+              "UserData": {
+                "Position": "1136,160"
+              }
+            },
+            {
+              "Id": 35,
+              "Type": "while",
+              "UserData": {
+                "Position": "1360,0",
+                "Labels": {
+                  "body": "Main Loop"
+                }
+              }
+            },
+            {
+              "Id": 37,
+              "Type": "mazing.isvalid",
+              "UserData": {
+                "Position": "1136,32"
+              }
+            },
+            {
+              "Id": 45,
+              "Type": "time.delayobj",
+              "UserData": {
+                "Position": "1392,160"
+              }
+            },
+            {
+              "Id": 56,
+              "Type": "call",
+              "Properties": {
+                "_name": "ChargeUp",
+                "_isStatic": false,
+                "_type": "Mazing.Teleporter"
+              },
+              "UserData": {
+                "Position": "672,160"
+              }
+            },
+            {
+              "Id": 58,
+              "Type": "time.delayobj",
+              "UserData": {
+                "Position": "896,160"
+              }
+            },
+            {
+              "Id": 66,
+              "Type": "call",
+              "Properties": {
+                "_name": "DispatchDeparted",
+                "_isStatic": false,
+                "_type": "Mazing.Teleporter"
+              },
+              "UserData": {
+                "Position": "192,-0"
+              }
+            }
+          ],
+          "Links": [
+            {
+              "SrcId": 66,
+              "SrcName": "_signal",
+              "DstId": 4,
+              "DstName": "_signal"
+            },
+            {
+              "SrcId": 0,
+              "SrcName": "_target",
+              "DstId": 4,
+              "DstName": "_target"
+            },
+            {
+              "Value": false,
+              "DstId": 4,
+              "DstName": "_value"
+            },
+            {
+              "SrcId": 0,
+              "SrcName": "_target",
+              "DstId": 7,
+              "DstName": "_target"
+            },
+            {
+              "SrcId": 4,
+              "SrcName": "_signal",
+              "DstId": 8,
+              "DstName": "_signal"
+            },
+            {
+              "SrcId": 14,
+              "SrcName": "_result",
+              "DstId": 8,
+              "DstName": "seconds"
+            },
+            {
+              "SrcId": 7,
+              "SrcName": "_result",
+              "DstId": 8,
+              "DstName": "target"
+            },
+            {
+              "Value": 4,
+              "DstId": 14,
+              "DstName": "max"
+            },
+            {
+              "Value": 3,
+              "DstId": 14,
+              "DstName": "min"
+            },
+            {
+              "SrcId": 35,
+              "SrcName": "body",
+              "DstId": 19,
+              "DstName": "_signal"
+            },
+            {
+              "SrcId": 18,
+              "SrcName": "_result",
+              "DstId": 19,
+              "DstName": "_target"
+            },
+            {
+              "SrcId": 0,
+              "SrcName": "_target",
+              "DstId": 20,
+              "DstName": "go"
+            },
+            {
+              "SrcId": 0,
+              "SrcName": "_signal",
+              "DstId": 21,
+              "DstName": "_signal"
+            },
+            {
+              "SrcId": 20,
+              "SrcName": "_result",
+              "DstId": 21,
+              "DstName": "condition"
+            },
+            {
+              "SrcId": 19,
+              "SrcName": "_signal",
+              "DstId": 25,
+              "DstName": "_signal"
+            },
+            {
+              "Value": 1,
+              "DstId": 25,
+              "DstName": "seconds"
+            },
+            {
+              "SrcId": 0,
+              "SrcName": "_target",
+              "DstId": 25,
+              "DstName": "target"
+            },
+            {
+              "SrcId": 25,
+              "SrcName": "_signal",
+              "DstId": 27,
+              "DstName": "_signal"
+            },
+            {
+              "SrcId": 26,
+              "SrcName": "_result",
+              "DstId": 27,
+              "DstName": "_target"
+            },
+            {
+              "SrcId": 27,
+              "SrcName": "_signal",
+              "DstId": 28,
+              "DstName": "_signal"
+            },
+            {
+              "Value": 2.5,
+              "DstId": 28,
+              "DstName": "seconds"
+            },
+            {
+              "SrcId": 0,
+              "SrcName": "_target",
+              "DstId": 28,
+              "DstName": "target"
+            },
+            {
+              "SrcId": 58,
+              "SrcName": "_signal",
+              "DstId": 30,
+              "DstName": "_signal"
+            },
+            {
+              "SrcId": 18,
+              "SrcName": "_result",
+              "DstId": 30,
+              "DstName": "_target"
+            },
+            {
+              "SrcId": 8,
+              "SrcName": "_signal",
+              "DstId": 35,
+              "DstName": "_signal"
+            },
+            {
+              "SrcId": 37,
+              "SrcName": "_result",
+              "DstId": 35,
+              "DstName": "condition"
+            },
+            {
+              "SrcId": 0,
+              "SrcName": "_target",
+              "DstId": 37,
+              "DstName": "go"
+            },
+            {
+              "SrcId": 30,
+              "SrcName": "_signal",
+              "DstId": 45,
+              "DstName": "_signal"
+            },
+            {
+              "Value": 3,
+              "DstId": 45,
+              "DstName": "seconds"
+            },
+            {
+              "SrcId": 7,
+              "SrcName": "_result",
+              "DstId": 45,
+              "DstName": "target"
+            },
+            {
+              "SrcId": 28,
+              "SrcName": "_signal",
+              "DstId": 56,
+              "DstName": "_signal"
+            },
+            {
+              "SrcId": 18,
+              "SrcName": "_result",
+              "DstId": 56,
+              "DstName": "_target"
+            },
+            {
+              "SrcId": 56,
+              "SrcName": "_signal",
+              "DstId": 58,
+              "DstName": "_signal"
+            },
+            {
+              "Value": 0.5,
+              "DstId": 58,
+              "DstName": "seconds"
+            },
+            {
+              "SrcId": 0,
+              "SrcName": "_target",
+              "DstId": 58,
+              "DstName": "target"
+            },
+            {
+              "SrcId": 21,
+              "SrcName": "false",
+              "DstId": 66,
+              "DstName": "_signal"
+            },
+            {
+              "SrcId": 18,
+              "SrcName": "_result",
+              "DstId": 66,
+              "DstName": "_target"
+            }
+          ],
+          "Defaults": {
+            "$18.component": {
+              "_type": "component",
+              "component_id": "680e5f65-fdb1-424a-8eab-10a9035920f7",
+              "go": "c7e51f88-4346-4332-91ab-5ac907297bf4",
+              "component_type": "Teleporter"
+            },
+            "$26.component": {
+              "_type": "component",
+              "component_id": "aa4ea5ef-6ad7-4dff-a5a8-179071ba66ec",
+              "go": "c7e51f88-4346-4332-91ab-5ac907297bf4",
+              "component_type": "Shooter"
+            }
+          }
+        }
+      }
+    ],
+    "Children": [
+      {
+        "__guid": "cb9d8af5-f11a-4046-988f-92923037c3e5",
+        "Flags": 0,
+        "Name": "Eyes",
+        "Position": "0,0,64",
+        "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkInterpolation": true
+      },
+      {
+        "__guid": "22bc318f-d885-4d9e-97e8-e597db526d03",
+        "Flags": 0,
+        "Name": "Clothing - office_skirt",
+        "Tags": "clothing",
+        "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkInterpolation": true,
+        "Components": [
+          {
+            "__type": "Sandbox.SkinnedModelRenderer",
+            "__guid": "06674f89-8cc9-4c00-92d7-f463498d883a",
+            "BodyGroups": 18446744073709551615,
+            "BoneMergeTarget": {
+              "_type": "component",
+              "component_id": "9102ce73-149c-4b0d-9947-3c3f25d50c90",
+              "go": "c7e51f88-4346-4332-91ab-5ac907297bf4",
+              "component_type": "SkinnedModelRenderer"
+            },
+            "CreateBoneObjects": false,
+            "Model": "models/citizen_clothes/dress/office_skirt/models/office_skirt.vmdl",
+            "RenderType": "On",
+            "Tint": "0,0.5,1,1"
+          }
+        ]
+      },
+      {
+        "__guid": "6074854c-e17d-437b-8fe4-b41cdef1779d",
+        "Flags": 0,
+        "Name": "Clothing - long_white_gloves",
+        "Tags": "clothing",
+        "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkInterpolation": true,
+        "Components": [
+          {
+            "__type": "Sandbox.SkinnedModelRenderer",
+            "__guid": "17530d1a-1d98-412d-a26f-ba664b2f4973",
+            "BodyGroups": 18446744073709551615,
+            "BoneMergeTarget": {
+              "_type": "component",
+              "component_id": "9102ce73-149c-4b0d-9947-3c3f25d50c90",
+              "go": "c7e51f88-4346-4332-91ab-5ac907297bf4",
+              "component_type": "SkinnedModelRenderer"
+            },
+            "CreateBoneObjects": false,
+            "Model": "models/citizen_clothes/gloves/long_white_gloves/models/long_white_gloves.vmdl",
+            "RenderType": "On",
+            "Tint": "0,0.5,1,1"
+          }
+        ]
+      },
+      {
+        "__guid": "a5004b69-7504-4d23-a09d-5e926bed54d7",
+        "Flags": 0,
+        "Name": "Clothing - hair_longbrown",
+        "Tags": "clothing",
+        "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkInterpolation": true,
+        "Components": [
+          {
+            "__type": "Sandbox.SkinnedModelRenderer",
+            "__guid": "0aa99ef5-9897-42bf-8773-444c13ffcb9c",
+            "BodyGroups": 18446744073709551615,
+            "BoneMergeTarget": {
+              "_type": "component",
+              "component_id": "9102ce73-149c-4b0d-9947-3c3f25d50c90",
+              "go": "c7e51f88-4346-4332-91ab-5ac907297bf4",
+              "component_type": "SkinnedModelRenderer"
+            },
+            "CreateBoneObjects": false,
+            "MaterialGroup": "Medium Hair",
+            "Model": "models/citizen_clothes/hair/hair_longbrown/models/hair_longbrown.vmdl",
+            "RenderType": "On",
+            "Tint": "0,0.5,1,1"
+          }
+        ]
+      },
+      {
+        "__guid": "809d74d7-752e-40af-bb16-2b278ec0720f",
+        "Flags": 0,
+        "Name": "Clothing - big_scruffy_beard",
+        "Tags": "clothing",
+        "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkInterpolation": true,
+        "Components": [
+          {
+            "__type": "Sandbox.SkinnedModelRenderer",
+            "__guid": "61b0e3c1-c15a-4a5d-85be-b714212d7c31",
+            "BodyGroups": 18446744073709551615,
+            "BoneMergeTarget": {
+              "_type": "component",
+              "component_id": "9102ce73-149c-4b0d-9947-3c3f25d50c90",
+              "go": "c7e51f88-4346-4332-91ab-5ac907297bf4",
+              "component_type": "SkinnedModelRenderer"
+            },
+            "CreateBoneObjects": false,
+            "Model": "models/citizen_clothes/hair/big_scruffy_bread/models/big_scruffy_beard.vmdl",
+            "RenderType": "On",
+            "Tint": "0,0.5,1,1"
+          }
+        ]
+      }
+    ]
+  },
+  "ShowInMenu": false,
+  "MenuPath": null,
+  "MenuIcon": null,
+  "ResourceVersion": 1,
+  "__references": [],
+  "__version": 1
+}

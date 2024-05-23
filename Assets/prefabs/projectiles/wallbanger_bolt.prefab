@@ -1,0 +1,776 @@
+{
+  "RootObject": {
+    "__guid": "ae016aec-af93-4394-8b41-4ece3edf2634",
+    "Flags": 0,
+    "Name": "wallbanger_bolt",
+    "Enabled": true,
+    "NetworkMode": 1,
+    "NetworkInterpolation": true,
+    "Components": [
+      {
+        "__type": "Mazing.Projectile",
+        "__guid": "a079fd89-7c9f-4611-b8e1-154f9a29e4ca",
+        "HitPlayer": {
+          "__version": 7,
+          "__guid": "67c16583-a4c4-4e09-8ee2-efe680dd217a",
+          "UserData": {
+            "Title": "Hit Player",
+            "ReferencedComponentTypes": []
+          },
+          "Variables": [],
+          "Nodes": [
+            {
+              "Id": 0,
+              "Type": "input"
+            },
+            {
+              "Id": 6,
+              "Type": "resource.ref",
+              "Properties": {
+                "value": "sounds/enemy/wizard.boltkill.sound",
+                "T": "Sandbox.SoundEvent"
+              },
+              "UserData": {
+                "Position": "-32,128"
+              }
+            },
+            {
+              "Id": 7,
+              "Type": "sound.play",
+              "UserData": {
+                "Position": "304,32"
+              }
+            }
+          ],
+          "Links": [
+            {
+              "SrcId": 0,
+              "SrcName": "_signal",
+              "DstId": 7,
+              "DstName": "_signal"
+            },
+            {
+              "SrcId": 0,
+              "SrcName": "_target",
+              "DstId": 7,
+              "DstName": "_this"
+            },
+            {
+              "SrcId": 6,
+              "SrcName": "_result",
+              "DstId": 7,
+              "DstName": "soundEvent"
+            }
+          ]
+        },
+        "HitWall": {
+          "__version": 7,
+          "__guid": "c4204afd-1483-482f-a5c0-de8a6b6f1881",
+          "UserData": {
+            "Title": "Hit Wall",
+            "ReferencedComponentTypes": []
+          },
+          "Variables": [],
+          "Nodes": [
+            {
+              "Id": 1,
+              "Type": "input",
+              "UserData": {
+                "Position": "-928,96"
+              }
+            },
+            {
+              "Id": 5,
+              "Type": "property",
+              "Properties": {
+                "_type": "Sandbox.Component",
+                "_name": "Enabled"
+              },
+              "UserData": {
+                "Position": "336,96"
+              }
+            },
+            {
+              "Id": 6,
+              "Type": "resource.ref",
+              "Properties": {
+                "T": "Sandbox.SoundEvent",
+                "value": "sounds/enemy/wizard.bolthitwall.sound"
+              },
+              "UserData": {
+                "Position": "336,224"
+              }
+            },
+            {
+              "Id": 7,
+              "Type": "sound.play",
+              "UserData": {
+                "Position": "672,96"
+              }
+            },
+            {
+              "Id": 11,
+              "Type": "scene.ref",
+              "Properties": {
+                "component": {
+                  "_type": "component",
+                  "component_id": "7cedd08e-ffb9-4a5a-a815-e0419c04ab97",
+                  "go": "de408683-a303-4407-946e-cd93f744a02b",
+                  "component_type": "ParticleSphereEmitter"
+                }
+              },
+              "UserData": {
+                "Position": "-1040,-32",
+                "Labels": {
+                  "_result": "explode emitter"
+                }
+              }
+            },
+            {
+              "Id": 13,
+              "Type": "op.not",
+              "UserData": {
+                "Position": "-640,240",
+                "Labels": {
+                  "_result": "not final hit"
+                }
+              }
+            },
+            {
+              "Id": 20,
+              "Type": "scene.ref",
+              "Properties": {
+                "component": {
+                  "_type": "component",
+                  "component_id": "5bdc1d79-8626-4a5c-ab3a-65cd2ad58203",
+                  "go": "aab3d094-a2ea-4370-94c8-f67fdbc10d62",
+                  "component_type": "ParticleSphereEmitter"
+                }
+              },
+              "UserData": {
+                "Position": "-48,192"
+              }
+            },
+            {
+              "Id": 23,
+              "Type": "property",
+              "Properties": {
+                "_type": "Sandbox.Component",
+                "_name": "Enabled"
+              },
+              "UserData": {
+                "Position": "-320,96"
+              }
+            },
+            {
+              "Id": 25,
+              "Type": "time.delayobj",
+              "UserData": {
+                "Position": "960,96"
+              }
+            },
+            {
+              "Id": 28,
+              "Type": "property",
+              "Properties": {
+                "_type": "Sandbox.Component",
+                "_name": "Enabled"
+              },
+              "UserData": {
+                "Position": "1248,96"
+              }
+            },
+            {
+              "Id": 32,
+              "Type": "property",
+              "ParentId": 11,
+              "Properties": {
+                "_type": "Sandbox.Component",
+                "_name": "Transform"
+              }
+            },
+            {
+              "Id": 33,
+              "Type": "property",
+              "Properties": {
+                "_type": "Sandbox.GameTransform",
+                "_name": "Position"
+              },
+              "UserData": {
+                "Position": "-656,96"
+              }
+            }
+          ],
+          "Links": [
+            {
+              "SrcId": 23,
+              "SrcName": "_signal",
+              "DstId": 5,
+              "DstName": "_signal"
+            },
+            {
+              "SrcId": 20,
+              "SrcName": "_result",
+              "DstId": 5,
+              "DstName": "_target"
+            },
+            {
+              "SrcId": 13,
+              "SrcName": "_result",
+              "DstId": 5,
+              "DstName": "_value"
+            },
+            {
+              "SrcId": 5,
+              "SrcName": "_signal",
+              "DstId": 7,
+              "DstName": "_signal"
+            },
+            {
+              "SrcId": 1,
+              "SrcName": "_target",
+              "DstId": 7,
+              "DstName": "_this"
+            },
+            {
+              "SrcId": 6,
+              "SrcName": "_result",
+              "DstId": 7,
+              "DstName": "soundEvent"
+            },
+            {
+              "SrcId": 1,
+              "SrcName": "arg2",
+              "DstId": 13,
+              "DstName": "a"
+            },
+            {
+              "SrcId": 33,
+              "SrcName": "_signal",
+              "DstId": 23,
+              "DstName": "_signal"
+            },
+            {
+              "SrcId": 11,
+              "SrcName": "_result",
+              "DstId": 23,
+              "DstName": "_target"
+            },
+            {
+              "Value": true,
+              "DstId": 23,
+              "DstName": "_value"
+            },
+            {
+              "SrcId": 7,
+              "SrcName": "_signal",
+              "DstId": 25,
+              "DstName": "_signal"
+            },
+            {
+              "Value": 0.1,
+              "DstId": 25,
+              "DstName": "seconds"
+            },
+            {
+              "SrcId": 1,
+              "SrcName": "_target",
+              "DstId": 25,
+              "DstName": "target"
+            },
+            {
+              "SrcId": 25,
+              "SrcName": "_signal",
+              "DstId": 28,
+              "DstName": "_signal"
+            },
+            {
+              "SrcId": 11,
+              "SrcName": "_result",
+              "DstId": 28,
+              "DstName": "_target"
+            },
+            {
+              "Value": false,
+              "DstId": 28,
+              "DstName": "_value"
+            },
+            {
+              "SrcId": 11,
+              "SrcName": "_result",
+              "DstId": 32,
+              "DstName": "_target"
+            },
+            {
+              "SrcId": 1,
+              "SrcName": "_signal",
+              "DstId": 33,
+              "DstName": "_signal"
+            },
+            {
+              "SrcId": 32,
+              "SrcName": "_result",
+              "DstId": 33,
+              "DstName": "_target"
+            },
+            {
+              "SrcId": 1,
+              "SrcName": "arg1",
+              "DstId": 33,
+              "DstName": "_value"
+            }
+          ],
+          "Defaults": {
+            "$11.component": {
+              "_type": "component",
+              "component_id": "7cedd08e-ffb9-4a5a-a815-e0419c04ab97",
+              "go": "de408683-a303-4407-946e-cd93f744a02b",
+              "component_type": "ParticleSphereEmitter"
+            },
+            "$20.component": {
+              "_type": "component",
+              "component_id": "5bdc1d79-8626-4a5c-ab3a-65cd2ad58203",
+              "go": "aab3d094-a2ea-4370-94c8-f67fdbc10d62",
+              "component_type": "ParticleSphereEmitter"
+            }
+          }
+        },
+        "Direction": "West",
+        "IgnoreWalls": true,
+        "Moving": false,
+        "OnComponentStart": {
+          "__version": 7,
+          "__guid": "f785b829-eb51-44c3-abc9-81aeac09a345",
+          "UserData": {
+            "Title": "On Component Start",
+            "ReferencedComponentTypes": []
+          },
+          "Variables": [],
+          "Nodes": [
+            {
+              "Id": 0,
+              "Type": "input"
+            },
+            {
+              "Id": 2,
+              "Type": "resource.ref",
+              "Properties": {
+                "value": "sounds/enemy/wizard.shoot.sound",
+                "T": "Sandbox.SoundEvent"
+              },
+              "UserData": {
+                "Position": "-16,96"
+              }
+            },
+            {
+              "Id": 3,
+              "Type": "sound.play",
+              "UserData": {
+                "Position": "256,0"
+              }
+            }
+          ],
+          "Links": [
+            {
+              "SrcId": 0,
+              "SrcName": "_signal",
+              "DstId": 3,
+              "DstName": "_signal"
+            },
+            {
+              "SrcId": 0,
+              "SrcName": "_target",
+              "DstId": 3,
+              "DstName": "_this"
+            },
+            {
+              "SrcId": 2,
+              "SrcName": "_result",
+              "DstId": 3,
+              "DstName": "soundEvent"
+            }
+          ]
+        },
+        "Radius": 4,
+        "Speed": 160
+      },
+      {
+        "__type": "Mazing.MazeObject",
+        "__guid": "d6cfa252-a2db-4adf-b6f8-462d1e3c26f2"
+      }
+    ],
+    "Children": [
+      {
+        "__guid": "de408683-a303-4407-946e-cd93f744a02b",
+        "Flags": 0,
+        "Name": "Explode",
+        "Tags": "particles",
+        "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkInterpolation": true,
+        "Components": [
+          {
+            "__type": "Sandbox.ParticleEffect",
+            "__guid": "89b9be16-2d42-4c72-b0fd-d8eb89e1aee3",
+            "Alpha": {
+              "Type": "Curve",
+              "CurveA": [
+                {
+                  "y": 1
+                },
+                {
+                  "x": 0.48029557,
+                  "y": 1,
+                  "in": 1.5365853,
+                  "out": -1.5365853
+                },
+                {
+                  "x": 1,
+                  "in": 1.312303,
+                  "out": -1.312303
+                }
+              ],
+              "Constants": "1,0,0,0"
+            },
+            "ApplyColor": true,
+            "ApplyRotation": false,
+            "ApplyShape": true,
+            "Bounce": {
+              "Constants": "1,0,0,0"
+            },
+            "Brightness": {
+              "Constants": "4,0,0,0"
+            },
+            "Bumpiness": {},
+            "Collision": true,
+            "CollisionIgnore": "ghost",
+            "CollisionRadius": 1,
+            "Damping": {
+              "Constants": "1,0,0,0"
+            },
+            "DieOnCollisionChance": {},
+            "Force": true,
+            "ForceDirection": "0,0,-600",
+            "ForceScale": {
+              "Constants": "1,0,0,0"
+            },
+            "Friction": {
+              "Constants": "1,0,0,0"
+            },
+            "Gradient": {
+              "Evaluation": "Particle",
+              "GradientA": {
+                "color": [
+                  {
+                    "t": 0.5,
+                    "c": "1,1,1,1"
+                  }
+                ],
+                "alpha": []
+              },
+              "GradientB": {
+                "color": [
+                  {
+                    "t": 0.5,
+                    "c": "1,1,1,1"
+                  }
+                ],
+                "alpha": []
+              },
+              "ConstantA": "1,1,1,1",
+              "ConstantB": "0.7451,0.57255,1,1"
+            },
+            "Lifetime": {
+              "Type": "Range",
+              "Evaluation": "Particle",
+              "Constants": "0.25,0.5,0,0"
+            },
+            "MaxParticles": 5000,
+            "PerParticleTimeScale": {
+              "Constants": "1,0.4,0,0"
+            },
+            "PreWarm": 0,
+            "PushStrength": {},
+            "Roll": {
+              "Type": "Range",
+              "Evaluation": "Particle",
+              "Constants": "0,360,0,0"
+            },
+            "Scale": {
+              "Type": "Curve",
+              "CurveA": {
+                "rangey": "0,3",
+                "frames": [
+                  {
+                    "in": -9.333329,
+                    "out": 9.333329
+                  },
+                  {
+                    "x": 0.03325123,
+                    "y": 1,
+                    "in": -0.056075174,
+                    "out": 0.056075174
+                  },
+                  {
+                    "x": 1,
+                    "in": 2.9152544,
+                    "out": -2.9152544
+                  }
+                ]
+              },
+              "Constants": "1,0,0,0"
+            },
+            "SequenceId": {},
+            "SequenceSpeed": {
+              "Constants": "1,0,0,0"
+            },
+            "SequenceTime": {
+              "Constants": "1,0,0,0"
+            },
+            "SheetSequence": false,
+            "Space": "World",
+            "StartVelocity": {
+              "Type": "Range",
+              "Evaluation": "Particle",
+              "Constants": "100,200,0,0"
+            },
+            "Stretch": {},
+            "TimeScale": 1,
+            "Tint": "0.23922,0.32941,1,1"
+          },
+          {
+            "__type": "Sandbox.ParticleSpriteRenderer",
+            "__guid": "d0ae3562-84c0-4fca-aefe-5496e9c44743",
+            "Additive": false,
+            "BlurAmount": 0.5,
+            "BlurOpacity": 0.91,
+            "BlurSpacing": 0.73,
+            "DepthFeather": 0,
+            "FaceVelocity": false,
+            "FogStrength": 1,
+            "LeadingTrail": true,
+            "MotionBlur": false,
+            "Opaque": false,
+            "RotationOffset": 0,
+            "Scale": 2,
+            "Shadows": false,
+            "SortMode": "Unsorted",
+            "Texture": "materials/particles/shapes/star3.vtex"
+          },
+          {
+            "__type": "Sandbox.ParticleSphereEmitter",
+            "__guid": "7cedd08e-ffb9-4a5a-a815-e0419c04ab97",
+            "__enabled": false,
+            "Burst": 100,
+            "Delay": 0,
+            "DestroyOnEnd": false,
+            "Duration": 0.25,
+            "Loop": false,
+            "OnEdge": true,
+            "Radius": 4,
+            "Rate": 0,
+            "Velocity": 50
+          }
+        ]
+      },
+      {
+        "__guid": "aab3d094-a2ea-4370-94c8-f67fdbc10d62",
+        "Flags": 0,
+        "Name": "Spray",
+        "Tags": "particles",
+        "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkInterpolation": true,
+        "Components": [
+          {
+            "__type": "Sandbox.ParticleEffect",
+            "__guid": "0b3b2e64-fc80-42ca-9882-ffb1376c6956",
+            "Alpha": {
+              "Type": "Curve",
+              "CurveA": [
+                {
+                  "y": 1
+                },
+                {
+                  "x": 0.48029557,
+                  "y": 1,
+                  "in": 1.5365853,
+                  "out": -1.5365853
+                },
+                {
+                  "x": 1,
+                  "in": 1.312303,
+                  "out": -1.312303
+                }
+              ],
+              "Constants": "1,0,0,0"
+            },
+            "ApplyColor": true,
+            "ApplyRotation": true,
+            "ApplyShape": true,
+            "Bounce": {
+              "Constants": "1,0,0,0"
+            },
+            "Brightness": {
+              "Constants": "4,0,0,0"
+            },
+            "Bumpiness": {},
+            "Collision": false,
+            "CollisionRadius": 1,
+            "Damping": {
+              "Constants": "50,0,0,0"
+            },
+            "DieOnCollisionChance": {},
+            "Force": true,
+            "ForceDirection": "0,0,-600",
+            "ForceScale": {
+              "Constants": "1,0,0,0"
+            },
+            "Friction": {
+              "Constants": "1,0,0,0"
+            },
+            "Gradient": {
+              "Evaluation": "Particle",
+              "GradientA": {
+                "color": [
+                  {
+                    "t": 0.5,
+                    "c": "1,1,1,1"
+                  }
+                ],
+                "alpha": []
+              },
+              "GradientB": {
+                "color": [
+                  {
+                    "t": 0.5,
+                    "c": "1,1,1,1"
+                  }
+                ],
+                "alpha": []
+              },
+              "ConstantA": "1,1,1,1",
+              "ConstantB": "0.7451,0.57255,1,1"
+            },
+            "Lifetime": {
+              "Type": "Range",
+              "Evaluation": "Particle",
+              "Constants": "0.25,0.5,0,0"
+            },
+            "MaxParticles": 5000,
+            "PerParticleTimeScale": {
+              "Constants": "1,0.4,0,0"
+            },
+            "PreWarm": 0,
+            "PushStrength": {},
+            "Roll": {
+              "Type": "Range",
+              "Evaluation": "Particle",
+              "Constants": "0,360,0,0"
+            },
+            "Scale": {
+              "Type": "Curve",
+              "CurveA": {
+                "rangey": "0,3",
+                "frames": [
+                  {
+                    "in": -9.333329,
+                    "out": 9.333329
+                  },
+                  {
+                    "x": 0.03325123,
+                    "y": 1,
+                    "in": -0.056075174,
+                    "out": 0.056075174
+                  },
+                  {
+                    "x": 1,
+                    "in": 2.9152544,
+                    "out": -2.9152544
+                  }
+                ]
+              },
+              "Constants": "1,0,0,0"
+            },
+            "SequenceId": {},
+            "SequenceSpeed": {
+              "Constants": "1,0,0,0"
+            },
+            "SequenceTime": {
+              "Constants": "1,0,0,0"
+            },
+            "SheetSequence": false,
+            "Space": "World",
+            "StartVelocity": {
+              "Type": "Range",
+              "Evaluation": "Particle",
+              "Constants": "100,200,0,0"
+            },
+            "Stretch": {},
+            "TimeScale": 1,
+            "Tint": "0.23922,0.32941,1,1"
+          },
+          {
+            "__type": "Sandbox.ParticleSpriteRenderer",
+            "__guid": "358f0a67-6106-4436-859a-8746a6cc9d81",
+            "Additive": false,
+            "BlurAmount": 0.5,
+            "BlurOpacity": 0.91,
+            "BlurSpacing": 0.73,
+            "DepthFeather": 0,
+            "FaceVelocity": false,
+            "FogStrength": 1,
+            "LeadingTrail": true,
+            "MotionBlur": false,
+            "Opaque": false,
+            "RotationOffset": 0,
+            "Scale": 4,
+            "Shadows": false,
+            "SortMode": "Unsorted",
+            "Texture": "materials/particles/shapes/star3.vtex"
+          },
+          {
+            "__type": "Sandbox.ParticleSphereEmitter",
+            "__guid": "5bdc1d79-8626-4a5c-ab3a-65cd2ad58203",
+            "Burst": 0,
+            "Delay": 0,
+            "DestroyOnEnd": false,
+            "Duration": 1,
+            "Loop": true,
+            "OnEdge": true,
+            "Radius": 4,
+            "Rate": 100,
+            "Velocity": 50
+          }
+        ]
+      },
+      {
+        "__guid": "34dcff0a-9099-46f6-aca2-918cd2c6dc62",
+        "Flags": 0,
+        "Name": "Point Light",
+        "Tags": "light_point,light",
+        "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkInterpolation": true,
+        "Components": [
+          {
+            "__type": "Sandbox.PointLight",
+            "__guid": "ed45139f-288b-4871-94b0-0c29c9cf4f1d",
+            "Attenuation": 1,
+            "FogMode": "Enabled",
+            "FogStrength": 1,
+            "LightColor": "0.23922,0.32941,1,1",
+            "Radius": 400,
+            "Shadows": false
+          }
+        ]
+      }
+    ]
+  },
+  "ShowInMenu": false,
+  "MenuPath": null,
+  "MenuIcon": null,
+  "ResourceVersion": 1,
+  "__references": [],
+  "__version": 1
+}
