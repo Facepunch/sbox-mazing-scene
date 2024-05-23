@@ -47,7 +47,7 @@ public static class AStar
 	{
 		var open = new PriorityQueue<(int Row, int Col), int>();
 		var from = new Dictionary<(int Row, int Col), (int Row, int Col)>();
-		var gScore = new Dictionary<(int Row, int Col), int> { { start, 0 } };
+		var gScore = new Dictionary<(int Row, int Col), (int Dist, int Cost)> { { start, (0, 0) } };
 		var fScore = new Dictionary<(int Row, int Col), int> { { start, H( start, end ) } };
 		var costs = new Dictionary<(int Row, int Col), int>();
 
@@ -62,7 +62,7 @@ public static class AStar
 
 			var gCurrent = gScore[current];
 
-			if ( gCurrent + 1 > maxDist )
+			if ( gCurrent.Dist + 1 > maxDist )
 			{
 				continue;
 			}
@@ -77,9 +77,9 @@ public static class AStar
 				var neighbor = direction.GetNeighbor( current.Row, current.Col );
 				var cost = getCost is null ? 0 : costs.TryGetValue( neighbor, out var c ) ? c : costs[neighbor] = getCost( neighbor.Row, neighbor.Col );
 
-				var gTentative = gCurrent + cost;
+				var gTentative = gCurrent.Cost + cost;
 
-				if ( gScore.TryGetValue( neighbor, out var gNeighbor ) && gTentative >= gNeighbor )
+				if ( gScore.TryGetValue( neighbor, out var gNeighbor ) && gTentative >= gNeighbor.Cost )
 				{
 					continue;
 				}
@@ -87,7 +87,7 @@ public static class AStar
 				var fNeighbor = gTentative + H( neighbor, end );
 
 				from[neighbor] = current;
-				gScore[neighbor] = gTentative;
+				gScore[neighbor] = (gCurrent.Dist + 1, gTentative);
 				fScore[neighbor] = fNeighbor;
 
 				if ( fNeighbor <= maxDist )
