@@ -1,0 +1,55 @@
+@using System
+@using System.Threading.Tasks
+@using Sandbox;
+@using Sandbox.Services
+
+@inherits PanelComponent
+
+<root>
+    <div class="title">@Title</div>
+    <div class="subtitle">@Subtitle</div>
+    <div class="entries">
+
+	    @foreach ( var entry in Entries )
+	    {
+            <div class="entry @( entry.Me ? "me" : "" )">
+			    <div class="rank">@entry.Rank</div>
+			    <div class="username">@entry.DisplayName</div>
+			    <div class="score">@string.Format( Format, entry.Value )</div>
+		    </div>
+	    }
+
+    </div>
+</root>
+
+@code
+{
+    [Property] public string Name { get; set; } = "money";
+    [Property] public string Group { get; set; } = "global";
+    [Property] public string Format { get; set; } = "${0:N0}";
+
+    private string Title => _board?.DisplayName ?? "Loading...";
+    private string Subtitle => _board?.Title ?? "";
+	private Leaderboards.Entry[] Entries => _board?.Entries ?? Array.Empty<Leaderboards.Entry>();
+
+	private Leaderboards.Board? _board;
+
+	protected override void OnEnabled()
+	{
+        _board = Leaderboards.Get( Name );
+        _board.MaxEntries = 10;
+        _board.Group = Group;
+
+        _ = UpdateBoard();
+	}
+
+	private async Task UpdateBoard()
+	{
+        await _board!.Refresh();
+	}
+
+	/// <summary>
+    /// the hash determines if the system should be rebuilt. If it changes, it will be rebuilt
+    /// </summary>
+    protected override int BuildHash() => System.HashCode.Combine( Name, Group, Format, Entries.Length );
+}

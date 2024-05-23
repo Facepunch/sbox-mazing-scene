@@ -378,11 +378,12 @@
             "prefab": "prefabs/player.prefab"
           },
           "PostModel": "models/post.vmdl",
-          "Seed": 1662167065,
+          "Seed": 1263148897,
           "TileModel": "models/tile.vmdl",
           "WallModel": "models/wall.vmdl"
         }
-      ]
+      ],
+      "Children": []
     },
     {
       "__guid": "64e3759a-f77b-42ce-bca5-622faf25cefd",
@@ -449,12 +450,147 @@
             ]
           },
           "CompletedTimeSeconds": 0,
+          "LeaderboardsParent": {
+            "_type": "gameobject",
+            "go": "255b721f-9191-49b5-bc0b-e42bc8115e4f"
+          },
           "Level": 0,
           "Score": 0,
           "State": "StartingLevel",
           "StateStart": {
-            "Relative": 599.8949
+            "Relative": 10222.38
           }
+        }
+      ]
+    },
+    {
+      "__guid": "255b721f-9191-49b5-bc0b-e42bc8115e4f",
+      "Flags": 0,
+      "Name": "Leaderboards",
+      "Position": "192,168,68.00002",
+      "Enabled": true,
+      "NetworkMode": 2,
+      "NetworkInterpolation": true,
+      "Children": [
+        {
+          "__guid": "d31319d8-67b3-4776-8218-e28e469b712e",
+          "Flags": 0,
+          "Name": "Global Depth",
+          "Position": "-80,-256,0",
+          "Rotation": "0,-0.7071068,0,0.7071068",
+          "Scale": "4,4,4",
+          "Enabled": true,
+          "NetworkMode": 2,
+          "NetworkInterpolation": true,
+          "Components": [
+            {
+              "__type": "Sandbox.WorldPanel",
+              "__guid": "e8273f90-01ee-483d-b7dc-830e999392b6",
+              "HorizontalAlign": "Center",
+              "InteractionRange": 1000,
+              "LookAtCamera": false,
+              "PanelSize": "640,1024",
+              "RenderScale": 1,
+              "VerticalAlign": "Center"
+            },
+            {
+              "__type": "LeaderboardPanel",
+              "__guid": "aedf6e24-9b4b-407d-91d8-0eb61033389a",
+              "Format": "{0}",
+              "Group": "global",
+              "Name": "level"
+            }
+          ]
+        },
+        {
+          "__guid": "a81c8fc6-e759-42fa-b3f7-cd3a16d5b92c",
+          "Flags": 0,
+          "Name": "Global Treasure",
+          "Position": "-80,256,0",
+          "Rotation": "0,-0.7071068,0,0.7071068",
+          "Scale": "4,4,4",
+          "Enabled": true,
+          "NetworkMode": 2,
+          "NetworkInterpolation": true,
+          "Components": [
+            {
+              "__type": "Sandbox.WorldPanel",
+              "__guid": "3bcbd985-688b-4a7d-9c2b-ba8e0f27fe90",
+              "HorizontalAlign": "Center",
+              "InteractionRange": 1000,
+              "LookAtCamera": false,
+              "PanelSize": "640,1024",
+              "RenderScale": 1,
+              "VerticalAlign": "Center"
+            },
+            {
+              "__type": "LeaderboardPanel",
+              "__guid": "9eb3a370-29f6-46a3-bedb-27f8d0e6c876",
+              "Format": "${0:N0}",
+              "Group": "global",
+              "Name": "money"
+            }
+          ]
+        },
+        {
+          "__guid": "127f58ad-8ca9-46d1-bef1-fc9965e55a0f",
+          "Flags": 0,
+          "Name": "Local Depth",
+          "Position": "128,-256,0.000007629395",
+          "Rotation": "0,-0.7071068,0,0.7071068",
+          "Scale": "4,4,4",
+          "Enabled": true,
+          "NetworkMode": 2,
+          "NetworkInterpolation": true,
+          "Components": [
+            {
+              "__type": "Sandbox.WorldPanel",
+              "__guid": "33e93146-6ad4-4434-bb16-bf39a178e7cb",
+              "HorizontalAlign": "Center",
+              "InteractionRange": 1000,
+              "LookAtCamera": false,
+              "PanelSize": "640,1024",
+              "RenderScale": 1,
+              "VerticalAlign": "Center"
+            },
+            {
+              "__type": "LeaderboardPanel",
+              "__guid": "7e15ada7-b008-4206-8970-8e9061c5a4ae",
+              "Format": "{0}",
+              "Group": "country",
+              "Name": "level"
+            }
+          ]
+        },
+        {
+          "__guid": "01ce9a90-ca67-44d3-9940-aff895843bd9",
+          "Flags": 0,
+          "Name": "Local Treasure",
+          "Position": "128,256,0.000007629395",
+          "Rotation": "0,-0.7071068,0,0.7071068",
+          "Scale": "4,4,4",
+          "Enabled": true,
+          "NetworkMode": 2,
+          "NetworkInterpolation": true,
+          "Components": [
+            {
+              "__type": "Sandbox.WorldPanel",
+              "__guid": "9a33aeeb-dfcf-4b81-a830-8783a8d5e994",
+              "HorizontalAlign": "Center",
+              "InteractionRange": 1000,
+              "LookAtCamera": false,
+              "PanelSize": "640,1024",
+              "RenderScale": 1,
+              "VerticalAlign": "Center"
+            },
+            {
+              "__type": "LeaderboardPanel",
+              "__guid": "23464227-03f8-4a66-b957-118cf328da56",
+              "Format": "${0:N0}",
+              "Group": "country",
+              "Name": "money"
+            }
+          ]
         }
       ]
     }
@@ -482,7 +618,7 @@
   },
   "Title": "minimal",
   "Description": "",
-  "LastSaved": "2024-05-21T18:02:06.6303303\u002B02:00",
+  "LastSaved": "2024-05-23T14:28:44.635084\u002B02:00",
   "ResourceVersion": 1,
   "__references": [],
   "__version": 1

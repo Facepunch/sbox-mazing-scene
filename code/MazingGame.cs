@@ -31,6 +31,9 @@ public class MazingGame : Component, Component.INetworkListener
 	public float CompletedTimeSeconds { get; set; }
 
 	[Property]
+	public GameObject LeaderboardsParent { get; set; }
+
+	[Property]
 	public event Action? LevelCompleted;
 
 	[Property]
@@ -61,6 +64,8 @@ public class MazingGame : Component, Component.INetworkListener
 
 	protected override void OnUpdate()
 	{
+		LeaderboardsParent.Enabled = Level == 0;
+
 		if ( IsProxy )
 		{
 			return;
