@@ -1,6 +1,6 @@
 {
   "RootObject": {
-    "__guid": "29357b66-8c47-4224-8291-0d0d47e73ce2",
+    "__guid": "3101fe98-9008-4526-876c-f90f862a9077",
     "Flags": 0,
     "Name": "vaulter",
     "Tags": "enemy",
@@ -10,7 +10,7 @@
     "Components": [
       {
         "__type": "Sandbox.SkinnedModelRenderer",
-        "__guid": "a6451a40-5ea4-4dc6-8c5c-e66a9f4ceda9",
+        "__guid": "3422eec9-deda-4137-b8c5-17de05274e40",
         "BodyGroups": 69,
         "CreateBoneObjects": false,
         "MaterialGroup": "default",
@@ -20,28 +20,28 @@
       },
       {
         "__type": "Sandbox.Citizen.CitizenAnimationHelper",
-        "__guid": "7461ac8c-0fc6-4e2e-8955-589eca22b319",
+        "__guid": "719a5574-9490-4a86-9a32-93a6c8f2b632",
         "BodyWeight": 1,
         "EyeSource": {
           "_type": "gameobject",
-          "go": "6f4659b2-b550-4168-8034-7c9094a18dce"
+          "go": "da48b8cc-1228-4e16-9f4a-2937ac0f9a14"
         },
         "EyesWeight": 1,
         "HeadWeight": 1,
         "LookAtEnabled": false,
         "Target": {
           "_type": "component",
-          "component_id": "a6451a40-5ea4-4dc6-8c5c-e66a9f4ceda9",
-          "go": "29357b66-8c47-4224-8291-0d0d47e73ce2",
+          "component_id": "3422eec9-deda-4137-b8c5-17de05274e40",
+          "go": "3101fe98-9008-4526-876c-f90f862a9077",
           "component_type": "SkinnedModelRenderer"
         }
       },
       {
         "__type": "Mazing.Mazer",
-        "__guid": "8413b922-f3d4-43db-8eec-0f01a9c4ab21",
+        "__guid": "cfd8ee2e-82fb-4dcd-83c3-b3278421a88c",
         "Footstep": {
           "__version": 7,
-          "__guid": "731d27ab-87b4-426a-888e-74916c5c5247",
+          "__guid": "b94d2e68-8709-45f6-a0ee-66071575fd4b",
           "UserData": {
             "Title": "Footstep",
             "ReferencedComponentTypes": []
@@ -125,8 +125,8 @@
               "Id": 7,
               "Type": "property",
               "Properties": {
-                "_type": "Sandbox.SoundHandle",
-                "_name": "Volume"
+                "_name": "Volume",
+                "_type": "Sandbox.SoundHandle"
               },
               "UserData": {
                 "Position": "720,192"
@@ -212,12 +212,65 @@
             }
           ]
         },
+        "Vaulted": {
+          "__version": 7,
+          "__guid": "c58217da-3171-4571-baf7-e087c7df0278",
+          "UserData": {
+            "Title": "Vaulted",
+            "ReferencedComponentTypes": []
+          },
+          "Variables": [],
+          "Nodes": [
+            {
+              "Id": 0,
+              "Type": "input"
+            },
+            {
+              "Id": 2,
+              "Type": "resource.ref",
+              "Properties": {
+                "T": "Sandbox.SoundEvent",
+                "value": "sounds/player/player.vault.sound"
+              },
+              "UserData": {
+                "Position": "-80,176"
+              }
+            },
+            {
+              "Id": 3,
+              "Type": "sound.play",
+              "UserData": {
+                "Position": "272,80"
+              }
+            }
+          ],
+          "Links": [
+            {
+              "SrcId": 0,
+              "SrcName": "_signal",
+              "DstId": 3,
+              "DstName": "_signal"
+            },
+            {
+              "SrcId": 0,
+              "SrcName": "_target",
+              "DstId": 3,
+              "DstName": "_this"
+            },
+            {
+              "SrcId": 2,
+              "SrcName": "_result",
+              "DstId": 3,
+              "DstName": "soundEvent"
+            }
+          ]
+        },
         "Friction": 2,
         "MoveInput": "0,0",
         "MoveSpeed": 45,
         "NextVault": {
-          "Relative": -3880.8823,
-          "Passed": 3880.8823,
+          "Relative": -277.8088,
+          "Passed": 277.8088,
           "Fraction": 1
         },
         "State": "Walking",
@@ -225,11 +278,64 @@
       },
       {
         "__type": "Mazing.MazeObject",
-        "__guid": "9979c88b-851e-4976-848b-d21136442033"
+        "__guid": "959b5649-a37d-4f5f-90e3-89c92b8957e9"
       },
       {
         "__type": "Mazing.Throwable",
-        "__guid": "54761559-dae0-4463-9768-d3c3a8888ed2",
+        "__guid": "1e52f8f3-dd79-4a07-a67c-51aacd27842c",
+        "Landed": {
+          "__version": 7,
+          "__guid": "3673edfc-06e7-4ba8-998f-e56cc1aacd25",
+          "UserData": {
+            "Title": "Landed",
+            "ReferencedComponentTypes": []
+          },
+          "Variables": [],
+          "Nodes": [
+            {
+              "Id": 0,
+              "Type": "input"
+            },
+            {
+              "Id": 2,
+              "Type": "resource.ref",
+              "Properties": {
+                "T": "Sandbox.SoundEvent",
+                "value": "sounds/player/player.land.sound"
+              },
+              "UserData": {
+                "Position": "-16,112"
+              }
+            },
+            {
+              "Id": 3,
+              "Type": "sound.play",
+              "UserData": {
+                "Position": "288,48"
+              }
+            }
+          ],
+          "Links": [
+            {
+              "SrcId": 0,
+              "SrcName": "_signal",
+              "DstId": 3,
+              "DstName": "_signal"
+            },
+            {
+              "SrcId": 0,
+              "SrcName": "_target",
+              "DstId": 3,
+              "DstName": "_this"
+            },
+            {
+              "SrcId": 2,
+              "SrcName": "_result",
+              "DstId": 3,
+              "DstName": "soundEvent"
+            }
+          ]
+        },
         "CanExit": false,
         "IndexOnFloor": 0,
         "IsAirborne": false,
@@ -239,7 +345,7 @@
       },
       {
         "__type": "Sandbox.CapsuleCollider",
-        "__guid": "840cc60c-52ac-401c-b2d2-247a68a01fdd",
+        "__guid": "edadd5db-963a-4acb-80a9-f93e3b430d2e",
         "End": "0,0,64",
         "IsTrigger": true,
         "Radius": 8,
@@ -248,7 +354,7 @@
       },
       {
         "__type": "Sandbox.CharacterController",
-        "__guid": "fc2d74cd-7611-4348-87b3-e1cbf33a7e51",
+        "__guid": "19f1891c-a2e5-41ec-bb0a-bcf63568e9d9",
         "Acceleration": 10,
         "Bounciness": 0.3,
         "GroundAngle": 45,
@@ -260,22 +366,23 @@
       },
       {
         "__type": "Mazing.ClothingSpawner",
-        "__guid": "b7ceda8a-3e7d-4285-9955-044ca1a99c7c",
+        "__guid": "823f9095-f559-460d-81e3-89ff740b4486",
         "Clothing": [
           "models/citizen_clothes/skin01.clothing",
           "models/citizen_clothes/trousers/legarmour/leg_armour.clothing",
           "models/citizen_clothes/shoes/boots/army_boots.clothing"
-        ]
+        ],
+        "Color": "1,1,1,1"
       },
       {
         "__type": "Mazing.Enemy",
-        "__guid": "4893d02b-1cb2-4db9-894c-4968fdc2f7ab",
+        "__guid": "b40b7480-2581-4ff4-a1f0-a4456af9e1fa",
         "Difficulty": 3,
         "IsFloorTrap": false,
         "MinLevel": 14,
         "OnComponentStart": {
           "__version": 7,
-          "__guid": "f57c7afa-cd0b-4391-bf8f-aed67e4319db",
+          "__guid": "f1236689-830d-4a85-b52b-fa885661022d",
           "UserData": {
             "Title": "On Component Start",
             "ReferencedComponentTypes": []
@@ -292,8 +399,8 @@
               "Properties": {
                 "component": {
                   "_type": "component",
-                  "component_id": "7461ac8c-0fc6-4e2e-8955-589eca22b319",
-                  "go": "29357b66-8c47-4224-8291-0d0d47e73ce2",
+                  "component_id": "719a5574-9490-4a86-9a32-93a6c8f2b632",
+                  "go": "3101fe98-9008-4526-876c-f90f862a9077",
                   "component_type": "CitizenAnimationHelper"
                 }
               },
@@ -338,8 +445,8 @@
           "Defaults": {
             "$2.component": {
               "_type": "component",
-              "component_id": "7461ac8c-0fc6-4e2e-8955-589eca22b319",
-              "go": "29357b66-8c47-4224-8291-0d0d47e73ce2",
+              "component_id": "719a5574-9490-4a86-9a32-93a6c8f2b632",
+              "go": "3101fe98-9008-4526-876c-f90f862a9077",
               "component_type": "CitizenAnimationHelper"
             }
           }
@@ -347,10 +454,10 @@
       },
       {
         "__type": "Mazing.MeleeAttacker",
-        "__guid": "b50bbad3-da9d-4bbc-a9db-881bd72bc367",
+        "__guid": "9dcabc99-16d9-4535-a587-59f535bc817c",
         "Attacked": {
           "__version": 7,
-          "__guid": "f3c8ee7b-8511-4785-bee6-517d6905cfc2",
+          "__guid": "23ee612a-5102-4fb9-850d-349419f4908a",
           "UserData": {
             "Title": "Attacked",
             "ReferencedComponentTypes": []
@@ -401,8 +508,8 @@
               "Properties": {
                 "component": {
                   "_type": "component",
-                  "component_id": "a6451a40-5ea4-4dc6-8c5c-e66a9f4ceda9",
-                  "go": "29357b66-8c47-4224-8291-0d0d47e73ce2",
+                  "component_id": "3422eec9-deda-4137-b8c5-17de05274e40",
+                  "go": "3101fe98-9008-4526-876c-f90f862a9077",
                   "component_type": "SkinnedModelRenderer"
                 }
               },
@@ -471,15 +578,15 @@
           "Defaults": {
             "$19.component": {
               "_type": "component",
-              "component_id": "a6451a40-5ea4-4dc6-8c5c-e66a9f4ceda9",
-              "go": "29357b66-8c47-4224-8291-0d0d47e73ce2",
+              "component_id": "3422eec9-deda-4137-b8c5-17de05274e40",
+              "go": "3101fe98-9008-4526-876c-f90f862a9077",
               "component_type": "SkinnedModelRenderer"
             }
           }
         },
         "NextAttack": {
-          "Relative": -3880.8823,
-          "Passed": 3880.8823,
+          "Relative": -277.8088,
+          "Passed": 277.8088,
           "Fraction": 1
         },
         "Range": 32,
@@ -487,29 +594,29 @@
       },
       {
         "__type": "Mazing.Seeker",
-        "__guid": "a83944f4-88cb-4391-a6a0-021b5d09b641",
+        "__guid": "da557012-55db-416a-bdda-f1f95ca190f4",
         "CanVault": true,
         "MinTargetUpdatePeriod": 0.5,
         "VaultPeriod": 4
       },
       {
         "__type": "Mazing.Holder",
-        "__guid": "ed8466cd-9460-46fc-a045-42a07b45d7b1",
+        "__guid": "030cd128-a22d-4b85-ad3e-107c83e9f40e",
         "AutoThrow": true,
         "AutoThrowTime": 0.5
       },
       {
         "__type": "Mazing.Holdable",
-        "__guid": "15b7bac6-2d90-4d02-93ae-6faf5100f9e9",
+        "__guid": "cd4ebcf1-28e4-46a5-a247-4c0976cfed80",
         "HeldTime": {
-          "Relative": 3880.8823
+          "Relative": 277.8088
         },
         "HeldVelocity": "0,0,0"
       }
     ],
     "Children": [
       {
-        "__guid": "6f4659b2-b550-4168-8034-7c9094a18dce",
+        "__guid": "da48b8cc-1228-4e16-9f4a-2937ac0f9a14",
         "Flags": 0,
         "Name": "Eyes",
         "Position": "0,0,64",
@@ -518,7 +625,7 @@
         "NetworkInterpolation": true
       },
       {
-        "__guid": "44ad0d9a-bfa9-4e61-b589-6d3bb584a931",
+        "__guid": "7539416a-a09b-4083-80b3-bde5ae691dd3",
         "Flags": 0,
         "Name": "Clothing - leg_armour",
         "Tags": "clothing",
@@ -528,12 +635,12 @@
         "Components": [
           {
             "__type": "Sandbox.SkinnedModelRenderer",
-            "__guid": "681228f7-c56b-47b4-a804-597d807f504e",
+            "__guid": "60340f3c-4e91-42c4-92ab-0d56cf85a3c6",
             "BodyGroups": 18446744073709551615,
             "BoneMergeTarget": {
               "_type": "component",
-              "component_id": "a6451a40-5ea4-4dc6-8c5c-e66a9f4ceda9",
-              "go": "29357b66-8c47-4224-8291-0d0d47e73ce2",
+              "component_id": "3422eec9-deda-4137-b8c5-17de05274e40",
+              "go": "3101fe98-9008-4526-876c-f90f862a9077",
               "component_type": "SkinnedModelRenderer"
             },
             "CreateBoneObjects": false,
@@ -544,7 +651,7 @@
         ]
       },
       {
-        "__guid": "0262db09-a77f-4fa6-9011-15cd5baf22fc",
+        "__guid": "24d58c9a-46f1-437f-8e77-9b5aa4363845",
         "Flags": 0,
         "Name": "Clothing - army_boots",
         "Tags": "clothing",
@@ -554,12 +661,12 @@
         "Components": [
           {
             "__type": "Sandbox.SkinnedModelRenderer",
-            "__guid": "ad3d4db0-15c3-4081-abce-66638db2eca7",
+            "__guid": "373b3957-9472-44b3-bb4a-76f1d544087d",
             "BodyGroups": 18446744073709551615,
             "BoneMergeTarget": {
               "_type": "component",
-              "component_id": "a6451a40-5ea4-4dc6-8c5c-e66a9f4ceda9",
-              "go": "29357b66-8c47-4224-8291-0d0d47e73ce2",
+              "component_id": "3422eec9-deda-4137-b8c5-17de05274e40",
+              "go": "3101fe98-9008-4526-876c-f90f862a9077",
               "component_type": "SkinnedModelRenderer"
             },
             "CreateBoneObjects": false,
