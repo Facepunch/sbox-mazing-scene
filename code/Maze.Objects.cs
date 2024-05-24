@@ -134,13 +134,17 @@ partial class Maze
 
 		_players.Add( player );
 
+		// Spawn it on the network, assign connection as the owner
+		obj.NetworkSpawn( connection );
+
 		if ( !alive )
 		{
 			player.Kill( Vector3.Zero, false );
 		}
-
-		// Spawn it on the network, assign connection as the owner
-		obj.NetworkSpawn( connection );
+		else
+		{
+			player.Respawn( pos.Value );
+		}
 
 		return player;
 	}

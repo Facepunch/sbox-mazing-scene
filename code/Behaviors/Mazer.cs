@@ -42,9 +42,6 @@ public sealed class Mazer : Component
 	[Property, Sync]
 	public TimeUntil NextVault { get; set; }
 
-	[Property, Sync]
-	public string? ClothingJson { get; set; }
-
 	public bool CanVault => NextVault > 0f;
 
 	public Direction Direction
@@ -71,13 +68,6 @@ public sealed class Mazer : Component
 	protected override void OnEnabled()
 	{
 		_targetLook = Transform.Rotation.Forward.WithZ( 0f ).Normal;
-	}
-
-	public void SetClothing( ClothingContainer clothing )
-	{
-		ClothingJson = clothing.Serialize();
-
-		clothing.Apply( ModelRenderer );
 	}
 
 	public bool TryVault()

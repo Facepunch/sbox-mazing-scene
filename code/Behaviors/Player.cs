@@ -2,32 +2,30 @@
 
 namespace Mazing;
 
-public sealed class Player : Component
+public sealed class Player : Component, Component.INetworkSpawn
 {
 	[RequireComponent] public Mazer Mazer { get; set; } = null!;
 	[RequireComponent] public Holder Holder { get; set; } = null!;
 	[RequireComponent] public SkinnedModelRenderer ModelRenderer { get; set; } = null!;
 
-	[Property, Sync]
-	public bool IsDead { get; set; }
+	public bool IsDead => _isDeadLocal || Mazer.State == MazerState.Dead;
 
-	[Property, Sync]
+	[Property]
 	public TimeSince DeathTime { get; set; }
 
 	[Property, Sync]
 	public bool HasExited { get; set; }
 
+	[Property, Sync]
+	public string? ClothingJson { get; set; }
+
 	[Property] public event Action? Exiting;
 
 	private bool _wasExiting;
+	private bool _isDeadLocal;
 
 	private GameObject? _ragdoll;
-
-	[Authority]
-	public void UpdateClothing()
-	{
-		Mazer.SetClothing( ClothingContainer.CreateFromLocalUser() );
-	}
+	private ClothingContainer? _clothing;
 
 	protected override void OnStart()
 	{
@@ -39,6 +37,7 @@ public sealed class Player : Component
 		if ( Networking.IsHost && Network.OwnerId.Equals( Guid.Empty ) && !IsDead )
 		{
 			Kill( Vector3.Up * 300f );
+			return;
 		}
 
 		if ( !_wasExiting && Mazer.Throwable.IsExiting )
@@ -72,16 +71,18 @@ public sealed class Player : Component
 		_ragdoll = null;
 	}
 
-	[Authority( NetPermission.HostOnly )]
+	[Broadcast( NetPermission.HostOnly )]
 	public void Respawn( Vector3 pos )
 	{
-		RemoveRagdoll();
+		_ragdoll?.Destroy();
+		_ragdoll = null;
 
 		Transform.Position = pos;
 
 		Mazer.State = MazerState.Falling;
 
 		_wasExiting = false;
+		_isDeadLocal = false;
 
 		Mazer.Throwable.IsAirborne = false;
 		Mazer.Throwable.IsExiting = false;
@@ -93,25 +94,33 @@ public sealed class Player : Component
 
 		HasExited = false;
 
-		IsDead = false;
-
 		Tags.Add( "player" );
 		Tags.Remove( "ghost" );
+	}
 
-		UpdateClothing();
+	public void Kill( Vector3 force, bool ragdoll = true )
+	{
+		if ( _isDeadLocal || IsDead )
+		{
+			return;
+		}
+
+		_isDeadLocal = true;
+		DeathTime = 0f;
+
+		KillInternal( force, ragdoll );
 	}
 
 	[Authority( NetPermission.HostOnly )]
-	public void Kill( Vector3 force, bool ragdoll = true )
+	private void KillInternal( Vector3 force, bool ragdoll )
 	{
-		if ( IsDead )
+		if ( Mazer.State == MazerState.Dead )
 		{
 			return;
 		}
 
 		Sandbox.Services.Stats.Increment( "deaths", 1 );
 
-		IsDead = true;
 		DeathTime = 0f;
 
 		Mazer.State = MazerState.Dead;
@@ -133,14 +142,7 @@ public sealed class Player : Component
 		Holder.Enabled = false;
 	}
 
-	[Broadcast( NetPermission.HostOnly )]
-	public void RemoveRagdoll()
-	{
-		_ragdoll?.Destroy();
-		_ragdoll = null;
-	}
-
-	[Broadcast( NetPermission.HostOnly )]
+	[Broadcast( NetPermission.OwnerOnly )]
 	public void SpawnRagdoll( Vector3 force )
 	{
 		_ragdoll?.Destroy();
@@ -160,9 +162,11 @@ public sealed class Player : Component
 		renderer.BoneMergeTarget = ModelRenderer;
 		renderer.BoneMergeTarget = null;
 
-		var clothing = ClothingContainer.CreateFromJson( Mazer.ClothingJson ?? "{}" );
-
-		clothing.Apply( renderer );
+		if ( ClothingJson is not null )
+		{
+			_clothing ??= ClothingContainer.CreateFromJson( ClothingJson );
+			_clothing.Apply( renderer );
+		}
 
 		var physics = _ragdoll.Components.Create<ModelPhysics>();
 
@@ -183,5 +187,13 @@ public sealed class Player : Component
 		var right = Vector3.Cross( normal, up ).Normal;
 
 		upperBody.ApplyImpulseAt( Transform.Position + right * hitPos2d.x + up * (hitPos2d.y + 48f), force );
+	}
+
+	public void OnNetworkSpawn( Connection owner )
+	{
+		ClothingJson = owner.GetUserData( "avatar" );
+
+		_clothing = ClothingContainer.CreateFromJson( ClothingJson );
+		_clothing.Apply( ModelRenderer );
 	}
 }
