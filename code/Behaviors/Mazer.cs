@@ -301,6 +301,11 @@ public sealed class Mazer : Component
 	{
 		if ( Transform.Position.z < -1024f )
 		{
+			if ( !Throwable.IsExiting )
+			{
+				Transform.Position = Transform.Position.WithZ( 512f );
+			}
+
 			return;
 		}
 
