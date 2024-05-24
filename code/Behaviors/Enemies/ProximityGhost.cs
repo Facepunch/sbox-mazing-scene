@@ -49,6 +49,8 @@ public sealed class ProximityGhost : Component
 		var t = Math.Clamp( (MathF.Sqrt( minDist2 ) - MaxAlphaRadius) / (MinAlphaRadius - MaxAlphaRadius), 0f, 1f );
 		var alpha = MaxAlpha - (MaxAlpha - MinAlpha) * t;
 
+		alpha = Math.Max( _prevAlpha - Time.Delta, alpha );
+
 		if ( MathF.Abs( alpha - _prevAlpha ) < 0.01f )
 		{
 			return;
