@@ -80,6 +80,8 @@ public sealed class Holder : Component, IThrowableListener
 		var item = HeldItems[0];
 
 		item.GameObject.SetParent( null );
+		item.Network.ClearInterpolation();
+
 		item.DispatchDropped();
 
 		var (row, col) = MazeObject.CellIndex;
@@ -150,6 +152,7 @@ public sealed class Holder : Component, IThrowableListener
 		else
 		{
 			item.GameObject.SetParent( GameObject );
+			item.Network.ClearInterpolation();
 		}
 
 		item.HeldVelocity = 0f;
