@@ -32,6 +32,12 @@ public sealed class Player : Component, Component.INetworkSpawn
 		Network.SetOrphanedMode( NetworkOrphaned.ClearOwner );
 	}
 
+	[Broadcast( NetPermission.OwnerOnly )]
+	private void DispatchExiting()
+	{
+		Exiting?.Invoke();
+	}
+
 	protected override void OnUpdate()
 	{
 		if ( Networking.IsHost && Network.OwnerId.Equals( Guid.Empty ) && !IsDead )
@@ -40,16 +46,15 @@ public sealed class Player : Component, Component.INetworkSpawn
 			return;
 		}
 
-		if ( !_wasExiting && Mazer.Throwable.IsExiting )
-		{
-			_wasExiting = Mazer.Throwable.IsExiting;
-
-			Exiting?.Invoke();
-		}
-
 		if ( IsProxy )
 		{
 			return;
+		}
+
+		if ( !_wasExiting && Mazer.Throwable.IsExiting )
+		{
+			_wasExiting = Mazer.Throwable.IsExiting;
+			DispatchExiting();
 		}
 
 		Mazer.MoveSpeed = 120f * 8f / (8f + Holder.HeldItems.Count);
