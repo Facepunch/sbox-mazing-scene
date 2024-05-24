@@ -21,9 +21,9 @@ public sealed class Holder : Component, IThrowableListener
 	private GameObject? _leftHandIk;
 	private GameObject? _rightHandIk;
 
-	void IThrowableListener.Thrown( Direction dir, int range )
+	void IThrowableListener.Thrown( int fromRow, int fromCol, Direction dir, int range )
 	{
-		ThrowAll( dir, range == 0 ? 0 : range + 1 );
+		ThrowAll( fromRow, fromCol, dir, range == 0 ? 0 : range + 1 );
 		Enabled = false;
 	}
 
@@ -53,24 +53,31 @@ public sealed class Holder : Component, IThrowableListener
 		ThrowAll( Direction.North, 0 );
 	}
 
-	[Broadcast( NetPermission.OwnerOnly )]
 	public void ThrowAll( Direction dir, int range )
+	{
+		var (row, col) = MazeObject.CellIndex;
+		ThrowAll( row, col, dir, range );
+	}
+
+	[Broadcast( NetPermission.OwnerOnly )]
+	public void ThrowAll( int fromRow, int fromCol, Direction dir, int range )
 	{
 		var count = HeldItems.Count;
 
 		for ( var i = 0; i < count; ++i)
 		{
-			ThrowOne( dir, range == 0 ? 0 : range + i );
+			ThrowOneInternal( fromRow, fromCol, dir, range == 0 ? 0 : range + i );
 		}
 	}
 
 	[Broadcast( NetPermission.OwnerOnly )]
 	public void ThrowOne( Direction dir, int range )
 	{
-		ThrowOneInternal( dir, range );
+		var (row, col) = MazeObject.CellIndex;
+		ThrowOneInternal( row, col, dir, range );
 	}
 
-	private void ThrowOneInternal( Direction dir, int range )
+	private void ThrowOneInternal( int fromRow, int fromCol, Direction dir, int range )
 	{
 		if ( HeldItems.Count == 0 )
 		{
@@ -84,9 +91,7 @@ public sealed class Holder : Component, IThrowableListener
 
 		item.DispatchDropped();
 
-		var (row, col) = MazeObject.CellIndex;
-
-		item.Throwable.Throw( row, col, dir, range );
+		item.Throwable.Throw( fromRow, fromCol, dir, range );
 
 		if ( HeldItems.Count > 0 )
 		{

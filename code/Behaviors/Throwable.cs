@@ -4,7 +4,7 @@ namespace Mazing;
 
 public interface IThrowableListener
 {
-	public void Thrown( Direction dir, int range ) { }
+	public void Thrown( int fromRow, int fromCol, Direction dir, int range ) { }
 	public void Landed() { }
 }
 
@@ -47,20 +47,22 @@ public sealed class Throwable : Component
 		var increment = dir.GetNeighbor( 0, 0 );
 		var actualRange = 0;
 
+		var (row, col) = (fromRow, fromCol);
+
 		while ( actualRange < range )
 		{
-			if ( MazeObject.View[fromRow + increment.Row, fromCol + increment.Col] == CellState.Empty )
+			if ( MazeObject.View[row + increment.Row, col + increment.Col] == CellState.Empty )
 			{
 				break;
 			}
 
-			fromRow += increment.Row;
-			fromCol += increment.Col;
+			row += increment.Row;
+			col += increment.Col;
 
 			++actualRange;
 		}
 
-		ThrowInternal( fromRow, fromCol, range );
+		ThrowInternal( row, col, range );
 
 		if ( IsProxy ) return;
 
@@ -68,7 +70,7 @@ public sealed class Throwable : Component
 
 		foreach ( var listener in Components.GetAll<IThrowableListener>( FindMode.Enabled | FindMode.Disabled | FindMode.InSelf ) )
 		{
-			listener.Thrown( dir, actualRange );
+			listener.Thrown( fromRow, fromCol, dir, range );
 		}
 	}
 
