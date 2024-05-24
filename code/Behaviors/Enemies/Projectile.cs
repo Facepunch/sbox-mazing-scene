@@ -99,8 +99,6 @@ internal sealed class Projectile : Component
 				return;
 			}
 
-			Log.Info( $"{wallHit}, {emptyHit}, {IgnoreWalls}" );
-
 			var hitPos = ((MazeObject.Maze.MazeToWorldPos( prevIndex.Row, prevIndex.Col )
 				+ MazeObject.Maze.MazeToWorldPos( nextIndex.Row, nextIndex.Col )) * 0.5f)
 				.WithZ( Transform.Position.z )
