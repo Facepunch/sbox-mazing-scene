@@ -162,10 +162,7 @@ public sealed class Player : Component, Component.INetworkSpawn
 		var renderer = _ragdoll.Components.Create<SkinnedModelRenderer>();
 
 		renderer.Model = ModelRenderer.Model;
-		renderer.SceneModel.UseAnimGraph = false;
-
-		renderer.BoneMergeTarget = ModelRenderer;
-		renderer.BoneMergeTarget = null;
+		renderer.UseAnimGraph = false;
 
 		if ( ClothingJson is not null )
 		{
@@ -177,6 +174,7 @@ public sealed class Player : Component, Component.INetworkSpawn
 
 		physics.Model = renderer.Model;
 		physics.Renderer = renderer;
+		physics.MotionEnabled = true;
 
 		_ragdoll.Tags.Add( "ragdoll" );
 
