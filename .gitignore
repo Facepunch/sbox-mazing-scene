@@ -24,3 +24,5 @@ Editor/.vscode/*
 *.*_c
 *.los
 *.vpk
+.bin/
+obj/
