@@ -147,10 +147,9 @@
 									m_conditions = 
 									[
 										{
-											_class = "CFinishedCondition"
-											m_comparisonOp = 0
-											m_option = "FinishedConditionOption_OnFinished"
-											m_bIsFinished = true
+											_class = "CTimeCondition"
+											m_comparisonOp = 3
+											m_comparisonValue = 2.75
 										},
 									]
 									m_blendDuration = 0.0

@@ -6,7 +6,6 @@
     "Tags": "solid",
     "Enabled": true,
     "NetworkMode": 1,
-    "NetworkInterpolation": true,
     "Components": [
       {
         "__type": "Mazing.Enemy",
@@ -28,518 +27,13 @@
         "__guid": "6f930f4a-9d5e-4c86-8817-df8ffc81c4e5"
       },
       {
-        "__type": "Mazing.SpikeTrap",
-        "__guid": "7f7a80ce-6173-4dd2-9317-addfddb8644e",
-        "Stabbed": {
-          "__version": 7,
-          "__guid": "eba9b22c-a4c8-44cb-bc37-b8b9ffbf024c",
-          "UserData": {
-            "Title": "Stabbed",
-            "ReferencedComponentTypes": []
-          },
-          "Variables": [],
-          "Nodes": [
-            {
-              "Id": 0,
-              "Type": "input"
-            },
-            {
-              "Id": 3,
-              "Type": "resource.ref",
-              "Properties": {
-                "value": "sounds/enemy/spiketrap.hitplayer.sound",
-                "T": "Sandbox.SoundEvent"
-              },
-              "UserData": {
-                "Position": "-32,112"
-              }
-            },
-            {
-              "Id": 4,
-              "Type": "sound.play",
-              "UserData": {
-                "Position": "320,32"
-              }
-            }
-          ],
-          "Links": [
-            {
-              "SrcId": 0,
-              "SrcName": "_signal",
-              "DstId": 4,
-              "DstName": "_signal"
-            },
-            {
-              "SrcId": 0,
-              "SrcName": "_target",
-              "DstId": 4,
-              "DstName": "_this"
-            },
-            {
-              "SrcId": 3,
-              "SrcName": "_result",
-              "DstId": 4,
-              "DstName": "soundEvent"
-            }
-          ]
-        },
-        "Triggered": {
-          "__version": 7,
-          "__guid": "267de97d-bdaf-4b2e-976c-7fc7c58bcbf8",
-          "UserData": {
-            "Title": "Triggered",
-            "ReferencedComponentTypes": []
-          },
-          "Variables": [],
-          "Nodes": [
-            {
-              "Id": 0,
-              "Type": "input"
-            },
-            {
-              "Id": 2,
-              "Type": "scene.ref",
-              "Properties": {
-                "component": {
-                  "_type": "component",
-                  "component_id": "0c7eab75-5c79-45a8-bc38-7d24237fccb4",
-                  "go": "18cc7041-1b38-4698-ba86-cc766bb70a2f",
-                  "component_type": "SkinnedModelRenderer"
-                }
-              },
-              "UserData": {
-                "Position": "-80,64"
-              }
-            },
-            {
-              "Id": 3,
-              "Type": "call",
-              "Properties": {
-                "_type": "Sandbox.SkinnedModelRenderer",
-                "_isStatic": false,
-                "_name": "Set"
-              },
-              "UserData": {
-                "Position": "320,0"
-              }
-            },
-            {
-              "Id": 11,
-              "Type": "resource.ref",
-              "Properties": {
-                "value": "sounds/enemy/spiketrap.initiate.sound",
-                "T": "Sandbox.SoundEvent"
-              },
-              "UserData": {
-                "Position": "320,144"
-              }
-            },
-            {
-              "Id": 15,
-              "Type": "sound.play",
-              "UserData": {
-                "Position": "672,0"
-              }
-            },
-            {
-              "Id": 18,
-              "Type": "time.delayobj",
-              "UserData": {
-                "Position": "928,-0"
-              }
-            },
-            {
-              "Id": 21,
-              "Type": "resource.ref",
-              "Properties": {
-                "value": "sounds/enemy/spiketrap.trigger.sound",
-                "T": "Sandbox.SoundEvent"
-              },
-              "UserData": {
-                "Position": "880,96"
-              }
-            },
-            {
-              "Id": 22,
-              "Type": "sound.play",
-              "UserData": {
-                "Position": "1232,-0"
-              }
-            },
-            {
-              "Id": 26,
-              "Type": "time.delayobj",
-              "UserData": {
-                "Position": "3024,0"
-              }
-            },
-            {
-              "Id": 29,
-              "Type": "resource.ref",
-              "Properties": {
-                "value": "sounds/enemy/spiketrap.retract.sound",
-                "T": "Sandbox.SoundEvent"
-              },
-              "UserData": {
-                "Position": "2992,112"
-              }
-            },
-            {
-              "Id": 30,
-              "Type": "sound.play",
-              "UserData": {
-                "Position": "3328,0"
-              }
-            },
-            {
-              "Id": 35,
-              "Type": "mazing.isproxy",
-              "UserData": {
-                "Position": "1232,80"
-              }
-            },
-            {
-              "Id": 36,
-              "Type": "if",
-              "UserData": {
-                "Position": "1520,0"
-              }
-            },
-            {
-              "Id": 38,
-              "Type": "scene.ref",
-              "Properties": {
-                "component": {
-                  "_type": "component",
-                  "component_id": "6f930f4a-9d5e-4c86-8817-df8ffc81c4e5",
-                  "go": "127f5776-2537-4f2a-a906-1c1d1625975b",
-                  "component_type": "MazeObject"
-                }
-              },
-              "UserData": {
-                "Position": "1488,112"
-              }
-            },
-            {
-              "Id": 39,
-              "Type": "call",
-              "Properties": {
-                "_type": "Mazing.MazeObject",
-                "_isStatic": false,
-                "_name": "GetObjectsInSameCell"
-              },
-              "UserData": {
-                "Position": "1744,112"
-              }
-            },
-            {
-              "Id": 40,
-              "Type": "foreach",
-              "UserData": {
-                "Position": "2048,112"
-              }
-            },
-            {
-              "Id": 42,
-              "Type": "call",
-              "Properties": {
-                "_type": "Sandbox.IComponentLister",
-                "T": "Mazing.Player",
-                "_isStatic": false,
-                "_name": "Get"
-              },
-              "UserData": {
-                "Position": "2336,256",
-                "Labels": {
-                  "_result": "hit player"
-                }
-              }
-            },
-            {
-              "Id": 43,
-              "Type": "op.isnotnull",
-              "UserData": {
-                "Position": "2384,192"
-              }
-            },
-            {
-              "Id": 44,
-              "Type": "if",
-              "UserData": {
-                "Position": "2560,144"
-              }
-            },
-            {
-              "Id": 45,
-              "Type": "call",
-              "Properties": {
-                "_type": "Mazing.Player",
-                "_isStatic": false,
-                "_name": "Kill"
-              },
-              "UserData": {
-                "Position": "2816,208"
-              }
-            },
-            {
-              "Id": 52,
-              "Type": "scene.ref",
-              "Properties": {
-                "component": {
-                  "_type": "component",
-                  "component_id": "7f7a80ce-6173-4dd2-9317-addfddb8644e",
-                  "go": "127f5776-2537-4f2a-a906-1c1d1625975b",
-                  "component_type": "SpikeTrap"
-                }
-              },
-              "UserData": {
-                "Position": "2752,400"
-              }
-            },
-            {
-              "Id": 53,
-              "Type": "call",
-              "Properties": {
-                "_type": "Mazing.SpikeTrap",
-                "_isStatic": false,
-                "_name": "Stab"
-              },
-              "UserData": {
-                "Position": "3056,272"
-              }
-            }
-          ],
-          "Links": [
-            {
-              "SrcId": 0,
-              "SrcName": "_signal",
-              "DstId": 3,
-              "DstName": "_signal"
-            },
-            {
-              "SrcId": 2,
-              "SrcName": "_result",
-              "DstId": 3,
-              "DstName": "_target"
-            },
-            {
-              "Value": "trigger",
-              "DstId": 3,
-              "DstName": "v"
-            },
-            {
-              "Value": true,
-              "DstId": 3,
-              "DstName": "value"
-            },
-            {
-              "SrcId": 3,
-              "SrcName": "_signal",
-              "DstId": 15,
-              "DstName": "_signal"
-            },
-            {
-              "SrcId": 0,
-              "SrcName": "_target",
-              "DstId": 15,
-              "DstName": "_this"
-            },
-            {
-              "SrcId": 11,
-              "SrcName": "_result",
-              "DstId": 15,
-              "DstName": "soundEvent"
-            },
-            {
-              "SrcId": 15,
-              "SrcName": "_signal",
-              "DstId": 18,
-              "DstName": "_signal"
-            },
-            {
-              "Value": 1,
-              "DstId": 18,
-              "DstName": "seconds"
-            },
-            {
-              "SrcId": 0,
-              "SrcName": "_target",
-              "DstId": 18,
-              "DstName": "target"
-            },
-            {
-              "SrcId": 18,
-              "SrcName": "_signal",
-              "DstId": 22,
-              "DstName": "_signal"
-            },
-            {
-              "SrcId": 0,
-              "SrcName": "_target",
-              "DstId": 22,
-              "DstName": "_this"
-            },
-            {
-              "SrcId": 21,
-              "SrcName": "_result",
-              "DstId": 22,
-              "DstName": "soundEvent"
-            },
-            {
-              "SrcId": 36,
-              "SrcName": "_signal",
-              "DstId": 26,
-              "DstName": "_signal"
-            },
-            {
-              "Value": 1,
-              "DstId": 26,
-              "DstName": "seconds"
-            },
-            {
-              "SrcId": 0,
-              "SrcName": "_target",
-              "DstId": 26,
-              "DstName": "target"
-            },
-            {
-              "SrcId": 26,
-              "SrcName": "_signal",
-              "DstId": 30,
-              "DstName": "_signal"
-            },
-            {
-              "SrcId": 0,
-              "SrcName": "_target",
-              "DstId": 30,
-              "DstName": "_this"
-            },
-            {
-              "SrcId": 29,
-              "SrcName": "_result",
-              "DstId": 30,
-              "DstName": "soundEvent"
-            },
-            {
-              "SrcId": 0,
-              "SrcName": "_target",
-              "DstId": 35,
-              "DstName": "go"
-            },
-            {
-              "SrcId": 22,
-              "SrcName": "_signal",
-              "DstId": 36,
-              "DstName": "_signal"
-            },
-            {
-              "SrcId": 35,
-              "SrcName": "_result",
-              "DstId": 36,
-              "DstName": "condition"
-            },
-            {
-              "SrcId": 36,
-              "SrcName": "false",
-              "DstId": 39,
-              "DstName": "_signal"
-            },
-            {
-              "SrcId": 38,
-              "SrcName": "_result",
-              "DstId": 39,
-              "DstName": "_target"
-            },
-            {
-              "SrcId": 39,
-              "SrcName": "_signal",
-              "DstId": 40,
-              "DstName": "_signal"
-            },
-            {
-              "SrcId": 39,
-              "SrcName": "_result",
-              "DstId": 40,
-              "DstName": "enumerable"
-            },
-            {
-              "SrcId": 40,
-              "SrcName": "body.value",
-              "DstId": 42,
-              "DstName": "_target"
-            },
-            {
-              "SrcId": 42,
-              "SrcName": "_result",
-              "DstId": 43,
-              "DstName": "input"
-            },
-            {
-              "SrcId": 40,
-              "SrcName": "body",
-              "DstId": 44,
-              "DstName": "_signal"
-            },
-            {
-              "SrcId": 43,
-              "SrcName": "_result",
-              "DstId": 44,
-              "DstName": "condition"
-            },
-            {
-              "SrcId": 44,
-              "SrcName": "true",
-              "DstId": 45,
-              "DstName": "_signal"
-            },
-            {
-              "SrcId": 42,
-              "SrcName": "_result",
-              "DstId": 45,
-              "DstName": "_target"
-            },
-            {
-              "Value": "0,0,5000",
-              "DstId": 45,
-              "DstName": "force"
-            },
-            {
-              "SrcId": 45,
-              "SrcName": "_signal",
-              "DstId": 53,
-              "DstName": "_signal"
-            },
-            {
-              "SrcId": 52,
-              "SrcName": "_result",
-              "DstId": 53,
-              "DstName": "_target"
-            }
-          ],
-          "Defaults": {
-            "$2.component": {
-              "_type": "component",
-              "component_id": "0c7eab75-5c79-45a8-bc38-7d24237fccb4",
-              "go": "18cc7041-1b38-4698-ba86-cc766bb70a2f",
-              "component_type": "SkinnedModelRenderer"
-            },
-            "$38.component": {
-              "_type": "component",
-              "component_id": "6f930f4a-9d5e-4c86-8817-df8ffc81c4e5",
-              "go": "127f5776-2537-4f2a-a906-1c1d1625975b",
-              "component_type": "MazeObject"
-            },
-            "$52.component": {
-              "_type": "component",
-              "component_id": "7f7a80ce-6173-4dd2-9317-addfddb8644e",
-              "go": "127f5776-2537-4f2a-a906-1c1d1625975b",
-              "component_type": "SpikeTrap"
-            }
-          }
-        },
-        "ResetTime": 4,
-        "TriggerTime": {
-          "Relative": 5924.31
+        "__type": "Sandbox.Events.StateMachineComponent",
+        "__guid": "3ef40403-719a-4ce4-a53e-c966125b7fb3",
+        "InitialState": {
+          "_type": "component",
+          "component_id": "264535a1-021e-4c20-b3e1-3e276d2d2ccd",
+          "go": "3abbe486-e16d-470b-ac14-2ecb1df5e609",
+          "component_type": "StateComponent"
         }
       }
     ],
@@ -551,8 +45,6 @@
         "Rotation": "0,0,0.7071068,0.7071068",
         "Scale": "0.24,0.24,0.24",
         "Enabled": true,
-        "NetworkMode": 2,
-        "NetworkInterpolation": true,
         "Components": [
           {
             "__type": "Sandbox.SkinnedModelRenderer",
@@ -562,11 +54,870 @@
             "CreateBoneObjects": false,
             "Model": "models/spiketrap.vmdl",
             "RenderType": "On",
-            "Tint": "1,1,1,1"
+            "Tint": "1,1,1,1",
+            "UseAnimGraph": true
+          }
+        ]
+      },
+      {
+        "__guid": "3abbe486-e16d-470b-ac14-2ecb1df5e609",
+        "Flags": 0,
+        "Name": "Idle",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Sandbox.Events.StateComponent",
+            "__guid": "264535a1-021e-4c20-b3e1-3e276d2d2ccd",
+            "EditorPosition": "256,-160"
+          },
+          {
+            "__type": "Sandbox.Events.TransitionComponent",
+            "__guid": "d84fda2d-1e09-4e03-9386-ba140316e387",
+            "Action": {
+              "__version": 7,
+              "__guid": "d2b68cae-e6c8-4126-a6b1-62cff59b68a9",
+              "UserData": {
+                "Title": "Play anim \u0026 trigger sound",
+                "ReferencedComponentTypes": []
+              },
+              "Variables": [],
+              "Nodes": [
+                {
+                  "Id": 0,
+                  "Type": "input"
+                },
+                {
+                  "Id": 1,
+                  "Type": "scene.ref",
+                  "Properties": {
+                    "component": {
+                      "_type": "component",
+                      "component_id": "0c7eab75-5c79-45a8-bc38-7d24237fccb4",
+                      "go": "18cc7041-1b38-4698-ba86-cc766bb70a2f",
+                      "component_type": "SkinnedModelRenderer"
+                    }
+                  },
+                  "UserData": {
+                    "Position": "-48,64"
+                  }
+                },
+                {
+                  "Id": 2,
+                  "Type": "call",
+                  "Properties": {
+                    "_name": "Set",
+                    "_isStatic": false,
+                    "_type": "Sandbox.SkinnedModelRenderer"
+                  },
+                  "UserData": {
+                    "Position": "352,0"
+                  }
+                },
+                {
+                  "Id": 5,
+                  "Type": "resource.ref",
+                  "Properties": {
+                    "value": "sounds/enemy/spiketrap.initiate.sound",
+                    "T": "Sandbox.SoundEvent"
+                  },
+                  "UserData": {
+                    "Position": "368,144"
+                  }
+                },
+                {
+                  "Id": 6,
+                  "Type": "sound.play",
+                  "UserData": {
+                    "Position": "720,0"
+                  }
+                }
+              ],
+              "Links": [
+                {
+                  "SrcId": 0,
+                  "SrcName": "_signal",
+                  "DstId": 2,
+                  "DstName": "_signal"
+                },
+                {
+                  "SrcId": 1,
+                  "SrcName": "_result",
+                  "DstId": 2,
+                  "DstName": "_target"
+                },
+                {
+                  "Value": "trigger",
+                  "DstId": 2,
+                  "DstName": "v"
+                },
+                {
+                  "Value": true,
+                  "DstId": 2,
+                  "DstName": "value"
+                },
+                {
+                  "SrcId": 2,
+                  "SrcName": "_signal",
+                  "DstId": 6,
+                  "DstName": "_signal"
+                },
+                {
+                  "SrcId": 0,
+                  "SrcName": "_target",
+                  "DstId": 6,
+                  "DstName": "_this"
+                },
+                {
+                  "SrcId": 5,
+                  "SrcName": "_result",
+                  "DstId": 6,
+                  "DstName": "soundEvent"
+                }
+              ],
+              "Defaults": {
+                "$1.component": {
+                  "_type": "component",
+                  "component_id": "0c7eab75-5c79-45a8-bc38-7d24237fccb4",
+                  "go": "18cc7041-1b38-4698-ba86-cc766bb70a2f",
+                  "component_type": "SkinnedModelRenderer"
+                }
+              }
+            },
+            "Condition": {
+              "__version": 7,
+              "__guid": "3774f88f-51e0-421d-ade9-a5a231ed6af2",
+              "UserData": {
+                "Title": "Triggered by object",
+                "ReferencedComponentTypes": [],
+                "Icon": "touch_app"
+              },
+              "Variables": [],
+              "Nodes": [
+                {
+                  "Id": 0,
+                  "Type": "input",
+                  "UserData": {
+                    "Position": "-16,96"
+                  }
+                },
+                {
+                  "Id": 1,
+                  "Type": "output",
+                  "UserData": {
+                    "Position": "496,96"
+                  }
+                },
+                {
+                  "Id": 2,
+                  "Type": "mazing.touchingHoldable",
+                  "UserData": {
+                    "Position": "208,96"
+                  }
+                },
+                {
+                  "Id": 4,
+                  "Type": "scene.ref",
+                  "Properties": {
+                    "component": {
+                      "_type": "component",
+                      "component_id": "6f930f4a-9d5e-4c86-8817-df8ffc81c4e5",
+                      "go": "127f5776-2537-4f2a-a906-1c1d1625975b",
+                      "component_type": "MazeObject"
+                    }
+                  },
+                  "UserData": {
+                    "Position": "-32,160"
+                  }
+                }
+              ],
+              "Links": [
+                {
+                  "SrcId": 2,
+                  "SrcName": "_result",
+                  "DstId": 1,
+                  "DstName": "_result"
+                },
+                {
+                  "SrcId": 2,
+                  "SrcName": "_signal",
+                  "DstId": 1,
+                  "DstName": "_signal"
+                },
+                {
+                  "SrcId": 0,
+                  "SrcName": "_signal",
+                  "DstId": 2,
+                  "DstName": "_signal"
+                },
+                {
+                  "SrcId": 4,
+                  "SrcName": "_result",
+                  "DstId": 2,
+                  "DstName": "obj"
+                }
+              ],
+              "Defaults": {
+                "$4.component": {
+                  "_type": "component",
+                  "component_id": "6f930f4a-9d5e-4c86-8817-df8ffc81c4e5",
+                  "go": "127f5776-2537-4f2a-a906-1c1d1625975b",
+                  "component_type": "MazeObject"
+                }
+              }
+            },
+            "Target": {
+              "_type": "component",
+              "component_id": "3f575cad-8e53-4b62-9eb2-cfa8fe490977",
+              "go": "a4f144a5-78a0-41b5-9d2a-d6702625585c",
+              "component_type": "StateComponent"
+            }
+          }
+        ]
+      },
+      {
+        "__guid": "a4f144a5-78a0-41b5-9d2a-d6702625585c",
+        "Flags": 0,
+        "Name": "Trigger",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Sandbox.Events.StateComponent",
+            "__guid": "3f575cad-8e53-4b62-9eb2-cfa8fe490977",
+            "EditorPosition": "-160,-320"
+          },
+          {
+            "__type": "Sandbox.Events.TransitionComponent",
+            "__guid": "48b394aa-0eb3-467e-b9e3-e80443267052",
+            "Action": {
+              "__version": 7,
+              "__guid": "773f737d-522b-4cde-851f-195a5e02477e",
+              "UserData": {
+                "Title": "Play stab sound, do damage",
+                "ReferencedComponentTypes": []
+              },
+              "Variables": [],
+              "Nodes": [
+                {
+                  "Id": 0,
+                  "Type": "input",
+                  "UserData": {
+                    "Position": "-144,48"
+                  }
+                },
+                {
+                  "Id": 3,
+                  "Type": "scene.ref",
+                  "Properties": {
+                    "component": {
+                      "_type": "component",
+                      "component_id": "6f930f4a-9d5e-4c86-8817-df8ffc81c4e5",
+                      "go": "127f5776-2537-4f2a-a906-1c1d1625975b",
+                      "component_type": "MazeObject"
+                    }
+                  },
+                  "UserData": {
+                    "Position": "144,160"
+                  }
+                },
+                {
+                  "Id": 4,
+                  "Type": "call",
+                  "Properties": {
+                    "_isStatic": false,
+                    "_name": "GetObjectsInSameCell",
+                    "_type": "Mazing.MazeObject"
+                  },
+                  "UserData": {
+                    "Position": "400,96"
+                  }
+                },
+                {
+                  "Id": 5,
+                  "Type": "foreach",
+                  "UserData": {
+                    "Position": "704,96"
+                  }
+                },
+                {
+                  "Id": 6,
+                  "Type": "call",
+                  "Properties": {
+                    "T": "Mazing.Player",
+                    "_isStatic": false,
+                    "_name": "Get",
+                    "_type": "Sandbox.IComponentLister"
+                  },
+                  "UserData": {
+                    "Position": "992,240",
+                    "Labels": {
+                      "_result": "hit player"
+                    }
+                  }
+                },
+                {
+                  "Id": 7,
+                  "Type": "op.isnotnull",
+                  "UserData": {
+                    "Position": "1040,176"
+                  }
+                },
+                {
+                  "Id": 8,
+                  "Type": "if",
+                  "UserData": {
+                    "Position": "1216,128"
+                  }
+                },
+                {
+                  "Id": 9,
+                  "Type": "call",
+                  "Properties": {
+                    "_isStatic": false,
+                    "_name": "Kill",
+                    "_type": "Mazing.Player"
+                  },
+                  "UserData": {
+                    "Position": "1472,192"
+                  }
+                },
+                {
+                  "Id": 13,
+                  "Type": "resource.ref",
+                  "Properties": {
+                    "value": "sounds/enemy/spiketrap.hitplayer.sound",
+                    "T": "Sandbox.SoundEvent"
+                  },
+                  "UserData": {
+                    "Position": "1424,320"
+                  }
+                },
+                {
+                  "Id": 14,
+                  "Type": "sound.play",
+                  "UserData": {
+                    "Position": "1744,192"
+                  }
+                },
+                {
+                  "Id": 16,
+                  "Type": "resource.ref",
+                  "Properties": {
+                    "T": "Sandbox.SoundEvent",
+                    "value": "sounds/enemy/spiketrap.trigger.sound"
+                  },
+                  "UserData": {
+                    "Position": "-160,112"
+                  }
+                },
+                {
+                  "Id": 17,
+                  "Type": "sound.play",
+                  "UserData": {
+                    "Position": "144,48"
+                  }
+                }
+              ],
+              "Links": [
+                {
+                  "SrcId": 17,
+                  "SrcName": "_signal",
+                  "DstId": 4,
+                  "DstName": "_signal"
+                },
+                {
+                  "SrcId": 3,
+                  "SrcName": "_result",
+                  "DstId": 4,
+                  "DstName": "_target"
+                },
+                {
+                  "SrcId": 4,
+                  "SrcName": "_signal",
+                  "DstId": 5,
+                  "DstName": "_signal"
+                },
+                {
+                  "SrcId": 4,
+                  "SrcName": "_result",
+                  "DstId": 5,
+                  "DstName": "enumerable"
+                },
+                {
+                  "SrcId": 5,
+                  "SrcName": "body.value",
+                  "DstId": 6,
+                  "DstName": "_target"
+                },
+                {
+                  "SrcId": 6,
+                  "SrcName": "_result",
+                  "DstId": 7,
+                  "DstName": "input"
+                },
+                {
+                  "SrcId": 5,
+                  "SrcName": "body",
+                  "DstId": 8,
+                  "DstName": "_signal"
+                },
+                {
+                  "SrcId": 7,
+                  "SrcName": "_result",
+                  "DstId": 8,
+                  "DstName": "condition"
+                },
+                {
+                  "SrcId": 8,
+                  "SrcName": "true",
+                  "DstId": 9,
+                  "DstName": "_signal"
+                },
+                {
+                  "SrcId": 6,
+                  "SrcName": "_result",
+                  "DstId": 9,
+                  "DstName": "_target"
+                },
+                {
+                  "Value": "0,0,5000",
+                  "DstId": 9,
+                  "DstName": "force"
+                },
+                {
+                  "SrcId": 9,
+                  "SrcName": "_signal",
+                  "DstId": 14,
+                  "DstName": "_signal"
+                },
+                {
+                  "SrcId": 0,
+                  "SrcName": "_target",
+                  "DstId": 14,
+                  "DstName": "_this"
+                },
+                {
+                  "SrcId": 13,
+                  "SrcName": "_result",
+                  "DstId": 14,
+                  "DstName": "soundEvent"
+                },
+                {
+                  "SrcId": 0,
+                  "SrcName": "_signal",
+                  "DstId": 17,
+                  "DstName": "_signal"
+                },
+                {
+                  "SrcId": 0,
+                  "SrcName": "_target",
+                  "DstId": 17,
+                  "DstName": "_this"
+                },
+                {
+                  "SrcId": 16,
+                  "SrcName": "_result",
+                  "DstId": 17,
+                  "DstName": "soundEvent"
+                }
+              ],
+              "Defaults": {
+                "$3.component": {
+                  "_type": "component",
+                  "component_id": "6f930f4a-9d5e-4c86-8817-df8ffc81c4e5",
+                  "go": "127f5776-2537-4f2a-a906-1c1d1625975b",
+                  "component_type": "MazeObject"
+                }
+              }
+            },
+            "Condition": {
+              "__version": 7,
+              "__guid": "d242bf39-6bec-49b5-9187-07084f75ce24",
+              "UserData": {
+                "Title": "1s",
+                "Icon": "timer",
+                "ReferencedComponentTypes": [
+                  "Sandbox.Events.StateComponent"
+                ]
+              },
+              "Variables": [],
+              "Nodes": [
+                {
+                  "Id": 0,
+                  "Type": "input"
+                },
+                {
+                  "Id": 1,
+                  "Type": "output",
+                  "UserData": {
+                    "Position": "416,-0"
+                  }
+                },
+                {
+                  "Id": 2,
+                  "Type": "scene.get",
+                  "Properties": {
+                    "T": "Sandbox.Events.StateComponent"
+                  },
+                  "UserData": {
+                    "Position": "-0,48"
+                  }
+                },
+                {
+                  "Id": 3,
+                  "Type": "property",
+                  "ParentId": 2,
+                  "Properties": {
+                    "_type": "Sandbox.Events.StateComponent",
+                    "_name": "Time"
+                  }
+                },
+                {
+                  "Id": 4,
+                  "Type": "op.greaterthanorequal",
+                  "UserData": {
+                    "Position": "224,144"
+                  }
+                }
+              ],
+              "Links": [
+                {
+                  "SrcId": 4,
+                  "SrcName": "_result",
+                  "DstId": 1,
+                  "DstName": "_result"
+                },
+                {
+                  "SrcId": 0,
+                  "SrcName": "_signal",
+                  "DstId": 1,
+                  "DstName": "_signal"
+                },
+                {
+                  "SrcId": 0,
+                  "SrcName": "_target",
+                  "DstId": 2,
+                  "DstName": "_this"
+                },
+                {
+                  "SrcId": 2,
+                  "SrcName": "_result",
+                  "DstId": 3,
+                  "DstName": "_target"
+                },
+                {
+                  "SrcId": 3,
+                  "SrcName": "_result",
+                  "DstId": 4,
+                  "DstName": "a"
+                },
+                {
+                  "Value": {
+                    "$type": "Simple",
+                    "Type": "System.Single",
+                    "Value": 1
+                  },
+                  "DstId": 4,
+                  "DstName": "b"
+                }
+              ]
+            },
+            "Target": {
+              "_type": "component",
+              "component_id": "b5911673-d8e5-44d8-b845-3d0291b2d700",
+              "go": "eb40e4a7-8d5f-40f3-8fb6-a88c689ed9d8",
+              "component_type": "StateComponent"
+            }
+          }
+        ]
+      },
+      {
+        "__guid": "eb40e4a7-8d5f-40f3-8fb6-a88c689ed9d8",
+        "Flags": 0,
+        "Name": "Stab",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Sandbox.Events.StateComponent",
+            "__guid": "b5911673-d8e5-44d8-b845-3d0291b2d700",
+            "EditorPosition": "256,-448"
+          },
+          {
+            "__type": "Sandbox.Events.TransitionComponent",
+            "__guid": "e53d437e-4f32-4d21-ad6d-c1750d491306",
+            "Action": {
+              "__version": 7,
+              "__guid": "4634aa76-e56a-4e22-830d-a03632ef39bc",
+              "UserData": {
+                "Title": "Play retract sound",
+                "ReferencedComponentTypes": []
+              },
+              "Variables": [],
+              "Nodes": [
+                {
+                  "Id": 0,
+                  "Type": "input",
+                  "UserData": {
+                    "Position": "-112,-0"
+                  }
+                },
+                {
+                  "Id": 1,
+                  "Type": "resource.ref",
+                  "Properties": {
+                    "value": "sounds/enemy/spiketrap.retract.sound",
+                    "T": "Sandbox.SoundEvent"
+                  },
+                  "UserData": {
+                    "Position": "-144,112"
+                  }
+                },
+                {
+                  "Id": 2,
+                  "Type": "sound.play",
+                  "UserData": {
+                    "Position": "192,0"
+                  }
+                }
+              ],
+              "Links": [
+                {
+                  "SrcId": 0,
+                  "SrcName": "_signal",
+                  "DstId": 2,
+                  "DstName": "_signal"
+                },
+                {
+                  "SrcId": 0,
+                  "SrcName": "_target",
+                  "DstId": 2,
+                  "DstName": "_this"
+                },
+                {
+                  "SrcId": 1,
+                  "SrcName": "_result",
+                  "DstId": 2,
+                  "DstName": "soundEvent"
+                }
+              ]
+            },
+            "Condition": {
+              "__version": 7,
+              "__guid": "c836b6c8-19e7-4673-8287-8c8148afba37",
+              "UserData": {
+                "Title": "1s",
+                "Icon": "timer",
+                "ReferencedComponentTypes": [
+                  "Sandbox.Events.StateComponent"
+                ]
+              },
+              "Variables": [],
+              "Nodes": [
+                {
+                  "Id": 0,
+                  "Type": "input"
+                },
+                {
+                  "Id": 1,
+                  "Type": "output",
+                  "UserData": {
+                    "Position": "416,-0"
+                  }
+                },
+                {
+                  "Id": 2,
+                  "Type": "scene.get",
+                  "Properties": {
+                    "T": "Sandbox.Events.StateComponent"
+                  },
+                  "UserData": {
+                    "Position": "-0,48"
+                  }
+                },
+                {
+                  "Id": 3,
+                  "Type": "property",
+                  "ParentId": 2,
+                  "Properties": {
+                    "_type": "Sandbox.Events.StateComponent",
+                    "_name": "Time"
+                  }
+                },
+                {
+                  "Id": 4,
+                  "Type": "op.greaterthanorequal",
+                  "UserData": {
+                    "Position": "224,144"
+                  }
+                }
+              ],
+              "Links": [
+                {
+                  "SrcId": 4,
+                  "SrcName": "_result",
+                  "DstId": 1,
+                  "DstName": "_result"
+                },
+                {
+                  "SrcId": 0,
+                  "SrcName": "_signal",
+                  "DstId": 1,
+                  "DstName": "_signal"
+                },
+                {
+                  "SrcId": 0,
+                  "SrcName": "_target",
+                  "DstId": 2,
+                  "DstName": "_this"
+                },
+                {
+                  "SrcId": 2,
+                  "SrcName": "_result",
+                  "DstId": 3,
+                  "DstName": "_target"
+                },
+                {
+                  "SrcId": 3,
+                  "SrcName": "_result",
+                  "DstId": 4,
+                  "DstName": "a"
+                },
+                {
+                  "Value": {
+                    "$type": "Simple",
+                    "Type": "System.Single",
+                    "Value": 1
+                  },
+                  "DstId": 4,
+                  "DstName": "b"
+                }
+              ]
+            },
+            "Target": {
+              "_type": "component",
+              "component_id": "78e4b1d6-e036-4326-971e-35cf31f63554",
+              "go": "40ad6f96-5d08-4e9a-baa5-31dc20d0a637",
+              "component_type": "StateComponent"
+            }
+          }
+        ]
+      },
+      {
+        "__guid": "40ad6f96-5d08-4e9a-baa5-31dc20d0a637",
+        "Flags": 0,
+        "Name": "Retract",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Sandbox.Events.StateComponent",
+            "__guid": "78e4b1d6-e036-4326-971e-35cf31f63554",
+            "EditorPosition": "672,-320"
+          },
+          {
+            "__type": "Sandbox.Events.TransitionComponent",
+            "__guid": "14ce23ec-c57a-40d0-8cb4-58a34c4ad49f",
+            "Condition": {
+              "__version": 7,
+              "__guid": "c464225a-c759-4d82-bbed-8553631c4950",
+              "UserData": {
+                "Title": "1s",
+                "Icon": "timer",
+                "ReferencedComponentTypes": [
+                  "Sandbox.Events.StateComponent"
+                ]
+              },
+              "Variables": [],
+              "Nodes": [
+                {
+                  "Id": 0,
+                  "Type": "input"
+                },
+                {
+                  "Id": 1,
+                  "Type": "output",
+                  "UserData": {
+                    "Position": "416,-0"
+                  }
+                },
+                {
+                  "Id": 2,
+                  "Type": "scene.get",
+                  "Properties": {
+                    "T": "Sandbox.Events.StateComponent"
+                  },
+                  "UserData": {
+                    "Position": "-0,48"
+                  }
+                },
+                {
+                  "Id": 3,
+                  "Type": "property",
+                  "ParentId": 2,
+                  "Properties": {
+                    "_type": "Sandbox.Events.StateComponent",
+                    "_name": "Time"
+                  }
+                },
+                {
+                  "Id": 4,
+                  "Type": "op.greaterthanorequal",
+                  "UserData": {
+                    "Position": "224,144"
+                  }
+                }
+              ],
+              "Links": [
+                {
+                  "SrcId": 4,
+                  "SrcName": "_result",
+                  "DstId": 1,
+                  "DstName": "_result"
+                },
+                {
+                  "SrcId": 0,
+                  "SrcName": "_signal",
+                  "DstId": 1,
+                  "DstName": "_signal"
+                },
+                {
+                  "SrcId": 0,
+                  "SrcName": "_target",
+                  "DstId": 2,
+                  "DstName": "_this"
+                },
+                {
+                  "SrcId": 2,
+                  "SrcName": "_result",
+                  "DstId": 3,
+                  "DstName": "_target"
+                },
+                {
+                  "SrcId": 3,
+                  "SrcName": "_result",
+                  "DstId": 4,
+                  "DstName": "a"
+                },
+                {
+                  "Value": {
+                    "$type": "Simple",
+                    "Type": "System.Single",
+                    "Value": 1
+                  },
+                  "DstId": 4,
+                  "DstName": "b"
+                }
+              ]
+            },
+            "Target": {
+              "_type": "component",
+              "component_id": "264535a1-021e-4c20-b3e1-3e276d2d2ccd",
+              "go": "3abbe486-e16d-470b-ac14-2ecb1df5e609",
+              "component_type": "StateComponent"
+            }
           }
         ]
       }
-    ]
+    ],
+    "__variables": []
   },
   "ShowInMenu": false,
   "MenuPath": null,

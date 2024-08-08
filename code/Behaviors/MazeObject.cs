@@ -41,3 +41,12 @@ public sealed class MazeObject : Component
 	}
 }
 
+public static class MazeObjectExtensions
+{
+	[ActionGraphNode("mazing.touchingHoldable")]
+	public static bool IsTouchingHoldable( this MazeObject obj )
+	{
+		return obj.GetObjectsInSameCell().Any( x => x != obj && x.Components.Get<Holdable>() is not null );
+	}
+}
+
