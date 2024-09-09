@@ -172,7 +172,7 @@ public class MazingGame : Component, Component.INetworkListener
 		{
 			Stats.SetValue( "level.max", level );
 
-			Stats.Increment( $"level{level}.count", level );
+			Stats.Increment( $"level{level}.count", 1 );
 			Stats.SetValue( $"level{level}.time", t );
 			Stats.SetValue( $"level{level}.money", money );
 		}
