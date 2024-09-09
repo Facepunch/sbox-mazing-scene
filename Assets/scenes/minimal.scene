@@ -7,8 +7,6 @@
       "Name": "UI",
       "Position": "-0.0001983643,-0.0002441406,-0.0002441406",
       "Enabled": true,
-      "NetworkMode": 2,
-      "NetworkInterpolation": true,
       "Components": [
         {
           "__type": "Sandbox.ScreenPanel",
@@ -16,6 +14,7 @@
           "AutoScreenScale": true,
           "Opacity": 1,
           "Scale": 1,
+          "ScaleStrategy": "ConsistentHeight",
           "ZIndex": 100
         }
       ],
@@ -26,8 +25,6 @@
           "Name": "Fade",
           "Position": "0,0,0",
           "Enabled": true,
-          "NetworkMode": 2,
-          "NetworkInterpolation": true,
           "Components": [
             {
               "__type": "ScreenFade",
@@ -42,8 +39,6 @@
           "Name": "HUD",
           "Position": "0,0,0",
           "Enabled": true,
-          "NetworkMode": 2,
-          "NetworkInterpolation": true,
           "Components": [
             {
               "__type": "Hud",
@@ -60,8 +55,6 @@
       "Position": "187.101,591.1297,1499.999",
       "Rotation": "-0.5735766,0.000000005658613,0.8191519,-0.00000001428858",
       "Enabled": true,
-      "NetworkMode": 2,
-      "NetworkInterpolation": true,
       "Components": [
         {
           "__type": "Sandbox.CameraComponent",
@@ -112,9 +105,13 @@
         {
           "__type": "Sandbox.Tonemapping",
           "__guid": "613f0bfb-10e8-464e-aba5-a0ddaf68a46e",
+          "__version": 1,
+          "ExposureBias": 2,
           "ExposureCompensation": 0,
+          "ExposureMethod": "RGB",
           "MaximumExposure": 2,
           "MinimumExposure": 1,
+          "Mode": "Legacy",
           "Rate": 1
         },
         {
@@ -143,8 +140,6 @@
       "Name": "Gradient Fog",
       "Position": "0,0,-64",
       "Enabled": true,
-      "NetworkMode": 2,
-      "NetworkInterpolation": true,
       "Components": [
         {
           "__type": "Sandbox.GradientFog",
@@ -164,7 +159,6 @@
       "Name": "Maze",
       "Enabled": true,
       "NetworkMode": 1,
-      "NetworkInterpolation": true,
       "Components": [
         {
           "__type": "Mazing.Maze",
@@ -213,8 +207,8 @@
                 "Type": "call",
                 "Properties": {
                   "_type": "Mazing.Helpers",
-                  "_name": "FloorToInt",
-                  "_isStatic": true
+                  "_isStatic": true,
+                  "_name": "FloorToInt"
                 },
                 "UserData": {
                   "Position": "640,96"
@@ -391,7 +385,6 @@
       "Name": "Game",
       "Enabled": true,
       "NetworkMode": 1,
-      "NetworkInterpolation": true,
       "Components": [
         {
           "__type": "Mazing.MazingGame",
@@ -413,8 +406,8 @@
                 "Id": 2,
                 "Type": "resource.ref",
                 "Properties": {
-                  "value": "sounds/player/player.victory.sound",
-                  "T": "Sandbox.SoundEvent"
+                  "T": "Sandbox.SoundEvent",
+                  "value": "sounds/player/player.victory.sound"
                 },
                 "UserData": {
                   "Position": "0,96"
@@ -458,7 +451,7 @@
           "Score": 0,
           "State": "StartingLevel",
           "StateStart": {
-            "Relative": 10222.38
+            "Relative": 1181.7327
           }
         }
       ]
@@ -469,8 +462,6 @@
       "Name": "Leaderboards",
       "Position": "192,168,68.00002",
       "Enabled": true,
-      "NetworkMode": 2,
-      "NetworkInterpolation": true,
       "Children": [
         {
           "__guid": "d31319d8-67b3-4776-8218-e28e469b712e",
@@ -480,8 +471,6 @@
           "Rotation": "0,-0.7071068,0,0.7071068",
           "Scale": "4,4,4",
           "Enabled": true,
-          "NetworkMode": 2,
-          "NetworkInterpolation": true,
           "Components": [
             {
               "__type": "Sandbox.WorldPanel",
@@ -510,8 +499,6 @@
           "Rotation": "0,-0.7071068,0,0.7071068",
           "Scale": "4,4,4",
           "Enabled": true,
-          "NetworkMode": 2,
-          "NetworkInterpolation": true,
           "Components": [
             {
               "__type": "Sandbox.WorldPanel",
@@ -540,8 +527,6 @@
           "Rotation": "0,-0.7071068,0,0.7071068",
           "Scale": "4,4,4",
           "Enabled": true,
-          "NetworkMode": 2,
-          "NetworkInterpolation": true,
           "Components": [
             {
               "__type": "Sandbox.WorldPanel",
@@ -570,8 +555,6 @@
           "Rotation": "0,-0.7071068,0,0.7071068",
           "Scale": "4,4,4",
           "Enabled": true,
-          "NetworkMode": 2,
-          "NetworkInterpolation": true,
           "Components": [
             {
               "__type": "Sandbox.WorldPanel",
@@ -618,7 +601,6 @@
   },
   "Title": "minimal",
   "Description": "",
-  "LastSaved": "2024-05-23T14:28:44.635084\u002B02:00",
   "ResourceVersion": 1,
   "__references": [],
   "__version": 1
