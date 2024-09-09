@@ -125,12 +125,17 @@ partial class Maze
 			return null;
 		}
 
+		if ( Players.FirstOrDefault( x => x.Network.OwnerConnection == connection ) is {} player )
+		{
+			return player;
+		}
+
 		pos ??= MazeToWorldPos( PlayerSpawns[0].Row, PlayerSpawns[0].Col ) + Vector3.Up * 512f;
 
 		// Spawn a player for this client
 		var obj = PlayerPrefab.Clone( pos.Value );
 
-		var player = obj.Components.Get<Player>();
+		player = obj.Components.Get<Player>();
 
 		_players.Add( player );
 
