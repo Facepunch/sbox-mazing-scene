@@ -160,14 +160,16 @@ public class MazingGame : Component, Component.INetworkListener
 	}
 
 	[Broadcast( NetPermission.HostOnly )]
-	public void UpdateStats( int level, int money, float time )
+	public void UpdateStats( int level, int money, float? time = null )
 	{
-		Stats.SetValue( "level", level );
 		Stats.SetValue( "money", money );
 
-		if ( Level % 5 == 0 && time > 0f )
+		// Time is null if we died on this level
+
+		if ( level > 0 && time is { } t )
 		{
-			Stats.SetValue( $"time.level{level}", time );
+			Stats.SetValue( $"time.level{level}", t );
+			Stats.SetValue( "level", level );
 		}
 
 		Stats.Flush();
@@ -177,10 +179,12 @@ public class MazingGame : Component, Component.INetworkListener
 	{
 		if ( StateStart > 1f )
 		{
+			var prevLevel = Level;
+
 			Level += 1;
 			Maze.NextLevel( Level, Random.Shared.Next() );
 
-			UpdateStats( Level, Score * 100, CompletedTimeSeconds );
+			UpdateStats( prevLevel, Score * 100, CompletedTimeSeconds );
 
 			State = GameState.StartingLevel;
 			StateStart = 0f;
@@ -191,7 +195,7 @@ public class MazingGame : Component, Component.INetworkListener
 	{
 		if ( StateStart > 1f )
 		{
-			UpdateStats( Level, Score * 100, 0f );
+			UpdateStats( Level, Score * 100 );
 
 			Level = 0;
 			Score = 0;
