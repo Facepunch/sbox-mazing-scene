@@ -159,6 +159,7 @@
       "Name": "Maze",
       "Enabled": true,
       "NetworkMode": 1,
+      "NetworkOrphaned": 1,
       "Components": [
         {
           "__type": "Mazing.Maze",
@@ -385,6 +386,7 @@
       "Name": "Game",
       "Enabled": true,
       "NetworkMode": 1,
+      "NetworkOrphaned": 1,
       "Components": [
         {
           "__type": "Mazing.MazingGame",

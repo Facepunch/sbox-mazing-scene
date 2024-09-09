@@ -5,7 +5,7 @@
     "Name": "gem_small",
     "Enabled": true,
     "NetworkMode": 1,
-    "NetworkInterpolation": true,
+    "NetworkOrphaned": 1,
     "Components": [
       {
         "__type": "Sandbox.SkinnedModelRenderer",

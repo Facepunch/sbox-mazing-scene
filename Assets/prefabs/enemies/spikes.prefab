@@ -6,7 +6,7 @@
     "Tags": "solid",
     "Enabled": true,
     "NetworkMode": 1,
-    "NetworkInterpolation": true,
+    "NetworkOrphaned": 1,
     "Components": [
       {
         "__type": "Mazing.Enemy",
