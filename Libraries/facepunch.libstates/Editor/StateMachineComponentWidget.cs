@@ -3,7 +3,7 @@ using Editor;
 using Sandbox.UI;
 using Button = Editor.Button;
 
-namespace Sandbox.Events.Editor;
+namespace Sandbox.States.Editor;
 
 [CustomEditor( typeof(StateMachineComponent)) ]
 public sealed class StateMachineComponentWidget : ComponentEditorWidget

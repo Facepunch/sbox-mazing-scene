@@ -2,8 +2,11 @@
 using System.Linq;
 using Editor;
 using Editor.NodeEditor;
+using Facepunch.ActionGraphs;
+using static System.Net.Mime.MediaTypeNames;
+using static Editor.Label;
 
-namespace Sandbox.Events.Editor;
+namespace Sandbox.States.Editor;
 
 public sealed class StateItem : GraphicsItem, IContextMenuSource, IDeletable
 {
@@ -11,7 +14,7 @@ public sealed class StateItem : GraphicsItem, IContextMenuSource, IDeletable
 	public static Color InitialColor { get; } = Color.Parse( "#BCA5DB" )!.Value;
 
 	public StateMachineView View { get; }
-	public StateComponent State { get; }
+	public State State { get; }
 
 	public float Radius => 64f;
 
@@ -21,7 +24,13 @@ public sealed class StateItem : GraphicsItem, IContextMenuSource, IDeletable
 
 	private int _lastHash;
 
-	public StateItem( StateMachineView view, StateComponent state )
+	private readonly StateLabel _enterLabel;
+	private readonly StateLabel _updateLabel;
+	private readonly StateLabel _leaveLabel;
+
+	internal bool HasMoved { get; set; }
+
+	public StateItem( StateMachineView view, State state )
 	{
 		View = view;
 		State = state;
@@ -32,6 +41,15 @@ public sealed class StateItem : GraphicsItem, IContextMenuSource, IDeletable
 		Movable = true;
 		Selectable = true;
 		HoverEvents = true;
+
+		Cursor = CursorShape.Finger;
+
+		_enterLabel = new StateLabel( this, new StateEnterAction( this ) );
+		_updateLabel = new StateLabel( this, new StateUpdateAction( this ) );
+		_leaveLabel = new StateLabel( this, new StateLeaveAction( this ) );
+
+		UpdateTooltip();
+		AlignLabels();
 	}
 
 	public override Rect BoundingRect => base.BoundingRect.Grow( 16f );
@@ -68,14 +86,30 @@ public sealed class StateItem : GraphicsItem, IContextMenuSource, IDeletable
 			Paint.DrawCircle( Size * 0.5f, Size + 8f );
 		}
 
-		Paint.ClearBrush();
-		Paint.SetFont( "roboto", 12f, 600 );
-		Paint.SetPen( Color.Black.WithAlpha( 0.5f ) );
-		Paint.DrawText( new Rect( 2f, 2f, Size.x, Size.y ), State.GameObject.Name );
+		var titleRect = (State.OnEnterState ?? State.OnUpdateState ?? State.OnLeaveState) is not null
+			? new Rect( 0f, Size.y * 0.35f - 12f, Size.x, 24f )
+			: new Rect( 0f, Size.y * 0.5f - 12f, Size.x, 24f );
 
-		Paint.SetPen( borderColor );
-		Paint.DrawText( new Rect( 0f, 0f, Size.x, Size.y ), State.GameObject.Name );
+		Paint.ClearBrush();
+
+		if ( IsEmoji )
+		{
+			Paint.SetFont( "roboto", Size.y * 0.5f, 600 );
+			Paint.SetPen( Color.White );
+			Paint.DrawText( new Rect( 0f, -4f, Size.x, Size.y ), State.Name );
+		}
+		else
+		{
+			Paint.SetFont( "roboto", 12f, 600 );
+			Paint.SetPen( Color.Black.WithAlpha( 0.5f ) );
+			Paint.DrawText( new Rect( titleRect.Position + 2f, titleRect.Size ), State.Name );
+
+			Paint.SetPen( borderColor );
+			Paint.DrawText( titleRect, State.Name );
+		}
 	}
+
+	public bool IsEmoji => State.Name.Length == 2 && State.Name[0] >= 0x8000 && char.ConvertToUtf32( State.Name, 0 ) != -1;
 
 	protected override void OnMousePressed( GraphicsMouseEvent e )
 	{
@@ -113,65 +147,52 @@ public sealed class StateItem : GraphicsItem, IContextMenuSource, IDeletable
 		base.OnMouseMove( e );
 	}
 
-	private void UpdateTransitions()
-	{
-		foreach ( var transition in State.Transitions )
-		{
-			View.GetTransitionItem( transition )?.Update();
-		}
-	}
-
-	protected override void OnHoverEnter( GraphicsHoverEvent e )
-	{
-		base.OnHoverEnter( e );
-		UpdateTransitions();
-	}
-
-	protected override void OnHoverLeave( GraphicsHoverEvent e )
-	{
-		base.OnHoverLeave( e );
-		UpdateTransitions();
-	}
-
-	protected override void OnSelectionChanged()
-	{
-		base.OnSelectionChanged();
-		UpdateTransitions();
-	}
-
 	public void OnContextMenu( ContextMenuEvent e )
 	{
 		e.Accepted = true;
 		Selected = true;
 
-		var menu = new global::Editor.Menu();
+		var menu = new global::Editor.Menu { DeleteOnClose = true };
 
-		if ( State.StateMachine.InitialState != State )
+		menu.AddHeading( "State" );
+
+		menu.AddMenu( "Rename", "edit" ).AddLineEdit( "Rename", State.Name, onSubmit: value =>
 		{
-			menu.AddOption( "Make Initial State", "start", action: () =>
-			{
-				State.StateMachine.InitialState = State;
-				Update();
-			} );
+			View.LogEdit( "State Renamed" );
 
-			menu.AddSeparator();
-		}
-
-		menu.AddMenu( "Rename State", "edit" ).AddLineEdit( "Rename", State.GameObject.Name, onSubmit: value =>
-		{
-			State.GameObject.Name = value;
+			State.Name = value ?? "Unnamed";
 			Update();
 		}, autoFocus: true );
 
-		menu.AddOption( "Delete State", "delete", action: Delete );
+		if ( State.StateMachine.InitialState != State )
+		{
+			menu.AddOption( "Make Initial", "start", action: () =>
+			{
+				View.LogEdit( "Initial State Assigned" );
+
+				State.StateMachine.InitialState = State;
+				Update();
+			} );
+		}
+
+		menu.AddSeparator();
+
+		foreach ( var label in Children.OfType<StateLabel>() )
+		{
+			label.Source.BuildAddContextMenu( menu );
+		}
+
+		menu.AddSeparator();
+		menu.AddOption( "Delete", "delete", action: Delete );
 
 		menu.OpenAtCursor( true );
 	}
 
 	protected override void OnMoved()
 	{
+		HasMoved = true;
+
 		State.EditorPosition = Position.SnapToGrid( View.GridSize );
-		SceneEditorSession.Active.Scene.EditLog( "State Moved", State );
 
 		UpdatePosition();
 	}
@@ -199,6 +220,8 @@ public sealed class StateItem : GraphicsItem, IContextMenuSource, IDeletable
 
 	public void Delete()
 	{
+		View.LogEdit( "State Removed" );
+
 		if ( State.StateMachine.InitialState == State )
 		{
 			State.StateMachine.InitialState = null;
@@ -213,16 +236,61 @@ public sealed class StateItem : GraphicsItem, IContextMenuSource, IDeletable
 			transition.Delete();
 		}
 
-		State.GameObject.Destroy();
+		State.Remove();
 		Destroy();
+	}
+
+	private void UpdateTooltip()
+	{
+		Tooltip = State.StateMachine.InitialState == State ? $"State <b>{State.Name}</b> <i>(initial)</i>" : $"State <b>{State.Name}</b>";
+	}
+
+	private void AlignLabels()
+	{
+		var labels = Children.OfType<StateLabel>()
+			.ToArray();
+
+		foreach ( var label in labels )
+		{
+			label.Layout();
+		}
+
+		var size = new Vector2( 32f, 32f );
+		var totalWidth = labels.Sum( x => x.Width );
+
+		var origin = Size * 0.5f - new Vector2( totalWidth * 0.5f, size.y * 0.5f );
+
+		if ( !IsEmoji )
+		{
+			origin.y += Radius / 6f;
+		}
+
+		foreach ( var label in labels )
+		{
+			label.Position = origin;
+			label.Update();
+
+			origin.x += label.Width;
+		}
+	}
+
+	public void ForceUpdate()
+	{
+		if ( !IsValid ) return;
+
+		AlignLabels();
+		Update();
 	}
 
 	public void Frame()
 	{
-		var hash = HashCode.Combine( State.StateMachine?.InitialState == State, State.StateMachine?.CurrentState == State );
+		var hash = HashCode.Combine( State.StateMachine.InitialState == State, State.StateMachine.CurrentState == State );
 		if ( hash == _lastHash ) return;
 
 		_lastHash = hash;
+
+		UpdateTooltip();
+		AlignLabels();
 		Update();
 	}
 }
