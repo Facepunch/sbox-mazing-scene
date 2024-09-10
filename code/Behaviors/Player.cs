@@ -27,11 +27,6 @@ public sealed class Player : Component, Component.INetworkSpawn
 	private GameObject? _ragdoll;
 	private ClothingContainer? _clothing;
 
-	protected override void OnStart()
-	{
-		Network.SetOrphanedMode( NetworkOrphaned.ClearOwner );
-	}
-
 	[Broadcast( NetPermission.OwnerOnly )]
 	private void DispatchExiting()
 	{
@@ -93,6 +88,8 @@ public sealed class Player : Component, Component.INetworkSpawn
 		Mazer.Throwable.IsExiting = false;
 		Mazer.Throwable.CanExit = true;
 
+		Mazer.Holdable.Enabled = true;
+
 		Mazer.CharacterController.Velocity = Vector3.Zero;
 
 		Holder.Enabled = true;
@@ -145,6 +142,8 @@ public sealed class Player : Component, Component.INetworkSpawn
 
 		Holder.ThrowAll( dir, 1 );
 		Holder.Enabled = false;
+
+		Mazer.Holdable.Enabled = false;
 	}
 
 	[Broadcast( NetPermission.OwnerOnly )]

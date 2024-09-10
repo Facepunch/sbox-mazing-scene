@@ -8,10 +8,30 @@ public sealed class Holder : Component, IThrowableListener
 {
 	[RequireComponent] public MazeObject MazeObject { get; set; } = null!;
 
-	public IReadOnlyList<Holdable> HeldItems => GameObject.Children
-		.Select( x => x.Components.Get<Holdable>() )
-		.Where( x => x is not null )
-		.ToArray();
+	private bool _heldItemsInvalid = true;
+	private readonly List<Holdable> _heldItems = new();
+
+	public IReadOnlyList<Holdable> HeldItems
+	{
+		get
+		{
+			if ( _heldItemsInvalid )
+			{
+				_heldItemsInvalid = false;
+
+				_heldItems.Clear();
+				_heldItems.AddRange( GameObject.Children
+					.Select( x => x.Components.Get<Holdable>() )
+					.Where( x => x.IsValid() ) );
+			}
+			else
+			{
+				_heldItems.RemoveAll( x => !x.IsValid() );
+			}
+
+			return _heldItems;
+		}
+	}
 
 	[Property] public bool AutoThrow { get; set; } = true;
 
@@ -62,29 +82,37 @@ public sealed class Holder : Component, IThrowableListener
 	[Broadcast( NetPermission.OwnerOnly )]
 	public void ThrowAll( int fromRow, int fromCol, Direction dir, int range )
 	{
-		var count = HeldItems.Count;
+		var items = HeldItems;
+		var count = items.Count;
 
-		for ( var i = 0; i < count; ++i)
+		for ( var i = 0; i < count && items.Count > 0; ++i)
 		{
-			ThrowOneInternal( fromRow, fromCol, dir, range == 0 ? 0 : range + i );
+			ThrowOneInternal( items[0], fromRow, fromCol, dir, range == 0 ? 0 : range + i );
 		}
 	}
 
 	[Broadcast( NetPermission.OwnerOnly )]
 	public void ThrowOne( Direction dir, int range )
 	{
+		if ( HeldItems is not { Count: > 0 } items ) return;
+
 		var (row, col) = MazeObject.CellIndex;
-		ThrowOneInternal( row, col, dir, range );
+		ThrowOneInternal( items[0], row, col, dir, range );
 	}
 
-	private void ThrowOneInternal( int fromRow, int fromCol, Direction dir, int range )
+	private void ThrowOneInternal( Holdable item, int fromRow, int fromCol, Direction dir, int range )
 	{
-		if ( HeldItems.Count == 0 )
+		if ( HeldItems is not { Count: > 0 } items )
 		{
 			return;
 		}
 
-		var item = HeldItems[0];
+		if ( !items.Contains( item ) || item.Holder != this )
+		{
+			return;
+		}
+
+		var isFirst = items.First() == item;
 
 		item.GameObject.SetParent( null );
 		item.Network.ClearInterpolation();
@@ -93,7 +121,9 @@ public sealed class Holder : Component, IThrowableListener
 
 		item.Throwable.Throw( fromRow, fromCol, dir, range );
 
-		if ( HeldItems.Count > 0 )
+		_heldItemsInvalid = true;
+
+		if ( isFirst && HeldItems.Count > 0 )
 		{
 			HeldItems[0].HeldTime = 0f;
 			return;
@@ -139,16 +169,14 @@ public sealed class Holder : Component, IThrowableListener
 			return heldholder.TryPickUp( item, airborne );
 		}
 
-		PickUp( item.GameObject.Id, airborne );
+		PickUp( item, airborne );
 		return true;
 	}
 
 	[Broadcast]
-	public void PickUp( Guid itemId, bool airborne )
+	public void PickUp( Holdable item, bool airborne )
 	{
-		var item = Scene.Directory.FindByGuid( itemId )
-			?.Components.Get<Holdable>()
-			?? throw new Exception( "Can't find item" );
+		_heldItemsInvalid = true;
 
 		if ( !airborne && HeldItems.FirstOrDefault() is {} first )
 		{
@@ -190,6 +218,19 @@ public sealed class Holder : Component, IThrowableListener
 			return;
 		}
 
+		if ( HeldItems is { Count: > 0 } items )
+		{
+			var (row, col) = MazeObject.CellIndex;
+
+			for ( var i = items.Count - 1; i >= 0; --i )
+			{
+				if ( !items[i].Enabled )
+				{
+					ThrowOneInternal( items[i], row, col, Direction.North, 0 );
+				}
+			}
+		}
+
 		foreach ( var mazeObject in MazeObject.GetObjectsInSameCell() )
 		{
 			if ( mazeObject.Components.Get<Holdable>() is not {} holdable )
@@ -215,6 +256,8 @@ public sealed class Holder : Component, IThrowableListener
 
 	private void UpdateHeldItemPositions()
 	{
+		_heldItemsInvalid = true;
+
 		if ( HeldItems.Count == 0 )
 		{
 			StopHolding();

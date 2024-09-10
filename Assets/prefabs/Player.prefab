@@ -6,7 +6,7 @@
     "Tags": "player",
     "Enabled": true,
     "NetworkMode": 1,
-    "NetworkInterpolation": true,
+    "NetworkOrphaned": 3,
     "Components": [
       {
         "__type": "Sandbox.SkinnedModelRenderer",
