@@ -1,3 +1,6 @@
 [submodule "Libraries/facepunch.libstates"]
 	path = Libraries/facepunch.libstates
 	url = https://github.com/Facepunch/sbox-libstates.git
+[submodule "Libraries/facepunch.compedit"]
+	path = Libraries/facepunch.compedit
+	url = git@github.com:Facepunch/sbox-compedit.git
