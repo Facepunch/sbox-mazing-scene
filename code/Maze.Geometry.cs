@@ -178,6 +178,8 @@ partial class Maze
 
 					var collider = floor.Components.Create<BoxCollider>();
 
+					collider.Scale = new Vector3( 48f * 4f, 48f * 4f, 32f );
+					collider.Center = new Vector3( 0f, 0f, -16f + 25f );
 					collider.Static = true;
 				}
 				else
