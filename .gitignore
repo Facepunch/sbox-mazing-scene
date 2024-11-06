@@ -27,3 +27,4 @@ Editor/.vscode/*
 .bin/
 obj/
 .sbox/
+*.user
