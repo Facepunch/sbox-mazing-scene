@@ -67,7 +67,7 @@ public sealed class Mazer : Component
 
 	protected override void OnEnabled()
 	{
-		_targetLook = Transform.Rotation.Forward.WithZ( 0f ).Normal;
+		_targetLook = WorldRotation.Forward.WithZ( 0f ).Normal;
 	}
 
 	public bool TryVault()
@@ -289,11 +289,11 @@ public sealed class Mazer : Component
 
 	private void OnFalling()
 	{
-		if ( Transform.Position.z < -1024f )
+		if ( WorldPosition.z < -1024f )
 		{
 			if ( !Throwable.IsExiting )
 			{
-				Transform.Position = Transform.Position.WithZ( 512f );
+				WorldPosition = WorldPosition.WithZ( 512f );
 			}
 
 			return;
@@ -362,10 +362,10 @@ public sealed class Mazer : Component
 		AnimationHelper.WithVelocity( 0f );
 		AnimationHelper.WithWishVelocity( input * MoveSpeed );
 
-		var curRot = Transform.Rotation;
+		var curRot = WorldRotation;
 		var targetRot = Rotation.LookAt( _targetLook );
 
-		Transform.Rotation = Rotation.Slerp( curRot, targetRot, Helpers.Ease( 0.125f ) );
+		WorldRotation = Rotation.Slerp( curRot, targetRot, Helpers.Ease( 0.125f ) );
 	}
 
 	private void OnDead()
@@ -400,10 +400,10 @@ public sealed class Mazer : Component
 		AnimationHelper.WithWishVelocity( input * MoveSpeed );
 		AnimationHelper.WithVelocity( CharacterController.Velocity * (noclip ? 4f : 1f) );
 
-		var curRot = Transform.Rotation;
+		var curRot = WorldRotation;
 		var targetRot = Rotation.LookAt( _targetLook );
 
-		Transform.Rotation = Rotation.Slerp( curRot, targetRot, Helpers.Ease( 0.125f ) );
+		WorldRotation = Rotation.Slerp( curRot, targetRot, Helpers.Ease( 0.125f ) );
 
 		CharacterController.Move();
 	}

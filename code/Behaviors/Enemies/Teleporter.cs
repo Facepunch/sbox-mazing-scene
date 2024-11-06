@@ -38,7 +38,7 @@ public sealed class Teleporter : Component
 
 	protected override void OnStart()
 	{
-		DepartPosition = ArrivePosition = Transform.Position;
+		DepartPosition = ArrivePosition = WorldPosition;
 		DepartDirection = ArriveDirection = Mazer.Direction;
 	}
 
@@ -99,7 +99,7 @@ public sealed class Teleporter : Component
 	{
 		_arriveCell = (row, col);
 
-		DepartPosition = Transform.Position;
+		DepartPosition = WorldPosition;
 		DepartDirection = Mazer.Direction;
 
 		ArrivePosition = MazeObject.Maze.MazeToWorldPos( row, col );
@@ -122,8 +122,8 @@ public sealed class Teleporter : Component
 	[Broadcast( NetPermission.OwnerOnly )]
 	public void DispatchArrived()
 	{
-		Transform.Position = ArrivePosition;
-		Transform.Rotation = ArriveDirection.GetRotation();
+		WorldPosition = ArrivePosition;
+		WorldRotation = ArriveDirection.GetRotation();
 
 		Mazer.Direction = ArriveDirection;
 

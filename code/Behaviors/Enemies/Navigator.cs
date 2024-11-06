@@ -54,7 +54,7 @@ public abstract class Navigator : Component
 	{
 		_nextTargetUpdate = 3f + Random.Shared.NextSingle();
 
-		Direction = ((Vector2)Transform.Rotation.Forward).GetDirection();
+		Direction = ((Vector2)WorldRotation.Forward).GetDirection();
 	}
 
 	public void ClearTarget()
@@ -97,7 +97,7 @@ public abstract class Navigator : Component
 
 		var dist = Math.Abs( target.Row - row ) + Math.Abs( target.Col - col );
 		var targetPos = MazeObject.Maze.MazeToWorldPos( target.Row, target.Col );
-		var diff = (Vector2)(targetPos - Transform.Position);
+		var diff = (Vector2)(targetPos - WorldPosition);
 
 		var input = Direction.GetNormal();
 		var otherNavigatorCount = MazeObject

@@ -13,7 +13,7 @@ public sealed class MazeObject : Component
 
 	public IMazeDataView View => Maze.View ?? throw new Exception( "No maze view!" );
 
-	public Vector2 MazeLocalPos => Maze?.WorldToMazePos( Transform.Position ) ?? default;
+	public Vector2 MazeLocalPos => Maze?.WorldToMazePos( WorldPosition ) ?? default;
 
 	public Vector2 CellLocalPos
 	{
@@ -28,7 +28,7 @@ public sealed class MazeObject : Component
 	{
 		get
 		{
-			var mazePos = Maze.WorldToMazePos( Transform.Position );
+			var mazePos = Maze.WorldToMazePos( WorldPosition );
 			return ((int)MathF.Floor( mazePos.x ), (int)MathF.Floor( mazePos.y ));
 		}
 	}

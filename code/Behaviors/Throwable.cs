@@ -81,7 +81,7 @@ public sealed class Throwable : Component
 		IsAirborne = true;
 		IndexOnFloor = 0;
 
-		_throwStart = Transform.Position;
+		_throwStart = WorldPosition;
 		_throwEnd = MazeObject.Maze.MazeToWorldPos( row, col );
 
 		var dist = Math.Max( 0.5f, range );
@@ -102,9 +102,9 @@ public sealed class Throwable : Component
 
 		if ( IsExiting )
 		{
-			if ( Transform.Position.z > -1024f )
+			if ( WorldPosition.z > -1024f )
 			{
-				Transform.Position -= new Vector3( 0f, 0f, 400f ) * Time.Delta;
+				WorldPosition -= new Vector3( 0f, 0f, 400f ) * Time.Delta;
 			}
 
 			return;
@@ -118,7 +118,7 @@ public sealed class Throwable : Component
 		var up = Vector3.Up * _throwHeight;
 		var along = _throwEnd - _throwStart;
 
-		Transform.Position = _throwStart + along * x + up * y;
+		WorldPosition = _throwStart + along * x + up * y;
 
 		var dt = 1f / duration;
 		var dydx = -8f * x + 4f;
@@ -157,12 +157,12 @@ public sealed class Throwable : Component
 			}
 
 			IndexOnFloor = landedOn.IndexOnFloor + 1;
-			Transform.Position = Transform.Position.WithZ( IndexOnFloor * 16f );
+			WorldPosition = WorldPosition.WithZ( IndexOnFloor * 16f );
 		}
 		else
 		{
 			IndexOnFloor = 0;
-			Transform.Position = Transform.Position.WithZ( 0f );
+			WorldPosition = WorldPosition.WithZ( 0f );
 		}
 	}
 }

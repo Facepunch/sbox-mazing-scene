@@ -31,12 +31,12 @@ public sealed class MeleeAttacker : Component
 			return;
 		}
 
-		var pos = (Vector2) Transform.Position;
+		var pos = (Vector2) WorldPosition;
 
 		var target = Scene.Components.GetAll<Player>( FindMode.Enabled | FindMode.InChildren )
 			.Where( x => x.Mazer.State == MazerState.Walking )
-			.Where( x => ((Vector2)x.Transform.Position - pos).LengthSquared <= Range * Range )
-			.MinBy( x => ((Vector2)x.Transform.Position - pos).LengthSquared );
+			.Where( x => ((Vector2)x.WorldPosition - pos).LengthSquared <= Range * Range )
+			.MinBy( x => ((Vector2)x.WorldPosition - pos).LengthSquared );
 
 		if ( target is null )
 		{
@@ -45,7 +45,7 @@ public sealed class MeleeAttacker : Component
 
 		NextAttack = 0f;
 
-		var force = ((target.Transform.Position - Transform.Position).WithZ( 0f ).Normal + Vector3.Up * 0.75f) * 5000f;
+		var force = ((target.WorldPosition - WorldPosition).WithZ( 0f ).Normal + Vector3.Up * 0.75f) * 5000f;
 
 		target.Kill( force );
 

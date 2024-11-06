@@ -32,7 +32,7 @@ public sealed class ProximityGhost : Component
 
 	protected override void OnUpdate()
 	{
-		var pos = Transform.Position;
+		var pos = WorldPosition;
 
 		var minDist2 = float.PositiveInfinity;
 
@@ -43,7 +43,7 @@ public sealed class ProximityGhost : Component
 				continue;
 			}
 
-			minDist2 = Math.Min( minDist2, (player.Transform.Position - pos).LengthSquared );
+			minDist2 = Math.Min( minDist2, (player.WorldPosition - pos).LengthSquared );
 		}
 
 		var t = Math.Clamp( (MathF.Sqrt( minDist2 ) - MaxAlphaRadius) / (MinAlphaRadius - MaxAlphaRadius), 0f, 1f );

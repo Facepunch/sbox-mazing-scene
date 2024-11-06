@@ -45,11 +45,8 @@ partial class Maze
 				{
 					Name = "Wall",
 					Parent = GameObject,
-					Transform =
-					{
-						LocalPosition = new Vector3( j * 48f, i * 48f ) + offset + vOffset + (outer ? outerOffset : floor ? Vector3.Up * -38f : 0f),
-						LocalRotation = Rotation.FromYaw( yaw )
-					},
+					LocalPosition = new Vector3( j * 48f, i * 48f ) + offset + vOffset + (outer ? outerOffset : floor ? Vector3.Up * -38f : 0f),
+					LocalRotation = Rotation.FromYaw( yaw ),
 					Flags = flags
 				};
 
@@ -119,7 +116,7 @@ partial class Maze
 				{
 					Name = "Post",
 					Parent = GameObject,
-					Transform = { LocalPosition = new Vector3( j * 48f, i * 48f ) + vOffset + (outer ? outerOffset : 0f) },
+					LocalPosition = new Vector3( j * 48f, i * 48f ) + vOffset + (outer ? outerOffset : 0f),
 					Flags = flags
 				};
 
@@ -167,10 +164,8 @@ partial class Maze
 					{
 						Name = "Floor",
 						Parent = GameObject,
-						Transform = {
-							LocalPosition = new Vector3( (j + 2) * 48f, (i + 2) * 48f ) - Vector3.Up * 25f,
-							LocalScale = new Vector3( 0.96f * 4f, 0.96f * 4f, 1f )
-						},
+						LocalPosition = new Vector3( (j + 2) * 48f, (i + 2) * 48f ) - Vector3.Up * 25f,
+						LocalScale = new Vector3( 0.96f * 4f, 0.96f * 4f, 1f ),
 						Flags = flags
 					};
 
@@ -193,9 +188,7 @@ partial class Maze
 						{
 							Name = "Floor",
 							Parent = GameObject,
-							Transform = {
-								LocalPosition = new Vector3( (j + l + 0.5f) * 48f, (i + k + 0.5f) * 48f )
-							},
+							LocalPosition = new Vector3( (j + l + 0.5f) * 48f, (i + k + 0.5f) * 48f ),
 							Flags = flags
 						};
 
@@ -219,10 +212,8 @@ partial class Maze
 					{
 						Name = "Block",
 						Parent = GameObject,
-						Transform = {
-							LocalPosition = new Vector3( (j + 2) * 48f, (i + 2) * 48f ) + vOffset + new Vector3( 0f, 0f, 124f ) + outerOffset,
-							LocalScale = new Vector3( 0.96f * 4f, 0.96f * 4f, 5.12f )
-						},
+						LocalPosition = new Vector3( (j + 2) * 48f, (i + 2) * 48f ) + vOffset + new Vector3( 0f, 0f, 124f ) + outerOffset,
+						LocalScale = new Vector3( 0.96f * 4f, 0.96f * 4f, 5.12f ),
 						Flags = flags
 					};
 
@@ -245,10 +236,8 @@ partial class Maze
 						{
 							Name = "Block",
 							Parent = GameObject,
-							Transform = {
-								LocalPosition = new Vector3( (j + l) * 48f, (i + k) * 48f ) + vOffset + new Vector3( 24f, 24f, 124f ) + outerOffset,
-								LocalScale = new Vector3( 0.96f, 0.96f, 5.12f )
-							},
+							LocalPosition = new Vector3( (j + l) * 48f, (i + k) * 48f ) + vOffset + new Vector3( 24f, 24f, 124f ) + outerOffset,
+							LocalScale = new Vector3( 0.96f, 0.96f, 5.12f ),
 							Flags = flags
 						};
 
@@ -273,7 +262,7 @@ partial class Maze
 			{
 				Name = "Light",
 				Parent = GameObject,
-				Transform = { LocalPosition = pos * 48f },
+				LocalPosition = pos * 48f,
 				Flags = flags
 			};
 

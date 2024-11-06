@@ -25,7 +25,7 @@ public sealed partial class Maze : Component
 	public IReadOnlyList<RangedUnitSpawn> RangedUnitSpawns { get; private set; } = Array.Empty<RangedUnitSpawn>();
 	public IReadOnlyList<Player> Players => _players;
 
-	[Button( "Run", "casino" ), Group( "Parameters" )]
+	[Button( icon: "casino" ), Group( "Parameters" )]
 	public void Randomize()
 	{
 		Seed = Random.Shared.Next();
@@ -79,7 +79,7 @@ public sealed partial class Maze : Component
 		return new MazeGeneratorParameters( seed, level, size, treasureCount, enemyCount );
 	}
 
-	[Button( "Run", "casino" ), Group( "Parameters" )]
+	[Button( icon: "casino" ), Group( "Parameters" )]
 	private void Generate()
 	{
 		using var _ = Scene.Push();

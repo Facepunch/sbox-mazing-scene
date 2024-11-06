@@ -35,7 +35,7 @@ internal sealed class Projectile : Component
 		Moving = true;
 		Direction = direction;
 
-		Transform.Rotation = direction.GetRotation();
+		WorldRotation = direction.GetRotation();
 	}
 
 	[Broadcast( NetPermission.OwnerOnly )]
@@ -67,7 +67,7 @@ internal sealed class Projectile : Component
 		if ( !IsProxy )
 		{
 			var hits = Scene.Trace
-				.Sphere( Radius, Transform.Position, Transform.Position + delta )
+				.Sphere( Radius, WorldPosition, WorldPosition + delta )
 				.WithTag( "player" )
 				.RunAll();
 
@@ -80,12 +80,12 @@ internal sealed class Projectile : Component
 					continue;
 				}
 
-				DispatchHitPlayer( player.Id, Transform.Position );
+				DispatchHitPlayer( player.Id, WorldPosition );
 				player.Kill( velocity * 50f );
 			}
 		}
 
-		Transform.Position += delta;
+		WorldPosition += delta;
 
 		var nextIndex = MazeObject.CellIndex;
 
@@ -101,14 +101,14 @@ internal sealed class Projectile : Component
 
 			var hitPos = ((MazeObject.Maze.MazeToWorldPos( prevIndex.Row, prevIndex.Col )
 				+ MazeObject.Maze.MazeToWorldPos( nextIndex.Row, nextIndex.Col )) * 0.5f)
-				.WithZ( Transform.Position.z )
+				.WithZ( WorldPosition.z )
 				- direction * 4f;
 
 			HitWall?.Invoke( hitPos, !IgnoreWalls || emptyHit );
 
 			if ( !IgnoreWalls || emptyHit )
 			{
-				Transform.Position = hitPos;
+				WorldPosition = hitPos;
 
 				Moving = false;
 				_ended = 0;

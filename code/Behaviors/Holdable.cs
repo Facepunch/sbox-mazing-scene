@@ -58,6 +58,6 @@ public sealed class Holdable : Component
 			return;
 		}
 
-		Transform.LocalPosition = Vector3.Lerp( Transform.LocalPosition, Vector3.Up * (64f + index * 16f), Helpers.Ease( 0.125f ) );
+		LocalPosition = Vector3.Lerp( LocalPosition, Vector3.Up * (64f + index * 16f), Helpers.Ease( 0.125f ) );
 	}
 }

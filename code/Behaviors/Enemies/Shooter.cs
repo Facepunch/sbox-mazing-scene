@@ -15,7 +15,7 @@ public sealed class Shooter : Component
 
 	public void Shoot()
 	{
-		var go = ProjectilePrefab.Clone( Transform.Position.WithZ( 32f ) );
+		var go = ProjectilePrefab.Clone( WorldPosition.WithZ( 32f ) );
 		var proj = go.Components.Get<Projectile>();
 
 		proj.Fire( Mazer.Direction );

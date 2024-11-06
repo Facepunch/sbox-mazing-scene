@@ -59,7 +59,7 @@ public sealed class Player : Component, Component.INetworkSpawn
 			return;
 		}
 
-		if ( Transform.Position.z < -512f )
+		if ( WorldPosition.z < -512f )
 		{
 			HasExited = true;
 		}
@@ -77,7 +77,7 @@ public sealed class Player : Component, Component.INetworkSpawn
 		_ragdoll?.Destroy();
 		_ragdoll = null;
 
-		Transform.Position = pos;
+		WorldPosition = pos;
 
 		Mazer.State = MazerState.Falling;
 
@@ -188,7 +188,7 @@ public sealed class Player : Component, Component.INetworkSpawn
 		var up = Vector3.Up;
 		var right = Vector3.Cross( normal, up ).Normal;
 
-		upperBody.ApplyImpulseAt( Transform.Position + right * hitPos2d.x + up * (hitPos2d.y + 48f), force );
+		upperBody.ApplyImpulseAt( WorldPosition + right * hitPos2d.x + up * (hitPos2d.y + 48f), force );
 	}
 
 	public void OnNetworkSpawn( Connection owner )

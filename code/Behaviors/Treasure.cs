@@ -21,7 +21,7 @@ public class Treasure : Component
 			Scene.Components.Get<MazingGame>( FindMode.Enabled | FindMode.InChildren ).Score += Value;
 		}
 
-		if ( _scored && Transform.Position.z <= -512f )
+		if ( _scored && WorldPosition.z <= -512f )
 		{
 			GameObject.Destroy();
 		}

@@ -19,7 +19,7 @@ public sealed class FollowCamera : Component
 			return;
 		}
 
-		Transform.Position = Target.Transform.Position.WithZ( 64f ) - Transform.Rotation.Forward * Distance;
+		WorldPosition = Target.WorldPosition.WithZ( 64f ) - WorldRotation.Forward * Distance;
 
 		var player = Target.Components.Get<Player>();
 

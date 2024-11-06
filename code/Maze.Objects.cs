@@ -100,7 +100,7 @@ partial class Maze
 			var spawn = PlayerSpawns[index++ % PlayerSpawns.Count];
 			var spawnPos = MazeToWorldPos( spawn.Row, spawn.Col ) + Vector3.Up * (1024f + index * 128f);
 
-			var pawn = pawns.FirstOrDefault( x => x.Network.OwnerConnection == connection )
+			var pawn = pawns.FirstOrDefault( x => x.Network.Owner == connection )
 				?? SpawnPlayer( connection, true, spawnPos );
 
 			if ( pawn is not null )
@@ -127,7 +127,7 @@ partial class Maze
 			return null;
 		}
 
-		if ( Players.FirstOrDefault( x => x.Network.OwnerConnection == connection ) is {} player )
+		if ( Players.FirstOrDefault( x => x.Network.Owner == connection ) is {} player )
 		{
 			return player;
 		}

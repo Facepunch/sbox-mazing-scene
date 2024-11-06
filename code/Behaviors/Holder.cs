@@ -248,7 +248,7 @@ public sealed class Holder : Component, IThrowableListener
 
 		if ( AutoThrow && HeldItems.Count > 0 && HeldItems[0].HeldTime > AutoThrowTime )
 		{
-			var dir = ((Vector2)Transform.Rotation.Forward).GetDirection();
+			var dir = ((Vector2)WorldRotation.Forward).GetDirection();
 
 			ThrowOne( (Direction)(((int)dir + Random.Shared.Next( 1, 4 )) % 4), 1 );
 		}
@@ -266,16 +266,16 @@ public sealed class Holder : Component, IThrowableListener
 
 		if ( _leftHandIk.IsValid() && _rightHandIk.IsValid() )
 		{
-			var pos = HeldItems[0].Transform.Position + Transform.Rotation.Up * 16f;
-			var right = Transform.Rotation.Right * 12f;
+			var pos = HeldItems[0].WorldPosition + WorldRotation.Up * 16f;
+			var right = WorldRotation.Right * 12f;
 
-			_leftHandIk.Transform.Position = pos - right;
-			_rightHandIk.Transform.Position = pos + right;
+			_leftHandIk.WorldPosition = pos - right;
+			_rightHandIk.WorldPosition = pos + right;
 
-			var forwardAmount = Math.Clamp( Vector3.Dot( Transform.Rotation.Forward, pos - Transform.Position ) / 16f, -0.75f, 0.75f );
+			var forwardAmount = Math.Clamp( Vector3.Dot( WorldRotation.Forward, pos - WorldPosition ) / 16f, -0.75f, 0.75f );
 
-			_leftHandIk.Transform.LocalRotation = Rotation.From( -45f, 90f, 0f + MathF.Asin( forwardAmount ).RadianToDegree() );
-			_rightHandIk.Transform.LocalRotation = Rotation.From( -45f, -90f, 180f - MathF.Asin( forwardAmount ).RadianToDegree() );
+			_leftHandIk.LocalRotation = Rotation.From( -45f, 90f, 0f + MathF.Asin( forwardAmount ).RadianToDegree() );
+			_rightHandIk.LocalRotation = Rotation.From( -45f, -90f, 180f - MathF.Asin( forwardAmount ).RadianToDegree() );
 		}
 	}
 }
